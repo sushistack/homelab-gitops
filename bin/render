@@ -15,6 +15,9 @@ import pathlib
 TOKENS = pathlib.Path("internal/tokens.env")
 OUTDIR = pathlib.Path("rendered")
 TOKEN_RE = re.compile(r"\$\{SECRET:([A-Z_]+)\}")
+# Any ${SECRET:...} TOKEN_RE did NOT consume (bad NAME: lowercase/digit/hyphen) is a typo,
+# not a real value — catch it instead of letting a literal token through to output.
+STRAY_RE = re.compile(r"\$\{SECRET:[^}]*\}")
 
 
 def load_tokens(path):
@@ -42,9 +45,12 @@ def render(text, vals):
 
 
 def dest_for(src):
-    dest = OUTDIR / src
-    # guard: output MUST live under rendered/ (the git-ignored path)
-    assert dest == OUTDIR / src and (dest.parent == OUTDIR or OUTDIR in dest.parents), dest
+    # Output MUST stay under rendered/ (git-ignored). An absolute INPUT or a `..` escape
+    # would write a real-value file OUTSIDE the ignored dir — the exact leak this repo
+    # exists to prevent. Resolve and check explicitly; never via assert (stripped under -O).
+    dest = (OUTDIR / src).resolve()
+    if src.is_absolute() or not dest.is_relative_to(OUTDIR.resolve()):
+        sys.exit(f"{src}: INPUT must be a relative path that stays under {OUTDIR}/")
     return dest
 
 
@@ -58,10 +64,13 @@ def main(argv):
     vals = load_tokens(TOKENS)
     for inp in argv:
         src = pathlib.Path(inp)
+        dest = dest_for(src)  # validate the path BEFORE reading anything
         out, missing = render(src.read_text(), vals)
         if missing:
             sys.exit(f"{inp}: no value for {sorted(set(missing))}")
-        dest = dest_for(src)
+        stray = STRAY_RE.findall(out)
+        if stray:
+            sys.exit(f"{inp}: malformed token(s) (NAME must be [A-Z_]+): {sorted(set(stray))}")
         dest.parent.mkdir(parents=True, exist_ok=True)
         dest.write_text(out)
         print(dest)
@@ -78,8 +87,18 @@ def selftest():
     # colon syntax: a plain $VAR / ${VAR} (envsubst-style) is left untouched
     out, _ = render("$HOST_PROXMOX ${HOST_PROXMOX}", vals)
     assert out == "$HOST_PROXMOX ${HOST_PROXMOX}", out
+    # a malformed token NAME (lowercase/digit/hyphen) is left literal -> STRAY_RE flags it
+    out, _ = render("${SECRET:ip1} ${SECRET:HOST_PROXMOX}", vals)
+    assert STRAY_RE.findall(out) == ["${SECRET:ip1}"], out
     # output path is forced under rendered/
-    assert dest_for(pathlib.Path("infra/x.yaml")) == OUTDIR / "infra/x.yaml"
+    assert dest_for(pathlib.Path("infra/x.yaml")) == (OUTDIR / "infra/x.yaml").resolve()
+    # absolute path and `..` escape are rejected, not written outside rendered/
+    for bad in ["/etc/passwd", "../escape.yaml"]:
+        try:
+            dest_for(pathlib.Path(bad))
+            assert False, f"escaped guard: {bad}"
+        except SystemExit:
+            pass
     print("selftest ok")
 
 
