@@ -29,7 +29,7 @@ disk so it exists).
 | IP       | `${SECRET:IP_CLUSTER_NODE_A}/24` | `${SECRET:IP_CLUSTER_NODE_B}/24` | `${SECRET:IP_CLUSTER_NODE_C}/24` |
 | Gateway  | `${SECRET:IP_LAN_GATEWAY}` (cloud-init static; matching OpenWrt DHCP leases) | ← same | ← same |
 | Role     | `--cluster-init` (initializes etcd) | join as `server`  | join as `server`           |
-| OS       | Debian 13 (trixie) genericcloud amd64, cloud-init | ← same        | ← same                     |
+| OS       | Ubuntu 24.04 LTS (Noble) cloudimg amd64, cloud-init | ← same      | ← same                     |
 
 VMIDs 101–103 (the Phase 1 throwaway VMID 101 is destroyed and reused). Roles, not install order, matter:
 node 1 inits etcd, nodes 2/3 join as **server** (NOT agent) so etcd reaches **quorum=3, never 2**.
