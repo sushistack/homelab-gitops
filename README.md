@@ -41,6 +41,7 @@ by the [`adr-link-check`](.github/workflows/adr-link-check.yml) CI gate.
 - [ADR-0001 — Why Compose → k3s](docs/adr/ADR-0001-why-compose-to-k3s.md)
 - [ADR-0002 — Excalidraw is the Phase-1 throwaway pilot](docs/adr/ADR-0002-excalidraw-phase1-pilot.md)
 - [ADR-0003 — Longhorn on a single host: replicas guard VM/disk loss, not host loss](docs/adr/ADR-0003-longhorn-single-host-storage.md)
+- [ADR-0004 — Sealed Secrets: the sealing key is a cluster-bound Plane 0 asset](docs/adr/ADR-0004-secrets-sealing-key.md)
 
 One-line decision log: [`docs/DECISIONS.md`](docs/DECISIONS.md).
 

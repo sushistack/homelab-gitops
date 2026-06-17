@@ -2,6 +2,22 @@
 
 Running log of load-bearing decisions. One line each; link the story.
 
+## Secrets / Sealed Secrets (Story 2.3)
+
+- **Sealing key is cluster-bound → Phase 1 sealed assets are undecryptable here.** Every
+  SealedSecret is sealed against THIS Phase 2a cluster's public cert; the private key lives in
+  etcd, not on a PV. Phase 1 held no real secrets (Excalidraw stateless), so nothing carries over
+  — documented boundary, not a bug. ([ADR-0004](adr/ADR-0004-secrets-sealing-key.md), AR9)
+- **Sealing key = Plane 0, exported OOB, age-encrypted, off-host.** It is NOT in Longhorn PV
+  backups (etcd object); losing it makes every SealedSecret permanently undecryptable. The export
+  is what Gate 0 (Story 2.6) restores. Export ALL keys, re-export on rotation. (AR12)
+- **Bootstrap-vs-workload split.** Only **workload** secrets flow through Sealed Secrets; bootstrap
+  creds (ArgoCD repo access, Cloudflare DNS-01 token) are **Ansible-injected plain Secrets** —
+  keeping them out avoids the bootstrap circular dependency. (AR4)
+- **Consumption is `envFrom: secretRef` only; no `namePrefix`/`commonLabels`.** Inline `${VAR}`/
+  `valueFrom` re-introduce the Compose empty-overwrite trap; name rewriting breaks the seal's
+  exact `namespace/name` binding. Controller v0.37.0 / chart 2.18.6, wave 0. (AR22, AR27, AR6)
+
 ## Storage / Longhorn (Story 2.2)
 
 - **Longhorn v1.12.0, V1 data engine pinned explicitly** (`defaultDataEngine: v1`) — V2 went
