@@ -52,7 +52,7 @@ sealed-secrets:
   # Chart 2.18.6 maps to controller appVersion 0.37.0 (verified against the chart's Chart.yaml at
   # install time, per Dev Notes). The local `kubeseal` CLI is pinned to the SAME v0.37.0 so the
   # sealing format stays aligned with the controller. ServerSideApply required (large CRD — AR7).
-  repo: https://bitnami-labs.github.io/sealed-secrets
+  repo: https://bitnami.github.io/sealed-secrets   # repo moved bitnami-labs -> bitnami (old Pages site 404s)
   chart: sealed-secrets
   chartVersion: 2.18.6     # -> appVersion v0.37.0
   appVersion: v0.37.0
