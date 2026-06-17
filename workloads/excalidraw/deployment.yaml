@@ -5,7 +5,7 @@ kind: Deployment
 metadata:
   name: excalidraw
 spec:
-  replicas: 1
+  replicas: 2
   # Selector is hand-written (NOT from kustomize labels) so it stays immutable across re-applies.
   selector:
     matchLabels:
