@@ -101,7 +101,9 @@ kubectl -n longhorn-smoke get pod smoke -o wide      # RECORD: which node (must 
 
 ```sh
 kubectl cordon <NODE_A>                               # stop scheduling onto A
-kubectl -n longhorn-smoke delete pod smoke            # recreate on a schedulable node (B)
+kubectl -n longhorn-smoke delete pod smoke --wait      # block until gone — RWO volume must DETACH
+# from node A before it can attach to B; recreating too early gives a transient "Multi-Attach" /
+# "volume already attached" error and the wait below may flap. --wait covers the common case.
 # re-apply the pod WITHOUT nodeName so the scheduler picks B (A is cordoned):
 kubectl -n longhorn-smoke run smoke --image=busybox:1.36 \
   --overrides='{"spec":{"containers":[{"name":"app","image":"busybox:1.36","command":["sh","-c","sleep 86400"],"volumeMounts":[{"name":"data","mountPath":"/data"}]}],"volumes":[{"name":"data","persistentVolumeClaim":{"claimName":"smoke-data"}}]}}' \
