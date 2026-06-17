@@ -5,7 +5,19 @@ kind: Deployment
 metadata:
   name: excalidraw
 spec:
-  replicas: 1
+  # replicas: 2 so a `kubectl delete pod` self-heals back to count with zero downtime (AC1, FR8),
+  # and the health-gated rollout has live pods that keep serving while a bad version is held (AC3).
+  replicas: 2
+  # The health gate (AC3 / FR10): a new ReplicaSet whose pods never pass readiness never becomes
+  # Available, and with maxUnavailable: 0 the old healthy pods are NEVER torn down — the bad version
+  # cannot take traffic. After progressDeadlineSeconds the Deployment reports ProgressDeadlineExceeded
+  # and ArgoCD surfaces the Application as Degraded. (ArgoCD `automated` does NOT auto-rollback —
+  # recovery is `git revert`, the 3-line rule.) 120s keeps the demo crisp vs the 600s chart default.
+  progressDeadlineSeconds: 120
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 0
   # Selector is hand-written (NOT from kustomize labels) so it stays immutable across re-applies.
   selector:
     matchLabels:
