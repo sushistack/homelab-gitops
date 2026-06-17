@@ -21,4 +21,14 @@ helm:
   installerRef: v3.16.4   # tag of helm/helm whose scripts/get-helm-3 we fetch
   version: v3.16.4        # DESIRED_VERSION the script installs
 
-# Phase 2a (NOT this story — Epic 2): sealed-secrets, longhorn, cert-manager.
+cert-manager:
+  # Story 1.5: Phase 1 NON-PRODUCTION TLS (LE staging + Cloudflare DNS-01). Vendor Helm
+  # chart referenced as an ArgoCD `source` (argocd/apps/cert-manager.yaml) — NOT mirrored.
+  # For cert-manager the chart version == the app version. v1.19.x uses `crds.enabled: true`
+  # (older charts used `installCRDs: true`). ServerSideApply required (CRD annotations are large).
+  repo: https://charts.jetstack.io
+  chart: cert-manager
+  chartVersion: v1.19.5
+  appVersion: v1.19.5
+
+# Phase 2a (NOT this story — Epic 2): sealed-secrets, longhorn.

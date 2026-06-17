@@ -1,0 +1,19 @@
+# Story 1.5 — Task 3: TLS delta over the Story 1.3/1.4 HTTP base.
+# cert-manager issues draw's cert from the Phase 1 NON-PRODUCTION ClusterIssuer
+# (letsencrypt-staging: LE staging + Cloudflare DNS-01) into the `excalidraw-tls` Secret,
+# which the websecure IngressRoute (ingressroute.yaml) serves.
+#
+# ── STAGING -> PROD SWAP POINT ──
+# Story 2.4 (Phase 2a) re-issues this against a PRODUCTION ClusterIssuer on a fresh cluster.
+# This Certificate + the excalidraw-tls Secret are browser-untrusted and DO NOT carry over (AR9).
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: excalidraw-tls
+spec:
+  secretName: excalidraw-tls
+  dnsNames:
+    - ${SECRET:DOMAIN_DRAW}   # tokenized; render CMP substitutes at sync (same host as the IngressRoute)
+  issuerRef:
+    name: letsencrypt-staging
+    kind: ClusterIssuer

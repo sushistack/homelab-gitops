@@ -1,0 +1,28 @@
+# Story 1.5 — Task 2: the non-production ClusterIssuer as a wave-2 platform Application.
+# Self-authored manifests (kustomize) -> source path is infra/cluster-issuer in THIS repo.
+# That dir has a kustomization.yaml, so the render CMP (ansible/argocd-values.yaml) discovers
+# it and substitutes ${SECRET:*} at sync (the solver zone + ACME email are tokenized).
+# The `homelab` AppProject already whitelists the cluster-scoped ClusterIssuer resource.
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: cluster-issuer
+  namespace: argocd
+  annotations:
+    argocd.argoproj.io/sync-wave: "2"   # AR3: after cert-manager CRDs (wave 1), before workloads (wave 3)
+spec:
+  project: homelab
+  source:
+    repoURL: https://github.com/sushistack/home-server-gitops.git
+    targetRevision: HEAD
+    path: infra/cluster-issuer
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: cert-manager   # ClusterIssuer is cluster-scoped; the ACME solver secret resolves here
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
+      - ServerSideApply=true

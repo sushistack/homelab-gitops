@@ -1,18 +1,53 @@
-# Story 1.4: per-host cutover of the draw host onto the cluster's Traefik (HTTP only).
-# entryPoint `web` (:80) — NO websecure/TLS block yet (Story 1.5 adds cert-manager TLS).
-# Host is tokenized (${SECRET:DOMAIN_DRAW}); the render CMP substitutes the real value at
-# ArgoCD sync time (see ansible/argocd-values.yaml). The literal host is blocked by the
-# exposure gate, and ArgoCD would otherwise sync the literal token string into Traefik.
-apiVersion: traefik.io/v1alpha1   # v3 API group — old traefik.containo.us is removed (silent fail).
+# Story 1.5 — Task 3: web -> websecure. draw served over HTTPS from the cert-manager
+# `excalidraw-tls` Secret (certificate.yaml); plain HTTP is redirected to HTTPS.
+# Replaces the Story 1.4 HTTP-only IngressRoute.
+#
+# Host is tokenized (${SECRET:DOMAIN_DRAW}); the render CMP substitutes at ArgoCD sync time
+# (see ansible/argocd-values.yaml). traefik.io/v1alpha1 (v3) — old traefik.containo.us silently fails.
+#
+# OPERATOR NOTE (live, no file): the cloudflared tunnel origin for draw — set to http://<node>:80
+# in Story 1.4 — must be repointed to https://<node>:443 (noTLSVerify, staging cert) or the
+# :80 redirect below loops the CF path. LAN clients hit :80 and follow the redirect to :443.
+---
+apiVersion: traefik.io/v1alpha1
+kind: Middleware
+metadata:
+  name: excalidraw-redirect-https
+spec:
+  redirectScheme:
+    scheme: https
+    permanent: true
+---
+# HTTPS (websecure :443) — serves the app with the cert-manager cert.
+apiVersion: traefik.io/v1alpha1
 kind: IngressRoute
 metadata:
   name: excalidraw
+spec:
+  entryPoints:
+    - websecure
+  routes:
+    - match: Host(`${SECRET:DOMAIN_DRAW}`)
+      kind: Rule
+      services:
+        - name: excalidraw
+          port: 80
+  tls:
+    secretName: excalidraw-tls
+---
+# HTTP (web :80) — 301 to HTTPS via the redirect middleware.
+apiVersion: traefik.io/v1alpha1
+kind: IngressRoute
+metadata:
+  name: excalidraw-redirect
 spec:
   entryPoints:
     - web
   routes:
     - match: Host(`${SECRET:DOMAIN_DRAW}`)
       kind: Rule
+      middlewares:
+        - name: excalidraw-redirect-https
       services:
-        - name: excalidraw
+        - name: excalidraw   # required by the IngressRoute schema; the middleware redirects before it is hit
           port: 80

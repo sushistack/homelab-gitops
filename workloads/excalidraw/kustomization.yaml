@@ -5,7 +5,8 @@ resources:
   - namespace.yaml
   - deployment.yaml
   - service.yaml
-  - ingressroute.yaml   # Story 1.4: draw host via Traefik web entryPoint (host tokenized)
+  - ingressroute.yaml   # Story 1.5: web->websecure (TLS serve + HTTP->HTTPS redirect); host tokenized
+  - certificate.yaml    # Story 1.5: cert-manager Certificate -> excalidraw-tls Secret
 
 # Use `labels:` (newer field), NEVER commonLabels (pollutes selectors -> immutable conflict)
 # and NEVER namePrefix (breaks the name+ns binding SealedSecrets are sealed against).

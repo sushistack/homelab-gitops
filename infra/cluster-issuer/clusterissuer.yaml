@@ -1,0 +1,32 @@
+# Story 1.5 — Task 2: Phase 1 NON-PRODUCTION ClusterIssuer (LE STAGING + Cloudflare DNS-01).
+#
+# WHY staging+DNS-01 over self-signed: AC2 requires the DNS-01 solver SHAPE to be exercised as
+# the exact machinery Story 2.4 promotes to production. Promotion is then a one-line swap
+# (staging ACME URL -> acme-v02 prod URL) + least-privilege token scoping — nothing structural.
+#
+# PRODUCTION LE IS FORBIDDEN IN PHASE 1 (AR8): the wildcard for the public zone shares a weekly
+# LE duplicate-cert rate limit a throwaway cluster would burn. Staging chains to a fake root, so
+# the cert is browser-untrusted — expected for a throwaway (AR9). Nothing here carries to Phase 2a.
+apiVersion: cert-manager.io/v1
+kind: ClusterIssuer
+metadata:
+  name: letsencrypt-staging
+spec:
+  acme:
+    server: https://acme-staging-v02.api.letsencrypt.org/directory   # STAGING — never acme-v02 (prod) in Phase 1
+    email: ${SECRET:ACME_EMAIL}   # tokenized: keep PII out of the public repo (render CMP substitutes at sync)
+    privateKeySecretRef:
+      name: letsencrypt-staging-account-key   # ACME account key, created by cert-manager (not sensitive host data)
+    solvers:
+      - dns01:
+          cloudflare:
+            # AR4 bootstrap secret: a PLAIN Secret injected DIRECTLY by Ansible into ns cert-manager
+            # (NOT a SealedSecret — Sealed Secrets does not exist in Phase 1; avoids the circular dep).
+            # Operator step (see runbook): kubectl create secret generic cloudflare-dns01-token \
+            #   -n cert-manager --from-literal=api-token=<CF API token, Zone:DNS:Edit on the public zone>
+            apiTokenSecretRef:
+              name: cloudflare-dns01-token
+              key: api-token
+        selector:
+          dnsZones:
+            - ${SECRET:DOMAIN_PUBLIC}   # scope the solver to the public DNS zone (tokenized)
