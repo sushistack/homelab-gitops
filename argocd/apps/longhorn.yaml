@@ -23,6 +23,14 @@ spec:
     targetRevision: 1.12.0   # == versions.yaml longhorn.chartVersion (appVersion v1.12.0)
     helm:
       values: |
+        # The chart's longhorn-pre-upgrade Job is a Helm `pre-upgrade` hook -> ArgoCD runs it as a
+        # PreSync hook, BEFORE the main sync creates longhorn-service-account. On a fresh install
+        # that deadlocks the sync ("serviceaccount longhorn-service-account not found", FailedCreate
+        # forever). The checker only validates an EXISTING deployment's upgrade-readiness, so it is
+        # meaningless on first install — disable it. Our upgrade path is a GitOps version bump, not
+        # an in-cluster helm upgrade, so we never depend on this Job. (Longhorn-on-ArgoCD trap.)
+        preUpgradeChecker:
+          jobEnabled: false
         defaultSettings:
           # ── THE pin that matters ── V2 Data Engine went GA in v1.12.0. Leaving this unset
           # risks landing on V2; we want the proven V1 (iSCSI) engine. Explicit, not chart-default.
