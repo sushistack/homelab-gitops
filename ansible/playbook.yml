@@ -10,6 +10,8 @@
   hosts: k3s
   become: true
   gather_facts: false
+  vars_files:
+    - ../versions.yaml   # NFR14: component pins (k3s/argocd/helm) come from here, the SSOT.
   environment:
     KUBECONFIG: /etc/rancher/k3s/k3s.yaml
   tasks:
@@ -18,7 +20,7 @@
       # NO --disable=traefik (Traefik stays k3s-owned via its HelmChart CR).
       ansible.builtin.shell: |
         set -o pipefail
-        curl -sfL https://get.k3s.io | INSTALL_K3S_VERSION={{ k3s_version }} \
+        curl -sfL https://get.k3s.io | INSTALL_K3S_VERSION={{ k3s.version }} \
           sh -s - server --tls-san {{ k3s_tls_san }}
       args:
         executable: /bin/bash   # pipefail is bash-only; default sh (dash) would swallow a curl failure
@@ -38,10 +40,11 @@
       delay: 10
       until: k3s_node_ready.rc == 0
 
-    - name: Install Helm
+    - name: Install Helm (installer pinned to a tag, not main — reproducible)
       ansible.builtin.shell: |
         set -o pipefail
-        curl -fsSL https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3 | bash
+        curl -fsSL https://raw.githubusercontent.com/helm/helm/{{ helm.installerRef }}/scripts/get-helm-3 \
+          | DESIRED_VERSION={{ helm.version }} bash
       args:
         executable: /bin/bash
         creates: /usr/local/bin/helm
@@ -52,7 +55,7 @@
         helm repo add argo https://argoproj.github.io/argo-helm
         helm repo update argo
         helm upgrade --install argocd argo/argo-cd \
-          --version {{ argocd_chart_version }} \
+          --version {{ argocd.chartVersion }} \
           --namespace {{ argocd_namespace }} --create-namespace --wait --timeout 10m
       args:
         executable: /bin/bash

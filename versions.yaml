@@ -14,4 +14,11 @@ argocd:
   chartVersion: 9.5.21   # -> appVersion v3.4.3
   appVersion: v3.4.3
 
+helm:
+  # The Helm CLI is just the install tool, but pin it too: the upstream get-helm-3
+  # script was being fetched from the moving `main` branch. Pin the script to a tag
+  # AND the binary it installs (DESIRED_VERSION) so the host bootstrap is reproducible.
+  installerRef: v3.16.4   # tag of helm/helm whose scripts/get-helm-3 we fetch
+  version: v3.16.4        # DESIRED_VERSION the script installs
+
 # Phase 2a (NOT this story — Epic 2): sealed-secrets, longhorn, cert-manager.
