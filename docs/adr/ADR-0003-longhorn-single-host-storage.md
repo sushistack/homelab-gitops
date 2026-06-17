@@ -51,6 +51,15 @@ unset risks silently landing on V2.
 - Real durability against host loss depends on the off-host backup/restore chain
   (Gate 0, Story 2.6) and self-heal behaviour (Story 2.5) — replication is not a
   substitute for either, and this ADR says so.
+- **Self-heal proven (Story 2.5).** The *software*-HA boundary above is no longer
+  theoretical: a node-VM eviction reschedules its pod onto a healthy node and the
+  Longhorn RWO volume detaches + re-attaches with the canary intact in **~12 s**
+  (well inside the NFR3 ≤5-min ceiling), the volume rebuilds its third replica once
+  the node returns, and a deleted PVC leaves the volume behind (`Retain`). During the
+  move the volume is briefly `degraded` (a surviving replica serves) — the precise
+  shape of VM-loss-not-host-loss resilience. This is the compute+storage HA boundary
+  the README states and demo clip #2 records; it is *not* protection against the
+  single Proxmox host failing.
 
 ## Rejected alternatives
 

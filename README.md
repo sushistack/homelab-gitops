@@ -52,8 +52,17 @@ The **3-line rule:** rollback is `git revert` + reconcile — never an out-of-ba
 
 These are scoping decisions, not oversights:
 
-- **Single-host SPOF.** Phase 1 is one node — if the box dies, the cluster is
-  down. Durable multi-node + proven recovery is Phase 2a, not pretended here.
+- **Single-host SPOF — software HA is real, hardware HA is not.** The cluster is
+  three k3s node VMs, but all three run on **one Proxmox host with effectively one
+  disk**. *Software*-level self-healing is real and demonstrated (clip #2): a killed
+  pod restarts to its replica count, a node-VM going down reschedules its pods onto
+  a healthy node and Longhorn re-attaches the volume with data intact (≤5 min, NFR3),
+  and a bad rollout is health-gate-held so the prior good version keeps serving. But
+  a **host reboot / PSU / single-disk failure takes all three VMs — and all Longhorn
+  replicas — down together**: one host is one failure domain, so this is *not*
+  hardware HA. Durability against host loss is the off-host bare-metal restore chain
+  (Gate 0, Story 2.6), not replication. Full reasoning:
+  [ADR-0003](docs/adr/ADR-0003-longhorn-single-host-storage.md).
 - **Throwaway cluster + certs.** Phase 1 is disposable: the cluster, its
   `letsencrypt-staging` (browser-untrusted) certs, and any secrets do **not**
   carry to the Phase 2a clean cluster. Production DNS-01 TLS comes later.
