@@ -56,8 +56,10 @@ Running log of load-bearing decisions. One line each; link the story.
   `prune: true`). (FR12, AR19, NFR10)
 - **One wildcard `*.<public zone>` Certificate, not per-host.** DNS-01 issues wildcards natively
   (HTTP-01 cannot — this is *why* DNS-01 is mandated). One production issuance covers draw today
-  and every Epic 3/4 cutover host via the same `excalidraw-tls` Secret — lowest LE rate-limit
-  pressure as services migrate. Browser-trusted (ISRG root), `CN=*.<zone>`, 90-day leaf. (AR19, AR26)
+  and every *single-label* Epic 3/4 cutover host via the same `excalidraw-tls` Secret — lowest LE
+  rate-limit pressure as services migrate. Browser-trusted (ISRG root), `CN=*.<zone>`, 90-day leaf.
+  Caveat: `*.<zone>` covers exactly one label — the apex `<zone>` and nested `a.b.<zone>` hosts are
+  NOT covered and would need their own SAN/cert. (AR19, AR26)
 - **Cloudflare token finalized to a DEDICATED least-privilege token.** Minted fresh, scoped
   exactly `Zone:DNS:Edit` on the public zone only (no account perms, no other zones) — replaces
   the DDNS token 1.5 reused. Still an Ansible-injected plain bootstrap Secret

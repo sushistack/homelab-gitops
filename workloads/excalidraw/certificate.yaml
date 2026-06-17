@@ -4,9 +4,14 @@
 # which the websecure IngressRoute (ingressroute.yaml) serves.
 #
 # WILDCARD (not per-host): DNS-01 supports wildcards natively (this is WHY DNS-01 is mandated —
-# HTTP-01 cannot issue them). One production issuance covers draw today and every Epic 3/4
-# cutover host (*.<public zone>) with the same Secret — lowest LE rate-limit pressure as services
-# migrate. Future hosts reuse this `excalidraw-tls` Secret via their own IngressRoute tls.secretName.
+# HTTP-01 cannot issue them). One production issuance covers draw today and every SINGLE-LABEL
+# Epic 3/4 cutover host under the public zone with the same Secret — lowest LE rate-limit pressure
+# as services migrate. `*.<zone>` covers EXACTLY one label: the apex `<zone>` and nested
+# `a.b.<zone>` hosts are NOT covered and would need their own SAN/cert. Future single-label hosts
+# reuse this `excalidraw-tls` Secret via their own IngressRoute tls.secretName.
+#
+# INVARIANT: the IngressRoute Host (${SECRET:DOMAIN_DRAW}) must be a single-label child of
+# ${SECRET:DOMAIN_PUBLIC}, or Traefik serves this wildcard cert against a non-matching host.
 #
 # ── STAGING -> PROD SWAP DONE ──
 # Story 1.5 served this from letsencrypt-staging (browser-untrusted rehearsal). This is the live
@@ -18,7 +23,7 @@ metadata:
 spec:
   secretName: excalidraw-tls
   dnsNames:
-    - "*.${SECRET:DOMAIN_PUBLIC}"   # wildcard for the public zone (tokenized); covers draw + all future cutover hosts
+    - "*.${SECRET:DOMAIN_PUBLIC}"   # wildcard for the public zone (tokenized); covers draw + all single-label hosts under the zone (NOT apex/nested)
   issuerRef:
     name: letsencrypt-prod
     kind: ClusterIssuer
