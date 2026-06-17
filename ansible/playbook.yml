@@ -17,28 +17,45 @@
       # NO --cluster-init (would switch to embedded etcd — Phase 2a only).
       # NO --disable=traefik (Traefik stays k3s-owned via its HelmChart CR).
       ansible.builtin.shell: |
+        set -o pipefail
         curl -sfL https://get.k3s.io | INSTALL_K3S_VERSION={{ k3s_version }} \
           sh -s - server --tls-san {{ k3s_tls_san }}
       args:
+        executable: /bin/bash   # pipefail is bash-only; default sh (dash) would swallow a curl failure
         creates: /usr/local/bin/k3s
 
-    - name: Wait for the node to become Ready
-      ansible.builtin.command: k3s kubectl wait --for=condition=Ready node --all --timeout=180s
+    - name: Wait for the node to register and become Ready
+      # `kubectl wait --all` returns 0 immediately if the node object doesn't exist yet
+      # (empty set = vacuous success), so poll until a node is actually reported Ready.
+      ansible.builtin.shell: |
+        set -o pipefail
+        k3s kubectl get nodes --no-headers 2>/dev/null | grep -qw Ready
+      args:
+        executable: /bin/bash
+      register: k3s_node_ready
       changed_when: false
+      retries: 18
+      delay: 10
+      until: k3s_node_ready.rc == 0
 
     - name: Install Helm
       ansible.builtin.shell: |
+        set -o pipefail
         curl -fsSL https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3 | bash
       args:
+        executable: /bin/bash
         creates: /usr/local/bin/helm
 
     - name: Install ArgoCD via Helm (idempotent)
       ansible.builtin.shell: |
+        set -o pipefail
         helm repo add argo https://argoproj.github.io/argo-helm
         helm repo update argo
         helm upgrade --install argocd argo/argo-cd \
           --version {{ argocd_chart_version }} \
           --namespace {{ argocd_namespace }} --create-namespace --wait --timeout 10m
+      args:
+        executable: /bin/bash
       changed_when: true
 
     - name: Inject the ArgoCD repository Secret DIRECTLY (AR4 — never via Sealed Secrets)
