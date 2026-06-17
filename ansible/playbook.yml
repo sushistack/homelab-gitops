@@ -74,13 +74,16 @@
       ansible.builtin.shell: |
         set -o pipefail
         curl -sfL https://get.k3s.io | INSTALL_K3S_VERSION={{ k3s.version }} \
-          K3S_TOKEN={{ hostvars[groups['k3s_init'][0]]['k3s_node_token'] }} \
           sh -s - server --server https://{{ node1_ip }}:6443 \
           {% for san in k3s_tls_sans %}--tls-san {{ san }} {% endfor %}
       args:
         executable: /bin/bash
         creates: /usr/local/bin/k3s
-      no_log: true   # K3S_TOKEN is interpolated here — keep it out of logs / -v output
+      environment:
+        # Passed via env (not on the command line) so the join token never appears in `ps`/audit
+        # on the target host — same hardening the Cloudflare token task uses.
+        K3S_TOKEN: "{{ hostvars[groups['k3s_init'][0]]['k3s_node_token'] }}"
+      no_log: true   # K3S_TOKEN is in the env — keep it out of logs / -v output too
 
     - name: Wait for this node to become Ready
       ansible.builtin.shell: |
@@ -103,11 +106,31 @@
   environment:
     KUBECONFIG: /etc/rancher/k3s/k3s.yaml
   tasks:
-    - name: Confirm etcd quorum — wait until all three nodes are Ready (never settle at 2)
+    - name: Require the Cloudflare DNS-01 token up front (AC3 — fail fast, not a silent skip)
+      # The staging ClusterIssuer (Story 1.5) and the prod one (Story 2.4) both reference the
+      # cloudflare-dns01-token Secret; without it certificate issuance fails LATER, after the
+      # GitOps handoff, with an opaque error. Injecting it is a required bootstrap step (AC3), so
+      # refuse to proceed silently. ARGOCD_REPO_TOKEN stays optional (public repo) — not asserted.
+      ansible.builtin.assert:
+        that:
+          - "lookup('ansible.builtin.env', 'CLOUDFLARE_DNS01_TOKEN') | trim | length > 0"
+        fail_msg: >-
+          CLOUDFLARE_DNS01_TOKEN is not set. Export it (Cloudflare API token, Zone:DNS:Edit on the
+          public zone only — NFR11) before running the playbook; it is injected as the
+          cloudflare-dns01-token Secret the ClusterIssuer consumes.
+        quiet: true
+
+    - name: Confirm etcd quorum — wait until every server node is an etcd member AND Ready
+      # Count nodes carrying the etcd role label, not just any Ready node: a node whose join
+      # half-failed (binary installed via the `creates:` guard but never joined etcd) can still
+      # report Ready as a stray, and a plain `grep -c Ready` would falsely pass at quorum=2 — the
+      # exact "never settle at 2" hazard. Require EXACTLY the inventory's server count to also
+      # reject a stale extra node inflating the total.
       ansible.builtin.shell: |
         set -o pipefail
-        ready=$(k3s kubectl get nodes --no-headers 2>/dev/null | grep -cw Ready)
-        [ "$ready" -ge 3 ]
+        expected={{ (groups['k3s_init'] | default([]) | length) + (groups['k3s_join'] | default([]) | length) }}
+        ready=$(k3s kubectl get nodes -l node-role.kubernetes.io/etcd=true --no-headers 2>/dev/null | grep -cw Ready)
+        [ "$ready" -eq "$expected" ]
       args:
         executable: /bin/bash
       register: cluster_quorum
@@ -224,7 +247,7 @@
         CLOUDFLARE_DNS01_TOKEN: "{{ lookup('ansible.builtin.env', 'CLOUDFLARE_DNS01_TOKEN') }}"
       no_log: true   # the token is passed via env — keep it out of logs / -v output
       changed_when: true
-      when: lookup('ansible.builtin.env', 'CLOUDFLARE_DNS01_TOKEN') | length > 0
+      # No `when:` guard — presence is asserted at the top of this play (fail fast, not skip).
 
     # ── BOUNDARY ──────────────────────────────────────────────────────────────
     # Ansible STOPS here. The next (manual) step is the single GitOps entry point:
