@@ -1,11 +1,16 @@
-# Story 1.5 — Task 3: TLS delta over the Story 1.3/1.4 HTTP base.
-# cert-manager issues draw's cert from the Phase 1 NON-PRODUCTION ClusterIssuer
-# (letsencrypt-staging: LE staging + Cloudflare DNS-01) into the `excalidraw-tls` Secret,
+# Story 2.4 — Task 3: PRODUCTION wildcard TLS for the cluster's hosts.
+# cert-manager issues a browser-trusted wildcard cert from the PRODUCTION ClusterIssuer
+# (letsencrypt-prod: LE production + Cloudflare DNS-01) into the `excalidraw-tls` Secret,
 # which the websecure IngressRoute (ingressroute.yaml) serves.
 #
-# ── STAGING -> PROD SWAP POINT ──
-# Story 2.4 (Phase 2a) re-issues this against a PRODUCTION ClusterIssuer on a fresh cluster.
-# This Certificate + the excalidraw-tls Secret are browser-untrusted and DO NOT carry over (AR9).
+# WILDCARD (not per-host): DNS-01 supports wildcards natively (this is WHY DNS-01 is mandated —
+# HTTP-01 cannot issue them). One production issuance covers draw today and every Epic 3/4
+# cutover host (*.<public zone>) with the same Secret — lowest LE rate-limit pressure as services
+# migrate. Future hosts reuse this `excalidraw-tls` Secret via their own IngressRoute tls.secretName.
+#
+# ── STAGING -> PROD SWAP DONE ──
+# Story 1.5 served this from letsencrypt-staging (browser-untrusted rehearsal). This is the live
+# production issuance; renewal is automatic (cert-manager renewBefore, ~2/3 of the 90-day LE leaf).
 apiVersion: cert-manager.io/v1
 kind: Certificate
 metadata:
@@ -13,7 +18,7 @@ metadata:
 spec:
   secretName: excalidraw-tls
   dnsNames:
-    - ${SECRET:DOMAIN_DRAW}   # tokenized; render CMP substitutes at sync (same host as the IngressRoute)
+    - "*.${SECRET:DOMAIN_PUBLIC}"   # wildcard for the public zone (tokenized); covers draw + all future cutover hosts
   issuerRef:
-    name: letsencrypt-staging
+    name: letsencrypt-prod
     kind: ClusterIssuer

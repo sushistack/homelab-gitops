@@ -2,7 +2,7 @@ apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 
 resources:
-  - clusterissuer.yaml   # Story 1.5: LE staging + Cloudflare DNS-01 (non-production)
+  - clusterissuer.yaml   # Story 2.4: LE PRODUCTION + Cloudflare DNS-01 (promoted from 1.5 staging)
 
 # `labels:` (newer field), NEVER commonLabels / namePrefix (see workloads/excalidraw note).
 # includeSelectors: false — these are metadata labels, not selectors.
