@@ -60,12 +60,13 @@
 
     - name: Inject the render-token Secret DIRECTLY (bootstrap-class, like the repo Secret — never via Sealed Secrets)
       ansible.builtin.shell: |
-        set -o pipefail
+        set -eo pipefail
+        # always wipe the plaintext token file, but a failed apply must still fail the task
+        trap 'rm -f /tmp/render-tokens.env' EXIT
         k3s kubectl create secret generic argocd-render-tokens \
           --namespace {{ argocd_namespace }} \
           --from-file=tokens.env=/tmp/render-tokens.env \
           --dry-run=client -o yaml | k3s kubectl apply -f -
-        rm -f /tmp/render-tokens.env
       args:
         executable: /bin/bash
       no_log: true
@@ -79,7 +80,7 @@
 
     - name: Install ArgoCD via Helm (idempotent; render CMP sidecar from argocd-values.yaml)
       ansible.builtin.shell: |
-        set -o pipefail
+        set -eo pipefail
         helm repo add argo https://argoproj.github.io/argo-helm
         helm repo update argo
         helm upgrade --install argocd argo/argo-cd \
