@@ -55,6 +55,19 @@ kubectl apply -f bootstrap/root-app.yaml
 The playbook is idempotent (k3s `creates:` guard, `helm upgrade --install`, `kubectl apply` of
 dry-run YAML). Re-running converges; it does not re-init etcd or duplicate joins.
 
+**Story 2.2 additions (now part of this same playbook):** Play 0 installs the Longhorn host
+prerequisites on **every** node (`open-iscsi` + `nfs-common`, `iscsid` enabled+started, `multipathd`
+stopped+masked + a `/etc/multipath.conf` blacklist). Play 3 also patches the bundled `local-path`
+StorageClass to non-default so `longhorn` is the sole default. Both are bootstrap-durable — they
+re-apply on a clean rebuild. The Longhorn Application itself (`argocd/apps/longhorn.yaml`) reconciles
+after the GitOps handoff, not from Ansible. Per-node verify:
+
+```sh
+iscsiadm --version                  # iSCSI admin tool present
+systemctl is-active iscsid          # active
+systemctl is-enabled multipathd     # masked / disabled / absent
+```
+
 ## Verify (operational evidence — keep real IPs/hostnames out of any committed clip, AR26)
 
 ```sh

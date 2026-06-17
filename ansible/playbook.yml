@@ -10,10 +10,62 @@
 #   Play 2  nodes2/3 — join as `server` (NOT agent) so all three are control-plane + worker
 #                      and etcd reaches quorum=3 (never settle at 2).
 #   Play 3  node 1   — Helm + ArgoCD (installed ONCE) + repo Secret + Cloudflare DNS-01 token.
+#                      + Story 2.2: un-default the bundled local-path StorageClass.
+#   Play 0  all      — Story 2.2: Longhorn host prerequisites (runs first; see below).
 #
 # Token-free by design: real IPs come from rendered/ansible/inventory.yml; the repo credential
 # ($ARGOCD_REPO_TOKEN, only for a private repo) and the Cloudflare DNS-01 token
 # ($CLOUDFLARE_DNS01_TOKEN) come from the operator's environment — never tracked.
+
+# ── Story 2.2 ───────────────────────────────────────────────────────────────
+# Longhorn host prerequisites on EVERY node. Runs first because they are plain host
+# packages, independent of k3s, and must exist before the Longhorn Application (wave 0)
+# attaches any volume. The two disaster traps Longhorn-on-bare-metal hits:
+#   1. open-iscsi installed ≠ working — `iscsid` must be ENABLED + ACTIVE or attach fails.
+#   2. multipathd steals the Longhorn block device ("device or resource busy") — disable AND
+#      mask the service (survives reboot/reinstall) AND blacklist the devices in multipath.conf.
+- name: Play 0 — Longhorn node prerequisites (ALL nodes, Story 2.2)
+  hosts: all
+  become: true
+  gather_facts: false
+  tasks:
+    - name: Install Longhorn prerequisite packages (open-iscsi for V1 iSCSI attach, nfs-common for RWX)
+      ansible.builtin.apt:
+        name:
+          - open-iscsi
+          - nfs-common
+        state: present
+        update_cache: true
+        cache_valid_time: 3600
+
+    - name: Enable + start iscsid (the package being present is NOT enough — Longhorn V1 needs it running)
+      ansible.builtin.systemd_service:
+        name: iscsid
+        enabled: true
+        state: started
+
+    - name: Disable + mask multipathd so it never claims Longhorn devices (masking survives reinstall/reboot)
+      # `state: stopped` + `masked: true` is stronger than disable alone: a mask points the unit at
+      # /dev/null so even a package reinstall or a dependency pulling multipath-tools back in cannot
+      # start it. Idempotent and harmless if multipath-tools is not installed at all.
+      ansible.builtin.systemd_service:
+        name: multipathd
+        state: stopped
+        enabled: false
+        masked: true
+      # If multipath-tools is genuinely absent the unit may not exist; that is already the desired state.
+      failed_when: false
+
+    - name: Belt-and-suspenders — blacklist block devices in /etc/multipath.conf
+      # In case multipath-tools is ever reinstalled and unmasked, this stops it grabbing sd* devices.
+      ansible.builtin.copy:
+        dest: /etc/multipath.conf
+        mode: '0644'
+        content: |
+          # Managed by Ansible (Story 2.2). multipathd must NOT claim Longhorn block devices.
+          blacklist {
+              devnode "^sd[a-z0-9]+"
+          }
 
 - name: Play 1 — initialize etcd on node 1 (--cluster-init)
   hosts: k3s_init
@@ -138,6 +190,28 @@
       retries: 18
       delay: 10
       until: cluster_quorum.rc == 0
+
+    - name: Un-default the bundled local-path StorageClass (Story 2.2 — so `longhorn` becomes the SOLE default)
+      # k3s ships local-path as the default StorageClass. The Longhorn Helm app sets `longhorn`
+      # default too; TWO defaults make Kubernetes reject class-less PVCs. Patch local-path to
+      # non-default here at bootstrap (durable through a clean rebuild — local-path returns as
+      # default on every fresh k3s install, so this MUST live in the bootstrap layer, not as a
+      # one-off kubectl). local-path was the Phase-1-only throwaway provisioner; Longhorn is the
+      # Phase-2a default. The SC exists shortly after k3s starts — wait for it, then patch idempotently.
+      ansible.builtin.shell: |
+        set -eo pipefail
+        for _ in $(seq 1 18); do
+          if k3s kubectl get storageclass local-path >/dev/null 2>&1; then
+            k3s kubectl patch storageclass local-path \
+              -p '{"metadata":{"annotations":{"storageclass.kubernetes.io/is-default-class":"false"}}}'
+            exit 0
+          fi
+          sleep 5
+        done
+        echo "local-path StorageClass never appeared" >&2; exit 1
+      args:
+        executable: /bin/bash
+      changed_when: true
 
     - name: Install Helm (installer pinned to a tag, not main — reproducible)
       ansible.builtin.shell: |

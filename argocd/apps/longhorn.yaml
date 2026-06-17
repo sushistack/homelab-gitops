@@ -1,0 +1,49 @@
+# Story 2.2 — Longhorn persistent storage as a wave-0 platform Application.
+#
+# Lives under argocd/ (the app-of-apps root recurses this dir and adopts it) rather than
+# infra/longhorn/, for the SAME reason as cert-manager: its `source` is the REMOTE Longhorn
+# Helm chart — there are no local manifests to put in infra/. infra/longhorn/ holds only the
+# README (SPOF note + the PVC reschedule-proof runbook), which nothing syncs.
+#
+# Vendor component -> Helm `source`, no chart mirroring. Version pinned in versions.yaml (SSOT).
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: longhorn
+  namespace: argocd
+  annotations:
+    # AR3: wave 0 — same wave as sealed-secrets. Longhorn must exist before ANY workload PVC.
+    # Do NOT number it relative to cert-manager (wave 1) / workloads (wave 3) beyond "0".
+    argocd.argoproj.io/sync-wave: "0"
+spec:
+  project: homelab
+  source:
+    repoURL: https://charts.longhorn.io
+    chart: longhorn
+    targetRevision: 1.12.0   # == versions.yaml longhorn.chartVersion (appVersion v1.12.0)
+    helm:
+      values: |
+        defaultSettings:
+          # ── THE pin that matters ── V2 Data Engine went GA in v1.12.0. Leaving this unset
+          # risks landing on V2; we want the proven V1 (iSCSI) engine. Explicit, not chart-default.
+          defaultDataEngine: v1
+        persistence:
+          # Let the chart own the `longhorn` StorageClass so it stays GitOps-managed
+          # (prefer this over a hand-written SC). Default class for the cluster, but real
+          # service PVCs still name `storageClassName: longhorn` explicitly per AR15.
+          defaultClass: true
+          reclaimPolicy: Retain          # AR15: never auto-delete the underlying volume on PVC delete
+          defaultClassReplicaCount: 3    # one replica per node (3-node cluster)
+        # NOTE: making `longhorn` the default does NOT un-set k3s's bundled `local-path` default.
+        # Two defaults = a binding error. local-path is patched to non-default at bootstrap
+        # (ansible playbook, Story 2.2) so `longhorn` is the SOLE default — see infra/longhorn/README.md.
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: longhorn-system
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
+      - ServerSideApply=true   # AR7: Longhorn CRD annotations exceed the client-side apply limit

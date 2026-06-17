@@ -11,6 +11,7 @@ spec:
     - https://github.com/sushistack/home-server-gitops.git
     - https://charts.jetstack.io   # Story 1.5: cert-manager Helm chart (vendor repo referenced as a source)
     - https://argoproj.github.io/argo-helm   # Story 2.1: ArgoCD self-management chart (argocd/apps/argocd.yaml)
+    - https://charts.longhorn.io   # Story 2.2: Longhorn storage Helm chart (vendor repo referenced as a source)
   destinations:
     - server: https://kubernetes.default.svc
       namespace: '*'

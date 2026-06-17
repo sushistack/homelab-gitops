@@ -2,6 +2,19 @@
 
 Running log of load-bearing decisions. One line each; link the story.
 
+## Storage / Longhorn (Story 2.2)
+
+- **Longhorn v1.12.0, V1 data engine pinned explicitly** (`defaultDataEngine: v1`) — V2 went
+  *GA* in v1.12.0, so an unset engine risks landing on V2. Default StorageClass, `Retain`,
+  3 replicas. ([ADR-0003](adr/ADR-0003-longhorn-single-host-storage.md), AR6)
+- **Single-host SPOF stated honestly, not hidden.** 3 VMs on 1 Proxmox host with 1 disk →
+  replicas guard VM/disk loss + pod mobility, **NOT host loss** (one failure domain). Host-loss
+  durability is the Gate-0 restore chain (Story 2.6), not replication. (AR13)
+- **`local-path` un-defaulted at bootstrap** so `longhorn` is the sole default (two defaults =
+  binding error); patched in the Ansible host layer so it survives a clean rebuild. (AR15)
+- **Vendor chart = Helm `source`, wave 0, `ServerSideApply=true`** (large CRDs); not mirrored,
+  not Kustomized — same pattern as cert-manager. (AR1, AR3, AR7)
+
 ## Documentation-as-product (Story 1.6)
 
 - **Two seed ADRs against the fixed template** ([ADR-0001](adr/ADR-0001-why-compose-to-k3s.md)

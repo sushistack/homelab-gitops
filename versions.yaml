@@ -33,6 +33,18 @@ cert-manager:
   chartVersion: v1.19.5
   appVersion: v1.19.5
 
-# Still NOT this story (reserved sync-wave 0/1/2 slots — Stories 2.2/2.3/2.4):
-#   sealed-secrets (wave 0), longhorn (wave 0). cert-manager (wave 1) + ClusterIssuer (wave 2)
-#   exist above/under argocd/apps from Story 1.5; Story 2.4 promotes the issuer to production.
+longhorn:
+  # Story 2.2: persistent storage, wave 0 (must exist before any workload PVC). Vendor Helm
+  # chart referenced as an ArgoCD `source` (argocd/apps/longhorn.yaml) — NOT mirrored.
+  # Chart version == release version WITHOUT the leading `v`; appVersion carries the `v`.
+  # PIN THE V1 DATA ENGINE EXPLICITLY: V2 went *GA* in v1.12.0 (not just tech-preview anymore),
+  # so an unset defaultDataEngine is a real risk of landing on V2 — see the app values (AR6).
+  # ServerSideApply required (Longhorn CRD annotations exceed client-side apply — AR7).
+  repo: https://charts.longhorn.io
+  chart: longhorn
+  chartVersion: 1.12.0     # -> appVersion v1.12.0 (released 2026-06-02)
+  appVersion: v1.12.0
+
+# Still NOT this story (reserved sync-wave 0 slot — Story 2.3):
+#   sealed-secrets (wave 0). cert-manager (wave 1) + ClusterIssuer (wave 2) exist above/under
+#   argocd/apps from Story 1.5; Story 2.4 promotes the issuer to production.
