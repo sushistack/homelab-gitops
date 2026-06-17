@@ -35,6 +35,8 @@ spec:
           # ── THE pin that matters ── V2 Data Engine went GA in v1.12.0. Leaving this unset
           # risks landing on V2; we want the proven V1 (iSCSI) engine. Explicit, not chart-default.
           defaultDataEngine: v1
+          v2DataEngine: false       # belt to the suspenders above: keep V2 disabled entirely, not just non-default
+          defaultReplicaCount: 3    # cluster-wide default == the SC's defaultClassReplicaCount (docs assert "3" everywhere)
         persistence:
           # Let the chart own the `longhorn` StorageClass so it stays GitOps-managed
           # (prefer this over a hand-written SC). Default class for the cluster, but real
