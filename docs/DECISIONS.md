@@ -47,6 +47,33 @@ Running log of load-bearing decisions. One line each; link the story.
   diagram → demo clip → ADR links, with a first-class "what was deliberately excluded"
   section. Not an end-of-project chore. (FR30, FR31)
 
+## TLS / cert-manager — PRODUCTION promotion (Story 2.4)
+
+- **TLS is now PRODUCTION Cloudflare DNS-01 on the Phase 2a cluster.** The 1.5 staging issuer
+  was the rehearsal; the swap point fired exactly as designed — a one-line ACME-URL change
+  (`acme-staging-v02` → `acme-v02`) plus a fresh prod account key, on the SAME DNS-01 Cloudflare
+  solver. ClusterIssuer is now `letsencrypt-prod`; the staging issuer was pruned (ArgoCD
+  `prune: true`). (FR12, AR19, NFR10)
+- **One wildcard `*.<public zone>` Certificate, not per-host.** DNS-01 issues wildcards natively
+  (HTTP-01 cannot — this is *why* DNS-01 is mandated). One production issuance covers draw today
+  and every Epic 3/4 cutover host via the same `excalidraw-tls` Secret — lowest LE rate-limit
+  pressure as services migrate. Browser-trusted (ISRG root), `CN=*.<zone>`, 90-day leaf. (AR19, AR26)
+- **Cloudflare token finalized to a DEDICATED least-privilege token.** Minted fresh, scoped
+  exactly `Zone:DNS:Edit` on the public zone only (no account perms, no other zones) — replaces
+  the DDNS token 1.5 reused. Still an Ansible-injected plain bootstrap Secret
+  (`cloudflare-dns01-token`, ns `cert-manager`), never sealed, never in Git. (NFR11, AR4)
+- **Renewal is automatic, no manual handling.** cert-manager default `renewBefore` (~2/3 of the
+  90-day leaf) → auto-renews ~30 days before expiry. Proven now via a forced `cmctl renew`: a fresh
+  cert (new serial) re-issued and re-served with the old Secret held Ready throughout (no outage,
+  zero manual cert steps). Cert-expiry *alerting* (ntfy) is out of scope — Epic 4 / Story 4.2. (NFR10)
+- **cloudflared tunnel origin repointed to the Phase 2a node + origin TLS verify ON.** The 1.5
+  origin (`https://<phase1-node>:443`, No-TLS-Verify ON for the untrusted staging cert) pointed at
+  the now-dead Phase 1 node → CF edge 502. Repointed to a Phase 2a node's `:443` (Traefik
+  klipper-lb answers on every node IP), **No-TLS-Verify OFF** + `originServerName: <draw host>`
+  now that the origin cert is real and publicly trusted.
+  LAN clients hit the node directly (real LE cert); internet clients via CF edge → tunnel → origin.
+  Single node IP is a SPOF (HA is Story 2.5). (operator step, AR19)
+
 ## TLS / cert-manager (Story 1.5)
 
 - **Phase 1 certs are NON-PRODUCTION and THROWAWAY.** The draw host (`${SECRET:DOMAIN_DRAW}`)
@@ -58,6 +85,7 @@ Running log of load-bearing decisions. One line each; link the story.
   `infra/cluster-issuer/clusterissuer.yaml`: promotion is a one-line ACME-URL swap
   (`acme-staging-v02` → `acme-v02`) plus least-privilege Cloudflare token scoping. Nothing
   structural changes — the DNS-01 solver shape proven here is the production shape. (AC2, Story 2.4)
+  **→ DONE: the swap fired in Story 2.4 (see the PRODUCTION promotion section above).**
 - **Production Let's Encrypt is FORBIDDEN in Phase 1**: the wildcard for the public zone shares a
   weekly LE duplicate-certificate rate limit a repeatedly-rebuilt throwaway cluster would burn. (AR8)
 - **Cloudflare DNS-01 token is a plain bootstrap Secret** (`cloudflare-dns01-token`, ns
