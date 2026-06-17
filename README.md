@@ -16,7 +16,7 @@ path. Diagram source: [`excalidraw-before-after.mmd`](docs/diagrams/excalidraw-b
 
 ## Demo — the closed loop (push → live → bad version held → revert)
 
-[▶ Demo clip #1: Excalidraw reconcile / bad-version hold / revert](docs/demo/excalidraw-loop.mp4)
+https://github.com/user-attachments/assets/08bcab1f-e96b-4cfb-9f76-9d003e3db96e
 
 A merge rolls a new version live in ~2 min; a deliberately broken image never
 becomes live (the old pod keeps serving, ArgoCD shows `Degraded`); a `git revert`
