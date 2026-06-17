@@ -34,6 +34,13 @@ spec:
               # Memory limit only — NO cpu limit (a cpu limit causes CFS throttling).
               memory: 256Mi
           # Ports the Compose `nc -z localhost 80` TCP-listen check (AR31).
+          # startupProbe gates liveness until the port opens — keeps the golden-path pattern
+          # faithful (nginx is fast, so this never delays, but every copy inherits the guard).
+          startupProbe:
+            tcpSocket:
+              port: 80
+            failureThreshold: 30
+            periodSeconds: 5
           readinessProbe:
             tcpSocket:
               port: 80

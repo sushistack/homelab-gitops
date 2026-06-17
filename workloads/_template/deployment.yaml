@@ -31,6 +31,14 @@ spec:
               # Memory limit only — NO cpu limit (avoids CFS throttling). Re-tier per service.
               memory: 256Mi
           # Default health gate = TCP listen. Swap to httpGet /healthz if the service has one.
+          # startupProbe holds liveness back until the port first opens (up to 30*5s = 150s).
+          # Without it, a slow-starting service (DB, JVM) is killed mid-boot and crash-loops forever.
+          # Re-tier failureThreshold per service: slower boots need a higher value.
+          startupProbe:
+            tcpSocket:
+              port: 80 # __PORT__
+            failureThreshold: 30
+            periodSeconds: 5
           readinessProbe:
             tcpSocket:
               port: 80 # __PORT__
