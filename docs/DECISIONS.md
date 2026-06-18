@@ -2,6 +2,19 @@
 
 Running log of load-bearing decisions. One line each; link the story.
 
+## ytdlp-api migration (Story 3.1)
+
+- 2026-06-18 | ytdlp-api deployed to k3s (golden-path proof: `_template/` copy → ApplicationSet →
+  own namespace → internal-only ClusterIP → runbook → CI gates); Compose **PARKED not
+  decommissioned** — functional decommission blocked on navidrome cutover (Story 4.3) + n8n
+  cutover (Epic 4); `/downloads` is `emptyDir` scratch until the real music volume is wired at 4.3.
+  Exposed internal-only (no IngressRoute) per Reconciliation 1. | no ADR
+- 2026-06-18 | Found: **no cluster NetworkPolicy baseline exists** (`kubectl get netpol -A` → none);
+  AC2's `infra/network-baseline/` (same-ns allow + DNS-egress :53) is unbuilt platform-wide.
+  Recorded as a gap (Operator-confirmed) — NOT created inside this single-service story. ytdlp-api
+  runs under k3s allow-all today; when the baseline lands it must select ns `ytdlp-api` with the
+  DNS-egress allow or downloads break silently. | no ADR
+
 ## Disaster Recovery — Gate 0 (Story 2.6)
 
 Affected services: the whole platform (the recovery chain underneath every service).
