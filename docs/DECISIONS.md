@@ -86,10 +86,19 @@ Running log of load-bearing decisions. One line each; link the story.
   Reconciliation 4) + homepage/offen labels. Public host tokenized `${SECRET:DOMAIN_N8N}`; per-host
   prod cert `n8n-tls`. **Manifests + sealed secrets (encryption key + R2 cred, sealed against the live
   cluster key) + runbook + ADR authored & validated** (`kubectl kustomize` 12 objects, `bin/render`
-  resolves the token, render selftest extended for digit-bearing names); **the LIVE write-freeze +
-  ingest + decrypt-verify + cloudflared flip + verified restore are operator-run** (≤10-min window).
-  Compose n8n + n8n-backup **PARKED not decommissioned** (rollback = flip cloudflared back to NPM;
-  functional retire rides Epic 5 Story 5.4). | [ADR-0010](adr/ADR-0010-n8n-write-freeze-cutover.md)
+  resolves the token, render selftest extended for digit-bearing names). **CUTOVER EXECUTED LIVE
+  2026-06-19:** ArgoCD `n8n` Synced/Healthy on an empty PVC → write-freeze (`docker compose stop n8n
+  n8n-backup`) → full `data/n8n/` tree ingested (scale-0 + tar-stream + chown) → **RPO=0 verified**
+  (k3s `creds 6 / workflows 25 / active 2 / execs 54` == frozen source, exact) → **all 6 credentials
+  DECRYPT** on k3s (n8n export:credentials --decrypted: SSH key, DeepSeek/Discord/ntfy/Anytype/
+  RocketChat — encryption key migrated) → backup actor proven (n8n-2026-…​tar.gz → R2
+  `homelab-k3s-services-backup/n8n/`) → **verified restore** in a scratch ns (6 creds decrypt + 25
+  workflows load from the R2 tar). Public flip: CF tunnel ingress `n8n.eli.kr → https://10.0.0.101:443`
+  inserted before `*.eli.kr→NPM`; LAN: OpenWrt override `n8n 10.0.0.20→10.0.0.101`; `n8n.eli.kr`=200
+  with the LE-prod `n8n-tls` cert. **🔴 Live key differed from a stale local working-copy key —
+  re-sealed from the LIVE host; also sealed the workflow `$env.*` bag (ANYTYPE_BEARER etc.) the live
+  container actually had.** Compose n8n + n8n-backup **PARKED** (Exited 0, rollback = flip cloudflared
+  back to NPM; functional retire rides Epic 5 Story 5.4). | [ADR-0010](adr/ADR-0010-n8n-write-freeze-cutover.md)
 
 ## ytdlp-api migration (Story 3.1)
 
