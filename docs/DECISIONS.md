@@ -38,10 +38,14 @@ Running log of load-bearing decisions. One line each; link the story.
   registered; **0-loss verified** (live `pg_dump`→k3s `pg_restore`: feeds 9==9, users 1==1,
   entries==dump); **backup actor proven** (`pg_dump`→`r2:homelab-k3s-services-backup/miniflux/`,
   through the default-deny NetworkPolicy); all 3 nodes serve `${SECRET:DOMAIN_RSS}` at :443 with the
-  prod cert (HTTP 200). **The ONLY remaining step is the public flip** — re-point the
-  `${SECRET:DOMAIN_RSS}` cloudflared tunnel ingress NPM→`https://<node>:443` (dashboard-managed
-  tunnel, needs CF Tunnel:Edit — operator). Compose stays live + **PARKED not decommissioned**
-  (rollback intact; Epic 5 Story 5.4 decommissions). | [ADR-0008](adr/ADR-0008-miniflux-postgres-logical-dump.md)
+  prod cert (HTTP 200). **CUTOVER COMPLETE — public + LAN flipped.** Public: CF tunnel ingress
+  edited via API (`rss → https://10.0.0.101:443` inserted before the `*.eli.kr→NPM` wildcard;
+  cloudflared first-match → k3s), verified 200 from outside. LAN: OpenWrt local-DNS override
+  `rss 10.0.0.20→10.0.0.101` (draw pattern). **Rollback rehearsed** at the tunnel (remove rule →
+  NPM/Compose → re-add, 200 throughout). Final 0-loss: k3s `9|1|566|51` == Compose. Compose
+  miniflux + miniflux-db **PARKED** (still live = the data fallback; operator retired the NPM proxy
+  host for rss, so the tunnel-only rollback layer is intentionally dropped — full decommission rides
+  Epic 5 Story 5.4). | [ADR-0008](adr/ADR-0008-miniflux-postgres-logical-dump.md)
 
 ## ytdlp-api migration (Story 3.1)
 
