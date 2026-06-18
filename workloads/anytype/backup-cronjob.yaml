@@ -25,10 +25,9 @@ metadata:
 spec:
   schedule: "30 */6 * * *"          # ≤6h (NFR5); offset from heart's :40 so they don't scale-flap together
   timeZone: Asia/Seoul
-  # PARKED until cutover. Pre-ingest, a tick would (a) tar an EMPTY /data and (b) the EXIT trap would
-  # scale the app to replicas=1 on that empty PVC → anysync mints a NEW identity (the orphan-clients
-  # disaster). Backing up a parked, dataless service is pointless anyway. Operator flips to false (or
-  # removes this line) AFTER ingest + identity-verify, when the Deployments are at replicas=1.
+  # ACTIVE post-cutover (2026-06-19): /data is ingested + identity-verified, Deployments at replicas=1.
+  # (Pre-cutover this was suspended: a tick on an EMPTY PVC would have had the EXIT trap scale the app
+  # to replicas=1 on empty /data → anysync mints a NEW identity → orphan-clients disaster.)
   suspend: false
   concurrencyPolicy: Forbid
   startingDeadlineSeconds: 300
@@ -37,6 +36,7 @@ spec:
   jobTemplate:
     spec:
       activeDeadlineSeconds: 900     # ~15 min ceiling: scale-down + tar + rclone; trap still scales back up
+      backoffLimit: 1                # a failed quiesce re-scales the app to 0 on retry — bound the flap
       template:
         metadata:
           labels:
@@ -70,6 +70,14 @@ spec:
                   # quiesce: stop the writer so BadgerDB flushes+closes, then wait for the pod to go
                   kubectl scale deploy/anytype -n anytype --replicas=0
                   kubectl wait --for=delete pod -l app.kubernetes.io/name=anytype -n anytype --timeout=120s || true
+                  # The `|| true` above is needed (wait errors if the pod is ALREADY gone), but it also
+                  # swallows a genuine timeout. So GATE the tar: if any app pod is still present (slow
+                  # BadgerDB flush, stuck Terminating, Longhorn detach hang), abort — exit 1 fires the
+                  # EXIT trap → app back to 1. A torn KV backup is worse than a missed one. (4.4 review)
+                  if [ -n "$(kubectl get pod -l app.kubernetes.io/name=anytype -n anytype -o name 2>/dev/null)" ]; then
+                    echo "anytype pod still present after quiesce timeout — aborting to avoid torn BadgerDB backup" >&2
+                    exit 1
+                  fi
                   tar -C /data -czf "/scratch/anytype-${ts}.tar.gz" .
                   rclone copy "/scratch/anytype-${ts}.tar.gz" "r2:homelab-k3s-services-backup/anytype/"
                   rclone delete --min-age 720h "r2:homelab-k3s-services-backup/anytype/" || true
@@ -99,10 +107,9 @@ metadata:
 spec:
   schedule: "40 */6 * * *"
   timeZone: Asia/Seoul
-  # PARKED until cutover. Pre-ingest, a tick would (a) tar an EMPTY /data and (b) the EXIT trap would
-  # scale the app to replicas=1 on that empty PVC → anysync mints a NEW identity (the orphan-clients
-  # disaster). Backing up a parked, dataless service is pointless anyway. Operator flips to false (or
-  # removes this line) AFTER ingest + identity-verify, when the Deployments are at replicas=1.
+  # ACTIVE post-cutover (2026-06-19): /data is ingested + identity-verified, Deployments at replicas=1.
+  # (Pre-cutover this was suspended: a tick on an EMPTY PVC would have had the EXIT trap scale the app
+  # to replicas=1 on empty /data → anysync mints a NEW identity → orphan-clients disaster.)
   suspend: false
   concurrencyPolicy: Forbid
   startingDeadlineSeconds: 300
@@ -111,6 +118,7 @@ spec:
   jobTemplate:
     spec:
       activeDeadlineSeconds: 900
+      backoffLimit: 1                # a failed quiesce re-scales the app to 0 on retry — bound the flap
       template:
         metadata:
           labels:
@@ -138,6 +146,12 @@ spec:
                   ts=$(date +%Y-%m-%dT%H-%M-%S)
                   kubectl scale deploy/anytype-heart -n anytype --replicas=0
                   kubectl wait --for=delete pod -l app.kubernetes.io/name=anytype-heart -n anytype --timeout=120s || true
+                  # GATE the tar (see anytype-backup): `|| true` masks a wait timeout, so refuse to copy
+                  # a store that hasn't actually quiesced. exit 1 → EXIT trap scales heart back to 1.
+                  if [ -n "$(kubectl get pod -l app.kubernetes.io/name=anytype-heart -n anytype -o name 2>/dev/null)" ]; then
+                    echo "anytype-heart pod still present after quiesce timeout — aborting to avoid torn backup" >&2
+                    exit 1
+                  fi
                   tar -C /data -czf "/scratch/anytype-heart-${ts}.tar.gz" .
                   rclone copy "/scratch/anytype-heart-${ts}.tar.gz" "r2:homelab-k3s-services-backup/anytype-heart/"
                   rclone delete --min-age 720h "r2:homelab-k3s-services-backup/anytype-heart/" || true
