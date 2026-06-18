@@ -41,6 +41,13 @@ metadata:
 spec:
   backoffLimit: 0
   template:
+    metadata:
+      # Borrow the backup role's identity: networkpolicy.yaml NP1 default-denies egress for EVERY pod
+      # in the ns, and NP3 only admits DB ingress from name=miniflux|miniflux-backup. Unlabelled, this
+      # one-shot pod gets ZERO egress (no DNS, no :5432) and the DB rejects it — pg_restore can't reach
+      # miniflux-db. The miniflux-backup label satisfies NP4 egress (DNS+5432) + NP3 db-ingress.
+      labels:
+        app.kubernetes.io/name: miniflux-backup
     spec:
       restartPolicy: Never
       containers:
