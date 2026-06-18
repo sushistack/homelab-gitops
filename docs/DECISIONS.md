@@ -2,6 +2,43 @@
 
 Running log of load-bearing decisions. One line each; link the story.
 
+## Disaster Recovery — Gate 0 (Story 2.6)
+
+Affected services: the whole platform (the recovery chain underneath every service).
+Exposure note: safe to show — the chain, the ≤1-step claim, and the result. No key
+material, IP, or `*.<zone>` host appears; Plane 0 secrets stay off-repo.
+
+- **Gate 0 PASSED on 2026-06-18 — the full bare-metal chain was proven once on
+  throwaway dummy data.** VM re-provision → k3s re-bootstrap (etcd quorum=3) →
+  sealing-key restore → ArgoCD root-app → Longhorn PV restore from R2 →
+  **byte-level integrity (sha256) PASS**, and the restored sealing key
+  (`adopted`, not regenerated) decrypted a pre-loss SealedSecret again. Runbook:
+  [`docs/runbooks/bare-metal-recovery.md`](runbooks/bare-metal-recovery.md). (FR20, FR21, FR23, NFR6, NFR7)
+- **No stateful service may cut over (Epic 4) until this chain has passed — it now has.**
+  This was the gate; it is open. Future drills are **PV-restore-only, quarterly** —
+  never the full bare-metal teardown again, because after Epic 4 the cluster holds
+  real data. The one safe window for the destructive full drill was Gate 0 (no real
+  data yet). (AR10)
+- **Gate 0 scope = infra + Longhorn PV + the cluster-bound sealing key ONLY.** The
+  data leg was a Longhorn-native backup of a *dummy* PVC to R2 (file-class,
+  crash-consistent) — **no dependency on the per-service quiesce/backup actor**
+  (that is Epic 4, a different mechanism for app-consistent dumps). This overrides
+  the architecture's "Gate 0 depends on the quiesce actor" line. (AR10, AR12, epics Story 2.6 AC3)
+- **Manual-step count, honest (NFR7):** steady-state cold boot = **1 step**
+  (`kubectl apply -f bootstrap/root-app.yaml`). Full bare-metal = **2 load-bearing
+  manual steps** — the sealing-key restore must precede root-app, and is
+  deliberately NOT automated (automating it would put the age identity on-cluster,
+  defeating the OOB Plane-0 design). VM provision + Ansible are scripted. (NFR7)
+- **Sealing-key export is age key-based, not passphrase.** Re-exported during the
+  drill encrypted to the operator's existing age recipient (`age1chmmudv…`), so
+  restore is non-interactive (`age -d -i keys.txt`) and round-trip-verified against
+  the live key before teardown. The old passphrase-based export is superseded.
+  The age **identity file** is now a Plane 0 asset — keep it off-host + backed up. (AR12)
+- **Nodes renamed `k3s-2a-1/2/3` → `k3s-cp-1/2/3`** during the rebuild. All three
+  stay **control-plane + etcd + worker** (`cp` = control-plane, quorum=3): a
+  descriptive `control-plane`/`worker-N` split would imply quorum=1 and lose
+  control-plane HA at 3-node scale. (AR9)
+
 ## Secrets / Sealed Secrets (Story 2.3)
 
 - **Sealing key is cluster-bound → Phase 1 sealed assets are undecryptable here.** Every

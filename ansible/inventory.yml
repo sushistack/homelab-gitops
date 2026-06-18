@@ -11,13 +11,13 @@ all:
   children:
     k3s_init:
       hosts:
-        k3s-2a-1:
+        k3s-cp-1:
           ansible_host: ${SECRET:IP_CLUSTER_NODE_A}
     k3s_join:
       hosts:
-        k3s-2a-2:
+        k3s-cp-2:
           ansible_host: ${SECRET:IP_CLUSTER_NODE_B}
-        k3s-2a-3:
+        k3s-cp-3:
           ansible_host: ${SECRET:IP_CLUSTER_NODE_C}
   vars:
     ansible_user: root
