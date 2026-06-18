@@ -110,10 +110,9 @@
       # k3s-native, outside-ArgoCD path (matches the "Traefik controller stays k3s-owned" boundary).
       # k3s's addon controller watches this dir and (re)applies the HelmChartConfig, which merge-
       # patches the traefik HelmChart values. Idempotent: re-running just re-copies the same file.
-      # CAVEAT: this play targets the cluster-init server (node 1) ONLY. The HelmChartConfig is a
-      # cluster-scoped CR so one copy suffices while node 1 lives — but the file is NOT on nodes 2/3.
-      # If the cluster is ever re-bootstrapped from another node, re-run this play, or the anytype
-      # TCP/UDP entryPoints silently vanish on the next traefik reconcile.
+      # The SAME drop runs on the join nodes (Play 2) so the file survives a re-bootstrap from ANY
+      # server node — otherwise the anytype TCP/UDP entryPoints would silently vanish on the next
+      # traefik reconcile if node 1 is not the bootstrapping node.
       ansible.builtin.copy:
         src: "{{ playbook_dir }}/../infra/traefik/traefik-helmchartconfig.yaml"
         dest: /var/lib/rancher/k3s/server/manifests/traefik-config.yaml
@@ -165,6 +164,15 @@
       retries: 18
       delay: 10
       until: k3s_join_ready.rc == 0
+
+    - name: Drop the Traefik entryPoints HelmChartConfig on the join nodes too (Story 4.4)
+      # Same file as Play 1 on node 1. k3s's deploy controller reads the manifests dir of whichever
+      # server node it runs on, so the HelmChartConfig must be present on ALL servers — otherwise a
+      # re-bootstrap from node 2/3 drops the anytype TCP/UDP entryPoints silently. Idempotent.
+      ansible.builtin.copy:
+        src: "{{ playbook_dir }}/../infra/traefik/traefik-helmchartconfig.yaml"
+        dest: /var/lib/rancher/k3s/server/manifests/traefik-config.yaml
+        mode: '0644'
 
 - name: Play 3 — ArgoCD + bootstrap creds (node 1 only, installed ONCE)
   hosts: k3s_init
