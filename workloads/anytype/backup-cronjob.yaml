@@ -25,6 +25,11 @@ metadata:
 spec:
   schedule: "30 */6 * * *"          # ≤6h (NFR5); offset from heart's :40 so they don't scale-flap together
   timeZone: Asia/Seoul
+  # PARKED until cutover. Pre-ingest, a tick would (a) tar an EMPTY /data and (b) the EXIT trap would
+  # scale the app to replicas=1 on that empty PVC → anysync mints a NEW identity (the orphan-clients
+  # disaster). Backing up a parked, dataless service is pointless anyway. Operator flips to false (or
+  # removes this line) AFTER ingest + identity-verify, when the Deployments are at replicas=1.
+  suspend: true
   concurrencyPolicy: Forbid
   startingDeadlineSeconds: 300
   successfulJobsHistoryLimit: 3
@@ -94,6 +99,11 @@ metadata:
 spec:
   schedule: "40 */6 * * *"
   timeZone: Asia/Seoul
+  # PARKED until cutover. Pre-ingest, a tick would (a) tar an EMPTY /data and (b) the EXIT trap would
+  # scale the app to replicas=1 on that empty PVC → anysync mints a NEW identity (the orphan-clients
+  # disaster). Backing up a parked, dataless service is pointless anyway. Operator flips to false (or
+  # removes this line) AFTER ingest + identity-verify, when the Deployments are at replicas=1.
+  suspend: true
   concurrencyPolicy: Forbid
   startingDeadlineSeconds: 300
   successfulJobsHistoryLimit: 3

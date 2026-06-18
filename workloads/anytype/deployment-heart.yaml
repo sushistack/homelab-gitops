@@ -32,10 +32,11 @@ spec:
       containers:
         - name: anytype-heart
           # PRIVATE custom build, rebuilt by home.server CD; the gitops repo only CONSUMES a pinned
-          # digest (AR29 — never :latest). Cannot be resolved from this repo (registry needs auth).
-          # ⚠️ PIN AT CUTOVER from the live container (the copy-not-upgrade rule applies to heart too):
-          #   docker inspect --format '{{.Image}}' anytype-heart
-          image: ghcr.io/sushistack/home.server/anytype-heart@sha256:REPLACE_AT_CUTOVER
+          # digest (AR29 — never :latest). Pull cred = the ghcr-sushistack SealedSecret.
+          # Pinned 2026-06-18 to the current registry :latest digest (resolved via GHCR auth, since
+          # Compose itself runs floating :latest — there is no stable "live" digest to copy). If a
+          # specific build must be preserved, re-pin from `docker inspect --format '{{.Image}}' anytype-heart`.
+          image: ghcr.io/sushistack/home.server/anytype-heart@sha256:8f1de0ea70e34ef976b98a2cbdc9622fd7ee24c713c724d301500a066f8aac73
           ports:
             - name: rest
               containerPort: 31009
