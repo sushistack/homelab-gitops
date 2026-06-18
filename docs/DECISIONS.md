@@ -20,9 +20,9 @@ Running log of load-bearing decisions. One line each; link the story.
 - 2026-06-19 | **Project DoD audited ([DONE.md](DONE.md)).** All 9 application services + platform on
   ArgoCD Synced/Healthy (only the `argocd` self-app is intentionally OutOfSync), Gate 0 + per-service
   verified restores, ADRs linked (CI green), exposure gate green, NFR15a verified. **One open DoD line:
-  the self-heal demo clip (clip 2) is recording-pending (operator-deferred, Story 3.3).** DONE is
-  declared **subject to the operator accepting that deferral** (AC4: optional polish must not block
-  DONE). **Epic 5 / Phase 3 is optional, post-DONE; Compose is PARKED not retired (retire = Story 5.4)
+  the self-heal demo clip (clip 2) is recording-pending (operator-deferred, Story 3.3).** **PROJECT
+  DONE declared 2026-06-19 — operator accepted the clip-2 deferral as non-blocking** (AC4: optional
+  polish must not block DONE). **Epic 5 / Phase 3 is optional, post-DONE; Compose is PARKED not retired (retire = Story 5.4)
   — the dual-run rollback net stays until then.**
 - 2026-06-19 | ⚠️ **Found (operator follow-up): `argocd-render-tokens` Secret has a pre-existing
   newline-corruption** — `CLOUDFLARE_DNS01_TOKEN`'s value runs into `DOMAIN_NTFY=notify.eli.kr` with no

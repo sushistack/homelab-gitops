@@ -2,6 +2,11 @@
 
 > Story 4.8 capstone. Each box is evidenced, not asserted (epics.md Story 4.8 AC3 / PRD DoD).
 > Audited 2026-06-19 after the Vaultwarden cutover (the last stateful service).
+>
+> ## ✅ PROJECT DONE — declared 2026-06-19
+> All engineering DoD boxes are met with evidence. The one polish item — the self-heal demo clip
+> (clip 2) — is **operator-accepted as deferred** (AC4: optional polish must not block DONE). The
+> migration from a single Docker Compose host to a GitOps-reconciled k3s cluster is **complete**.
 
 ## (a) All in-scope services run via ArgoCD (`Synced`/`Healthy`, 1 Application ↔ 1 namespace)
 
@@ -42,7 +47,7 @@ Cross-cutting ADR-0001..0007 + service ADRs [ADR-0008 (miniflux)](adr/ADR-0008-m
   is proven live (pod self-heal to replica count; node-drain reschedule + Longhorn re-attach ~12s;
   health-gated bad rollout held), but the screen-recorded clip was **deferred per operator**
   (Story 3.3 decision; tracked in [deferred-work.md](../_bmad-output/implementation-artifacts/deferred-work.md)).
-  **This is the one open DoD line item.**
+  **Operator-accepted as deferred 2026-06-19 (non-blocking, post-DONE) — does not hold DONE.**
 
 ## (e) Exposure gate passes (full-history scan CI + human gate)
 
@@ -56,18 +61,16 @@ backup-restore-Job-failure, proven by a deliberate failure ([ops-alerts.md](runb
 
 ---
 
-## Declaration
+## Declaration — DONE (2026-06-19)
 
-**Engineering scope is complete: all 9 application services + platform run on GitOps-reconciled
-k3s, every stateful service has a verified restore, Gate 0 passed, exposure gate + NFR15a green,
-ADRs linked.** The Vaultwarden cutover (the last, CRITICAL service) completed LIVE 2026-06-19 with
-RPO=0.
+**The project is DONE.** All 9 application services + platform run on GitOps-reconciled k3s, every
+stateful service has a verified restore, Gate 0 passed, exposure gate + NFR15a green, ADRs linked.
+The Vaultwarden cutover (the last, CRITICAL service) completed LIVE 2026-06-19 with RPO=0.
 
-**The single open DoD item is (d): the self-heal demo clip (clip 2) is not yet recorded** — its
-behavior is proven live but the recording was operator-deferred. **Project DONE is declared subject
-to the operator accepting that deferral** (consistent with AC4: optional polish must not become the
-reason the project never ends), **or** held until clip 2 is published. Operator decision recorded in
-[DECISIONS.md](DECISIONS.md).
+The one polish item — (d) the self-heal demo clip (clip 2) — was **operator-accepted as deferred**
+on 2026-06-19 (its behavior is proven live; only the screen-recording remains, tracked as
+post-DONE). Per AC4, optional polish must not become the reason the project never ends, so it does
+**not** block DONE. Decision recorded in [DECISIONS.md](DECISIONS.md).
 
 ## (AC4) Phase 3 / Epic 5 is optional, post-DONE
 
