@@ -54,6 +54,10 @@ by data class (this is the only step that differs per service):
 > get **no scale-to-0 and no Role** (architecture.md 636–640). Only file-class services that can't
 > copy hot get a brief quiesce.
 
+> **Note — cutover copy ≠ ongoing R2 backup.** The one-time cutover moves *all* of a service's data
+> (incl. its media) to the Longhorn PVC. The recurring R2 backup CronJob is narrower — see
+> "Backup scope" below: bulk media is **not** shipped to R2.
+
 ### Step 3 — Ingest the consistent copy into the Longhorn PVC (one-shot Job + rsync)
 Apply the **throwaway** ingest Job (`workloads/<service>/_cutover/ingest-job.yaml`) — it mounts the
 `<service>-data` PVC, receives the consistent copy from Step 2 (`kubectl cp` / rsync into the PVC),
@@ -111,6 +115,26 @@ onto the pod's node via `podAffinity` (`app.kubernetes.io/name: <service>`,
 `topologyKey: kubernetes.io/hostname`), mount the PVC **read-write** (online `.backup` needs the
 `-wal`/`-shm` files), and write the dump to an `emptyDir` `/scratch` — **never** back onto `/data`.
 Do **not** scale the app to 0. (architecture.md 636–640; AR14/AR17)
+
+---
+
+## Backup scope — what goes to R2 (and what does NOT)
+
+The per-service backup CronJob ships only the **small, durable, hard-to-reproduce state** to R2 —
+databases + config (ntfy `auth.db`, navidrome `navidrome.db`, miniflux `pg_dump`, karakeep's DB).
+
+**Bulk media is EXCLUDED from R2 by design** — music, video, photos, large bookmarked assets are
+**not** pushed to the cloud:
+- shipping 100s of GB every cycle is slow + costly, and the media is usually reproducible or
+  sourced elsewhere;
+- it stays protected by **Longhorn replication** (multi-node copies) for availability;
+- if it genuinely needs a backup, that's a **separate, local/cold, low-frequency** job — never the
+  ≤6 h per-service R2 CronJob.
+
+Mechanism: the CronJob only mounts/dumps the **DB + config** paths and simply does not touch the
+media volume. e.g. **navidrome (4.3)** backs up `navidrome.db` (playlists / play counts / users /
+annotations) to R2 and leaves the music library on Longhorn. The dedicated services bucket
+(`homelab-k3s-services-backup`) therefore stays tiny — DB dumps, not media.
 
 ---
 
