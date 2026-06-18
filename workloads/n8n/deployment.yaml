@@ -1,0 +1,78 @@
+# Story 4.7 — n8n on k3s (ports configs/docker/docker-compose.yml:5-44).
+# SQLite on an RWO volume: strategy MUST be Recreate (never RollingUpdate — two pods sharing one WAL
+# is the named anti-pattern, AC5/AR14) and terminationGracePeriodSeconds 30 ports the Compose
+# stop_grace_period: 30s WAL-checkpoint flush. Same shape as the ntfy/navidrome reference.
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: n8n
+spec:
+  replicas: 1
+  # Recreate -> old pod dies before the new one starts, so a stuck rollout is a full outage with no
+  # healthy fallback. 120s (vs the 600s default) surfaces ArgoCD Degraded fast for a quick git revert.
+  progressDeadlineSeconds: 120
+  strategy:
+    type: Recreate
+  # Hand-written selector (kept out of kustomize labels) so it stays immutable across re-applies.
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: n8n
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: n8n
+    spec:
+      terminationGracePeriodSeconds: 30   # WAL checkpoint flush on shutdown (= Compose stop_grace_period)
+      # n8nio/n8n runs as the non-root `node` user (uid/gid 1000); fsGroup makes the kubelet chown the
+      # freshly-provisioned RWO volume to gid 1000 so n8n can write ~/.n8n. (deluan/navidrome runs as
+      # root so it didn't need this — n8n does.) The cutover ingest preserves uid 1000 ownership too.
+      securityContext:
+        runAsUser: 1000
+        runAsGroup: 1000
+        fsGroup: 1000
+      containers:
+        - name: n8n
+          # Already pinned to 2.23.4 in Compose — KEEP IT (AR29 carve-out): a copy-not-upgrade cutover
+          # must not trigger a surprise n8n DB schema migration. Upgrade = bump this tag via PR (revertible).
+          image: n8nio/n8n:2.23.4
+          ports:
+            - containerPort: 5678
+          # envFrom ONLY (NOT per-key valueFrom / inline env: ${VAR}) — avoids the empty-string overwrite
+          # trap the Compose host-side interpolation warns of. Secret first so the encryption key is set
+          # before the non-secret config; neither overlaps a key anyway.
+          envFrom:
+            - secretRef:
+                name: n8n-secrets      # N8N_ENCRYPTION_KEY (Reconciliation 1)
+            - configMapRef:
+                name: n8n-config
+          resources:
+            requests:
+              cpu: 100m
+              memory: 256Mi    # Node.js — above the 64Mi default tier
+            limits:
+              memory: 512Mi    # memory limit only — no cpu limit (avoids CFS throttling on bursty runs)
+          # Ports the Compose healthcheck `wget --spider http://localhost:5678/healthz` (AR31).
+          # startupProbe holds liveness back while n8n boots + opens SQLite (+ WAL replay after an unclean
+          # stop) — up to 30*5s = 150s; without it the default liveness window can kill the pod mid-boot
+          # and crash-loop it (the DB-class trap the golden path warns of).
+          startupProbe:
+            httpGet:
+              path: /healthz
+              port: 5678
+            failureThreshold: 30
+            periodSeconds: 5
+          readinessProbe:
+            httpGet:
+              path: /healthz
+              port: 5678
+          livenessProbe:
+            httpGet:
+              path: /healthz
+              port: 5678
+          volumeMounts:
+            - name: data
+              mountPath: /home/node/.n8n   # the whole ~/.n8n: database.sqlite, config, nodes, storage
+      volumes:
+        - name: data
+          persistentVolumeClaim:
+            claimName: n8n-data

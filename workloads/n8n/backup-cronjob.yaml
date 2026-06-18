@@ -1,0 +1,83 @@
+# Story 4.7 — n8n backup actor (AC4). STEADY-STATE backup: online `sqlite3 .backup` of database.sqlite
+# -> R2. This is the ONGOING ≤6h backup and is distinct from the one-time cutover write-freeze
+# (Reconciliation 2): steady-state RPO is ≤6h (not 0), so an online lock-safe `.backup` of the LIVE
+# pod is correct here — NO scale-down. Replaces the Compose offen `n8n-backup` sidecar
+# (docker-compose.yml:618-641): same 30 */6 cadence, 30-day retention, n8n- prefix. Copied from the
+# navidrome (4.3) SQLite-class reference with only the DB path + R2 prefix changed.
+#
+# RWO multi-mount trap (Reconciliation 3): n8n-data is RWO -> Longhorn attaches to one node. This Job
+# co-schedules onto the n8n pod's node via podAffinity and mounts the PVC read-write (online .backup
+# needs the -wal/-shm files), writing the dump to an emptyDir /scratch — NEVER back onto the volume.
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: n8n-backup
+spec:
+  schedule: "30 */6 * * *"         # = the Compose N8N_BACKUP_CRON; ≤6h NFR5 cadence
+  timeZone: Asia/Seoul
+  concurrencyPolicy: Forbid
+  # A hung pod would otherwise run forever and, with Forbid, silently suppress every later backup.
+  # activeDeadlineSeconds kills the job (-> Failed, visible); a missed schedule is only honored within
+  # startingDeadlineSeconds.
+  startingDeadlineSeconds: 300
+  successfulJobsHistoryLimit: 3
+  failedJobsHistoryLimit: 3
+  jobTemplate:
+    spec:
+      activeDeadlineSeconds: 900       # ~15 min ceiling: apk + sqlite .backup + rclone copy
+      template:
+        metadata:
+          # NOT `app.kubernetes.io/name: n8n` — that is the Service selector, and this pod has no
+          # listener, so sharing it would add a dead endpoint to the n8n Service every run.
+          labels:
+            app.kubernetes.io/name: n8n-backup
+            app.kubernetes.io/component: backup
+        spec:
+          restartPolicy: OnFailure
+          affinity:
+            podAffinity:
+              requiredDuringSchedulingIgnoredDuringExecution:
+                - labelSelector:
+                    matchLabels:
+                      app.kubernetes.io/name: n8n
+                  topologyKey: kubernetes.io/hostname   # land on the node holding the RWO data volume
+          containers:
+            - name: backup
+              # sqlite3 + rclone in one small image. // ponytail: runtime `apk add` floats the tool
+              # versions and needs egress to the alpine CDN — fine under today's allow-all; when the
+              # network-baseline default-deny lands, allow egress to the CDN + R2, or bake a pinned
+              # sqlite+rclone image (upgrade path). Pin alpine by digest in that same sweep.
+              image: alpine:3.20
+              command:
+                - /bin/sh
+                - -ceu
+                - |
+                  apk add --no-cache sqlite rclone ca-certificates tzdata
+                  ts=$(date +%Y-%m-%dT%H-%M-%S)
+                  # online, lock-safe — source pod stays live (no scale-down). DB-class: only
+                  # database.sqlite is dumped (the encryption key in `config` is sealed separately +
+                  # is in the PVC; the cutover carries the full tree, but the recurring backup is the DB).
+                  sqlite3 /data/database.sqlite ".backup /scratch/database.sqlite"
+                  tar -C /scratch -czf "/scratch/n8n-${ts}.tar.gz" database.sqlite
+                  rclone copy "/scratch/n8n-${ts}.tar.gz" "r2:homelab-k3s-services-backup/n8n/"
+                  # ~30-day retention (offen semantics) + n8n- prefix preserved.
+                  rclone delete --min-age 720h "r2:homelab-k3s-services-backup/n8n/" || true
+              env:
+                # bucket-scoped token (Object R&W) can't ListBuckets/CreateBucket -> rclone's default
+                # bucket probe 403s; no_check_bucket skips it and PUTs straight to the existing bucket.
+                - name: RCLONE_CONFIG_R2_NO_CHECK_BUCKET
+                  value: "true"
+              envFrom:
+                - secretRef:
+                    name: n8n-backup-r2   # per-ns SealedSecret: R2 creds + rclone remote
+              volumeMounts:
+                - name: data
+                  mountPath: /data          # RW: online .backup needs -wal/-shm (Reconciliation 3)
+                - name: scratch
+                  mountPath: /scratch
+          volumes:
+            - name: data
+              persistentVolumeClaim:
+                claimName: n8n-data
+            - name: scratch
+              emptyDir: {}

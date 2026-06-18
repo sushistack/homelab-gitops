@@ -54,6 +54,8 @@ by the [`adr-link-check`](.github/workflows/adr-link-check.yml) CI gate.
 - [ADR-0006 — One public-default repo, render-time tokens + a two-layer gate](docs/adr/ADR-0006-exposure-model.md)
 - [ADR-0007 — Self-scaffolded ArgoCD app-of-apps (bounded), not an adopted template](docs/adr/ADR-0007-gitops-tool.md)
 - [ADR-0008 — Miniflux cutover: Postgres logical dump/restore, not a volume snapshot](docs/adr/ADR-0008-miniflux-postgres-logical-dump.md)
+- [ADR-0009 — Vaultwarden cutover: CRITICAL, last, with a Bitwarden-Cloud availability fallback](docs/adr/ADR-0009-vaultwarden-critical-last.md)
+- [ADR-0010 — n8n cutover: write-freeze + parallel run, encryption key sealed explicitly](docs/adr/ADR-0010-n8n-write-freeze-cutover.md)
 
 One-line decision log: [`docs/DECISIONS.md`](docs/DECISIONS.md).
 

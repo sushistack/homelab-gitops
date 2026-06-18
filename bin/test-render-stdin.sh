@@ -49,9 +49,13 @@ check crlf "$(printf 'H[${SECRET:DOMAIN_DRAW}]' | RENDER_TOKENS=/tmp/_rt.env sh 
 printf 'DOMAIN_DRAW=draw.example.test   \n' > /tmp/_rt.env
 check trailing-ws "$(printf 'H[${SECRET:DOMAIN_DRAW}]' | RENDER_TOKENS=/tmp/_rt.env sh "$SCRIPT")" 'H[draw.example.test]'
 
-# non-[A-Z_] key skipped -> token stays unresolved -> fail closed
+# non-[A-Z0-9_] key (lowercase/hyphen) skipped -> token stays unresolved -> fail closed
 printf 'bad-key=x\n' > /tmp/_rt.env
 expect_fail bad-key-name '${SECRET:bad-key}' /tmp/_rt.env
+
+# uppercase name WITH a digit IS valid (real service: n8n -> DOMAIN_N8N)
+printf 'DOMAIN_N8N=n8n.example.test\n' > /tmp/_rt.env
+check digit-name "$(printf 'Host(`${SECRET:DOMAIN_N8N}`)' | RENDER_TOKENS=/tmp/_rt.env sh "$SCRIPT")" 'Host(`n8n.example.test`)'
 
 # token-free manifest passes through even with no tokens file
 check token-free "$(printf 'plain: yaml\n' | RENDER_TOKENS=/nonexistent sh "$SCRIPT")" 'plain: yaml'

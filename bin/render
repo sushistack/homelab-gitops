@@ -14,8 +14,9 @@ import pathlib
 
 TOKENS = pathlib.Path("internal/tokens.env")
 OUTDIR = pathlib.Path("rendered")
-TOKEN_RE = re.compile(r"\$\{SECRET:([A-Z_]+)\}")
-# Any ${SECRET:...} TOKEN_RE did NOT consume (bad NAME: lowercase/digit/hyphen) is a typo,
+TOKEN_RE = re.compile(r"\$\{SECRET:([A-Z0-9_]+)\}")
+# NAME allows digits (uppercase + digit + _) so real service names like n8n -> DOMAIN_N8N work.
+# Any ${SECRET:...} TOKEN_RE did NOT consume (bad NAME: lowercase/hyphen) is a typo,
 # not a real value — catch it instead of letting a literal token through to output.
 STRAY_RE = re.compile(r"\$\{SECRET:[^}]*\}")
 
@@ -70,7 +71,7 @@ def main(argv):
             sys.exit(f"{inp}: no value for {sorted(set(missing))}")
         stray = STRAY_RE.findall(out)
         if stray:
-            sys.exit(f"{inp}: malformed token(s) (NAME must be [A-Z_]+): {sorted(set(stray))}")
+            sys.exit(f"{inp}: malformed token(s) (NAME must be [A-Z0-9_]+): {sorted(set(stray))}")
         dest.parent.mkdir(parents=True, exist_ok=True)
         dest.write_text(out)
         print(dest)
@@ -87,9 +88,12 @@ def selftest():
     # colon syntax: a plain $VAR / ${VAR} (envsubst-style) is left untouched
     out, _ = render("$HOST_PROXMOX ${HOST_PROXMOX}", vals)
     assert out == "$HOST_PROXMOX ${HOST_PROXMOX}", out
-    # a malformed token NAME (lowercase/digit/hyphen) is left literal -> STRAY_RE flags it
-    out, _ = render("${SECRET:ip1} ${SECRET:HOST_PROXMOX}", vals)
-    assert STRAY_RE.findall(out) == ["${SECRET:ip1}"], out
+    # a malformed token NAME (lowercase/hyphen) is left literal -> STRAY_RE flags it
+    out, _ = render("${SECRET:ip-1} ${SECRET:HOST_PROXMOX}", vals)
+    assert STRAY_RE.findall(out) == ["${SECRET:ip-1}"], out
+    # an uppercase NAME with a digit IS valid (real service: n8n -> DOMAIN_N8N)
+    out, missing = render("${SECRET:DOMAIN_N8N}", {"DOMAIN_N8N": "n8n.example"})
+    assert out == "n8n.example" and missing == [], (out, missing)
     # output path is forced under rendered/
     assert dest_for(pathlib.Path("infra/x.yaml")) == (OUTDIR / "infra/x.yaml").resolve()
     # absolute path and `..` escape are rejected, not written outside rendered/

@@ -24,6 +24,27 @@ Running log of load-bearing decisions. One line each; link the story.
   decommissioned** (rollback = flip the stream forward back; Story 5.4 does the functional retire).
   | [runbook](runbooks/anytype.md)
 
+## Karakeep cutover — multi-component with east-west isolation (Story 4.5)
+
+- 2026-06-19 | karakeep migrated to k3s as **one logical service / FOUR components / one namespace**
+  via the **workloads ApplicationSet** (HTTP, no TCP/UDP exception — unlike anytype). **East-west
+  isolation (AC2) reproduces the Compose `karakeep-internal` net** WITHOUT a blanket same-ns allow
+  (the Reconciliation 3 trap — NetworkPolicies are additive): chrome (unauthenticated CDP :9222) and
+  meili (master-key index :7700) each get a **targeted ingress policy admitting `karakeep-web` ALONE**,
+  so the in-ns bridge + flat network are denied; web ingress is left open (Traefik) per the miniflux
+  precedent. **Hybrid backup (AC1):** web `db.db` AND the bridge's **second SQLite `bridge.sqlite`
+  (the dedup map — Reconciliation 2; losing it re-emits duplicate Anytype objects)** are dumped via
+  online `sqlite3 .backup` → R2 (two CronJobs, RWO podAffinity); **meili is rebuildable** (fresh PVC,
+  reindex — no dump); `assets/` ride Longhorn replication. Bridge perms via **initContainer chown**
+  (AC3, not a cross-pod dep); private bridge image → `ghcr-sushistack` imagePullSecret; all four
+  images pinned by digest. Host is **keep.\*, NOT karakeep.\*** (Reconciliation 4 — NextAuth cookie
+  domain). Bridge → `anytype-heart` cross-ns (Reconciliation 1, anytype on k3s since 4.4); bridge is
+  optional for the core ACs. **Manifests + NetworkPolicy + sealed secrets + runbook authored,
+  built, gitleaks-clean & server-dry-run-validated; the LIVE quiesce→copy→verify→flip is operator-run**
+  (≤10min window, `_cutover/ingest-job.yaml`). Compose karakeep (5 containers) **PARKED not
+  decommissioned** (rollback = flip the `${SECRET:DOMAIN_KEEP}` cloudflared route back to NPM).
+  | [runbook](runbooks/karakeep.md)
+
 ## Miniflux cutover — Postgres logical dump (Story 4.6)
 
 - 2026-06-18 | miniflux migrated to k3s as the **one Postgres service** — backup/restore + cutover
@@ -46,6 +67,29 @@ Running log of load-bearing decisions. One line each; link the story.
   miniflux + miniflux-db **PARKED** (still live = the data fallback; operator retired the NPM proxy
   host for rss, so the tunnel-only rollback layer is intentionally dropped — full decommission rides
   Epic 5 Story 5.4). | [ADR-0008](adr/ADR-0008-miniflux-postgres-logical-dump.md)
+
+## n8n cutover — CRITICAL: write-freeze + parallel run, encryption key sealed (Story 4.7)
+
+- 2026-06-19 | n8n migrated to k3s as the **first CRITICAL cutover** (vaultwarden 4.8 follows the same
+  procedure). Single-writer **SQLite** (`database.sqlite`), so it uses the file-class ingest machine
+  (copy → `n8n-data` RWO PVC via `_cutover/ingest-job.yaml`), **but** the cutover quiesce is a
+  **WRITE-FREEZE** — Compose n8n is **stopped** for the copy→verify→flip window (RPO=0), NOT an online
+  `.backup` of a live writer (Reconciliation 2; ADR-0010). Learning-first explicitly suspended (AC1).
+  The **steady-state `n8n-backup` CronJob stays an online `sqlite3 .backup` with no scale-down**
+  (≤6h RPO) — same SQLite-class actor as navidrome (podAffinity to the RWO node, emptyDir scratch,
+  `rclone`→`r2:homelab-k3s-services-backup/n8n/`, 30-day retention, `n8n-` prefix). **🔑 The
+  encryption key is the disaster gate:** n8n auto-generated `N8N_ENCRYPTION_KEY` into the Compose
+  `data/n8n/config` file (NOT `.env`) — it decrypts every `credentials_entity` row; it is sealed
+  **explicitly** in `n8n-secrets` (env wins, deterministic, survives a fresh PVC) and a credential
+  must **decrypt** on k3s before the flip (AR24 documented exception — rotation re-seals from `config`,
+  not `.env`). Dropped the Compose `/var/run/docker.sock` mount (privilege escalation in k3s;
+  Reconciliation 4) + homepage/offen labels. Public host tokenized `${SECRET:DOMAIN_N8N}`; per-host
+  prod cert `n8n-tls`. **Manifests + sealed secrets (encryption key + R2 cred, sealed against the live
+  cluster key) + runbook + ADR authored & validated** (`kubectl kustomize` 12 objects, `bin/render`
+  resolves the token, render selftest extended for digit-bearing names); **the LIVE write-freeze +
+  ingest + decrypt-verify + cloudflared flip + verified restore are operator-run** (≤10-min window).
+  Compose n8n + n8n-backup **PARKED not decommissioned** (rollback = flip cloudflared back to NPM;
+  functional retire rides Epic 5 Story 5.4). | [ADR-0010](adr/ADR-0010-n8n-write-freeze-cutover.md)
 
 ## ytdlp-api migration (Story 3.1)
 

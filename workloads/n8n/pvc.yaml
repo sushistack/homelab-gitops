@@ -1,0 +1,20 @@
+# Story 4.7 — n8n's single durable store. The WHOLE ~/.n8n dir lives on ONE RWO PVC:
+#   database.sqlite (+ -wal/-shm)  — workflows, credentials_entity, executions (DB-class, dumped to R2)
+#   config                         — the auto-generated encryption key (now ALSO sealed explicitly;
+#                                    see Reconciliation 1 in the story — env wins, this file is backup)
+#   nodes/ storage/ settings       — installed community nodes, binary data, instance settings
+# RWO (Longhorn single-node attach) + Prune=false + Retain so ArgoCD/Longhorn never delete the real
+# data on PVC removal (AR15). Mounted at /home/node/.n8n (the n8n home dir).
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: n8n-data
+  annotations:
+    argocd.argoproj.io/sync-options: Prune=false
+spec:
+  accessModes:
+    - ReadWriteOnce
+  storageClassName: longhorn
+  resources:
+    requests:
+      storage: 1Gi   # database.sqlite ~745 KB today + nodes/binaryData headroom; grow via PR if it climbs

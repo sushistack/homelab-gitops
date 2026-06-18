@@ -1,0 +1,8 @@
+# Story 4.7 — n8n cutover (CRITICAL: write-freeze + parallel run). Workflow-automation engine:
+# SQLite single-writer store (database.sqlite, DB-class, dumped to R2) + an irreplaceable
+# encryption key that decrypts every saved credential (sealed explicitly — see sealedsecret.yaml).
+# One service = one namespace = one ArgoCD Application (the workloads ApplicationSet picks this up).
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: n8n

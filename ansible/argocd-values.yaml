@@ -88,8 +88,8 @@ extraObjects:
         # In-cluster twin of bin/render (the argocd image has no python3). Substitute
         # ${SECRET:NAME} from $RENDER_TOKENS (a KEY=VALUE file) into stdin -> stdout, and
         # FAIL on any unresolved token so a broken literal never reaches the cluster.
-        # Parity with bin/render: only [A-Z_]+ names; empty/absent value = unresolved (fail
-        # closed); values trimmed (whitespace + CR for CRLF files); sed metachars escaped.
+        # Parity with bin/render: only [A-Z0-9_]+ names (digits allowed for n8n -> DOMAIN_N8N);
+        # empty/absent value = unresolved (fail closed); values trimmed; sed metachars escaped.
         # Checked by bin/test-render-stdin.sh.
         set -eu
         tokens="${RENDER_TOKENS:-/render/tokens/tokens.env}"
@@ -97,8 +97,8 @@ extraObjects:
         if [ -f "$tokens" ]; then
           while IFS='=' read -r k v || [ -n "$k" ]; do
             k=$(printf '%s' "$k" | tr -d '[:space:]')
-            # skip blanks, comments, and any non-[A-Z_] name (matches bin/render TOKEN_RE)
-            case "$k" in ''|\#*|*[!A-Z_]*) continue ;; esac
+            # skip blanks, comments, and any non-[A-Z0-9_] name (matches bin/render TOKEN_RE)
+            case "$k" in ''|\#*|*[!A-Z0-9_]*) continue ;; esac
             # trim surrounding whitespace + CR, like Python str.strip()
             v=$(printf '%s' "$v" | sed 's/^[[:space:]]*//; s/[[:space:]]*$//')
             # empty value = unresolved: leave the token so the stray check below fails it
