@@ -35,9 +35,10 @@ spec:
   template:
     spec:
       restartPolicy: Never
-      # chown both dirs to uid 1000 after the copy lands so the bridge (uid 1000) — and karakeep-web
-      # (also non-root) — can open their SQLite. `kubectl cp` writes as the pod's user; this mirrors
-      # the steady-state initContainer chown so the apps don't EACCES on first boot.
+      # NOTE: this Job does NOT chown — it only parks the PVCs so `kubectl cp` can land the data.
+      # Ownership is fixed afterwards by the steady-state bridge initContainer (deployment-bridge.yaml
+      # chowns /data -> uid 1000 on boot, since the bridge runs as uid 1000); karakeep-web runs as root
+      # so its copied files need no chown. `kubectl cp` flows apiserver->kubelet, not pod egress.
       containers:
         - name: ingest
           image: alpine:3.20   # only needs a shell + sleep for `kubectl cp`; pin by digest if desired
