@@ -29,7 +29,7 @@ spec:
   # scale the app to replicas=1 on that empty PVC → anysync mints a NEW identity (the orphan-clients
   # disaster). Backing up a parked, dataless service is pointless anyway. Operator flips to false (or
   # removes this line) AFTER ingest + identity-verify, when the Deployments are at replicas=1.
-  suspend: true
+  suspend: false
   concurrencyPolicy: Forbid
   startingDeadlineSeconds: 300
   successfulJobsHistoryLimit: 3
@@ -103,7 +103,7 @@ spec:
   # scale the app to replicas=1 on that empty PVC → anysync mints a NEW identity (the orphan-clients
   # disaster). Backing up a parked, dataless service is pointless anyway. Operator flips to false (or
   # removes this line) AFTER ingest + identity-verify, when the Deployments are at replicas=1.
-  suspend: true
+  suspend: false
   concurrencyPolicy: Forbid
   startingDeadlineSeconds: 300
   successfulJobsHistoryLimit: 3
