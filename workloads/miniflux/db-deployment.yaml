@@ -50,6 +50,14 @@ spec:
             limits:
               memory: 512Mi   # memory limit only — NO cpu limit (avoids CFS throttling).
           # Ports the Compose healthcheck `pg_isready -U miniflux -d miniflux` (AR31).
+          # startupProbe gates liveness during cold Longhorn attach + first-boot initdb: without it,
+          # livenessProbe (initialDelay 30s, default failureThreshold 3) can kill Postgres mid-initdb
+          # on a slow node. 30×5s = 150s of boot headroom (mirrors the app Deployment's startupProbe).
+          startupProbe:
+            exec:
+              command: ["pg_isready", "-U", "miniflux", "-d", "miniflux"]
+            failureThreshold: 30
+            periodSeconds: 5
           readinessProbe:
             exec:
               command: ["pg_isready", "-U", "miniflux", "-d", "miniflux"]
