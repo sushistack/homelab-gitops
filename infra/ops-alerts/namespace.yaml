@@ -1,0 +1,8 @@
+# Story 4.2 — NFR15a critical alerting. A single k8s-native poller (CronJob) that reads cluster
+# state via the apiserver and publishes to ntfy. NOT a monitoring stack (AC4: no Prometheus/
+# Alertmanager/Grafana). This is an infra/ component (sibling of cluster-issuer), referenced by
+# the app-of-apps root via argocd/apps/ops-alerts.yaml.
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: ops-alerts

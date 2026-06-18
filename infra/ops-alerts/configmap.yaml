@@ -1,0 +1,93 @@
+# The four checks, all via apiserver reads (kubectl) + a curl publish to ntfy. Plain ConfigMap
+# (stable name, no generator hash needed). No hosts/secrets here — NTFY_TOKEN arrives via envFrom
+# from the SealedSecret; NTFY_URL/NTFY_TOPIC are env on the CronJob (AC4).
+#
+# ponytail: poll + curl, no Prometheus. Re-fires every 15 min while a condition persists (no dedupe
+#   state) — acceptable for a 4-condition bus-factor-1 homelab (a real condition SHOULD keep nagging).
+#   Phase 3 / NFR15b can replace this with kube-prometheus-stack + an Alertmanager ntfy receiver if
+#   alert volume ever justifies a real pipeline.
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: ops-alerter-script
+  namespace: ops-alerts
+data:
+  alert.sh: |
+    #!/bin/sh
+    # ops-alerter — NFR15a critical alerting poller (Story 4.2). Read-only apiserver reads -> ntfy.
+    set -eu
+
+    CERT_WARN_DAYS="${CERT_WARN_DAYS:-14}"   # backstop: cert-manager renews at ~2/3 life; <=14d => renewal failing
+    DISK_PCT="${DISK_PCT:-80}"
+
+    # Make the egress gotcha LOUD, not silent: if the apiserver is unreachable (the #1 predictable
+    # failure once network-baseline default-deny lands without our egress allow), exit non-zero so
+    # the Job goes Failed and is visible — rather than every check silently reading nothing.
+    kubectl get --raw=/readyz >/dev/null 2>&1 || {
+      echo "FATAL: kube-apiserver unreachable — check ops-alerts egress NetworkPolicy (apiserver allow)"; exit 1; }
+
+    now=$(date -u +%s)
+
+    notify() {  # $1 title, $2 body  — failure to publish is logged, never aborts the poll
+      if curl -fsS --max-time 10 \
+           -H "Authorization: Bearer ${NTFY_TOKEN}" \
+           -H "X-Priority: 5" \
+           -H "X-Title: $1" \
+           -d "$2" "${NTFY_URL}/${NTFY_TOPIC}" >/dev/null; then
+        echo "ALERT sent [$1] $2"
+      else
+        echo "ERROR: ntfy publish failed [$1] $2"
+      fi
+    }
+
+    # (a) cert expiry — alert if notAfter within the warning window (renewal backstop, NFR10)
+    kubectl get certificate -A -o json | jq -r --argjson now "$now" --argjson warn "$CERT_WARN_DAYS" '
+      .items[] | select(.status.notAfter != null)
+      | (.status.notAfter | fromdateiso8601) as $exp
+      | select(($exp - $now) <= ($warn * 86400))
+      | "\(.metadata.namespace)/\(.metadata.name)\t\(.status.notAfter)"' \
+    | while IFS="$(printf '\t')" read -r cert exp; do
+        notify "cert expiry: $cert" "Certificate $cert expires $exp (within ${CERT_WARN_DAYS}d — auto-renew may be failing)"
+      done
+
+    # (b) Longhorn node disk >= 80%  (usage = 1 - storageAvailable/storageMaximum)
+    kubectl get nodes.longhorn.io -A -o json | jq -r --argjson pct "$DISK_PCT" '
+      .items[] | .metadata.name as $node
+      | (.status.diskStatus // {}) | to_entries[]
+      | select((.value.storageMaximum // 0) > 0)
+      | ((1 - (.value.storageAvailable / .value.storageMaximum)) * 100) as $used
+      | select($used >= $pct)
+      | "\($node)\t\(.key)\t\($used | floor)"' \
+    | while IFS="$(printf '\t')" read -r node disk used; do
+        notify "storage >=${DISK_PCT}%: $node" "Longhorn disk $disk on $node at ${used}% (>= ${DISK_PCT}%)"
+      done
+
+    # Stateful namespaces = those carrying a <service>-backup CronJob (the Story 4.1 backup-actor
+    # convention). Ties "stateful" to "has a backup actor" -> no noise from disposable workloads
+    # (e.g. ytdlp-api), and self-enrolls each new cutover (4.3-4.8) as its backup CronJob lands.
+    stateful_ns=$(kubectl get cronjob -A -o json | jq -r \
+      '.items[].metadata | select(.name | test("-backup$")) | .namespace' | sort -u)
+
+    # (c) stateful service down — readyReplicas < desired, scoped to stateful namespaces.
+    #     NOTE: orthogonal to uptime-kuma's HTTP probes (catches a down pod even when the public
+    #     endpoint is cached/healthy or internal-only). Does NOT self-monitor ntfy (the channel) —
+    #     ntfy-down is covered out-of-band by Kuma (see runbook: self-monitoring gap).
+    for ns in $stateful_ns; do
+      kubectl get deploy,statefulset -n "$ns" -o json | jq -r '
+        .items[] | select((.status.readyReplicas // 0) < (.spec.replicas // 0))
+        | "\(.kind)/\(.metadata.name)\t\(.status.readyReplicas // 0)\t\(.spec.replicas)"' \
+      | while IFS="$(printf '\t')" read -r wl ready desired; do
+          notify "service down: $ns/$wl" "$ns/$wl ready ${ready}/${desired} (stateful workload degraded)"
+        done
+    done
+
+    # (d) backup/restore Job failure — any Job whose name carries the -backup convention with
+    #     status.failed>=1. Matches real CronJob-spawned jobs (ntfy-backup-<ts>, navidrome-backup-<ts>, ...).
+    kubectl get jobs -A -o json | jq -r '
+      .items[] | select((.status.failed // 0) >= 1) | select(.metadata.name | test("-backup"))
+      | "\(.metadata.namespace)/\(.metadata.name)\t\(.status.failed)"' \
+    | while IFS="$(printf '\t')" read -r job failed; do
+        notify "backup FAILED: $job" "Backup/restore Job $job failed (status.failed=${failed})"
+      done
+
+    echo "ops-alerter poll complete"

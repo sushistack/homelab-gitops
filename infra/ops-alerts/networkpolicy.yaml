@@ -1,0 +1,45 @@
+# THE EGRESS GOTCHA (load-bearing, same family as the DNS-egress trap). A kubectl poller talks to
+# the kube-apiserver and curls ntfy in another namespace — both blocked once infra/network-baseline
+# default-deny lands, unless explicitly allowed here. Without the apiserver allow every check reads
+# nothing (the script's /readyz preflight then fails the Job loudly); without the ntfy allow no
+# alert ever sends. (architecture.md 644-648; AR21, AR28)
+#
+# This applies even today (no baseline yet): a NetworkPolicy with egress rules switches THIS pod
+# from allow-all to allow-only-listed. Keep the three allows correct.
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: ops-alerter-egress
+  namespace: ops-alerts
+spec:
+  podSelector:
+    matchLabels:
+      app.kubernetes.io/name: ops-alerter
+  policyTypes: [Egress]
+  egress:
+    # (1) DNS — resolve ntfy.ntfy.svc.cluster.local + kubernetes.default.svc
+    - to:
+        - namespaceSelector:
+            matchLabels:
+              kubernetes.io/metadata.name: kube-system
+      ports:
+        - { protocol: UDP, port: 53 }
+        - { protocol: TCP, port: 53 }
+    # (2) ntfy publish (cross-ns, port 80) — AR21 cross-ns needs namespaceSelector
+    - to:
+        - namespaceSelector:
+            matchLabels:
+              kubernetes.io/metadata.name: ntfy
+      ports:
+        - { protocol: TCP, port: 80 }
+    # (3) kube-apiserver. In k3s it runs in the host network (not a pod), reached via the
+    # `kubernetes` ClusterIP :443 which DNATs to the node :6443 — no podSelector can match it.
+    # 0.0.0.0/0 is the exposure-gate-allowed, token-free way to allow it without leaking the node
+    # IP. ponytail: broad CIDR on the apiserver ports; tighten to a ${SECRET:CIDR_NODES} token if
+    # the network-baseline ever needs strict egress here.
+    - to:
+        - ipBlock:
+            cidr: 0.0.0.0/0
+      ports:
+        - { protocol: TCP, port: 443 }
+        - { protocol: TCP, port: 6443 }

@@ -1,0 +1,55 @@
+# The whole alerting slice: ONE CronJob (AC4 — not a monitoring stack). Polls every 15 min, reads
+# cluster state via the SA's read-only RBAC, publishes hits to ntfy. Image bundles kubectl+jq+curl.
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: ops-alerter
+  namespace: ops-alerts
+spec:
+  schedule: "*/15 * * * *"
+  timeZone: Asia/Seoul
+  concurrencyPolicy: Forbid
+  startingDeadlineSeconds: 120
+  successfulJobsHistoryLimit: 1
+  failedJobsHistoryLimit: 3      # keep failures visible across polls (mirrors the backup actor)
+  jobTemplate:
+    spec:
+      activeDeadlineSeconds: 180   # a handful of kubectl reads + curls; bound so a hung run goes Failed (visible)
+      template:
+        metadata:
+          # ops-alerter has no Service, so labelling the pod with the app name is safe (no dead
+          # endpoint). The egress NetworkPolicy podSelector matches THIS label.
+          labels:
+            app.kubernetes.io/name: ops-alerter
+        spec:
+          serviceAccountName: ops-alerter
+          restartPolicy: OnFailure
+          containers:
+            - name: alerter
+              # bundles kubectl + jq + curl. PIN to a digest at hardening (AR29 — exact tag for now):
+              #   docker buildx imagetools inspect alpine/k8s:1.31.0
+              image: alpine/k8s:1.31.0
+              command: ["/bin/sh", "/scripts/alert.sh"]
+              env:
+                - name: NTFY_URL
+                  value: http://ntfy.ntfy.svc.cluster.local   # FQDN (AR28 — short name won't resolve cross-ns)
+                - name: NTFY_TOPIC
+                  value: alerts                                 # the deny-all ntfy ops topic (Story 4.1)
+                - name: TZ
+                  value: Asia/Seoul
+              envFrom:
+                - secretRef:
+                    name: ops-alerts-secrets   # NTFY_TOKEN (write on the ops topic) — SealedSecret, never inline
+              resources:
+                requests:
+                  cpu: 10m
+                  memory: 64Mi
+                limits:
+                  memory: 128Mi    # memory-only limit (no CPU limit -> no throttle), per AR29
+              volumeMounts:
+                - name: scripts
+                  mountPath: /scripts
+          volumes:
+            - name: scripts
+              configMap:
+                name: ops-alerter-script

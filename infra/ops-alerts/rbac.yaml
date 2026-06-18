@@ -1,0 +1,38 @@
+# Least-privilege, read-only, cross-namespace (ClusterRole) — exactly the resource kinds the four
+# checks inspect, get+list ONLY. No write verbs, NO secret reads. (AR27; architecture #RBAC line ~651)
+#   certificates.cert-manager.io  -> (a) cert expiry backstop
+#   nodes.longhorn.io             -> (b) disk >= 80%
+#   deployments/statefulsets.apps -> (c) stateful workload readyReplicas < desired
+#   jobs.batch                    -> (d) backup/restore Job failure
+#   cronjobs.batch                -> derive the "stateful namespaces" set for (c) from the
+#                                    <service>-backup convention (Story 4.1 backup actor)
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: ops-alerter
+rules:
+  - apiGroups: ["cert-manager.io"]
+    resources: ["certificates"]
+    verbs: ["get", "list"]
+  - apiGroups: ["longhorn.io"]
+    resources: ["nodes"]
+    verbs: ["get", "list"]
+  - apiGroups: ["apps"]
+    resources: ["deployments", "statefulsets"]
+    verbs: ["get", "list"]
+  - apiGroups: ["batch"]
+    resources: ["jobs", "cronjobs"]
+    verbs: ["get", "list"]
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: ops-alerter
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: ops-alerter
+subjects:
+  - kind: ServiceAccount
+    name: ops-alerter
+    namespace: ops-alerts
