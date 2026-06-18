@@ -183,3 +183,26 @@ material, IP, or `*.<zone>` host appears; Plane 0 secrets stay off-repo.
   local/cold backup only; the per-service CronJob ships DB/config, not media.
 - **TLS per cutover = per-host cert** (`<svc>-tls` from `letsencrypt-prod`), not a shared wildcard.
   4.3–4.8 inherit all of the above.
+
+## Critical operational alerting — NFR15a slice (Story 4.2)
+
+- **2026-06-18 | NFR15a critical alerting (cert-expiry / storage-80% / stateful-workload-down /
+  backup-restore-job-failure) is DONE here via a single ntfy poller** (`infra/ops-alerts/`, a
+  `*/15` `CronJob` reading cluster state via read-only RBAC → `curl` to the in-cluster ntfy `alerts`
+  topic, `X-Priority: 5`). **NFR15b** (component/version-drift + full steady-state ops alerting + the
+  ntfy-self-monitoring fix) is **deferred to Epic 5 / Phase 3** — this explicitly resolves the
+  architecture's flagged NFR15 partial-gap (architecture.md 867–869). Runbook:
+  [ops-alerts.md](runbooks/ops-alerts.md). (FR27, NFR15, AC3)
+- **Minimal poller, NOT a monitoring stack (AC4).** No kube-prometheus-stack / Alertmanager /
+  Grafana — observability is explicitly Phase 3. Read CRD status directly via kubectl (cert-manager
+  `Certificate.status.notAfter`, Longhorn `nodes.longhorn.io` disk usage) instead of scraping metrics.
+  Phase 3 can replace this with a real pipeline + an Alertmanager ntfy receiver if volume ever justifies it.
+- **"Stateful service" = has a `<service>-backup` CronJob.** Check (c) scopes workload-readiness to
+  those namespaces (ties to the Story 4.1 backup-actor convention; self-enrolls each 4.3–4.8 cutover),
+  so disposable workloads (ytdlp-api) don't generate noise. Orthogonal to uptime-kuma's HTTP probes —
+  the two monitors are NOT duplicates (Kuma = public HTTP from LAN; this = in-cluster pod readiness).
+- **ntfy self-monitoring is a known, accepted gap.** The alert channel cannot alert on its own
+  outage; ntfy-down is detected out-of-band by uptime-kuma. A second independent dead-man's-switch
+  channel is the correct fix but is NFR15b/Phase-3 scope — deliberately not built in this slice.
+- **No per-slice ADR.** The split is recorded here + in the runbook (AC3 accepts "ADR/runbook +
+  DECISIONS.md"); a dedicated ADR would be ceremony for a four-condition slice and is not warranted.
