@@ -18,9 +18,10 @@
 #
 # k3s ENFORCES NetworkPolicy (bundled kube-router). The cluster is allow-all today, so these are the
 # first enforced policies in ns karakeep.
-# // ponytail: chrome/web/backup egress to 0.0.0.0/0 on 80/443 — crawled pages + DeepSeek + R2 live
-# // anywhere on the public internet; add an ipBlock `except` for RFC1918 only if east-west isolation
-# // of OUTBOUND traffic ever becomes a requirement (the inbound isolation is what AC2 is about).
+# chrome/web/backup egress to 0.0.0.0/0 on 80/443 reaches crawled pages + DeepSeek + R2 (all public),
+# with an ipBlock `except` for RFC1918 + link-local so outbound SSRF (a malicious bookmark URL or a
+# driven Chrome CDP) can't pivot to the LAN (10.0.0.x admin panels) or cloud metadata (169.254.x).
+# AC2 is the INBOUND isolation; this `except` is the OUTBOUND half of the same threat model.
 ---
 # NP-DENY-EGRESS — default-deny EGRESS for every pod (forces each role to declare its egress).
 apiVersion: networking.k8s.io/v1
@@ -140,6 +141,14 @@ spec:
     - to:
         - ipBlock:
             cidr: 0.0.0.0/0
+            # SSRF / outbound east-west hardening — crawled pages, DeepSeek and R2 are all PUBLIC, so
+            # deny the private + link-local ranges (the in-cluster peers have their own podSelector
+            # egress rules; nothing here legitimately needs the LAN or cloud metadata).
+            except:
+              - 10.0.0.0/8
+              - 172.16.0.0/12
+              - 192.168.0.0/16
+              - 169.254.0.0/16
       ports:
         - protocol: TCP
           port: 80
@@ -170,6 +179,14 @@ spec:
     - to:
         - ipBlock:
             cidr: 0.0.0.0/0
+            # SSRF / outbound east-west hardening — crawled pages, DeepSeek and R2 are all PUBLIC, so
+            # deny the private + link-local ranges (the in-cluster peers have their own podSelector
+            # egress rules; nothing here legitimately needs the LAN or cloud metadata).
+            except:
+              - 10.0.0.0/8
+              - 172.16.0.0/12
+              - 192.168.0.0/16
+              - 169.254.0.0/16
       ports:
         - protocol: TCP
           port: 80
@@ -245,6 +262,14 @@ spec:
     - to:
         - ipBlock:
             cidr: 0.0.0.0/0
+            # SSRF / outbound east-west hardening — crawled pages, DeepSeek and R2 are all PUBLIC, so
+            # deny the private + link-local ranges (the in-cluster peers have their own podSelector
+            # egress rules; nothing here legitimately needs the LAN or cloud metadata).
+            except:
+              - 10.0.0.0/8
+              - 172.16.0.0/12
+              - 192.168.0.0/16
+              - 169.254.0.0/16
       ports:
         - protocol: TCP
           port: 80
