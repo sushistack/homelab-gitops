@@ -81,7 +81,7 @@ In-cluster / ArgoCD: `kubectl get pods -n n8n` → pod `Running`/`Ready`;
 `r2:homelab-k3s-services-backup/n8n/` (replaces the Compose offen sidecar — same cadence, 30-day
 retention, `n8n-` prefix). Credential: the per-namespace `n8n-backup-r2` SealedSecret. Online +
 lock-safe → **no scale-down** (steady-state RPO is ≤6h, not 0 — distinct from the cutover
-write-freeze; see [stateful-cutover.md](stateful-cutover.md) + ADR-0009).
+write-freeze; see [stateful-cutover.md](stateful-cutover.md) + ADR-0010).
 
 > The recurring backup dumps `database.sqlite` only. The **encryption key** is independently sealed
 > in `n8n-secrets` (and also lives in `config` on the PVC) — so a DB-only restore is recoverable as
@@ -107,6 +107,9 @@ kubectl scale deploy/n8n -n n8n --replicas=0
 kubectl apply -f workloads/n8n/_cutover/ingest-job.yaml   # re-use the ingest pod for PVC write access
 pod=$(kubectl -n n8n get pod -l job-name=n8n-ingest -o name | head -1)
 kubectl -n n8n cp /tmp/database.sqlite "${pod#pod/}:/home/node/.n8n/database.sqlite"
+# drop any stale WAL/SHM left by the prior pod — otherwise SQLite replays those frames over the
+# freshly restored main DB on first open (divergence/corruption). The .backup archive is self-contained.
+kubectl -n n8n exec "${pod#pod/}" -- rm -f /home/node/.n8n/database.sqlite-wal /home/node/.n8n/database.sqlite-shm
 kubectl -n n8n exec "${pod#pod/}" -- chown 1000:1000 /home/node/.n8n/database.sqlite
 kubectl -n n8n delete -f workloads/n8n/_cutover/ingest-job.yaml
 
