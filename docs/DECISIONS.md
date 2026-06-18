@@ -165,3 +165,21 @@ material, IP, or `*.<zone>` host appears; Plane 0 secrets stay off-repo.
   boundary + in-cluster planes + external services) and `platform-gitops-flow`
   (bootstrap → sync waves 0→3 → reconcile loop), adapted from architecture.md's
   Mermaid. Logical names only; PNG forbidden, orphan SVG forbidden. (AR35)
+
+## First stateful cutover — ntfy (Story 4.1)
+
+- **2026-06-18 | ntfy cut over to k3s — the FIRST stateful cutover.** Founds the reusable
+  cutover machine ([stateful-cutover.md](runbooks/stateful-cutover.md)) + the k8s-native backup
+  actor (per-ns `ntfy-backup` CronJob → R2, replacing the offen sidecar). Online `sqlite3 .backup`
+  of `auth.db`+`cache.db` from the live Compose source → Longhorn PVC; **0-loss verified**
+  (users 2==2, token 1==1); public route flipped NPM→Traefik via the cloudflared tunnel ingress
+  (config push, near-instant — no DNS TTL). **Compose ntfy is PARKED, not decommissioned** —
+  rollback was *exercised* (remove the notify tunnel rule → Compose serves again, health 200),
+  not assumed. (FR4/FR16/FR17/FR19, NFR1/NFR2/NFR4, AR14/AR16–AR19)
+- **k3s service app-data backups → dedicated R2 bucket `homelab-k3s-services-backup`**, separate
+  from Longhorn volume backups (`homelab-k3s-backup`) and legacy Compose backups
+  (`home-server-backups`). Bucket-scoped R2 token ⇒ rclone `no_check_bucket=true`.
+- **Bulk media is NEVER backed up to R2** (music/video/photos) — Longhorn replication + optional
+  local/cold backup only; the per-service CronJob ships DB/config, not media.
+- **TLS per cutover = per-host cert** (`<svc>-tls` from `letsencrypt-prod`), not a shared wildcard.
+  4.3–4.8 inherit all of the above.
