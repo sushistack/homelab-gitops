@@ -24,8 +24,10 @@ Story 3.4 Validation Gate with no open "would lose data" finding. (epics.md Epic
 4. **Backup actor has succeeded once** — trigger the CronJob and confirm an archive lands in
    `r2:homelab-k3s-services-backup/<service>/` **before** touching any data. This is the in-cutover
    fallback: if anything corrupts mid-move, you restore from this archive.
-5. **TTL pre-lowered** — drop the `<host>` cloudflared/DNS TTL to the rollback window
-   (e.g. 60s) and wait out the OLD TTL so the low value is actually live before you flip.
+5. **Rollback path confirmed.** The house flip is a **cloudflared tunnel-ingress config push**
+   (re-point the rule in the tunnel config) — near-instant, **no DNS TTL involved**, so there is
+   nothing to pre-lower. *Only* if a `<host>` is fronted by a real DNS A/CNAME record (not the
+   tunnel): pre-lower that record's TTL to the rollback window and wait out the old TTL first.
 6. **Window announced** — the SLO is **≤10 min** of planned low-use disruption (NFR1).
 7. **Render token registered** — the public host token (e.g. `DOMAIN_NTFY`) is present in the
    out-of-band `argocd-render-tokens` Secret **and** local `internal/tokens.env`, or the
@@ -35,9 +37,11 @@ Story 3.4 Validation Gate with no open "would lose data" finding. (epics.md Epic
 
 ## The 6-step machine
 
-### Step 1 — Pre-lower the TTL (the rollback window)
-Lower the cloudflared/DNS TTL for `<host>` to the planned rollback window and **wait out the
-previous TTL** so resolvers actually hold the low value. This bounds max rollback latency.
+### Step 1 — Confirm the rollback path (TTL only if it's a real DNS flip)
+The house flip is a **cloudflared tunnel-ingress config push** — re-pointing the tunnel rule takes
+effect in seconds, so rollback latency is the push propagation, **not** a DNS TTL, and there is
+nothing to pre-lower. Only if `<host>` is served by a real DNS A/CNAME record (not the tunnel):
+lower that record's TTL to the rollback window and **wait out the previous TTL** before flipping.
 
 ### Step 2 — Quiesce the source (online, lock-safe — NO `docker stop`, NO scale-down)
 Take an **application-consistent online copy** from the **live Compose** service. The method is
@@ -91,9 +95,11 @@ Compose was never stopped, so **there is nothing to restore**. To roll back:
 2. Within the pre-lowered TTL window, resolvers return to Compose; it is still serving its own
    live volume. Zero data reconstruction.
 
-**Max rollback latency = the TTL set in Step 1.** Record the TTL value used and the observed
-rollback latency. Either **exercise** the rollback or **dry-run rehearse** it (flip back, confirm
-200 from Compose, flip forward again) and write the result in the service runbook. (AC2, FR4, NFR2)
+**Max rollback latency** = the cloudflared tunnel-config push propagation (seconds) for the house
+tunnel flip, or the pre-lowered DNS TTL from Step 1 if `<host>` uses a real DNS record. Record the
+mechanism and the observed rollback latency. Either **exercise** the rollback or **dry-run rehearse**
+it (flip back, confirm 200 from Compose, flip forward again) and write the result in the service
+runbook. (AC2, FR4, NFR2)
 
 ---
 

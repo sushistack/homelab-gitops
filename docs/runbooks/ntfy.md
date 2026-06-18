@@ -72,7 +72,10 @@ rclone lsl r2:homelab-k3s-services-backup/ntfy/ | tail
 rclone copy r2:homelab-k3s-services-backup/ntfy/ntfy-<ts>.tar.gz /tmp/
 tar -C /tmp -xzf /tmp/ntfy-<ts>.tar.gz          # -> /tmp/auth.db, /tmp/cache.db
 
-# 2. quiesce the pod so nothing holds the SQLite WAL, then copy into the PVC
+# 2. quiesce the pod so nothing holds the SQLite WAL, then copy into the PVC.
+#    FIRST suspend autosync — selfHeal:true would revert --replicas=0 back to 1 mid-restore and
+#    the re-spawned pod + ingest pod would both want the RWO PVC (Multi-Attach / racing writers).
+argocd app set ntfy --sync-policy none      # or: kubectl -n argocd patch app ntfy --type merge -p '{"spec":{"syncPolicy":{"automated":null}}}'
 kubectl scale deploy/ntfy -n ntfy --replicas=0
 #    (re-use the cutover ingest pod to get write access to the RWO PVC)
 kubectl apply -f workloads/ntfy/_cutover/ingest-job.yaml
@@ -80,8 +83,9 @@ pod=$(kubectl -n ntfy get pod -l job-name=ntfy-ingest -o name | head -1)
 kubectl -n ntfy cp /tmp/auth.db "${pod#pod/}:/data/auth.db"
 kubectl -n ntfy delete -f workloads/ntfy/_cutover/ingest-job.yaml
 
-# 3. bring ntfy back and verify the user/token count
+# 3. bring ntfy back, re-enable autosync, and verify the user/token count
 kubectl scale deploy/ntfy -n ntfy --replicas=1
+argocd app set ntfy --sync-policy automated --self-heal
 kubectl exec -n ntfy deploy/ntfy -- sqlite3 /var/cache/ntfy/auth.db "select count(*) from user;"
 ```
 
