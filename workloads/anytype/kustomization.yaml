@@ -8,7 +8,7 @@ resources:
   - namespace.yaml
   - pvc.yaml
   - configmap.yaml
-  - sealedsecret.yaml        # STUBS — operator seals real values at cutover (see file header)
+  - sealedsecret.yaml        # 3 SealedSecrets, really sealed against this cluster's key (see file header)
   - sa.yaml
   - rbac.yaml
   - deployment-anysync.yaml
