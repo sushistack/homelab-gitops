@@ -34,6 +34,7 @@ spec:
   jobTemplate:
     spec:
       activeDeadlineSeconds: 900       # ~15 min ceiling: apk + sqlite .backup + rclone copy -> Failed if hung
+      backoffLimit: 2                  # fail fast for the ntfy Failed-Job watch (don't retry the default 6×)
       template:
         metadata:
           # NOT app.kubernetes.io/name: karakeep-web — that is the web Service selector, and this pod
@@ -70,9 +71,10 @@ spec:
                   sqlite3 /data/db.db ".backup /scratch/db.db"
                   tar -C /scratch -czf "/scratch/karakeep-${ts}.tar.gz" db.db
                   rclone copy "/scratch/karakeep-${ts}.tar.gz" "r2:homelab-k3s-services-backup/karakeep/"
-                  # ~30-day retention (offen semantics). homelab-k3s-services-backup is the dedicated
-                  # k3s-service bucket, so this prefix only holds our own archives.
-                  rclone delete --min-age 720h "r2:homelab-k3s-services-backup/karakeep/" || true
+                  # ~30-day retention (offen semantics). The karakeep/ prefix holds BOTH web
+                  # (karakeep-<ts>) and bridge (karakeep-bridge-<ts>) archives, so scope this prune to
+                  # the web ones — an unfiltered delete would also drop the bridge dedup-map backups.
+                  rclone delete --min-age 720h --include "karakeep-2*" "r2:homelab-k3s-services-backup/karakeep/" || true
               env:
                 # bucket-scoped token (Object R&W) can't ListBuckets/CreateBucket -> rclone's default
                 # bucket probe 403s; no_check_bucket skips it and PUTs straight to the existing bucket.
@@ -107,6 +109,7 @@ spec:
   jobTemplate:
     spec:
       activeDeadlineSeconds: 900
+      backoffLimit: 2                  # fail fast for the ntfy Failed-Job watch (don't retry the default 6×)
       template:
         metadata:
           labels:
