@@ -14,7 +14,9 @@ scrubbing).
 ArgoCD auto-sync → health-gated rollout on k3s, with `git revert` as the rollback
 path. Diagram source: [`excalidraw-before-after.mmd`](docs/diagrams/excalidraw-before-after.mmd).
 
-## Demo — the closed loop (push → live → bad version held → revert)
+## Demo — live behavior
+
+**Clip 1 — the closed loop (push → live → bad version held → revert):**
 
 https://github.com/user-attachments/assets/08bcab1f-e96b-4cfb-9f76-9d003e3db96e
 
@@ -22,6 +24,12 @@ A merge rolls a new version live in ~2 min; a deliberately broken image never
 becomes live (the old pod keeps serving, ArgoCD shows `Degraded`); a `git revert`
 restores the prior state. Recorded against logical names only, behind the
 [release checklist](docs/RELEASE-CHECKLIST.md) human gate.
+
+**Clip 2 — self-heal (pod-kill / node-drain → reschedule):** *recording pending.*
+The behavior is already proven live (pod self-heal to replica count; node-drain
+reschedule + Longhorn re-attach in ~12 s; health-gated bad rollout held) — the
+screen-recorded clip is captured and gated after the stateful cutovers land, so it
+shows the full platform rather than a Phase-2 slice.
 
 ## Why k3s over Compose
 
@@ -69,30 +77,53 @@ waves 0→3 and the steady-state reconcile/`git revert` loop. Source:
 
 ## What was deliberately excluded
 
-These are scoping decisions, not oversights:
+These are scoping decisions, not oversights — each names where the reasoning lives:
 
-- **Single-host SPOF — software HA is real, hardware HA is not.** The cluster is
-  three k3s node VMs, but all three run on **one Proxmox host with effectively one
-  disk**. *Software*-level self-healing is real and demonstrated (clip #2): a killed
-  pod restarts to its replica count, a node-VM going down reschedules its pods onto
-  a healthy node and Longhorn re-attaches the volume with data intact (≤5 min, NFR3),
-  and a bad rollout is health-gate-held so the prior good version keeps serving. But
-  a **host reboot / PSU / single-disk failure takes all three VMs — and all Longhorn
-  replicas — down together**: one host is one failure domain, so this is *not*
-  hardware HA. Durability against host loss is the off-host bare-metal restore chain
-  (Gate 0, Story 2.6), not replication. Full reasoning:
-  [ADR-0003](docs/adr/ADR-0003-longhorn-single-host-storage.md).
-- **Throwaway cluster + certs.** Phase 1 is disposable: the cluster, its
-  `letsencrypt-staging` (browser-untrusted) certs, and any secrets do **not**
-  carry to the Phase 2a clean cluster. Production DNS-01 TLS comes later.
-- **No persistent storage / backups yet.** Only stateless services are here.
-  Longhorn, Sealed Secrets, and the full backup/recovery chain are later phases.
-- **ArgoCD self-management deferred.** ArgoCD is bootstrapped, not yet managing
-  its own upgrades via GitOps.
-- **Stateful & critical services not migrated.** Databases, the password vault,
-  etc. move only after the pattern is proven and zero-data-loss cutovers exist.
+- **Hardware HA — software self-heal is real, host redundancy is not.** The cluster
+  is three k3s node VMs, but all three run on **one Proxmox host with effectively one
+  disk**. *Software*-level self-healing is proven live: a killed pod restarts to its
+  replica count, a node-VM going down reschedules its pods onto a healthy node and
+  Longhorn re-attaches the volume with data intact (≤5 min, NFR3), and a bad rollout
+  is health-gate-held so the prior good version keeps serving. But a **host reboot /
+  PSU / single-disk failure takes all three VMs — and all Longhorn replicas — down
+  together**: one host is one failure domain, so this is *not* hardware HA. Durability
+  against host loss is the off-host bare-metal restore chain (Gate 0), not replication.
+  Full reasoning: [ADR-0003](docs/adr/ADR-0003-longhorn-single-host-storage.md).
+- **An adopted GitOps scaffold (onedr0p / Flux + Talos).** Rejected in favour of a
+  self-scaffolded, bounded app-of-apps so every layer is understood and owned, not
+  inherited — sized to ~14 services, not a generic fleet.
+  [ADR-0007](docs/adr/ADR-0007-gitops-tool.md).
+- **A public/private mirror split.** One public-default repo kept safe by render-time
+  token substitution and a two-layer gate — not by scrubbing a separate mirror, which
+  rots and leaks on the first missed commit. [ADR-0006](docs/adr/ADR-0006-exposure-model.md).
+- **ArgoCD self-management.** ArgoCD is bootstrapped manually and not yet managing its
+  own upgrades via GitOps — deferred to Phase 2a to avoid a sync-wave self-destroy
+  risk while the platform is still being stood up.
+- **Full operational alerting.** Only the critical alert slice (NFR15a) is in scope to
+  declare the platform done; version-drift and broader operational alerting (NFR15b)
+  are explicit Phase-3 day-2 work.
+- **Stateful & critical services.** Databases, the password vault, and other stateful
+  apps move only after the pattern is proven and zero-data-loss cutovers exist — that
+  cutover work is in progress, so only stateless services are reconciled here today.
 
 ---
+
+## Deploy a service (the golden path)
+
+Adding service #N is a copy-and-adapt, not a design exercise:
+
+1. **Copy the template.** [`workloads/_template/`](workloads/_template/) is the
+   golden path — `namespace` / `deployment` / `service` / `kustomization` /
+   `application` (the ArgoCD `Application`) / `backup-cronjob` + a
+   [`runbook.md`](workloads/_template/runbook.md) skeleton. Copy it to
+   `workloads/<service>/` and fill in the blanks.
+2. **Follow a worked example.** [`workloads/ytdlp-api/`](workloads/ytdlp-api/) is a
+   real service migrated through that template, with its operations
+   [runbook](docs/runbooks/ytdlp-api.md) (what it does → health check → if-DOWN →
+   common failures → backup/restore → escalation).
+3. **Know the bootstrap order.** [`bootstrap/README.md`](bootstrap/README.md) is the
+   single manual entry point (`root-app.yaml`) and the exact provision → ArgoCD →
+   `kubectl apply` → sync-wave sequence everything else reconciles from.
 
 ## Exposure gate (how it stays public-safe)
 
