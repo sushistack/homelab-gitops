@@ -1,0 +1,30 @@
+# Story 4.2 — the NFR15a critical-alerting poller as a late-wave infra Application.
+# Self-authored manifests (kustomize) -> source path is infra/ops-alerts in THIS repo (the same
+# pattern as cluster-issuer.yaml, not a Helm vendor source). The app-of-apps root recurses argocd/
+# and adopts this. No ${SECRET:*} tokens -> the render CMP build is a no-op (ntfy FQDN is literal,
+# token lives in the SealedSecret).
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: ops-alerts
+  namespace: argocd
+  annotations:
+    # AR3: late wave — AFTER workloads (wave 3) so the deployments/statefulsets/backup-CronJobs
+    # the poller inspects already exist when it first runs.
+    argocd.argoproj.io/sync-wave: "4"
+spec:
+  project: homelab
+  source:
+    repoURL: https://github.com/sushistack/home-server-gitops.git
+    targetRevision: HEAD
+    path: infra/ops-alerts
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: ops-alerts
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
+      - ServerSideApply=true
