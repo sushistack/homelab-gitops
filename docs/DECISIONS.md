@@ -2,6 +2,31 @@
 
 Running log of load-bearing decisions. One line each; link the story.
 
+## GitOps upgrade & rollback discipline (Story 5.3, Epic 5 / Phase 3)
+
+- 2026-06-19 | **Version SSOT completed + made enforceable.** All pins now answerable from one
+  file — [`versions.yaml`](../versions.yaml): platform charts (k3s, ArgoCD, Longhorn, cert-manager,
+  sealed-secrets) **plus** a new **workload image registry** (14 images). No image-templating layer
+  exists (the render CMP only substitutes `${SECRET:*}` hostnames) and building one for ~14 images
+  is overkill, so the deploy-time value stays inline in each manifest and `versions.yaml` mirrors
+  it — `bin/version-lint` makes the file **authoritative** (fails CI if a manifest drifts from the
+  pin, blocks any `:latest`, asserts chart pins are referenced in `argocd/apps`). Sanctioned
+  mirror-with-lint; upgrade path is a Kustomize `images:` transformer if it ever chafes. | **no ADR**
+  (the SSOT + 3-line rule were already architecture decisions; recorded here + in the runbook).
+- 2026-06-19 | **Renovate added, automerge OFF.** [`renovate.json`](../renovate.json) opens one PR
+  per component (never a mega-PR) against `versions.yaml`/the manifests; differential policy encoded
+  in `packageRules` — **conservative on etcd/k3s** (30-day soak), **current on ArgoCD** (no soak,
+  CRDs stay `v1alpha1` on 3.x). **Traefik disabled** (ArgoCD must not manage the k3s-bundled
+  Traefik). Validated with `renovate-config-validator --strict`. Honest ceiling: digest-only pins
+  (`name@sha256:` with no tag) aren't Renovate-trackable — pin `name:<tag>@sha256:` to track. | no ADR
+- 2026-06-19 | **Upgrade/rollback proven end-to-end (AC5), `ytdlp-api`** (internal-only, stateless —
+  lowest blast radius). **Upgrade:** PR re-pinned the image (manifest + `versions.yaml` registry, one
+  commit, lint green) → push `master` → **ArgoCD auto-synced** (no manual sync) → health-gated
+  rollout → new pod `Synced/Healthy` (`5fd8f89`). **Rollback:** `git revert 5fd8f89` → push →
+  auto-reconciled back to the prior digest, `Synced/Healthy` (`a6d282b`) — **no `kubectl rollout
+  undo` / `helm rollback`**. The revert IS the rollback. | no ADR | runbook:
+  [upgrade-rollback.md](runbooks/upgrade-rollback.md)
+
 ## Cold-boot ordering — tested + deterministic (Story 5.2, Epic 5 / Phase 3)
 
 Exposure note: safe to show — boot order, the stagger rationale, the ≤1-step claim, and the
