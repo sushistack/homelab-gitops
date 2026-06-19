@@ -1,8 +1,8 @@
-# Story 5.7 — Semaphore embedded BoltDB + project state on Longhorn. Small (project/template/run
-# history + the BoltDB-encrypted access-key store), reading-progress-class → 3× Longhorn replication.
-# RWO → strategy:Recreate (BoltDB is single-writer, the Epic 4 SQLite-class pattern). Prune=false +
+# Story 5.7 — Semaphore embedded SQLite + project state on Longhorn. Small (project/template/run
+# history + the DB-encrypted access-key store), reading-progress-class → 3× Longhorn replication.
+# RWO → strategy:Recreate (SQLite is single-writer, the Epic 4 SQLite-class pattern). Prune=false +
 # Retain so ArgoCD/Longhorn never delete the run history on PVC removal.
-# # ponytail: BoltDB, not a postgres/mysql sidecar — a single-operator runner does not need a DB server.
+# # ponytail: embedded SQLite, not a postgres/mysql sidecar — a single-operator runner needs no DB server.
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:

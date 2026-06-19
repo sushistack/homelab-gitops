@@ -1,6 +1,7 @@
 # Story 5.7 — Semaphore: a clickable + SCHEDULABLE runner for the existing OpenWrt/Oracle Ansible
-# (configs/openwrt/ in the home.server repo). Embedded BoltDB on Longhorn → strategy:Recreate +
-# startupProbe (the Epic 4 / 5.6 SQLite-class pattern; BoltDB is single-writer too).
+# (configs/openwrt/ in the home.server repo). Embedded SQLite on Longhorn → strategy:Recreate +
+# startupProbe (the Epic 4 / 5.6 SQLite-class pattern; single-writer). NOT BoltDB — it's deprecated
+# upstream and v2.18's terraform store panics "unknown store type" on it; sqlite is the supported default.
 #
 # 🔴 BITE 1 / Reconciliation 1 — Semaphore manages Plane 0 (OpenWrt 10.0.0.1) FROM INSIDE k3s,
 # whose own LAN rides on that gateway. The SANCTIONED easy path is the scheduled `--check --diff`
@@ -26,7 +27,7 @@ spec:
   replicas: 1
   progressDeadlineSeconds: 180
   strategy:
-    type: Recreate          # BoltDB single-writer: never two pods on one DB file
+    type: Recreate          # SQLite single-writer: never two pods on one DB file
   selector:
     matchLabels:
       app.kubernetes.io/name: semaphore
@@ -55,10 +56,12 @@ spec:
           env:
             - name: TZ
               value: Asia/Seoul
+            # Embedded SQLite — no postgres/mysql sidecar. (NOT bolt: it's deprecated and v2.18's
+            # terraform store panics "unknown store type" on it; sqlite is the supported embedded default.)
             - name: SEMAPHORE_DB_DIALECT
-              value: bolt                              # embedded — no postgres/mysql sidecar
+              value: sqlite
             - name: SEMAPHORE_DB_HOST
-              value: /var/lib/semaphore/database.boltdb
+              value: /var/lib/semaphore/database.sqlite
             - name: SEMAPHORE_PLAYBOOK_PATH
               value: /var/lib/semaphore/repositories
             - name: SEMAPHORE_TMP_PATH
