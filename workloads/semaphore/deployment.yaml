@@ -15,8 +15,9 @@
 # FIX (no custom image): a postStart hook curls the pinned sops binary into /usr/local/bin (already on
 # PATH + writable; the image bundles curl). Do NOT set a static PATH env — Semaphore runs ansible from a
 # versioned app venv (/opt/semaphore/apps/ansible/<ver>/venv/bin) that it injects into PATH per-task;
-# overriding PATH hides it ("ansible-playbook not found"). sops has native age support, so
-# SOPS_AGE_KEY_FILE alone decrypts — no separate `age` binary. Pin matches the workstation (3.13.0).
+# overriding PATH hides it ("ansible-playbook not found"). sops has native age support (no separate
+# `age` binary); the age key is mounted at sops's DEFAULT path since Semaphore scrubs task env (see the
+# SOPS_AGE_KEY_FILE note below). Pin matches the workstation (3.13.0).
 #
 # Runs as ROOT: reads the root-owned 0400 mounted SSH/age key files directly and writes the root:root
 # Longhorn PVC — no fsGroup/chown gymnastics (the komga "runs as root" rationale). The pod already SSHes
@@ -86,8 +87,13 @@ spec:
             # community.sops reads the age key from here to decrypt configs/openwrt/group_vars/*.sops.yaml
             # at PLAY runtime — the secrets stay SOPS-in-git, never copied into Semaphore's Key Store
             # (Reconciliation 4). Single age identity = the cluster DR key (gate0-dr), 0 new keys.
+            # 🔴 Semaphore SCRUBS the container env for task subprocesses (confirmed 2026-06-20: a
+            # --check run failed `CouldNotRetrieveKey` despite this var being set — sops never saw it).
+            # So the age key is mounted at sops's DEFAULT path (/root/.config/sops/age/keys.txt, see the
+            # age volumeMount) — sops finds it with NO env dependency. This var is kept only for the
+            # exec/break-glass case (processes that DO inherit the container env).
             - name: SOPS_AGE_KEY_FILE
-              value: /keys/age/keys.txt
+              value: /root/.config/sops/age/keys.txt
           # Admin bootstrap creds + access-key encryption key (must be STABLE across restarts — it
           # encrypts stored access keys in BoltDB). Sealed by the operator (Task 1b).
           envFrom:
@@ -121,8 +127,9 @@ spec:
             - name: ssh
               mountPath: /keys/ssh
               readOnly: true
+            # Mounted at sops's DEFAULT key path so the scrubbed-env task still finds it (see env note).
             - name: age
-              mountPath: /keys/age
+              mountPath: /root/.config/sops/age
               readOnly: true
       volumes:
         - name: data
