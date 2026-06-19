@@ -364,3 +364,32 @@ material, IP, or `*.<zone>` host appears; Plane 0 secrets stay off-repo.
   channel is the correct fix but is NFR15b/Phase-3 scope — deliberately not built in this slice.
 - **No per-slice ADR.** The split is recorded here + in the runbook (AC3 accepts "ADR/runbook +
   DECISIONS.md"); a dedicated ADR would be ceremony for a four-condition slice and is not warranted.
+
+## Full operational alerting — NFR15b slice CLOSED (Story 5.1)
+
+- **2026-06-19 | NFR15b full-ops alerting closed — version/config drift added to `ops-alerter`;
+  NFR15 condition set now complete.** Extends the 4.2 poller (no second poller — AC4 still binds)
+  with: **(e)** ArgoCD `Application` drift (`OutOfSync` = config/version drift; `Degraded`/`Missing`/
+  `Unknown` health) covering every ArgoCD-managed component in one CR read; **(f)** k3s node version
+  drift vs the `versions.yaml` pin (`K3S_PINNED_VERSION`, baked at author time — the cluster can't
+  read Git); **(g)** node `NotReady` (shares the (f) `nodes` read; SPOF/health signal, pairs with
+  cold-boot 5.2). RBAC delta: +`get,list` on `applications.argoproj.io` + core `nodes` (same actor,
+  read-only). NetworkPolicy unchanged (both reads hit the apiserver, already allowed). Verified
+  end-to-end 2026-06-19: a real `OutOfSync` app → ntfy alert received → revert; zero baseline noise.
+  Runbook: [ops-alerts.md](runbooks/ops-alerts.md). (FR27, FR29, NFR12, NFR15b, AC1–3)
+- **Let ArgoCD be the drift detector — don't rebuild a version table.** ArgoCD already computes
+  live-vs-desired for everything it manages and exposes it as `Application.status.sync`/`.health`,
+  so the drift check is one CR read, ~10 lines of shell. Only k3s (which ArgoCD does *not* manage —
+  k3s owns Traefik + its own version) needs a separate `kubeletVersion`-vs-pin compare.
+- **`DRIFT_SYNC_IGNORE` excludes benign steady-state OutOfSync (default `argocd`).** The self-managed
+  `argocd` app is *perpetually* `OutOfSync` on its own CMs/Secrets (a Helm/SSA self-diff, not drift);
+  alerting on it would fire every poll and violate AC3's no-noise rule. **Health is never ignored** —
+  a `Degraded`/`Missing` argocd is still a real alert. (Empty env = the `argocd` default, not
+  "ignore nothing" — use a non-matching sentinel to alert on all apps.)
+- **"Newer upstream version available" is NOT alerted here — that's Renovate's PR path.** This slice
+  detects *config drift* (live ≠ Git pin), not *update availability*. No upstream registry/Helm-repo
+  polling from the cluster (would duplicate Renovate + add egress surface). (architecture.md 654, 884)
+- **No metrics stack (AC4 still binds).** NFR15b does NOT unlock kube-prometheus-stack/Alertmanager/
+  Grafana; it's +3 branches on the existing kubectl poller. **ntfy self-monitoring gap is unchanged**
+  (uptime-kuma covers ntfy liveness out-of-band) — deliberately not fixed in this slice.
+- **No per-slice ADR** (consistent with 4.2) — recorded here + in the runbook; AC3 accepts that.
