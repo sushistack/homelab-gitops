@@ -1,0 +1,136 @@
+# Story 5.9 follow-up: the vaultwarden→Bitwarden-Cloud weekly mirror, ported off the (now frozen)
+# home.server GitHub Actions workflow into a k3s CronJob. Script is verbatim from
+# home.server/scripts/backup/vaultwarden-sync-to-bitwarden.sh (commit 6719532).
+apiVersion: v1
+data:
+  sync.sh: |
+    #!/usr/bin/env bash
+    #===============================================================================
+    # Vaultwarden → Bitwarden Cloud one-way sync (availability fallback)
+    #
+    # Triggered by .github/workflows/vaultwarden-cloud-sync.yml on weekly cron.
+    # Runs on GitHub Actions ubuntu-latest (NOT on the home stack — isolation).
+    #
+    # Required env vars (all from GH secrets):
+    #   VW_API_URL              e.g. https://vault.eli.kr
+    #   VW_API_CLIENT_ID        Vaultwarden API key client_id
+    #   VW_API_CLIENT_SECRET    Vaultwarden API key client_secret
+    #   VW_MASTER_PASSWORD      Vaultwarden master password
+    #   BW_API_CLIENT_ID        Bitwarden Cloud API key client_id
+    #   BW_API_CLIENT_SECRET    Bitwarden Cloud API key client_secret
+    #   BW_MASTER_PASSWORD      Bitwarden Cloud master password (MUST differ from VW)
+    #
+    # Flow:
+    #   1. Vaultwarden:  config server → apikey login → unlock → sync → export
+    #   2. Sanity check: export .json size ≥ 1 KB and item count ≥ 1
+    #   3. Vaultwarden:  logout
+    #   4. Bitwarden Cloud: config server (default) → apikey login → unlock
+    #   5. Wipe existing items (loop bw delete item <id>)
+    #   6. Import the .json
+    #   7. Logout + secure-delete the export
+    #===============================================================================
+
+    set -euo pipefail
+
+    # RUNNER_TEMP is set by GitHub Actions; fall back to /tmp for local manual runs.
+    WORK_DIR="${RUNNER_TEMP:-/tmp}"
+    EXPORT_FILE="$WORK_DIR/vw-export.json"
+
+    # Always wipe the plaintext export on exit, even on partial failure.
+    cleanup() {
+      if [ -f "$EXPORT_FILE" ]; then
+        if command -v shred >/dev/null 2>&1; then
+          shred -u "$EXPORT_FILE" || rm -f "$EXPORT_FILE"
+        else
+          rm -f "$EXPORT_FILE"
+        fi
+      fi
+      # Best-effort logout of any leftover bw session; ignore errors.
+      bw logout >/dev/null 2>&1 || true
+    }
+    trap cleanup EXIT
+
+    log() { echo "[$(date -u +%FT%TZ)] $*"; }
+
+    # Required env var sanity.
+    for v in VW_API_URL VW_API_CLIENT_ID VW_API_CLIENT_SECRET VW_MASTER_PASSWORD \
+             BW_API_CLIENT_ID BW_API_CLIENT_SECRET BW_MASTER_PASSWORD; do
+      if [ -z "${!v:-}" ]; then
+        echo "FATAL: $v is unset" >&2
+        exit 1
+      fi
+    done
+
+    #-------------------------------------------------------------------------------
+    # Step 1-4: pull export from Vaultwarden
+    #-------------------------------------------------------------------------------
+    log "Configuring bw client for Vaultwarden at $VW_API_URL"
+    bw config server "$VW_API_URL"
+
+    log "Logging in to Vaultwarden with API key"
+    BW_CLIENTID="$VW_API_CLIENT_ID" BW_CLIENTSECRET="$VW_API_CLIENT_SECRET" \
+      bw login --apikey
+
+    log "Unlocking Vaultwarden vault"
+    SESSION_VW=$(BW_PASSWORD="$VW_MASTER_PASSWORD" bw unlock --passwordenv BW_PASSWORD --raw)
+
+    log "Syncing Vaultwarden vault"
+    bw --session "$SESSION_VW" sync
+
+    log "Exporting Vaultwarden vault to $EXPORT_FILE"
+    bw --session "$SESSION_VW" export --format json --output "$EXPORT_FILE"
+
+    # Sanity check before destructive wipe on Bitwarden Cloud.
+    EXPORT_SIZE=$(stat -c %s "$EXPORT_FILE")
+    ITEM_COUNT=$(jq '.items | length' "$EXPORT_FILE")
+    log "Exported $ITEM_COUNT items from Vaultwarden (size: $EXPORT_SIZE bytes)"
+
+    if [ "$EXPORT_SIZE" -lt 1024 ]; then
+      echo "FATAL: export file size $EXPORT_SIZE < 1024 bytes — aborting before wipe" >&2
+      exit 1
+    fi
+    if [ "$ITEM_COUNT" -lt 1 ]; then
+      echo "FATAL: export item count $ITEM_COUNT < 1 — aborting before wipe" >&2
+      exit 1
+    fi
+
+    log "Logging out of Vaultwarden"
+    bw logout
+
+    #-------------------------------------------------------------------------------
+    # Step 5-7: wipe + import to Bitwarden Cloud
+    #-------------------------------------------------------------------------------
+    log "Switching bw client to Bitwarden Cloud"
+    bw config server https://vault.bitwarden.com
+
+    log "Logging in to Bitwarden Cloud with API key"
+    BW_CLIENTID="$BW_API_CLIENT_ID" BW_CLIENTSECRET="$BW_API_CLIENT_SECRET" \
+      bw login --apikey
+
+    log "Unlocking Bitwarden Cloud vault"
+    SESSION_BW=$(BW_PASSWORD="$BW_MASTER_PASSWORD" bw unlock --passwordenv BW_PASSWORD --raw)
+
+    log "Syncing Bitwarden Cloud vault (read current state)"
+    bw --session "$SESSION_BW" sync
+
+    EXISTING=$(bw --session "$SESSION_BW" list items | jq -r '.[].id')
+    EXISTING_COUNT=$(printf '%s\n' "$EXISTING" | grep -c . || true)
+    log "Wiping $EXISTING_COUNT existing items from Bitwarden Cloud"
+
+    if [ "$EXISTING_COUNT" -gt 0 ]; then
+      printf '%s\n' "$EXISTING" | while read -r id; do
+        [ -z "$id" ] && continue
+        bw --session "$SESSION_BW" delete item "$id" --permanent
+      done
+    fi
+
+    log "Importing $ITEM_COUNT items into Bitwarden Cloud"
+    bw --session "$SESSION_BW" import bitwardenjson "$EXPORT_FILE"
+
+    log "Logging out of Bitwarden Cloud"
+    bw logout
+
+    log "Sync complete: $ITEM_COUNT items mirrored from Vaultwarden to Bitwarden Cloud"
+kind: ConfigMap
+metadata:
+  name: vaultwarden-cloud-sync-script

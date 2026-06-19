@@ -1,0 +1,59 @@
+# Story 5.9 follow-up — vaultwarden → Bitwarden Cloud weekly mirror, ported off the frozen
+# home.server GitHub Actions workflow (vaultwarden-cloud-sync.yml) into k3s. Talks to vaultwarden over
+# HTTPS (VW_API_URL) + Bitwarden Cloud over HTTPS — NO PVC / node affinity (unlike vaultwarden-backup,
+# which mounts the data volume). One-way availability fallback, NOT a backup substitute (R2 backup-cronjob
+# is the real backup).
+#
+# 🔴 SUSPENDED until the operator seals the secret. Steps:
+#   1. ./seal-cloud-sync.sh  (fills vaultwarden-cloud-sync from the 7 values, → sealedsecret-cloud-sync.yaml)
+#   2. add sealedsecret-cloud-sync.yaml to kustomization.yaml
+#   3. set `suspend: false` here
+#   4. commit + ArgoCD sync. Test once: `kubectl -n vaultwarden create job --from=cronjob/vaultwarden-cloud-sync vw-sync-test`
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: vaultwarden-cloud-sync
+spec:
+  suspend: true                    # ← flip to false AFTER sealing vaultwarden-cloud-sync (see header)
+  schedule: "0 10 * * 0"           # Sun 10:00 KST (was "0 1 * * 0" UTC in the GH workflow)
+  timeZone: Asia/Seoul
+  concurrencyPolicy: Forbid
+  startingDeadlineSeconds: 300
+  successfulJobsHistoryLimit: 3
+  failedJobsHistoryLimit: 3
+  jobTemplate:
+    spec:
+      activeDeadlineSeconds: 1800      # ~30 min: npm i bw + two vault round-trips + import
+      template:
+        metadata:
+          labels:
+            app.kubernetes.io/name: vaultwarden-cloud-sync
+            app.kubernetes.io/component: backup
+        spec:
+          restartPolicy: OnFailure
+          containers:
+            - name: sync
+              # node (for the Bitwarden CLI via npm) + bash + jq. // ponytail: runtime apk/npm install
+              # floats versions + needs egress (alpine CDN, npm registry, vault.eli.kr, *.bitwarden.com)
+              # — fine under today's allow-all; bake a pinned bw+jq image when network-baseline lands.
+              image: node:20-alpine
+              command:
+                - /bin/sh
+                - -ceu
+                - |
+                  apk add --no-cache bash jq
+                  npm install -g @bitwarden/cli >/dev/null 2>&1
+                  exec bash /scripts/sync.sh
+              envFrom:
+                - secretRef:
+                    name: vaultwarden-cloud-sync   # 7 keys: VW_API_URL, VW_API_CLIENT_ID/SECRET,
+                                                   # VW_MASTER_PASSWORD, BW_API_CLIENT_ID/SECRET,
+                                                   # BW_MASTER_PASSWORD (sealed by seal-cloud-sync.sh)
+              volumeMounts:
+                - name: script
+                  mountPath: /scripts
+                  readOnly: true
+          volumes:
+            - name: script
+              configMap:
+                name: vaultwarden-cloud-sync-script
