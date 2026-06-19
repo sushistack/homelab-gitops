@@ -678,3 +678,11 @@ material, IP, or `*.<zone>` host appears; Plane 0 secrets stay off-repo.
   `replica-replenishment-wait-interval` at 600 s (lowering it causes more full rebuilds on routine
   reboots); after each maintenance reboot, delete genuinely-failed replicas to force immediate rebuild.
   `default-disk` on the 31 GB root stays unschedulable (correct — keeps Longhorn off the OS disk). | Story 5.10 (AC1)
+- 2026-06-20 | **k3s storage simplified to a single 200 GB root disk per node (operator: don't separate).**
+  Initially Story 5.10 grew the dedicated Longhorn disk (`sdb`) to 200 GB, but the operator preferred one
+  disk over a separate Longhorn disk. So the **root (`scsi0`) was grown 32→200 GB online** (growpart +
+  resize2fs; root partition is last) and Longhorn now uses only its `default-disk` on the root; `sdb` was
+  evicted and removed on all nodes. Safe on these etcd control-plane nodes because Longhorn's
+  `storage-minimal-available-percentage=25` keeps 25% (≈50 GB) free for OS/etcd. The actual "Longhorn
+  dying" cause was the 30 GB root filling (containerd images + the default-disk's reserved space) → root
+  was 77–82% full; now 15–17%. komga's cp-1 local-volume (`/mnt/manga`, 200 GB `sdc`) is untouched. | Story 5.10 (disk)
