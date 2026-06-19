@@ -1,0 +1,41 @@
+# gitleaks ignore — historical findings accepted, not rewritten.
+# These are commits from Stories 4.3–4.8 (and earlier) that recorded private *.eli.kr
+# hostnames / 10.0.0.x host IPs in tracked docs+manifests BEFORE the redaction convention.
+# Rationale: the data is already public (pushed days ago), low-value (RFC1918 + public-
+# resolvable hostnames), and a public-repo history rewrite (force-push) was judged not worth
+# the blast radius. Current HEAD is redacted to ${SECRET:*} tokens; the gate stays enforced
+# for NEW commits. Fingerprint = commit:file:rule:startline (no secret value is stored here).
+# Generated for Story 5.1 follow-up, 2026-06-19.
+
+41dedd86a2351eec272fd362008cbd07fd20ffff:workloads/navidrome/_cutover/ingest-job.yaml:raw-ipv4:15
+548f310d225238686fb6464e4615d56bf87ee155:workloads/n8n/_cutover/ingest-job.yaml:raw-ipv4:14
+548f310d225238686fb6464e4615d56bf87ee155:workloads/n8n/sealedsecret.yaml:raw-ipv4:13
+548f310d225238686fb6464e4615d56bf87ee155:workloads/n8n/sealedsecret.yaml:raw-ipv4:14
+54e1382998be3064e5ca192402b3e30b03c8bf32:docs/DECISIONS.md:private-domain-elikr:50
+54e1382998be3064e5ca192402b3e30b03c8bf32:docs/DECISIONS.md:private-domain-elikr:51
+54e1382998be3064e5ca192402b3e30b03c8bf32:docs/DECISIONS.md:raw-ipv4:49
+54e1382998be3064e5ca192402b3e30b03c8bf32:docs/DECISIONS.md:raw-ipv4:51
+54e1382998be3064e5ca192402b3e30b03c8bf32:docs/runbooks/karakeep.md:private-domain-elikr:143
+54e1382998be3064e5ca192402b3e30b03c8bf32:docs/runbooks/karakeep.md:private-domain-elikr:144
+54e1382998be3064e5ca192402b3e30b03c8bf32:docs/runbooks/karakeep.md:raw-ipv4:142
+54e1382998be3064e5ca192402b3e30b03c8bf32:docs/runbooks/karakeep.md:raw-ipv4:143
+935cd61e3407ff2c22600478a05ba2a82c76a317:docs/DECISIONS.md:private-domain-elikr:42
+935cd61e3407ff2c22600478a05ba2a82c76a317:docs/DECISIONS.md:raw-ipv4:42
+935cd61e3407ff2c22600478a05ba2a82c76a317:docs/DECISIONS.md:raw-ipv4:44
+c87c2522aa18abd0ed3b77c5ed1631f2bcf18925:workloads/anytype/configmap.yaml:private-domain-elikr:13
+c87c2522aa18abd0ed3b77c5ed1631f2bcf18925:workloads/anytype/configmap.yaml:raw-ipv4:13
+c87c2522aa18abd0ed3b77c5ed1631f2bcf18925:workloads/anytype/_cutover/ingest-job.yaml:private-domain-elikr:13
+d5e70c20a7db394812ab6be5fa6e661e91430bea:docs/runbooks/anytype.md:private-domain-elikr:20
+d5e70c20a7db394812ab6be5fa6e661e91430bea:docs/runbooks/anytype.md:private-domain-elikr:26
+d5e70c20a7db394812ab6be5fa6e661e91430bea:docs/runbooks/anytype.md:private-domain-elikr:27
+d5e70c20a7db394812ab6be5fa6e661e91430bea:docs/runbooks/anytype.md:private-domain-elikr:67
+d5e70c20a7db394812ab6be5fa6e661e91430bea:docs/runbooks/anytype.md:raw-ipv4:20
+e529ccb5e4bd28ba821926e9ae9daee86ba445db:docs/DECISIONS.md:private-domain-elikr:14
+e529ccb5e4bd28ba821926e9ae9daee86ba445db:docs/DECISIONS.md:private-domain-elikr:28
+e529ccb5e4bd28ba821926e9ae9daee86ba445db:docs/DECISIONS.md:private-domain-elikr:32
+e529ccb5e4bd28ba821926e9ae9daee86ba445db:docs/DECISIONS.md:raw-ipv4:14
+e529ccb5e4bd28ba821926e9ae9daee86ba445db:docs/DECISIONS.md:raw-ipv4:15
+e71ab365cd9f5bff367985548542a8b040716b69:docs/DECISIONS.md:private-domain-elikr:96
+e71ab365cd9f5bff367985548542a8b040716b69:docs/DECISIONS.md:private-domain-elikr:97
+e71ab365cd9f5bff367985548542a8b040716b69:docs/DECISIONS.md:raw-ipv4:96
+e71ab365cd9f5bff367985548542a8b040716b69:docs/DECISIONS.md:raw-ipv4:97
