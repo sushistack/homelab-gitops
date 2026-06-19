@@ -14,7 +14,7 @@ resources:
   - cloud-sync-cronjob.yaml     # weekly vaultwarden -> Bitwarden Cloud mirror (SUSPENDED until sealed)
   - sealedsecret.yaml       # vaultwarden-backup-r2: R2 cred for the CronJob (REAL — sealed at the 2026-06-19 cutover)
   - sealedsecret-admin.yaml # vaultwarden-secrets: ADMIN_TOKEN (envFrom: secretRef) (REAL — sealed at the 2026-06-19 cutover)
-  # - sealedsecret-cloud-sync.yaml  # ← operator: uncomment after running ./seal-cloud-sync.sh
+  - sealedsecret-cloud-sync.yaml  # vaultwarden-cloud-sync: 7 VW_/BW_ creds for the mirror CronJob
 # NOT included on purpose:
 #   _cutover/   -> one-shot ingest Job, applied by hand during the cutover (must NOT be ArgoCD-managed)
 

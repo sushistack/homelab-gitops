@@ -14,7 +14,7 @@ kind: CronJob
 metadata:
   name: vaultwarden-cloud-sync
 spec:
-  suspend: true                    # ← flip to false AFTER sealing vaultwarden-cloud-sync (see header)
+  suspend: false                   # sealed 2026-06-20 (vaultwarden-cloud-sync) → active
   schedule: "0 10 * * 0"           # Sun 10:00 KST (was "0 1 * * 0" UTC in the GH workflow)
   timeZone: Asia/Seoul
   concurrencyPolicy: Forbid
