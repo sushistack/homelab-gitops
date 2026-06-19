@@ -97,8 +97,13 @@ sqlite3 /tmp/vw/db.sqlite3 "select count(*) from users; select count(*) from cip
 **Restore into the live PVC** (DB + keys are the durable state): suspend autosync FIRST
 (`argocd app set vaultwarden --sync-policy none` — selfHeal would revert `--replicas=0` mid-restore
 and race the RWO PVC), scale to 0, re-use `workloads/vaultwarden/_cutover/ingest-job.yaml` for PVC
-write access, `kubectl cp` the restored tree into `/data`, then scale back to 1 and re-enable
-autosync. (Same shape as the navidrome restore.)
+write access, `kubectl cp` the restored tree into `/data`. **Then drop any stale WAL/SHM left by the
+prior pod** — otherwise SQLite replays those frames over the freshly restored `db.sqlite3` on first
+open (divergence/corruption); same fix as n8n (Story 4.7):
+```
+kubectl -n vaultwarden exec "${pod#pod/}" -- rm -f /data/db.sqlite3-wal /data/db.sqlite3-shm
+```
+Then scale back to 1 and re-enable autosync.
 
 ## Escalation / depends-on
 
