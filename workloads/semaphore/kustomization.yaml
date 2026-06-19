@@ -10,14 +10,11 @@ resources:
   - service.yaml
   - ingressroute.yaml
   - certificate.yaml
-# NOT included until the operator seals real values (Task 1b — LIVE, ns sealed-secrets). The Deployment
-# references all three (envFrom semaphore-admin + the ssh/age volumes), so until these are sealed and
-# these lines are uncommented the pod can't start — it sits in CreateContainerConfigError (missing
-# envFrom secret) and the Semaphore Application reads Degraded in ArgoCD (NOT a clean "waiting" state;
-# expected until Task 1b). The komga backup-cronjob stub pattern:
-#   - sealedsecret-admin.yaml
-#   - sealedsecret-ssh.yaml
-#   - sealedsecret-age.yaml
+  # Sealed LIVE 2026-06-19 (Task 1b, seal-secrets.sh against ns sealed-secrets): admin (bootstrap +
+  # stable access-key encryption), ssh (openwrt + oracle keys), age (cluster DR identity for sops).
+  - sealedsecret-admin.yaml
+  - sealedsecret-ssh.yaml
+  - sealedsecret-age.yaml
 
 labels:
   - includeSelectors: false

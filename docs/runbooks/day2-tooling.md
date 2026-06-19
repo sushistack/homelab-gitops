@@ -67,7 +67,9 @@ Then **uncomment the three `sealedsecret-*.yaml` lines in
 builds, and commit+push. ArgoCD syncs → the pod starts.
 
 (Manual equivalent if you'd rather not run the script: `kubectl create secret generic … --dry-run=client
--o yaml | kubeseal --controller-namespace sealed-secrets --format yaml` for each — `semaphore-admin`
+-o yaml | kubeseal --controller-name sealed-secrets --controller-namespace sealed-secrets --format yaml`
+for each (the controller service is named `sealed-secrets`, not the kubeseal default
+`sealed-secrets-controller`) — `semaphore-admin`
 with the 5 admin literals, `semaphore-ssh` with `--from-file=openwrt=<key> --from-file=oracle=<key>`,
 `semaphore-age` with `--from-file=keys.txt=<key>` — then overwrite the matching stub file.)
 

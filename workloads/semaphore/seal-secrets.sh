@@ -17,6 +17,8 @@ set -euo pipefail
 
 NS=semaphore
 CTRL_NS=sealed-secrets                      # memory kubeseal-controller-ns (NOT kube-system)
+CTRL_NAME=sealed-secrets                    # the controller SERVICE name (default is
+                                            # sealed-secrets-controller — this cluster's is sealed-secrets)
 DIR="$(cd "$(dirname "$0")" && pwd)"
 
 OPENWRT_KEY="${1:?usage: seal-secrets.sh <openwrt-ssh-key> <oracle-ssh-key> <age-keys.txt>}"
@@ -40,7 +42,7 @@ read -rsp "Choose a Semaphore admin password: " ADMIN_PW; echo
 #   -o jsonpath='{.data.SEMAPHORE_ACCESS_KEY_ENCRYPTION}' | base64 -d) — regenerating orphans them.
 ENC_KEY="$(head -c32 /dev/urandom | base64)"
 
-seal() { kubeseal --controller-namespace "$CTRL_NS" --format yaml; }
+seal() { kubeseal --controller-name "$CTRL_NAME" --controller-namespace "$CTRL_NS" --format yaml; }
 
 echo "→ sealing semaphore-admin"
 kubectl create secret generic semaphore-admin -n "$NS" \
