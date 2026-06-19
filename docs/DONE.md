@@ -25,6 +25,11 @@ Documented exclusions (NOT regressions): jellyfin/immich (shared iGPU passthroug
 media — would regress on a k3s VM), and the opportunistic LXC consolidation (trade-monitor /
 komga / calibre) — both explicitly Epic 5.6 / out-of-scope per the architecture.
 
+> **Reconciling "all 14 services" (epics.md / PRD DoD):** the 14 = these **9 migrated** + the **5
+> documented exclusions** above (jellyfin, immich, trade-monitor, komga, calibre). Every in-scope
+> service is on ArgoCD; the 5 are scoped out by the architecture, not skipped. So AC3(a) is met
+> against the in-scope denominator.
+
 ## (b) Gate 0 passed + every stateful service has a verified restore
 
 - **Gate 0 PASSED 2026-06-18** — full bare-metal recovery chain proven on dummy data
