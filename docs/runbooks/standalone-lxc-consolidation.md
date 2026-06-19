@@ -7,9 +7,21 @@
 > passthrough a k3s VM can't replicate without a VFIO regression). This is opportunistic: fine to
 > start, fine to stop. NOT a Compose cutover (these were never in LXC #202). [DECISIONS.md Story 5.6]
 
+> ✅ **EXECUTED LIVE 2026-06-19** (agent, operator-granted SSH+kubeconfig). **AS-BUILT differs from §2
+> below:** the in-place NFS plan was **infeasible** — #203 is an unprivileged LXC, so kernel `nfsd` is
+> unavailable and userspace `nfs-ganesha`'s VFS FSAL hits `open_by_handle_at` EPERM (needs
+> CAP_DAC_READ_SEARCH in the initial userns). **Pivoted to node-local:** a dedicated 200G disk on
+> k3s-cp-1 (`/mnt/manga`, ext4, UUID-mounted), 90G rsync'd from #203 (12663 files == source), static
+> `local` PV (RWX, nodeAffinity k3s-cp-1; komga ro / suwayomi rw — both pinned there, no replication/HA,
+> accepted). config DBs ingested to Longhorn (komga 228M SQLite, suwayomi 137M H2, calibre app.db+183M).
+> trade-monitor image needed **fonts-dejavu-core** (PIL `ImageFont` needs the system TTF, else tiny
+> text). Flip: OpenWrt uci (comics/comics-admin/book → 10.0.0.101) + CF tunnel API (comics+book before
+> the wildcard; comics-admin NO rule = internal). #204/#205 destroyed; #203 stopped (retained as the
+> sole 90G manga backup — destroy when comfortable). §2/§3 below are the original (NFS) plan, kept for
+> context; node-local is the as-built. The 90G has NO replica — that is the one durability caveat.
+
 DEV authored + validated all manifests (`workloads/{trade-monitor,komga,calibre}/`), the trade.monitor
-image build (Dockerfile + CI), tokens, and this runbook. The steps below are **operator-run LIVE**
-(NFS repurpose, OpenWrt edit, data copy, parity, decommission) — same split as the Epic 4 cutovers.
+image build (Dockerfile + CI), tokens, and this runbook.
 
 ---
 

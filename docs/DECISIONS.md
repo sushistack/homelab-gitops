@@ -8,8 +8,10 @@ Running log of load-bearing decisions. One line each; link the story.
   (#203 komga+Suwayomi, #204 calibre-web, #205 trade-monitor) were NEVER in the Compose stack (LXC
   #202), so none of the Epic 4 write-freeze / dual-run / R2-actor machinery applies to *moving the
   apps* — only the GitOps *shapes* (ApplicationSet, golden-path Deployment+ingress, render-CMP tokens,
-  SQLite Recreate+startupProbe) are reused. Data migrates by plain copy (small config DBs) or stays in
-  place (90G manga via NFS). Epic 5 stayed optional; this did not gate completion. | Story 5.6
+  SQLite Recreate+startupProbe) are reused. Data migrates by plain copy (small config DBs + the 90G
+  manga — NFS was infeasible, see below). **EXECUTED LIVE 2026-06-19** (agent, operator-granted access):
+  all 4 apps on k3s, parity verified, public+LAN flipped, #204/#205 destroyed, #203 stopped (retained as
+  the sole manga backup). Epic 5 stayed optional; this did not gate completion. | Story 5.6
 - 2026-06-19 | **trade-monitor → k8s `CronJob`** (`* * * * *`, `Asia/Seoul`, Forbid, `activeDeadline
   55s` mirroring the LXC `timeout 55`). Stateless: ConfigMap (no PVC), no Service/ingress/SealedSecret,
   outbound-only (Binance + Yahoo + LaMetric internet + LAN displays 10.0.0.200–206). Image built in
@@ -45,12 +47,13 @@ Running log of load-bearing decisions. One line each; link the story.
   without exclusive VFIO (steals the iGPU from the other guest + host), and they hold large local media
   → moving them forces CPU-only transcoding + Longhorn-bound media I/O = a real regression for no GitOps
   payoff. They remain dedicated LXCs. | Story 5.6
-- 2026-06-19 | **High-blast-radius touch points (the two Plane-0-adjacent edits), operator-gated:** (1)
-  the NFS server config on the repurposed #203 guest, (2) the OpenWrt static-lease rename `komga`→`storage`
-  + the LAN DNS overrides for the new hosts (`configs/openwrt/`). Both follow the high-blast-radius
-  procedure (`--check --diff`, show diff, approve, state rollback). The OpenWrt edit was STAGED in the
-  runbook (not applied) to avoid racing parallel Epic 5 edits to the same file. Proxmox host config,
-  OpenWrt routing/DoH, Oracle/WireGuard, cloudflared are otherwise untouched (AC4). | Story 5.6
+- 2026-06-19 | **Plane-0-adjacent edits — APPLIED LIVE (AS-BUILT):** (1) **OpenWrt** LAN DNS overrides
+  `comics`/`comics-admin`/`book`.eli.kr → `10.0.0.101` (uci add/del_list + dnsmasq reload, surgical — not
+  a full playbook apply). The `komga`→`storage` lease rename was **dropped** (node-local means #203 is NOT
+  a storage box — it's retired). (2) **Cloudflare tunnel** ingress: `comics` + `book` → `https://10.0.0.101:443`
+  inserted before the `*.eli.kr` wildcard (cfd_tunnel API PUT); `comics-admin` deliberately gets NO rule
+  (internal). (3) **Proxmox** (guest-level only, AC4-ok): added a 200G disk to k3s-cp-1, `pct destroy` #204/#205,
+  `pct stop` #203. Proxmox host config, OpenWrt routing/DoH, Oracle/WireGuard are otherwise untouched. | Story 5.6
 
 ## Compose stack RETIRED — k3s is the sole production path (Story 5.4, Epic 5 / Phase 3)
 
@@ -544,3 +547,45 @@ material, IP, or `*.<zone>` host appears; Plane 0 secrets stay off-repo.
     in git history at `97caeec~1:configs/docker/data/homepage/{bookmarks,services}.yaml`, no data loss).
   - NPM `portainer.eli.kr` + homepage proxy-host entries — **left as-is / moot**: NPM itself is slated
     for retirement, so cleaning these inert entries (backends already down) isn't worth a separate pass.
+
+## Day-2 self-service tooling on the platform — Semaphore + Heimdall + Beszel (Story 5.7, Epic 5 / Phase 3 — opportunistic)
+
+- 2026-06-19 | **Heimdall REVERSES 5.5's "no replacement dashboard."** 5.5 retired the Compose
+  `homepage` and folded its links into Karakeep, explicitly introducing *no* replacement dashboard.
+  5.7 brings a dashboard back — but as a NEW, GitOps-managed `Deployment` on the platform, **not** by
+  un-retiring `homepage` (that Compose service stays dead). Operator decision. **Karakeep overlap
+  noted**: Heimdall = at-a-glance app-launcher tiles (+ optional live status); Karakeep =
+  bookmark/read-later manager. The 5.5 links already live in Karakeep — re-adding them as Heimdall
+  tiles is an optional operator nicety (Story 5.8 item 4), not required. | Story 5.7 (reverses 5.5 AC1c)
+- 2026-06-19 | **Beszel = lightweight node-resource monitoring, explicitly NOT Prometheus and NOT a
+  duplicate.** Three monitoring perspectives now exist: uptime-kuma (external/LAN HTTP up/down, sees
+  `*.eli.kr` edge breakage), the ntfy poller (in-cluster ArgoCD Synced/Healthy + k3s version/node
+  drift, 4.2/5.1), and **Beszel** (node CPU/mem/disk/net + HISTORY — the gap `kubectl top` leaves: no
+  history, no UI). Beszel stays **within** the arch's lightweight-monitoring stance (Go binaries +
+  SQLite); the heavy Prometheus/Grafana/node-exporter stack stays rejected (NFR15 = ntfy alerting). A
+  fourth, kuma-blind cluster-internal monitor was NOT built (the 5.5 AC2 warning) — Beszel is a
+  different layer, not a duplicate. | Story 5.7 (fills the 5.5 AC2 / architecture.md 162–164 gap)
+- 2026-06-19 | **Semaphore manages Plane 0 (OpenWrt) FROM INSIDE k3s — the sanctioned easy path is the
+  drift CHECK, not a one-click apply.** OpenWrt is the high-blast-radius gateway the cluster's own LAN
+  rides on; a web "Run" button doing a LIVE `playbook-apply.yml --diff` would bypass the mandated
+  `--check --diff → human review → approval` discipline and could cut the network that serves Semaphore
+  itself (circular dependency). So the **default/scheduled** template is `--check --diff` (scheduled
+  drift detection — complements 5.1 drift alerting); the **LIVE apply** template exists but is
+  documented review-required, operator-triggered, NOT scheduled, NOT one-click. **Recovery from a bad
+  apply is the CLI** (workstation ssh / `configs/openwrt/Makefile`), never "click Run again." | Story 5.7
+- 2026-06-19 | **Secrets stay SOPS-in-git; the age key is delivered as a SealedSecret — Semaphore's
+  built-in Key Store is deliberately NOT used.** The Ansible secrets remain SOPS-encrypted in git
+  (`group_vars/*.sops.yaml`); Semaphore consumes them by being handed the **age key as a SealedSecret**
+  (the same delivery every other pod secret uses) and decrypting at play runtime via `community.sops`.
+  Rationale = minimal operational *overhead*, not minimal install effort: (1) **one secret-management
+  surface**, not two — migrating into Semaphore's store forks the SSOT and doubles backup/audit/rotation
+  surface; (2) **zero new keys** — the SOPS recipient `age1chmmudv…` is the SAME age identity the cluster
+  DR/backup already uses; (3) **break-glass preserved** — secrets stay decryptable from the workstation
+  Makefile if Semaphore/the cluster is down (Semaphore must never be the *only* thing that can decrypt);
+  (4) KMS/Vault is the enterprise-canonical next step but overkill for a single operator on a running
+  age scheme — revisit only if secret access spreads beyond the operator. | Story 5.7
+- 2026-06-19 | **No backup actors for these three (deliberate, unlike 5.6).** Semaphore (run history +
+  project config), Heimdall (tile layout), and Beszel (pairings + short-horizon metrics) hold only
+  **reproducible config** — losing it costs minutes of re-clicking, not data loss. So no R2 backup
+  CronJob, no backup actor. (Contrast 5.6's komga/calibre reading-progress DBs, which got R2 actors.)
+  | Story 5.7
