@@ -97,6 +97,44 @@ Proxmox host  →  OpenWrt router  →  k3s VMs  →  etcd quorum=3  →  [SEALI
 
 5. **Restore PVs from R2** (per volume that needs data — see §5).
 
+### 3a. Cold-boot leg (power-cycle — etcd SURVIVES, the everyday outage path)
+
+> This leg is what a **power outage** triggers, and is distinct from the bare-metal
+> rebuild above. The 3 k3s VMs and etcd **survive a clean power-cycle**, so there is
+> **NO sealing-key restore** (that step exists only when etcd is lost — §3.3 above).
+> Tested + measured under Story 5.2; the bare-metal leg (§3.1–3.5) stands for etcd loss.
+
+**Deterministic boot order (enforced at the hypervisor, not improvised):**
+
+```
+Proxmox host (Plane 0)  →  OpenWrt router VM  →  3× k3s node VMs  →  etcd quorum 3/3 re-forms  →  ArgoCD reconciles  →  workloads (sync waves 0→3)
+   onboot=1                 startup order=1        startup order=2,up=S (onboot=1)
+   (boots first, outside    (household internet     (staggered: etcd must reach quorum
+    the cluster)             first; no cluster dep)   BEFORE Longhorn/wave-0 storage wakes)
+```
+
+The single load-bearing rule: **Longhorn (wave 0) must not be scheduled before etcd is
+healthy** — else storage flaps while the datastore is still electing. The `up=S` stagger
+on the node VMs (declared in §5) plus k3s/ArgoCD readiness gating enforces it. The exact
+`order`/`up=S` values are the SSOT in §5; do not "optimise" the stagger away — it is what
+prevents the single-host etcd-quorum race (3 members starting at once on one host).
+
+**Per-layer stall map — if convergence stalls, find the layer, run the check, take the action:**
+
+| Layer (in boot order) | Check (is THIS layer the stall?) | If stalled, do exactly this |
+|---|---|---|
+| **Proxmox host** | host does not POST / no console | This is the **host-reimage boundary** — out of cold-boot scope. Power + OOB console (NanoKVM); if the host itself is lost, you are in the full bare-metal leg (§3.1), not cold boot. |
+| **OpenWrt router VM** | no household DNS/DHCP; `qm status <router-vmid>` ≠ running | `qm start <router-vmid>`. Confirm `onboot=1` + **lowest** `startup order`. Router must NOT wait on the cluster (Plane 0 invariant) — if it does, that dependency is the bug. |
+| **a k3s node VM** | `kubectl get nodes` shows <3 Ready; `qm status` of the missing VMID | `qm start` the missing VM; confirm `onboot=1`. If the VM is up but NotReady: SSH in, `systemctl status k3s` (init node) / `k3s-agent`→no, all are `server`; check disk/`iscsid`. |
+| **etcd quorum** | `kubectl get nodes -l node-role.kubernetes.io/etcd=true --no-headers \| wc -l` < 3, or apiserver unreachable | The single-host **race**: members started too close together. Increase `up=S` in §5 and re-cycle. If one member is wedged, restart `k3s` on the lagging node only. **Never run at 2** — fix to 3 or you have lost control-plane HA. |
+| **ArgoCD** | `kubectl -n argocd get applications` OutOfSync/Missing, or argocd pods not Running | Wait for etcd + apiserver first (ArgoCD cannot reconcile without them). Then `kubectl -n argocd rollout status deploy/argocd-application-controller`. **The ≤1 manual step, if any is needed:** `kubectl apply -f bootstrap/root-app.yaml` (idempotent — safe to re-run). |
+| **a workload** | pod Pending/CrashLoop; its PVC not Bound | Almost always **Longhorn woke before etcd settled** — the volume re-attaches on its own once etcd is healthy. Confirm `kubectl -n longhorn-system get nodes.longhorn.io` all Ready, then delete the stuck pod to force a clean reschedule. If it recurs every boot, the `up=S` stagger is too short. |
+
+**Measured manual-step count (NFR7):** `<MEASURED — pending operator cold-boot drill, Story 5.2 Task 3>`
+(target ≤1; the only candidate step is the idempotent `kubectl apply -f bootstrap/root-app.yaml`
+above — ArgoCD `automated{selfHeal}` should make even that unnecessary on a power-cycle. Record
+the real number from the drill here; if >1, list each extra step honestly.)
+
 ## 4. Common failures
 
 | Symptom | Cause | Fix |
@@ -107,6 +145,7 @@ Proxmox host  →  OpenWrt router  →  k3s VMs  →  etcd quorum=3  →  [SEALI
 | Longhorn volumes won't attach | iscsid not running / multipathd grabbed the device | Ansible Play 0 handles this; re-run it. Verify `systemctl is-active iscsid`, `multipathd` masked. |
 | BackupTarget `available=false` | R2 creds/endpoint wrong, or region rejected | Secret keys `AWS_ACCESS_KEY_ID/AWS_SECRET_ACCESS_KEY/AWS_ENDPOINTS`; URL `s3://<bucket>@us-east-1/<path>` (R2 ignores region but the SDK needs a valid-looking one). |
 | `draw.<zone>` 502 at the edge | cloudflared origin points at a dead node | Origin must point at a live Phase-2a node `:443`; Traefik answers on every node IP. |
+| **Cold boot:** etcd quorum won't form, or volumes flap on every power-cycle | Single-host **race** — 3 etcd members started too close together, or Longhorn woke before etcd was healthy | Increase the `up=<S>` stagger on the node VMs (§5) and re-cycle; the stagger holds wave-0 storage back until etcd is electing-done. See the §3a per-layer stall map. |
 
 ## 5. Backup / restore — exact commands
 
@@ -118,6 +157,28 @@ image to scsi0 + resize 32G → add scsi1 100G (Longhorn) → ide2 cloudinit →
 cloud-init `ciuser=root` + sshkeys + static `ipconfig0` → `qm start`. This is the
 reproducible substrate definition (Terraform Proxmox provider is deferred);
 keep it next to `ansible/`.
+
+**Cold-boot start-order — the declared SSOT (Story 5.2, AC1).** After power-on the
+host must bring the VMs up in a fixed order with no operator at the console, so set
+these per-VM keys as part of the substrate definition (native Proxmox feature — do
+NOT build an orchestration daemon). Verify exact key syntax against the installed PVE
+version before applying:
+
+```sh
+# Plane 0 router first, then the k3s nodes after a stagger so etcd forms quorum
+# BEFORE Longhorn (wave 0) wakes. up=S = wait S seconds after THIS vm starts before
+# starting the next ordered VM. S is tuned empirically in the drill (start at up=30 → 60).
+qm set <router-vmid>  --onboot 1 --startup order=1
+qm set <k3s-cp-1-vmid> --onboot 1 --startup order=2,up=<S>
+qm set <k3s-cp-2-vmid> --onboot 1 --startup order=2,up=<S>
+qm set <k3s-cp-3-vmid> --onboot 1 --startup order=2,up=<S>
+```
+
+> **HIGH-BLAST-RADIUS (`configs/proxmox/`, Plane 0).** Never apply directly. Dry-run /
+> show the diff (`qm config <vmid> | grep -E 'onboot|startup'` before & after), get
+> explicit operator approval, and state the rollback **before** applying. **Rollback:**
+> `qm set <vmid> --delete startup` (and `--onboot 0` if it was unset) restores the prior
+> behaviour. A mistake here also touches the household-internet boot path (the router VM).
 
 **Sealing key — export (do this on the live cluster; re-export after any key renewal):**
 ```sh
@@ -170,8 +231,15 @@ EOF
 ## 6. Manual-step count (NFR7, honest) + escalation
 
 - **Steady-state cold boot** (cluster already provisioned + keyed, just powered
-  off): **1 deterministic manual step** — `kubectl apply -f bootstrap/root-app.yaml`.
-  Meets NFR7.
+  off — the §3a power-cycle leg): **1 deterministic manual step** — `kubectl apply -f
+  bootstrap/root-app.yaml` — and **possibly 0** once ArgoCD `automated{selfHeal}`
+  reconciles on its own after etcd+API are back. Tested + measured under Story 5.2:
+  **`<MEASURED — pending operator cold-boot drill, Story 5.2 Task 3>`** (verified over
+  2–3 repeated power-cycles to confirm the single-host etcd-quorum race does not stall
+  convergence). The load-bearing rule that makes this deterministic: the `up=<S>`
+  stagger (§5) holds the k3s node VMs so **etcd reaches quorum before Longhorn (wave 0)
+  wakes** — do not optimise the stagger away, or the storage layer flaps while the
+  datastore is still electing. Meets NFR7 (≤1). Record the real number above after the drill.
 - **Full bare-metal recovery**: **2 load-bearing manual steps** — (a) the
   sealing-key restore (§3.3), then (b) root-app (§3.4). The key-restore is
   **deliberately not automated**: automating it would require the age identity

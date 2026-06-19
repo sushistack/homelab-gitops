@@ -2,6 +2,30 @@
 
 Running log of load-bearing decisions. One line each; link the story.
 
+## Cold-boot ordering — tested + deterministic (Story 5.2, Epic 5 / Phase 3)
+
+Exposure note: safe to show — boot order, the stagger rationale, the ≤1-step claim, and the
+measured result. No key material, IP, or `*.<zone>` host; the live `qm` apply uses real VMIDs
+only on the host (off-repo).
+
+- **Cold-boot start-order is enforced at the hypervisor, not improvised.** Per-VM Proxmox
+  `onboot=1` + `startup order=N,up=S`: OpenWrt router VM `order=1` (household internet first,
+  no cluster dependency — Plane 0), the three k3s node VMs `order=2,up=<S>` staggered so **etcd
+  reaches quorum=3 BEFORE Longhorn (wave 0) wakes**. Native Proxmox feature — no custom
+  orchestration daemon (AR3). Declared as the SSOT in the VM substrate def
+  ([bare-metal-recovery.md §5](runbooks/bare-metal-recovery.md)); the live `qm set` is the
+  operator's high-blast-radius apply (`configs/proxmox/`, Plane 0 — dry-run/diff/rollback/approval).
+  (FR23, NFR7, AR3)
+- **This is the everyday power-cycle path, NOT Gate 0.** etcd survives a clean power-cycle, so the
+  cold-boot leg needs **no sealing-key restore** (that is the bare-metal/etcd-loss leg, Story 2.6).
+  Cold-boot leg + per-layer stall map hardened in
+  [bare-metal-recovery.md §3a](runbooks/bare-metal-recovery.md). (FR23, NFR7, AR34)
+- **Manual-step count (NFR7, honest):** `<TESTED DETERMINISTIC AS OF <DATE> — manual steps =
+  <MEASURED>, verified over <N> repeated power-cycles; pending operator cold-boot drill (Story 5.2
+  Task 3)>`. Target ≤1 (the only candidate step is the idempotent `kubectl apply -f
+  bootstrap/root-app.yaml`; likely 0 once ArgoCD selfHeal reconciles). If >1, the extra step is
+  recorded here as a known limitation rather than papered over. (NFR7, FR23)
+
 ## Vaultwarden cutover (CRITICAL, LAST) + project DONE audit (Story 4.8)
 
 - 2026-06-19 | **Vaultwarden cut over to k3s — the LAST stateful service.** Same SQLite write-freeze
@@ -325,8 +349,8 @@ material, IP, or `*.<zone>` host appears; Plane 0 secrets stay off-repo.
   `*/15` `CronJob` reading cluster state via read-only RBAC → `curl` to the in-cluster ntfy `alerts`
   topic, `X-Priority: 5`). **NFR15b** (component/version-drift + full steady-state ops alerting + the
   ntfy-self-monitoring fix) is **deferred to Epic 5 / Phase 3** — this explicitly resolves the
-  architecture's flagged NFR15 partial-gap (architecture.md 867–869). Runbook:
-  [ops-alerts.md](runbooks/ops-alerts.md). (FR27, NFR15, AC3)
+  architecture's flagged NFR15 partial-gap (architecture.md 867–869). **NFR15b closed 2026-06-19
+  (Story 5.1) — see below.** Runbook: [ops-alerts.md](runbooks/ops-alerts.md). (FR27, NFR15, AC3)
 - **Minimal poller, NOT a monitoring stack (AC4).** No kube-prometheus-stack / Alertmanager /
   Grafana — observability is explicitly Phase 3. Read CRD status directly via kubectl (cert-manager
   `Certificate.status.notAfter`, Longhorn `nodes.longhorn.io` disk usage) instead of scraping metrics.
