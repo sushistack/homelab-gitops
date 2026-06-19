@@ -1,6 +1,7 @@
 # gitleaks ignore — historical findings accepted, not rewritten.
-# These are commits from Stories 4.3–4.8 (and earlier) that recorded private *.eli.kr
-# hostnames / 10.0.0.x host IPs in tracked docs+manifests BEFORE the redaction convention.
+# These are commits from Stories 4.3-4.8 (and earlier) that recorded the private DNS zone
+# and 10.x host IPs in tracked docs+manifests BEFORE the redaction convention. (This header
+# avoids literal hosts/IPs so the ignore file itself does not trip the gate.)
 # Rationale: the data is already public (pushed days ago), low-value (RFC1918 + public-
 # resolvable hostnames), and a public-repo history rewrite (force-push) was judged not worth
 # the blast radius. Current HEAD is redacted to ${SECRET:*} tokens; the gate stays enforced
