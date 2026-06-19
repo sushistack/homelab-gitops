@@ -13,3 +13,10 @@ resources:
 # No `labels:` block: these are selector-less Services with manual EndpointSlices, and a
 # commonLabels/labels transformer that touched the Service selector would break the manual-endpoint
 # association (kubernetes.io/service-name is the only label that may match). Keep it minimal.
+#
+# ⚠️ EndpointSlices are NOT ArgoCD-synced. ArgoCD's cluster-wide resource.exclusions (argocd-cm)
+# excludes both core/v1 Endpoints and discovery.k8s.io/EndpointSlice, so the EndpointSlice doc in
+# each <host>.yaml is dropped at sync (ExcludedResourceWarning — expected, not an error). The
+# Service/Certificate/IngressRoute ARE synced. Apply the 5 slices out of band — they're static and
+# persist (a selector-less Service never auto-manages them):  bash workloads/edge-proxies/apply-endpoints.sh
+# Re-run after a cluster rebuild. (Discovered live during the 5.8 cutover.)

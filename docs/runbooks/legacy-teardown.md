@@ -240,11 +240,17 @@ ONLY after all six verify on Traefik.** cloudflared untouched.
 
 ### E2. Five externals → Traefik (workloads/edge-proxies — DEV-authored)
 
-Fill the tokens in `internal/tokens.env`: `DOMAIN_{KUMA,JELLYFIN,IMMICH,PROXMOX,OPENWRT,KVM}` and
-`IP_{JELLYFIN,IMMICH,OPENWRT,KVM}` (`IP_PROXMOX` already set). **CONFIRM each backend port/scheme
-against the live NPM nginx conf on H before flipping** — the manifests default jellyfin→http:8096,
-immich→http:2283, kvm→http:80, proxmox→https:8006, openwrt→https:443. Commit/push → ArgoCD creates
-the headless Services + EndpointSlices + per-host Certificates + IngressRoutes in ns `edge-proxies`.
+Fill the tokens in `internal/tokens.env` + the in-cluster `argocd-render-tokens` Secret:
+`DOMAIN_{KUMA,JELLYFIN,IMMICH,PROXMOX,OPENWRT,KVM}` and `IP_{JELLYFIN,IMMICH,OPENWRT,KVM}`
+(`IP_PROXMOX` already set). Backends CONFIRMED against the live NPM confs: jellyfin `http .10:8096`
+(5.conf), immich `http .11:2283` (6.conf), proxmox `https .2:8006` (7.conf), openwrt `http .1:80`
+(8.conf — plain http, NOT https), kvm `http .100:80` (11.conf). Commit/push → ArgoCD creates the
+headless Services + per-host Certificates + IngressRoutes in ns `edge-proxies`.
+
+> ⚠️ **EndpointSlices are NOT ArgoCD-managed** — ArgoCD's `resource.exclusions` excludes the kind, so
+> the slices in the `<host>.yaml` files are dropped at sync (the Service/Cert/IngressRoute still sync).
+> Apply the 5 static slices out of band: **`bash workloads/edge-proxies/apply-endpoints.sh`** (re-run
+> after a cluster rebuild). Verify `kubectl -n edge-proxies get endpointslice` shows all 5 before flipping.
 
 ### E3. Per-host edge re-point (one at a time, verify before the next)
 

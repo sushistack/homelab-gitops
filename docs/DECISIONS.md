@@ -628,6 +628,16 @@ material, IP, or `*.<zone>` host appears; Plane 0 secrets stay off-repo.
   carry + ntfy tags/priority. ntfy is `deny-all`, so the existing token user is granted `wo` on the new
   topics via `ntfy access` (no server.yml change, no SealedSecret reseal — same user, more grants). |
   Story 5.8 (AC3)
+- 2026-06-19 | **edge-proxies EndpointSlices are applied OUT OF BAND, not by ArgoCD (discovered live).**
+  ArgoCD's default `resource.exclusions` (argocd-cm) excludes BOTH core/v1 `Endpoints` and
+  `discovery.k8s.io/EndpointSlice` — the standard default that stops ArgoCD watching control-plane
+  endpoint churn. So the manual EndpointSlices fronting the 5 external hosts can't be GitOps-synced
+  (they show ExcludedResourceWarning). Rather than un-excluding the kind cluster-wide (which would
+  make ArgoCD watch every endpoint object in the cluster — the noise the exclusion exists to prevent),
+  the 5 slices are applied via `workloads/edge-proxies/apply-endpoints.sh` (render + kubectl apply).
+  They're static (one backend IP each) and a selector-less Service never prunes them, so they persist;
+  the script is re-run after a cluster rebuild. The Service/Certificate/IngressRoute stay ArgoCD-managed.
+  | Story 5.8 (AC6b)
 - 2026-06-19 | **Heimdall tile list lives in the runbook (reproducibility, honoring 5.7's claim).** 5.7
   shipped Heimdall with no backup actor on the claim its config is "trivially reproducible." Hand-clicking
   tiles and walking away would quietly break that, so the **runbook tile-list (or an exported JSON) is the
