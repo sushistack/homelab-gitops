@@ -10,8 +10,9 @@ Running log of load-bearing decisions. One line each; link the story.
   apps* — only the GitOps *shapes* (ApplicationSet, golden-path Deployment+ingress, render-CMP tokens,
   SQLite Recreate+startupProbe) are reused. Data migrates by plain copy (small config DBs + the 90G
   manga — NFS was infeasible, see below). **EXECUTED LIVE 2026-06-19** (agent, operator-granted access):
-  all 4 apps on k3s, parity verified, public+LAN flipped, #204/#205 destroyed, #203 stopped (retained as
-  the sole manga backup). Epic 5 stayed optional; this did not gate completion. | Story 5.6
+  all 4 apps on k3s, parity verified (operator-confirmed working after 3 post-flip fixes — see below),
+  public+LAN flipped, **#203/#204/#205 all destroyed**. The 90G manga now lives ONLY on k3s-cp-1's local
+  disk (no replica — re-downloadable via Suwayomi). Epic 5 stayed optional; did not gate completion. | Story 5.6
 - 2026-06-19 | **trade-monitor → k8s `CronJob`** (`* * * * *`, `Asia/Seoul`, Forbid, `activeDeadline
   55s` mirroring the LXC `timeout 55`). Stateless: ConfigMap (no PVC), no Service/ingress/SealedSecret,
   outbound-only (Binance + Yahoo + LaMetric internet + LAN displays 10.0.0.200–206). Image built in
@@ -53,7 +54,7 @@ Running log of load-bearing decisions. One line each; link the story.
   a storage box — it's retired). (2) **Cloudflare tunnel** ingress: `comics` + `book` → `https://10.0.0.101:443`
   inserted before the `*.eli.kr` wildcard (cfd_tunnel API PUT); `comics-admin` deliberately gets NO rule
   (internal). (3) **Proxmox** (guest-level only, AC4-ok): added a 200G disk to k3s-cp-1, `pct destroy` #204/#205,
-  `pct stop` #203. Proxmox host config, OpenWrt routing/DoH, Oracle/WireGuard are otherwise untouched. | Story 5.6
+  `pct destroy` #203 (after operator confirmed working). Proxmox host config, OpenWrt routing/DoH, Oracle/WireGuard otherwise untouched. | Story 5.6
 
 ## Compose stack RETIRED — k3s is the sole production path (Story 5.4, Epic 5 / Phase 3)
 
