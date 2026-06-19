@@ -165,3 +165,9 @@ workloads:
   uptime-kuma:
     manifest: workloads/uptime-kuma/deployment.yaml
     image: louislam/uptime-kuma@sha256:3d632903e6af34139a37f18055c4f1bfd9b7205ae1138f1e5e8940ddc1d176f9
+  # Story 5.10 — cloudflared relocated off the retiring docker LXC (.20) INTO k3s as a 2-replica
+  # infra Deployment (the public *.eli.kr edge / Plane 0). Was :latest on .20; pinned on the move
+  # to the digest the host last ran (2026.6.1). Same tunnel/token — only its home changed.
+  cloudflared:
+    manifest: infra/cloudflared/deployment.yaml
+    image: cloudflare/cloudflared:2026.6.1@sha256:6d91c121b803126f7a5344005d17a9324788fc09d305b6e2560ec6040a7ae283

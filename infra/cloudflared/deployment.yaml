@@ -1,0 +1,74 @@
+# Cloudflare Tunnel — the public edge for *.eli.kr (Plane 0). Outbound-only: no Service,
+# no IngressRoute, no PVC. 2 replicas + soft anti-affinity so a single node reboot (e.g. the
+# 5.10 RAM bumps, or any maintenance) never drops the edge — Cloudflare load-balances across
+# all connections of the one tunnel. The TUNNEL_TOKEN is the same tunnel that ran on .20;
+# moving its home does not change the tunnel, so no CF-side change is needed.
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: cloudflared
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: cloudflared
+  strategy:
+    rollingUpdate:
+      maxUnavailable: 0   # never drop below 2 healthy tunnels during a rollout
+    type: RollingUpdate
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: cloudflared
+    spec:
+      affinity:
+        podAntiAffinity:
+          preferredDuringSchedulingIgnoredDuringExecution:
+            - weight: 100
+              podAffinityTerm:
+                labelSelector:
+                  matchLabels:
+                    app.kubernetes.io/name: cloudflared
+                topologyKey: kubernetes.io/hostname
+      containers:
+        - name: cloudflared
+          # Pinned in versions.yaml (Story 5.3 SSOT). Was :latest on .20 — pinned on the move.
+          image: cloudflare/cloudflared:2026.6.1@sha256:6d91c121b803126f7a5344005d17a9324788fc09d305b6e2560ec6040a7ae283
+          args:
+            - tunnel
+            - --no-autoupdate
+            - --metrics
+            - 0.0.0.0:2000   # /ready returns 200 once the tunnel has live connections
+            - run
+          envFrom:
+            - secretRef:
+                name: cloudflared-token   # TUNNEL_TOKEN — sealed; envFrom only (AR22/AR27)
+          env:
+            - name: TZ
+              value: Asia/Seoul
+          ports:
+            - name: metrics
+              containerPort: 2000
+          resources:
+            requests:
+              cpu: 50m
+              memory: 64Mi
+            limits:
+              memory: 128Mi
+          startupProbe:
+            httpGet:
+              path: /ready
+              port: 2000
+            failureThreshold: 30
+            periodSeconds: 3
+          readinessProbe:
+            httpGet:
+              path: /ready
+              port: 2000
+            periodSeconds: 10
+          livenessProbe:
+            httpGet:
+              path: /ready
+              port: 2000
+            failureThreshold: 3
+            periodSeconds: 10

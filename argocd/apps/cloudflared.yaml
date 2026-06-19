@@ -1,0 +1,29 @@
+# Story 5.10 — cloudflared as a late-wave infra Application (self-authored kustomize, same
+# pattern as ops-alerts.yaml / cluster-issuer.yaml — NOT a Helm vendor source). The app-of-apps
+# root recurses argocd/ and adopts this. No ${SECRET:*} tokens (the token lives in the
+# SealedSecret), so the render CMP build is a no-op.
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: cloudflared
+  namespace: argocd
+  annotations:
+    # Wave 2: after the sealed-secrets controller (wave 0) so the SealedSecret can decrypt.
+    # Needs no cert/ingress, so it does not wait on cert-manager/workloads.
+    argocd.argoproj.io/sync-wave: "2"
+spec:
+  project: homelab
+  source:
+    repoURL: https://github.com/sushistack/home-server-gitops.git
+    targetRevision: HEAD
+    path: infra/cloudflared
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: cloudflared
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
+      - ServerSideApply=true

@@ -1,0 +1,9 @@
+# Story 5.10 — cloudflared relocated off the retiring docker LXC (10.0.0.20) into k3s.
+# Plane 0 (the public *.eli.kr edge tunnel) now lives in-cluster. Acceptable post-5.8:
+# every public host already routes through Traefik (in k3s), so a k3s outage takes the
+# services down regardless — cloudflared-in-cluster loses nothing. LAN-IP is the recovery
+# path for proxmox/openwrt/kvm during a k3s outage (5.8 AC6e).
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: cloudflared
