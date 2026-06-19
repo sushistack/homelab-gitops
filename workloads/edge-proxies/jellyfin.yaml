@@ -45,6 +45,8 @@ ports:
 endpoints:
   - addresses:
       - "${SECRET:IP_JELLYFIN}"                          # backend IP (tokenized — never a raw .x in git)
+    conditions:
+      ready: true        # explicit: an absent `ready` defaults to ready, but stricter Traefik builds may skip NotReady endpoints
 ---
 apiVersion: traefik.io/v1alpha1
 kind: IngressRoute
