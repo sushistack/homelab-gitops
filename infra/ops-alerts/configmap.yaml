@@ -19,6 +19,9 @@ data:
 
     CERT_WARN_DAYS="${CERT_WARN_DAYS:-14}"   # backstop: cert-manager renews at ~2/3 life; <=14d => renewal failing
     DISK_PCT="${DISK_PCT:-80}"
+    K3S_PINNED_VERSION="${K3S_PINNED_VERSION:-}"   # default so an unset env doesn't trip set -u mid-pipeline (which would
+                                                   # silently drop BOTH (f) version-drift AND (g) NotReady). Empty = skip the
+                                                   # (f) version compare only (jq guards on $pin != ""); (g) NotReady still runs.
 
     # Make the egress gotcha LOUD, not silent: if the apiserver is unreachable (the #1 predictable
     # failure once network-baseline default-deny lands without our egress allow), exit non-zero so
@@ -32,9 +35,13 @@ data:
       # JSON publish (not X-Title/-d headers): HTTP headers are latin-1, so 한글/이모지 in the
       # title/body would mojibake. jq builds the payload (safe escaping) — already a dependency.
       payload=$(jq -nc --arg topic "$NTFY_TOPIC" --arg t "$1" --arg m "$2" \
-        '{topic:$topic, title:$t, message:$m, priority:5}')
+        '{topic:$topic, title:$t, message:$m, priority:5}') \
+        || { echo "ERROR: payload build failed [$1] $2"; return 0; }   # guard: under set -eu a bare $(…) failure aborts the whole poll
+      # POST to the ntfy ROOT url (topic is in the JSON body, not the path). Content-Type makes the
+      # JSON-publish contract explicit instead of relying on ntfy's lenient root-url body sniffing.
       if curl -fsS --max-time 10 \
            -H "Authorization: Bearer ${NTFY_TOKEN}" \
+           -H "Content-Type: application/json" \
            -d "$payload" "${NTFY_URL}" >/dev/null; then
         echo "ALERT sent [$1] $2"
       else
