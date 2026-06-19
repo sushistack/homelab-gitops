@@ -638,6 +638,15 @@ material, IP, or `*.<zone>` host appears; Plane 0 secrets stay off-repo.
   They're static (one backend IP each) and a selector-less Service never prunes them, so they persist;
   the script is re-run after a cluster rebuild. The Service/Certificate/IngressRoute stay ArgoCD-managed.
   | Story 5.8 (AC6b)
+- 2026-06-19 | **uptime-kuma is INTERNAL-only, not public (operator decision, post-cutover).** The
+  cutover initially gave kuma a public cloudflared rule, but a monitoring dashboard shouldn't be
+  internet-facing. Fix: removed kuma's cloudflared ingress rule + changed the `*.eli.kr` wildcard from
+  Traefik to **default-deny `http_status:404`** (only kuma relied on the wildcard; the public apps have
+  explicit rules; the internal-only services — semaphore/heimdall/beszel/traefik/comics-admin — are
+  NXDOMAIN so were never exposed by the wildcard). Result: kuma external = 404, LAN = served via the
+  OpenWrt `.101` override → Traefik. kuma now matches the 5.7 internal-only pattern. The external
+  uptime watcher (AC6e) therefore targets `notify.eli.kr` (public), not kuma. (Optional cleanup: delete
+  the kuma.eli.kr public DNS record for NXDOMAIN parity — needs Zone:DNS:Edit.) | Story 5.8 (AC6a/6e)
 - 2026-06-19 | **Heimdall tile list lives in the runbook (reproducibility, honoring 5.7's claim).** 5.7
   shipped Heimdall with no backup actor on the claim its config is "trivially reproducible." Hand-clicking
   tiles and walking away would quietly break that, so the **runbook tile-list (or an exported JSON) is the
