@@ -1,0 +1,26 @@
+# Traefik dashboard exposed read-only on an INTERNAL-only host (operator tooling, not public).
+# Backend is the BUILT-IN `api@internal` TraefikService (kind: TraefikService, no port) — the
+# dashboard/api is already enabled (live: --api.dashboard=true), so NO HelmChartConfig change.
+#
+# Internal-only = NO cloudflared tunnel rule + a LAN-only OpenWrt DNS override → 10.0.0.101.
+# Externally NXDOMAIN. NO ipAllowList middleware: cloudflared egresses from a LAN IP, so an
+# allowlist would ADMIT internet-via-tunnel traffic — "no tunnel rule + LAN-only DNS" is the only
+# correct internal gate (the semaphore/suwayomi rationale). traefik.io/v1alpha1 (v3); old
+# containo.us API silently fails.
+#
+# The dashboard serves only /dashboard and /api, so the route is path-scoped to those prefixes.
+apiVersion: traefik.io/v1alpha1
+kind: IngressRoute
+metadata:
+  name: traefik-dashboard
+spec:
+  entryPoints:
+    - websecure
+  routes:
+    - match: Host(`${SECRET:DOMAIN_TRAEFIK}`) && (PathPrefix(`/dashboard`) || PathPrefix(`/api`))
+      kind: Rule
+      services:
+        - name: api@internal
+          kind: TraefikService
+  tls:
+    secretName: traefik-dashboard-tls

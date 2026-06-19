@@ -1,0 +1,11 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+# Traefik dashboard (read-only observability of routers/services/middlewares). Generated as ONE
+# Application by the `workloads` ApplicationSet. Namespace `traefik-dashboard` is auto-created
+# (CreateNamespace=true) — no pods here, the backend is the built-in api@internal service.
+# ponytail: no namespace.yaml (CreateNamespace covers it); no http→websecure redirect (LAN admin
+#           types https; add a redirect IngressRoute like semaphore's if you ever want http→https).
+resources:
+  - ingressroute.yaml
+  - certificate.yaml
