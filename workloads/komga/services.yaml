@@ -1,0 +1,29 @@
+# Story 5.6 — two ClusterIP Services, one per component. Each selector targets the per-component
+# app.kubernetes.io/name (the shared kustomize labels: are NOT selectors). Public exposure is via the
+# Traefik IngressRoute, not host ports.
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: komga
+spec:
+  type: ClusterIP
+  selector:
+    app.kubernetes.io/name: komga
+  ports:
+    - name: http
+      port: 25600
+      targetPort: 25600
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: suwayomi
+spec:
+  type: ClusterIP
+  selector:
+    app.kubernetes.io/name: suwayomi
+  ports:
+    - name: http
+      port: 4567
+      targetPort: 4567

@@ -1,0 +1,69 @@
+# Story 5.6 — calibre-web (ebook reader), LinuxServer image. config (app.db) + library (metadata.db +
+# books) are SQLite-backed -> strategy:Recreate + grace 30s + startupProbe (the Epic 4 SQLite pattern).
+# The LinuxServer image runs its s6 init as root and drops to PUID/PGID (1000) itself, chowning /config
+# on the way — so NO chown initContainer is needed here (unlike suwayomi). One Longhorn PVC, two
+# subPaths: /config (app.db) and /books (the library; app.db references this in-container path).
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: calibre
+spec:
+  replicas: 1
+  progressDeadlineSeconds: 180
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: calibre
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: calibre
+    spec:
+      terminationGracePeriodSeconds: 30
+      containers:
+        - name: calibre
+          # lscr.io/linuxserver/calibre-web. CONFIRM the current tag + SWAP TO @sha256 at cutover (AR29):
+          #   docker buildx imagetools inspect lscr.io/linuxserver/calibre-web:latest
+          image: lscr.io/linuxserver/calibre-web:0.6.24
+          ports:
+            - containerPort: 8083
+          env:
+            - name: PUID
+              value: "1000"
+            - name: PGID
+              value: "1000"
+            - name: TZ
+              value: Asia/Seoul
+          resources:
+            requests:
+              cpu: 50m
+              memory: 128Mi
+            limits:
+              memory: 512Mi
+          # calibre-web serves its login at / -> 200. startupProbe covers the s6 init + SQLite open.
+          startupProbe:
+            httpGet:
+              path: /
+              port: 8083
+            failureThreshold: 30
+            periodSeconds: 5
+          readinessProbe:
+            httpGet:
+              path: /
+              port: 8083
+          livenessProbe:
+            httpGet:
+              path: /
+              port: 8083
+          volumeMounts:
+            - name: data
+              mountPath: /config
+              subPath: config       # app.db
+            - name: data
+              mountPath: /books
+              subPath: books        # the library + metadata.db (app.db references /books in-container)
+      volumes:
+        - name: data
+          persistentVolumeClaim:
+            claimName: calibre-data

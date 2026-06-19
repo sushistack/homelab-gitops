@@ -1,0 +1,61 @@
+# Story 5.6 — trade-monitor config, ported from the trade.monitor repo (config/settings.yaml) with
+# TWO deltas for k3s (Reconciliation 4 + log handling):
+#   * upload_host / awtrix.host: dnsmasq LEASE NAMES → STATIC LAN IPs. A pod resolves via CoreDNS,
+#     which has no knowledge of the OpenWrt dnsmasq static leases (crypto-btc, ulanzi, …), so the
+#     names would NXDOMAIN. The IPs are MAC-bound static leases (memory lan-devices), stable.
+#       ulanzi 10.0.0.200 | btc .201 | eth .202 | xrp .203 | sol .204 | doge .205 | snp500 .206
+#   * logging.file → /tmp: the container runs as `nobody`; /app is root-owned and not writable, so
+#     the LXC-relative `logs/…` path would crash configure_logging on mkdir. /tmp is writable and
+#     k8s captures stdout anyway (the file is throwaway; no PVC — AC1a).
+coins:
+  - symbol: "BTCUSDT"
+    display_name: "BTC"
+    upload_host: "10.0.0.201"
+  - symbol: "ETHUSDT"
+    display_name: "ETH"
+    upload_host: "10.0.0.202"
+  - symbol: "XRPUSDT"
+    display_name: "XRP"
+    upload_host: "10.0.0.203"
+  - symbol: "SOLUSDT"
+    display_name: "SOL"
+    upload_host: "10.0.0.204"
+  - symbol: "DOGEUSDT"
+    display_name: "DOGE"
+    upload_host: "10.0.0.205"
+
+stocks:
+  - symbol: "^GSPC"
+    display_name: "SP500"
+    upload_host: "10.0.0.206"
+
+chart:
+  width: 240
+  height: 240
+  style: "tradingview"
+  jpeg_quality: 85
+
+upload:
+  timeout: 30.0
+  retries: 3
+  dir: "/image/"
+
+timeframes:
+  - code: "1D"
+    interval: "1h"
+    limit: 24
+  - code: "1M"
+    interval: "1d"
+    limit: 30
+
+logging:
+  level: "INFO"
+  file: "/tmp/trade_monitor.log"
+
+awtrix:
+  enabled: true
+  host: "10.0.0.200"
+  app_name: "nasdaq"
+  icon: "47"
+  color: [0, 200, 100]
+  ticker: "^IXIC"

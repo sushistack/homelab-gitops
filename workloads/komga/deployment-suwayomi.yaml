@@ -1,0 +1,99 @@
+# Story 5.6 — Suwayomi/Tachidesk (the manga DOWNLOADER/source). Writes new manga INTO the shared
+# library, so it mounts the NFS export READ-WRITE; its own DB/sources/settings live on a Longhorn PVC.
+# Reconciliation 5: komga + suwayomi are two Deployments in one namespace sharing one library (the
+# karakeep multi-component-in-one-workload shape).
+#
+# 🔴 LIBRARY PATH (operator, during data migration): the upstream image runs as uid 1000 and stores
+# its data dir at /home/suwayomi/.local/share/Tachidesk. Downloads default to <data>/downloads — which
+# would land on Longhorn, NOT the shared NFS. So the migrated `server.conf` MUST set
+# `server.downloadsPath = /manga` (the NFS mount below) so suwayomi writes where komga reads. komga's
+# /data (ro) and suwayomi's /manga (rw) are the SAME export (10.0.0.30:/mnt/manga). Verify a suwayomi
+# download appears in komga at parity (Task 7).
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: suwayomi
+  labels:
+    app.kubernetes.io/name: suwayomi
+    app.kubernetes.io/component: downloader
+spec:
+  replicas: 1
+  progressDeadlineSeconds: 180
+  strategy:
+    type: Recreate          # single-writer data dir (DB) -> never two pods at once
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: suwayomi
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: suwayomi
+    spec:
+      terminationGracePeriodSeconds: 30
+      securityContext:
+        runAsUser: 1000      # upstream image user; the Longhorn PVC is chowned to match below
+      # A freshly-provisioned Longhorn volume mounts root:root 0755 -> EACCES when uid 1000 opens its
+      # DB. Chown it once before the app starts (the karakeep-bridge pattern). The NFS export's perms
+      # are set on the server side (runbook), not here.
+      initContainers:
+        - name: data-fix
+          image: busybox:1.36
+          command:
+            - sh
+            - -xc
+            - |
+              d=/home/suwayomi/.local/share/Tachidesk
+              owner="$(stat -c %u "$d")"
+              if [ "$owner" != "1000" ]; then
+                echo "=====> Fixing $d ownership to uid 1000"
+                chown -R 1000:1000 "$d"
+              else
+                echo "=====> Nothing to do for $d"
+              fi
+          securityContext:
+            runAsUser: 0      # chown needs root; the app container then runs as 1000
+          volumeMounts:
+            - name: config
+              mountPath: /home/suwayomi/.local/share/Tachidesk
+      containers:
+        - name: suwayomi
+          # ghcr.io/suwayomi/tachidesk. CONFIRM the current stable tag + SWAP TO @sha256 at cutover (AR29):
+          #   docker buildx imagetools inspect ghcr.io/suwayomi/tachidesk:stable
+          image: ghcr.io/suwayomi/tachidesk:stable
+          ports:
+            - containerPort: 4567
+          env:
+            - name: TZ
+              value: Asia/Seoul
+          resources:
+            requests:
+              cpu: 100m
+              memory: 256Mi
+            limits:
+              memory: 1Gi
+          startupProbe:
+            httpGet:
+              path: /
+              port: 4567
+            failureThreshold: 40
+            periodSeconds: 5
+          readinessProbe:
+            httpGet:
+              path: /
+              port: 4567
+          livenessProbe:
+            httpGet:
+              path: /
+              port: 4567
+          volumeMounts:
+            - name: config
+              mountPath: /home/suwayomi/.local/share/Tachidesk   # Tachidesk data dir (DB) on Longhorn
+            - name: manga
+              mountPath: /manga  # shared NFS library, READ-WRITE (downloadsPath -> /manga)
+      volumes:
+        - name: config
+          persistentVolumeClaim:
+            claimName: suwayomi-config
+        - name: manga
+          persistentVolumeClaim:
+            claimName: komga-manga-local

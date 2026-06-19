@@ -131,3 +131,17 @@ workloads:
   vaultwarden:
     manifest: workloads/vaultwarden/deployment.yaml
     image: vaultwarden/server@sha256:d626d04934cd1192ad8ced1adb975099fca78cec33ab467d2d3c923cde7f3b0c
+  # Story 5.6 — standalone-LXC consolidation. Tags pinned now (lint passes); SWAP TO @sha256 digests
+  # at cutover (AR29 — the manifest comments carry the `imagetools inspect` command for each).
+  trade-monitor:
+    manifest: workloads/trade-monitor/cronjob.yaml
+    image: ghcr.io/sushistack/trade.monitor:0.1.0   # built by the trade.monitor repo CI -> digest at hardening
+  komga:
+    manifest: workloads/komga/deployment-komga.yaml
+    image: gotson/komga:1.21.0
+  suwayomi:
+    manifest: workloads/komga/deployment-suwayomi.yaml
+    image: ghcr.io/suwayomi/tachidesk:stable
+  calibre:
+    manifest: workloads/calibre/deployment.yaml
+    image: lscr.io/linuxserver/calibre-web:0.6.24

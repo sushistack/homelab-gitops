@@ -1,0 +1,46 @@
+# Story 5.6 — calibre is PUBLIC (verified live: NPM 20.conf `book.eli.kr` -> 10.0.0.31:8083, NO IP-ACL,
+# reached via the *.eli.kr CF tunnel wildcard). Golden-path public route (same shape as komga): the CF
+# tunnel gets a `book.eli.kr -> https://<node>:443` rule inserted before the wildcard at cutover, and
+# the OpenWrt LAN override points book.eli.kr at the node. Host tokenized ${SECRET:DOMAIN_CALIBRE}
+# (= book.<public-zone>, SINGULAR). calibre has its own login, so public is the preserved exposure.
+---
+apiVersion: traefik.io/v1alpha1
+kind: Middleware
+metadata:
+  name: calibre-redirect-https
+spec:
+  redirectScheme:
+    scheme: https
+    permanent: true
+---
+apiVersion: traefik.io/v1alpha1
+kind: IngressRoute
+metadata:
+  name: calibre
+spec:
+  entryPoints:
+    - websecure
+  routes:
+    - match: Host(`${SECRET:DOMAIN_CALIBRE}`)
+      kind: Rule
+      services:
+        - name: calibre
+          port: 8083
+  tls:
+    secretName: calibre-tls
+---
+apiVersion: traefik.io/v1alpha1
+kind: IngressRoute
+metadata:
+  name: calibre-redirect
+spec:
+  entryPoints:
+    - web
+  routes:
+    - match: Host(`${SECRET:DOMAIN_CALIBRE}`)
+      kind: Rule
+      middlewares:
+        - name: calibre-redirect-https
+      services:
+        - name: calibre
+          port: 8083

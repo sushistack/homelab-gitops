@@ -16,21 +16,30 @@ Running log of load-bearing decisions. One line each; link the story.
   the **trade.monitor repo** (its own Dockerfile + GHCR CI — `home.server` is not touched, Reconciliation
   3), consumed by digest. Pod CoreDNS can't resolve the dnsmasq lease names, so the ConfigMap rewrites
   `crypto-*`/`ulanzi`/`stock-snp500` → static IPs (Reconciliation 4). #205 decommissioned after parity. | Story 5.6
-- 2026-06-19 | **90G manga library stays OFF Longhorn — #203 repurposed into the `storage` NFS server
-  (ZERO copy).** Longhorn's synchronous 3× replication + tight node disk (memory `longhorn-node-storage`)
-  make 90G a bad fit; MinIO/s3fs was rejected (FUSE shim + still needs the disk). #203's apps are
-  stripped, `nfs-kernel-server` exports `/mnt/manga` to the 3 k3s nodes, the guest is renamed
-  `komga`→`storage` (IP 10.0.0.30 MAC-bound, unchanged). komga mounts it **read-only**, Suwayomi
-  **read-write** via a static NFS PV (RWX). Plane 0 stays clean (NFS isolated in a guest, not on the
-  Proxmox host). Cost accepted: #203/NFS is a new SPOF for komga/suwayomi — fine, both are below the
-  DONE/NFR alerting bar. (Reconciliation 6) | Story 5.6
+- 2026-06-19 | **90G manga library OFF Longhorn — node-local PV on k3s-cp-1 (NOT NFS — the
+  Reconciliation 6 plan was infeasible).** Longhorn's 3× sync replication + tight node disk make 90G a
+  bad fit (memory `longhorn-node-storage`). The intended fix (repurpose #203 into an in-place NFS server,
+  zero-copy) **FAILED at execution**: #203 is an UNPRIVILEGED LXC — kernel `nfsd` is unavailable, and
+  userspace `nfs-ganesha`'s VFS FSAL needs `open_by_handle_at`, which the kernel gates behind
+  CAP_DAC_READ_SEARCH **in the initial userns** (an unprivileged container can NEVER hold it →
+  `vfs_open_by_handle: Operation not permitted`, confirmed live). Privileged-convert (rootfs uid-shift,
+  invasive), host-NFS (Plane 0 daemon), unfsd (NFSv3, unmaintained) were the alternatives. **Operator
+  chose node-local copy:** a dedicated 200G disk on k3s-cp-1 (`/mnt/manga`, ext4, UUID-mounted), 90G
+  rsync'd from #203 (12663 files verified == source), exposed as a static `local` PV (RWX). komga ro +
+  Suwayomi rw, both PINNED to k3s-cp-1 by the local-PV nodeAffinity. **Cost accepted: no replication /
+  no HA** (the node or its disk is a SPOF) — fine, the library is non-critical + re-downloadable via
+  Suwayomi, and #203 was a single box with no HA either. Grows online (`qm resize`+`resize2fs`). #203 is
+  therefore fully decommissioned too (no storage role). (supersedes Reconciliation 6) | Story 5.6
 - 2026-06-19 | **komga + Suwayomi = two Deployments, one namespace, one shared library** (Reconciliation
   5 — #203 ran BOTH, not just komga). Config DBs (komga `database.sqlite`/`tasks.sqlite`, Suwayomi data
   dir) on small Longhorn PVCs (reading progress — precious, tiny); the library on NFS. **calibre's ~4G
   library goes on Longhorn** (Reconciliation 7 — too small to hit the bottleneck; lets #204 be FULLY
-  decommissioned, no NFS dependency). Exposure PRESERVED per app: komga PUBLIC (`comics.*`), Suwayomi
-  INTERNAL (`comics-admin.*`), calibre INTERNAL (new host) — internal-only = no CF tunnel rule + LAN-only
-  DNS override (no ipAllowList middleware needed). No SealedSecret (these apps need no API key). | Story 5.6
+  decommissioned, no NFS dependency). Exposure PRESERVED per app, **verified vs live NPM 2026-06-19**:
+  komga PUBLIC (`comics.*`, no ACL), calibre PUBLIC (`book.*` SINGULAR, no ACL), Suwayomi INTERNAL
+  (`comics-admin.*`, NPM `allow 10.0.0.0/24+10.8.0.0/24 deny all`). Internal-only on k3s = NO cloudflared
+  tunnel rule + LAN-only DNS override — NOT an ipAllowList (cloudflared egresses from a LAN IP `10.0.0.20`,
+  so a `10.0.0.0/24` allow would ADMIT internet-via-tunnel; "no tunnel rule" is the only correct gate).
+  No SealedSecret (these apps need no API key). | Story 5.6
 - 2026-06-19 | **jellyfin (#200) / immich (#201) EXPLICITLY EXCLUDED** (AC3). They share the host iGPU
   via LXC device passthrough (`/dev/dri/renderD128`+`card0`), which a k3s **VM** node cannot replicate
   without exclusive VFIO (steals the iGPU from the other guest + host), and they hold large local media

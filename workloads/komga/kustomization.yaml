@@ -1,0 +1,29 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+# Story 5.6 — ONE logical workload, TWO components (komga reader + suwayomi downloader), ONE
+# namespace, sharing the 90G NFS manga library (the karakeep multi-component shape). Generated as ONE
+# Application by the `workloads` ApplicationSet (HTTP, no TCP/UDP exception -> not excluded).
+resources:
+  - namespace.yaml
+  - pvc-manga-local.yaml  # static node-local PV -> k3s-cp-1:/mnt/manga (RWX, off-Longhorn; #203 NFS infeasible — see file header)
+  - pvc-config.yaml       # komga-config + suwayomi-config (small Longhorn RWO; reading progress)
+  - deployment-komga.yaml
+  - deployment-suwayomi.yaml
+  - services.yaml         # komga (25600) + suwayomi (4567) ClusterIP
+  - ingressroute.yaml     # komga PUBLIC + suwayomi INTERNAL (ACL preserved); host tokenized
+  - certificate.yaml      # per-host letsencrypt-prod certs -> komga-tls / suwayomi-tls
+# NOT included on purpose:
+#   backup-cronjob.yaml  -> Task 6 OPTIONAL: needs the operator-sealed `komga-backup-r2`. Add this
+#                           line AFTER sealing the R2 cred, else the base references a missing Secret.
+#   No sealedsecret.yaml: these apps need no external API key (AC2f).
+
+# `labels:` (never commonLabels — pollutes selectors; never namePrefix). Only the SHARED identity here;
+# app.kubernetes.io/name + /component DIFFER per component (hand-written inline on each resource, and
+# every Service selector targets `name`). part-of: komga ties the two components to one logical service.
+labels:
+  - includeSelectors: false
+    pairs:
+      app.kubernetes.io/instance: komga
+      app.kubernetes.io/part-of: komga
+      app.kubernetes.io/managed-by: argocd

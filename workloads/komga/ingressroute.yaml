@@ -1,0 +1,91 @@
+# Story 5.6 — exposure PRESERVED per app (AC2a), VERIFIED against live NPM 2026-06-19:
+#
+#   komga    = PUBLIC   ${SECRET:DOMAIN_KOMGA}    (NPM 16.conf comics.eli.kr -> .30:25600, no IP-ACL).
+#                       Full golden-path public route below + a CF tunnel split + a LAN DNS override.
+#   suwayomi = INTERNAL ${SECRET:DOMAIN_SUWAYOMI} (NPM 17.conf comics-admin.eli.kr -> .30:4567, with
+#                       `allow 10.0.0.0/24; allow 10.8.0.0/24; deny all`). Preserved by NO cloudflared
+#                       tunnel rule + LAN-only OpenWrt DNS override -> the node. The internet has NO route
+#                       to the k3s suwayomi (the wildcard *.eli.kr still hits NPM, whose now-dead .30:4567
+#                       just 502s). The cert still issues (DNS-01). 🔴 ipAllowList is NOT used and would
+#                       be WRONG here: cloudflared egresses to the origin FROM a LAN IP (10.0.0.20), so a
+#                       `10.0.0.0/24` allow would ADMIT internet-via-tunnel traffic — the opposite of
+#                       internal-only. "No tunnel rule + LAN-only DNS" is the only correct gate.
+#
+# traefik.io/v1alpha1 (v3) — the old traefik.containo.us API silently fails.
+---
+apiVersion: traefik.io/v1alpha1
+kind: Middleware
+metadata:
+  name: komga-redirect-https
+spec:
+  redirectScheme:
+    scheme: https
+    permanent: true
+---
+# komga HTTPS (websecure :443) — PUBLIC reader.
+apiVersion: traefik.io/v1alpha1
+kind: IngressRoute
+metadata:
+  name: komga
+spec:
+  entryPoints:
+    - websecure
+  routes:
+    - match: Host(`${SECRET:DOMAIN_KOMGA}`)
+      kind: Rule
+      services:
+        - name: komga
+          port: 25600
+  tls:
+    secretName: komga-tls
+---
+# komga HTTP (web :80) — 301 to HTTPS.
+apiVersion: traefik.io/v1alpha1
+kind: IngressRoute
+metadata:
+  name: komga-redirect
+spec:
+  entryPoints:
+    - web
+  routes:
+    - match: Host(`${SECRET:DOMAIN_KOMGA}`)
+      kind: Rule
+      middlewares:
+        - name: komga-redirect-https
+      services:
+        - name: komga
+          port: 25600
+---
+# suwayomi HTTPS (websecure :443) — INTERNAL-only (no CF tunnel rule; LAN DNS override only).
+apiVersion: traefik.io/v1alpha1
+kind: IngressRoute
+metadata:
+  name: suwayomi
+spec:
+  entryPoints:
+    - websecure
+  routes:
+    - match: Host(`${SECRET:DOMAIN_SUWAYOMI}`)
+      kind: Rule
+      services:
+        - name: suwayomi
+          port: 4567
+  tls:
+    secretName: suwayomi-tls
+---
+# suwayomi HTTP (web :80) — 301 to HTTPS (reuses komga's redirect middleware, same ns).
+apiVersion: traefik.io/v1alpha1
+kind: IngressRoute
+metadata:
+  name: suwayomi-redirect
+spec:
+  entryPoints:
+    - web
+  routes:
+    - match: Host(`${SECRET:DOMAIN_SUWAYOMI}`)
+      kind: Rule
+      middlewares:
+        - name: komga-redirect-https
+      services:
+        - name: suwayomi
+          port: 4567

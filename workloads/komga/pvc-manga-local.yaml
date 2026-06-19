@@ -1,0 +1,55 @@
+# Story 5.6 — the 90G manga library OFF Longhorn (Reconciliation 6/7), via a node-local PV.
+#
+# 🔴 DEVIATION from the original Reconciliation 6 (verified live 2026-06-19): #203 is an UNPRIVILEGED
+# LXC and CANNOT run an NFS server — kernel nfsd is unavailable, and userspace nfs-ganesha's VFS FSAL
+# needs `open_by_handle_at`, which the kernel gates behind CAP_DAC_READ_SEARCH in the INITIAL userns
+# (an unprivileged container can never hold it; `vfs_open_by_handle: Operation not permitted`). So the
+# "in-place NFS, zero-copy" plan was infeasible. Operator decision 2026-06-19: copy the 90G to a
+# dedicated 200G disk on ONE node (k3s-cp-1, `/mnt/manga`, UUID-mounted) and use a static `local` PV.
+# Trade-off accepted: pins komga+suwayomi to k3s-cp-1, NO replication / NO HA (the node or its disk is
+# a SPOF) — fine, the library is non-critical + re-downloadable via Suwayomi, and #203 was a single box
+# with no HA either. Capacity grows online: `qm resize 101 scsi2 +Ng` -> `growpart`+`resize2fs` (ext4).
+#
+# A `local` PV REQUIRES nodeAffinity (k8s enforces it) — which also PINS every consumer pod to that
+# node, so komga + suwayomi auto-co-locate (both mount this RWX PV, komga ro / suwayomi rw).
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: komga-manga-local
+  annotations:
+    argocd.argoproj.io/sync-options: Prune=false   # never let ArgoCD delete the PV binding to real data
+spec:
+  capacity:
+    storage: 200Gi          # the dedicated disk size (informational for local volumes; grow the disk to expand)
+  accessModes:
+    - ReadWriteMany         # komga (ro) + suwayomi (rw) both mount — legal for a local PV when co-located on the node
+  persistentVolumeReclaimPolicy: Retain
+  storageClassName: ""
+  local:
+    path: /mnt/manga
+  nodeAffinity:
+    required:
+      nodeSelectorTerms:
+        - matchExpressions:
+            - key: kubernetes.io/hostname
+              operator: In
+              values: ["k3s-cp-1"]
+  claimRef:
+    namespace: komga
+    name: komga-manga-local
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: komga-manga-local
+  annotations:
+    argocd.argoproj.io/sync-options: Prune=false
+spec:
+  accessModes:
+    - ReadWriteMany
+  storageClassName: ""
+  volumeName: komga-manga-local   # bind to the static local PV above (1:1 via claimRef)
+  resources:
+    requests:
+      storage: 200Gi

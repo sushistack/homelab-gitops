@@ -1,0 +1,17 @@
+# Story 5.6 — calibre's small (~4G) library + config on Longhorn (Reconciliation 7): 3× replication
+# is trivial at this size and lets #204 be FULLY decommissioned (no NFS dependency — the opposite call
+# from the 90G manga). ONE PVC, two subPath mounts (config/ = app.db, books/ = the library +
+# metadata.db). RWO -> Deployment is strategy:Recreate (SQLite). Prune=false + Retain.
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: calibre-data
+  annotations:
+    argocd.argoproj.io/sync-options: Prune=false
+spec:
+  accessModes:
+    - ReadWriteOnce
+  storageClassName: longhorn
+  resources:
+    requests:
+      storage: 10Gi   # ~4G library today + app.db/metadata.db + headroom; grow via PR

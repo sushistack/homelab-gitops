@@ -1,0 +1,70 @@
+# Story 5.6 Task 6 (RECOMMENDED, NON-BLOCKING) — online sqlite3 .backup of calibre's app.db +
+# metadata.db to R2 (the Story 4.1 actor; only the dump command + paths changed). The ebook FILES ride
+# Longhorn replication — they are NOT shipped to R2 (file-class, Story 4.1 bulk rule).
+#
+# 🔴 OPERATOR: references a SealedSecret `calibre-backup-r2` sealed against the LIVE cluster key (reuse
+# the live R2 cred). Until sealed + added to kustomization.yaml, it does NOT run. Left OUT of
+# kustomization.yaml so the base stays ArgoCD-Healthy without the live secret.
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: calibre-backup
+spec:
+  schedule: "45 */6 * * *"
+  timeZone: Asia/Seoul
+  concurrencyPolicy: Forbid
+  startingDeadlineSeconds: 300
+  successfulJobsHistoryLimit: 3
+  failedJobsHistoryLimit: 3
+  jobTemplate:
+    spec:
+      activeDeadlineSeconds: 900
+      template:
+        metadata:
+          labels:
+            app.kubernetes.io/name: calibre-backup
+            app.kubernetes.io/component: backup
+        spec:
+          restartPolicy: OnFailure
+          affinity:
+            podAffinity:
+              requiredDuringSchedulingIgnoredDuringExecution:
+                - labelSelector:
+                    matchLabels:
+                      app.kubernetes.io/name: calibre
+                  topologyKey: kubernetes.io/hostname
+          containers:
+            - name: backup
+              image: alpine:3.20   # PIN to a digest at hardening (AR29)
+              command:
+                - /bin/sh
+                - -ceu
+                - |
+                  apk add --no-cache sqlite rclone ca-certificates tzdata
+                  ts=$(date +%Y-%m-%dT%H-%M-%S)
+                  sqlite3 /config/app.db        ".backup /scratch/app.db"
+                  sqlite3 /books/metadata.db    ".backup /scratch/metadata.db"
+                  tar -C /scratch -czf "/scratch/calibre-${ts}.tar.gz" app.db metadata.db
+                  rclone copy "/scratch/calibre-${ts}.tar.gz" "r2:homelab-k3s-services-backup/calibre/"
+                  rclone delete --min-age 720h "r2:homelab-k3s-services-backup/calibre/" || true
+              env:
+                - name: RCLONE_CONFIG_R2_NO_CHECK_BUCKET
+                  value: "true"
+              envFrom:
+                - secretRef:
+                    name: calibre-backup-r2
+              volumeMounts:
+                - name: data
+                  mountPath: /config
+                  subPath: config
+                - name: data
+                  mountPath: /books
+                  subPath: books
+                - name: scratch
+                  mountPath: /scratch
+          volumes:
+            - name: data
+              persistentVolumeClaim:
+                claimName: calibre-data
+            - name: scratch
+              emptyDir: {}

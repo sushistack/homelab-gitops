@@ -1,0 +1,13 @@
+# Story 5.6 — per-host production TLS for calibre (letsencrypt-prod, DNS-01). DNS-01 needs no public
+# reachability, so the internal-only host still gets a browser-trusted cert for LAN clients.
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: calibre-tls
+spec:
+  secretName: calibre-tls
+  dnsNames:
+    - "${SECRET:DOMAIN_CALIBRE}"
+  issuerRef:
+    name: letsencrypt-prod
+    kind: ClusterIssuer

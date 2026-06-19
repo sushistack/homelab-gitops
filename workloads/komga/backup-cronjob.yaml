@@ -1,0 +1,73 @@
+# Story 5.6 Task 6 (RECOMMENDED, NON-BLOCKING) — online sqlite3 .backup of komga's CONFIG DBs to R2,
+# the Story 4.1 actor verbatim (only the dump command + paths changed). Backs up reading progress +
+# library metadata (database.sqlite + tasks.sqlite). Does NOT back up the 90G manga (re-downloadable
+# via Suwayomi; file-class -> Longhorn/NFS only, never R2 — the Story 4.1 bulk-media rule).
+#
+# Suwayomi's DB is intentionally NOT here: its on-disk format is not a guaranteed SQLite file, so the
+# online `.backup` actor doesn't apply — if a suwayomi backup is ever wanted, tar its data-dir PVC
+# (file-class, crash-consistent); these apps are below the DONE/NFR alerting bar so it's optional.
+#
+# 🔴 OPERATOR: this references a SealedSecret `komga-backup-r2` that must be sealed against the LIVE
+# cluster key (reuse the live ntfy-backup-r2 R2 cred; memory kubeseal-controller-ns). Until it is
+# sealed + this file is added to kustomization.yaml, the backup does NOT run. Left OUT of
+# kustomization.yaml on purpose so the base stays ArgoCD-Healthy without the live secret.
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: komga-backup
+spec:
+  schedule: "35 */6 * * *"
+  timeZone: Asia/Seoul
+  concurrencyPolicy: Forbid
+  startingDeadlineSeconds: 300
+  successfulJobsHistoryLimit: 3
+  failedJobsHistoryLimit: 3
+  jobTemplate:
+    spec:
+      activeDeadlineSeconds: 900
+      template:
+        metadata:
+          labels:
+            app.kubernetes.io/name: komga-backup
+            app.kubernetes.io/component: backup
+        spec:
+          restartPolicy: OnFailure
+          # komga-config is RWO -> Longhorn attaches it to komga's node; co-schedule there to mount it.
+          affinity:
+            podAffinity:
+              requiredDuringSchedulingIgnoredDuringExecution:
+                - labelSelector:
+                    matchLabels:
+                      app.kubernetes.io/name: komga
+                  topologyKey: kubernetes.io/hostname
+          containers:
+            - name: backup
+              image: alpine:3.20   # PIN to a digest at hardening (AR29)
+              command:
+                - /bin/sh
+                - -ceu
+                - |
+                  apk add --no-cache sqlite rclone ca-certificates tzdata
+                  ts=$(date +%Y-%m-%dT%H-%M-%S)
+                  sqlite3 /config/database.sqlite ".backup /scratch/database.sqlite"
+                  sqlite3 /config/tasks.sqlite    ".backup /scratch/tasks.sqlite"
+                  tar -C /scratch -czf "/scratch/komga-${ts}.tar.gz" database.sqlite tasks.sqlite
+                  rclone copy "/scratch/komga-${ts}.tar.gz" "r2:homelab-k3s-services-backup/komga/"
+                  rclone delete --min-age 720h "r2:homelab-k3s-services-backup/komga/" || true
+              env:
+                - name: RCLONE_CONFIG_R2_NO_CHECK_BUCKET
+                  value: "true"
+              envFrom:
+                - secretRef:
+                    name: komga-backup-r2
+              volumeMounts:
+                - name: config
+                  mountPath: /config   # RW: online .backup needs -wal/-shm
+                - name: scratch
+                  mountPath: /scratch
+          volumes:
+            - name: config
+              persistentVolumeClaim:
+                claimName: komga-config
+            - name: scratch
+              emptyDir: {}

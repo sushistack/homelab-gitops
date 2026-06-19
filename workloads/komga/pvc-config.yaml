@@ -1,0 +1,34 @@
+# Story 5.6 — the SMALL, PRECIOUS config DBs go on Longhorn (NOT NFS): komga's database.sqlite +
+# tasks.sqlite (library metadata + reading progress) and suwayomi's data dir (library/source/download
+# state). These are tiny and reading-progress-bearing, so 3× Longhorn replication is the right home;
+# only the 90G *library* is too big for Longhorn (Reconciliation 7). RWO -> each Deployment is
+# strategy:Recreate (SQLite single-writer/WAL, the Epic 4 pattern). Prune=false + Retain: ArgoCD/
+# Longhorn never delete real reading data on PVC removal.
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: komga-config
+  annotations:
+    argocd.argoproj.io/sync-options: Prune=false
+spec:
+  accessModes:
+    - ReadWriteOnce
+  storageClassName: longhorn
+  resources:
+    requests:
+      storage: 2Gi   # database.sqlite + tasks.sqlite + komga thumbnail cache; grow via PR
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: suwayomi-config
+  annotations:
+    argocd.argoproj.io/sync-options: Prune=false
+spec:
+  accessModes:
+    - ReadWriteOnce
+  storageClassName: longhorn
+  resources:
+    requests:
+      storage: 2Gi   # Tachidesk data dir (DB + sources/extensions + settings); downloads live on NFS, not here

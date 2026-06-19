@@ -1,0 +1,24 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+# Story 5.6 — calibre-web, one Deployment, own namespace. Generated as ONE Application by the
+# `workloads` ApplicationSet. Library on Longhorn (small) -> #204 fully decommissioned (Reconciliation 7).
+resources:
+  - namespace.yaml
+  - pvc.yaml
+  - deployment.yaml
+  - service.yaml
+  - ingressroute.yaml     # internal-only host (ACL preserved); tokenized
+  - certificate.yaml      # per-host letsencrypt-prod cert -> calibre-tls
+# NOT included on purpose:
+#   backup-cronjob.yaml  -> Task 6 OPTIONAL: add AFTER sealing `calibre-backup-r2` (else missing Secret).
+#   No sealedsecret.yaml: calibre needs no external API key (AC2f).
+
+labels:
+  - includeSelectors: false
+    pairs:
+      app.kubernetes.io/name: calibre
+      app.kubernetes.io/instance: calibre
+      app.kubernetes.io/part-of: calibre
+      app.kubernetes.io/managed-by: argocd
+      app.kubernetes.io/component: app
