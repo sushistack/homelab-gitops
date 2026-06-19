@@ -1,0 +1,13 @@
+# Story 5.7 — per-host production TLS (letsencrypt-prod, DNS-01). DNS-01 needs no public
+# reachability, so an internal-only host still gets a browser-trusted cert.
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: semaphore-tls
+spec:
+  secretName: semaphore-tls
+  dnsNames:
+    - "${SECRET:DOMAIN_SEMAPHORE}"
+  issuerRef:
+    name: letsencrypt-prod
+    kind: ClusterIssuer

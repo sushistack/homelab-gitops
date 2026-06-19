@@ -1,0 +1,29 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+# Story 5.7 — Semaphore (clickable + schedulable Ansible runner for configs/openwrt/). Generated as
+# ONE Application by the `workloads` ApplicationSet (HTTP golden path; not excluded).
+resources:
+  - namespace.yaml
+  - pvc.yaml
+  - deployment.yaml
+  - service.yaml
+  - ingressroute.yaml
+  - certificate.yaml
+# NOT included until the operator seals real values (Task 1b — LIVE, ns sealed-secrets). The Deployment
+# references all three (envFrom semaphore-admin + the ssh/age volumes), so until these are sealed and
+# these lines are uncommented the pod can't start — it sits in CreateContainerConfigError (missing
+# envFrom secret) and the Semaphore Application reads Degraded in ArgoCD (NOT a clean "waiting" state;
+# expected until Task 1b). The komga backup-cronjob stub pattern:
+#   - sealedsecret-admin.yaml
+#   - sealedsecret-ssh.yaml
+#   - sealedsecret-age.yaml
+
+labels:
+  - includeSelectors: false
+    pairs:
+      app.kubernetes.io/name: semaphore
+      app.kubernetes.io/instance: semaphore
+      app.kubernetes.io/part-of: semaphore
+      app.kubernetes.io/managed-by: argocd
+      app.kubernetes.io/component: ansible-runner

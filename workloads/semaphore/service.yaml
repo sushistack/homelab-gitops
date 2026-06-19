@@ -1,0 +1,13 @@
+# Story 5.7 — ClusterIP; exposure is via the internal-only Traefik IngressRoute, not a host port.
+apiVersion: v1
+kind: Service
+metadata:
+  name: semaphore
+spec:
+  type: ClusterIP
+  selector:
+    app.kubernetes.io/name: semaphore
+  ports:
+    - name: http
+      port: 3000
+      targetPort: 3000

@@ -1,0 +1,116 @@
+# Story 5.7 — Semaphore: a clickable + SCHEDULABLE runner for the existing OpenWrt/Oracle Ansible
+# (configs/openwrt/ in the home.server repo). Embedded BoltDB on Longhorn → strategy:Recreate +
+# startupProbe (the Epic 4 / 5.6 SQLite-class pattern; BoltDB is single-writer too).
+#
+# 🔴 BITE 1 / Reconciliation 1 — Semaphore manages Plane 0 (OpenWrt 10.0.0.1) FROM INSIDE k3s,
+# whose own LAN rides on that gateway. The SANCTIONED easy path is the scheduled `--check --diff`
+# DRIFT CHECK (complements 5.1 drift alerting). The LIVE `--diff` apply template stays REVIEW-GATED,
+# NOT a no-review one-click (see runbook day2-tooling.md). If a bad apply cuts OpenWrt, recover at
+# the CLI (workstation ssh / `configs/openwrt/Makefile`) — NEVER "click Run again in Semaphore".
+#
+# 🔴 RUNNER NEEDS THE `sops` BINARY: community.sops (requirements.yml) shells out to the `sops` CLI
+# to decrypt group_vars/*.sops.yaml. The stock semaphoreui/semaphore image ships ansible-core but may
+# NOT ship `sops`/`age`. If a `--check` run fails at the decrypt step, the operator supplies a custom
+# runner image (semaphore "apps") or installs sops in a task bootstrap step. Documented in the runbook.
+#
+# Runs as ROOT: reads the root-owned 0400 mounted SSH/age key files directly and writes the root:root
+# Longhorn PVC — no fsGroup/chown gymnastics (the komga "runs as root" rationale). The pod already SSHes
+# to root@10.0.0.1, so a root pod is consistent with its blast radius. securityContext.runAsUser:0 is
+# set EXPLICITLY (not relying on the image default) — the 0400 secret mounts have no fsGroup, so a
+# non-root uid could not read the ssh/age keys and the runner would silently fail to decrypt/connect.
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: semaphore
+spec:
+  replicas: 1
+  progressDeadlineSeconds: 180
+  strategy:
+    type: Recreate          # BoltDB single-writer: never two pods on one DB file
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: semaphore
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: semaphore
+    spec:
+      terminationGracePeriodSeconds: 30
+      securityContext:
+        runAsUser: 0          # explicit root — see header (0400 ssh/age mounts, no fsGroup)
+        runAsGroup: 0
+      containers:
+        - name: semaphore
+          # semaphoreui/semaphore. CONFIRM the current stable tag at install (this is a plausible
+          # placeholder) + SWAP TO @sha256 digest at cutover (AR29):
+          #   docker buildx imagetools inspect semaphoreui/semaphore:v2.16.21
+          image: semaphoreui/semaphore:v2.16.21
+          ports:
+            - containerPort: 3000
+          env:
+            - name: TZ
+              value: Asia/Seoul
+            - name: SEMAPHORE_DB_DIALECT
+              value: bolt                              # embedded — no postgres/mysql sidecar
+            - name: SEMAPHORE_DB_HOST
+              value: /var/lib/semaphore/database.boltdb
+            - name: SEMAPHORE_PLAYBOOK_PATH
+              value: /var/lib/semaphore/repositories
+            - name: SEMAPHORE_TMP_PATH
+              value: /var/lib/semaphore/tmp
+            # community.sops reads the age key from here to decrypt configs/openwrt/group_vars/*.sops.yaml
+            # at PLAY runtime — the secrets stay SOPS-in-git, never copied into Semaphore's Key Store
+            # (Reconciliation 4). Single age identity = the cluster DR key (gate0-dr), 0 new keys.
+            - name: SOPS_AGE_KEY_FILE
+              value: /keys/age/keys.txt
+          # Admin bootstrap creds + access-key encryption key (must be STABLE across restarts — it
+          # encrypts stored access keys in BoltDB). Sealed by the operator (Task 1b).
+          envFrom:
+            - secretRef:
+                name: semaphore-admin
+          # Semaphore serves its UI/login at / on :3000. startupProbe holds liveness back through boot
+          # + BoltDB open; without it a slow boot crash-loops.
+          startupProbe:
+            httpGet:
+              path: /api/ping
+              port: 3000
+            failureThreshold: 30
+            periodSeconds: 5
+          readinessProbe:
+            httpGet:
+              path: /api/ping
+              port: 3000
+          livenessProbe:
+            httpGet:
+              path: /api/ping
+              port: 3000
+          resources:
+            requests:
+              cpu: 100m
+              memory: 128Mi
+            limits:
+              memory: 512Mi        # memory-only limit (no CPU limit → no throttle); ansible fork spikes
+          volumeMounts:
+            - name: data
+              mountPath: /var/lib/semaphore     # BoltDB + cloned repo + tmp
+            - name: ssh
+              mountPath: /keys/ssh
+              readOnly: true
+            - name: age
+              mountPath: /keys/age
+              readOnly: true
+      volumes:
+        - name: data
+          persistentVolumeClaim:
+            claimName: semaphore-data
+        # SSH private key for root@10.0.0.1 + Oracle ubuntu@… — 0400, read by root. The operator wires
+        # it into the Semaphore project (inventory ansible_ssh_private_key_file=/keys/ssh/id_ed25519,
+        # or a native Login-With-Key Key Store entry). Source stays the SealedSecret/git, not hand-typed.
+        - name: ssh
+          secret:
+            secretName: semaphore-ssh
+            defaultMode: 0400
+        - name: age
+          secret:
+            secretName: semaphore-age
+            defaultMode: 0400
