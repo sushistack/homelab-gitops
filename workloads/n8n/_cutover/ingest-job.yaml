@@ -11,7 +11,7 @@
 #   kubectl apply -f workloads/n8n/_cutover/ingest-job.yaml
 #   pod=$(kubectl -n n8n get pod -l job-name=n8n-ingest -o name | head -1)
 #   # carry the WHOLE tree (config = encryption-key fallback, binaryData, installed nodes, settings):
-#   ssh root@10.0.0.20 'tar -C /opt/docker/data/n8n -cf - .' \
+#   ssh root@${SECRET:IP_COMPOSE} 'tar -C /opt/docker/data/n8n -cf - .' \
 #     | kubectl -n n8n exec -i "${pod#pod/}" -- tar -C /home/node/.n8n -xf -
 #   # ownership: n8n runs as uid 1000 — fix it so the pod can write its own home dir
 #   kubectl -n n8n exec "${pod#pod/}" -- chown -R 1000:1000 /home/node/.n8n

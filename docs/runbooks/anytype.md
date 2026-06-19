@@ -17,14 +17,14 @@ HTTP ingress. `anytype-heart` is the gRPC middleware + JSON REST API on **:31009
 **🔴 The node identity IS the data.** any-sync has a stable `peerId`/`networkId` (+ signing keys) that
 lives in `/data/anytype` (BadgerDB + key files) and that **every client hardcodes**
 (`anytype-client-config.yml`: `networkId: N4fe…`, node `peerId: 12D3KooW…`, addresses
-`anytype.eli.kr:33010` + `quic://anytype.eli.kr:33020` + LAN `10.0.0.20`). Migration is a **data
+`anytype.${SECRET:DOMAIN_ZONE}:33010` + `quic://anytype.${SECRET:DOMAIN_ZONE}:33020` + LAN `${SECRET:IP_COMPOSE}`). Migration is a **data
 copy, never a fresh init** — a new init mints a new peerId and *silently* orphans every client.
 
 ## Health check (exact command → expected output)
 
 ```
-nc -z anytype.eli.kr 33010 && echo "tcp ok"                              # public raw-TCP edge listens
-nc -zu anytype.eli.kr 33020 && echo "udp ok"                             # public QUIC/UDP edge (UDP probe is best-effort)
+nc -z anytype.${SECRET:DOMAIN_ZONE} 33010 && echo "tcp ok"                              # public raw-TCP edge listens
+nc -zu anytype.${SECRET:DOMAIN_ZONE} 33020 && echo "udp ok"                             # public QUIC/UDP edge (UDP probe is best-effort)
 kubectl exec -n anytype deploy/anytype-heart -- nc -z anytype-heart.anytype.svc.cluster.local 31009 && echo "heart ok"
 ```
 
@@ -64,7 +64,7 @@ kubectl logs -n anytype deploy/anytype --tail=200 | grep -iE 'peerId|networkId'
 
 ## Common failures
 
-- **entryPoint not published** — `nc -z anytype.eli.kr 33010` fails but pods are `Healthy`: the
+- **entryPoint not published** — `nc -z anytype.${SECRET:DOMAIN_ZONE} 33010` fails but pods are `Healthy`: the
   Traefik HelmChartConfig wasn't applied (k3s auto-deploy dir) or the Service didn't get the
   33010/33020 ports. Re-check step 3; the HelmChartConfig is dropped by ansible into
   `/var/lib/rancher/k3s/server/manifests/traefik-config.yaml` on node 1.

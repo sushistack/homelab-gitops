@@ -142,9 +142,9 @@ kubectl -n karakeep scale deploy/karakeep-web --replicas=1
 > (db.db drifts under background workers, so the authoritative copy is taken AFTER `docker stop`) →
 > **0-loss verified byte-identical** (`db.db` md5 `2b32ba8b…` == live; `bridge.sqlite` `f07fc0b2…`
 > == live; 66 bookmarks served, `/api/health` ok). AC2 isolation proven (chrome/meili blocked from
-> the bridge + another ns, reachable from web). Edge flipped: CF tunnel `keep → https://10.0.0.101:443`
-> (before the `*.eli.kr→NPM` wildcard) + OpenWrt LAN override `keep → 10.0.0.101`; both paths 200,
-> LE-prod `keep.eli.kr` cert valid. Compose karakeep **PARKED** (all 5 containers exited; rollback =
+> the bridge + another ns, reachable from web). Edge flipped: CF tunnel `keep → https://${SECRET:IP_K3S}:443`
+> (before the `*.${SECRET:DOMAIN_ZONE}→NPM` wildcard) + OpenWrt LAN override `keep → ${SECRET:IP_K3S}`; both paths 200,
+> LE-prod `keep.${SECRET:DOMAIN_ZONE}` cert valid. Compose karakeep **PARKED** (all 5 containers exited; rollback =
 > remove the CF ingress rule + `docker start`).
 
 ## Escalation / depends-on

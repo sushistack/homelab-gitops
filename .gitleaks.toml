@@ -52,4 +52,15 @@ regexes = [
   # can never be one of the house's real IPs. Same safety class as cluster.local. Exempts service
   # bind configs (e.g. ytdlp-api config.yml `host: 0.0.0.0`) without weakening raw-ipv4 for real IPs.
   '''\b0\.0\.0\.0\b''',
+  # `127.0.0.1` loopback — universal constant, reveals no topology (every host has it). Exempts
+  # docs/manifests noting a service's localhost bind (e.g. anytype-heart was 127.0.0.1:31009 on Compose).
+  '''\b127\.0\.0\.1\b''',
+  # RFC1918 + link-local NETWORK BASES (the `.0` network address, not a host) used as egress-deny CIDR
+  # blocks in SSRF NetworkPolicies (`10.0.0.0/8`, `172.16.0.0/12`, `192.168.0.0/16`, `169.254.0.0/16`).
+  # Standardised private ranges — fixed constants identical in every network, NOT the house's host
+  # addresses (real hosts like 10.0.0.20 / .101 still trip raw-ipv4).
+  '''\b10\.0\.0\.0\b''',
+  '''\b172\.16\.0\.0\b''',
+  '''\b192\.168\.0\.0\b''',
+  '''\b169\.254\.0\.0\b''',
 ]

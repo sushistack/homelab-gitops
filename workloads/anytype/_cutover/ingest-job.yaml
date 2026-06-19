@@ -10,7 +10,7 @@
 # every client with no error.
 #
 # CUTOVER SEQUENCE (live, operator-run; full procedure in docs/runbooks/anytype.md):
-#   # 0) pre-lower the public DNS/edge TTL for anytype.eli.kr (rollback window)
+#   # 0) pre-lower the public DNS/edge TTL for anytype.${SECRET:DOMAIN_ZONE} (rollback window)
 #   # 1) quiesce the live source so BadgerDB flushes cleanly, and RECORD the identity:
 #   docker stop anytype anytype-heart
 #   grep -E 'networkId|peerId' configs/docker/anytype-client-config.yml   # expected identity

@@ -12,7 +12,7 @@
 #   kubectl -n navidrome cp ./navidrome-cut.db "${pod#pod/}:/data/navidrome.db"
 #   # 2. file-class: the music library (long pole — ~2.3 GB; rsync over `kubectl exec` or cp the tree)
 #   #    e.g. tar from the host and untar into the pod:
-#   #    ssh root@10.0.0.20 'tar -C /opt/docker/data/navidrome/music -cf - .' \
+#   #    ssh root@${SECRET:IP_COMPOSE} 'tar -C /opt/docker/data/navidrome/music -cf - .' \
 #   #      | kubectl -n navidrome exec -i "${pod#pod/}" -- tar -C /music -xf -
 #   kubectl -n navidrome exec "${pod#pod/}" -- sh -c \
 #     'ls -l /data && sqlite3 /data/navidrome.db "select count(*) from media_file;" && du -sh /music'
