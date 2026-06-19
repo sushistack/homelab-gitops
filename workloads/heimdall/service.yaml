@@ -1,0 +1,13 @@
+# Story 5.7 — ClusterIP; exposure via the internal-only Traefik IngressRoute.
+apiVersion: v1
+kind: Service
+metadata:
+  name: heimdall
+spec:
+  type: ClusterIP
+  selector:
+    app.kubernetes.io/name: heimdall
+  ports:
+    - name: http
+      port: 80
+      targetPort: 80

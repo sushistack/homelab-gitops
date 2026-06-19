@@ -1,0 +1,21 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+# Story 5.7 — Heimdall (internal dashboard). One Application via the `workloads` ApplicationSet.
+# No SealedSecret: base Heimdall needs none (only if the operator wires live-tile API keys later).
+resources:
+  - namespace.yaml
+  - pvc.yaml
+  - deployment.yaml
+  - service.yaml
+  - ingressroute.yaml
+  - certificate.yaml
+
+labels:
+  - includeSelectors: false
+    pairs:
+      app.kubernetes.io/name: heimdall
+      app.kubernetes.io/instance: heimdall
+      app.kubernetes.io/part-of: heimdall
+      app.kubernetes.io/managed-by: argocd
+      app.kubernetes.io/component: dashboard
