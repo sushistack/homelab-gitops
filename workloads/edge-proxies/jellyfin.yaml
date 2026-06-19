@@ -1,0 +1,83 @@
+# Story 5.8 (AC6b) — Traefik front for the jellyfin host (was an NPM proxy-host on .20).
+# Backend = http://${SECRET:IP_JELLYFIN}:8096. jellyfin LXC. CONFIRMED against live NPM (5.conf: http :8096).
+#
+# Selector-less headless Service + manual EndpointSlice: k8s won't manage endpoints (no pod selector),
+# so Traefik routes to the IP in the EndpointSlice. The public cert (jellyfin-tls) is browser-trusted;
+# the Traefik->backend hop is LAN-internal.
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: jellyfin-tls
+  namespace: edge-proxies
+spec:
+  secretName: jellyfin-tls
+  dnsNames:
+    - "${SECRET:DOMAIN_JELLYFIN}"
+  issuerRef:
+    name: letsencrypt-prod
+    kind: ClusterIssuer
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: jellyfin-backend
+  namespace: edge-proxies
+spec:
+  clusterIP: None        # headless; endpoints come from the manual EndpointSlice below
+  ports:
+    - name: http
+      port: 8096
+      targetPort: 8096
+      protocol: TCP
+---
+apiVersion: discovery.k8s.io/v1
+kind: EndpointSlice
+metadata:
+  name: jellyfin-backend-1
+  namespace: edge-proxies
+  labels:
+    kubernetes.io/service-name: jellyfin-backend   # associates this slice with the Service above
+addressType: IPv4
+ports:
+  - name: http
+    port: 8096
+    protocol: TCP
+endpoints:
+  - addresses:
+      - "${SECRET:IP_JELLYFIN}"                          # backend IP (tokenized — never a raw .x in git)
+---
+apiVersion: traefik.io/v1alpha1
+kind: IngressRoute
+metadata:
+  name: jellyfin
+  namespace: edge-proxies
+spec:
+  entryPoints:
+    - websecure
+  routes:
+    - match: Host(`${SECRET:DOMAIN_JELLYFIN}`)
+      kind: Rule
+      services:
+        - name: jellyfin-backend
+          port: 8096
+          scheme: http
+  tls:
+    secretName: jellyfin-tls
+---
+apiVersion: traefik.io/v1alpha1
+kind: IngressRoute
+metadata:
+  name: jellyfin-redirect
+  namespace: edge-proxies
+spec:
+  entryPoints:
+    - web
+  routes:
+    - match: Host(`${SECRET:DOMAIN_JELLYFIN}`)
+      kind: Rule
+      middlewares:
+        - name: redirect-https
+      services:
+        - name: jellyfin-backend
+          port: 8096
+          scheme: http

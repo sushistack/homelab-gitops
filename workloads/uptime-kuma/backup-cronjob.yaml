@@ -1,0 +1,72 @@
+# Story 5.8 (AC6a) — uptime-kuma backup actor, the Story 4.1 reusable pattern (copied from
+# workloads/ntfy/backup-cronjob.yaml, only the dump command + namespace changed). Preserved deltas:
+# R2 path homelab-k3s-services-backup/uptime-kuma/, ~6h cadence, ~30-day retention. (FR19/FR22; NFR5)
+#
+# RWO multi-mount trap: uptime-kuma-data is RWO -> Longhorn attaches to one node. This Job
+# co-schedules onto the kuma pod's node via podAffinity and mounts the PVC read-write (online
+# `sqlite3 .backup` needs the -wal/-shm files), writing the dump to an emptyDir /scratch — never back
+# onto /app/data. The app is NOT scaled to 0 (online backup needs no quiesce).
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: uptime-kuma-backup
+spec:
+  schedule: "50 */6 * * *"        # ~6h; offset from the other backups so they don't all fire at once
+  timeZone: Asia/Seoul
+  concurrencyPolicy: Forbid
+  startingDeadlineSeconds: 300
+  successfulJobsHistoryLimit: 3
+  failedJobsHistoryLimit: 3       # keep failures visible (the ops-alerter (d) check reads these)
+  jobTemplate:
+    spec:
+      activeDeadlineSeconds: 900       # apk + sqlite .backup + rclone copy ceiling
+      template:
+        metadata:
+          labels:
+            app.kubernetes.io/name: uptime-kuma-backup
+            app.kubernetes.io/component: backup
+        spec:
+          restartPolicy: OnFailure
+          affinity:
+            podAffinity:
+              requiredDuringSchedulingIgnoredDuringExecution:
+                - labelSelector:
+                    matchLabels:
+                      app.kubernetes.io/name: uptime-kuma
+                  topologyKey: kubernetes.io/hostname   # land on the node holding the RWO volume
+          containers:
+            - name: backup
+              # sqlite3 + rclone in one small image. PIN AT CUTOVER:
+              #   docker buildx imagetools inspect alpine:3.20
+              image: alpine:3.20
+              command:
+                - /bin/sh
+                - -ceu
+                - |
+                  apk add --no-cache sqlite rclone ca-certificates tzdata
+                  ts=$(date +%Y-%m-%dT%H-%M-%S)
+                  # online, lock-safe — source stays live (no docker stop / no scale-down)
+                  sqlite3 /data/kuma.db ".backup /scratch/kuma.db"
+                  tar -C /scratch -czf "/scratch/uptime-kuma-${ts}.tar.gz" kuma.db
+                  rclone copy "/scratch/uptime-kuma-${ts}.tar.gz" "r2:homelab-k3s-services-backup/uptime-kuma/"
+                  # ~30-day retention (offen semantics). // ponytail: rclone delete is the lazy port;
+                  # swap to an R2 lifecycle rule if you'd rather not grant the cred delete scope.
+                  rclone delete --min-age 720h "r2:homelab-k3s-services-backup/uptime-kuma/" || true
+              env:
+                # bucket-scoped token can't ListBuckets/CreateBucket; skip rclone's pre-PUT probe.
+                - name: RCLONE_CONFIG_R2_NO_CHECK_BUCKET
+                  value: "true"
+              envFrom:
+                - secretRef:
+                    name: uptime-kuma-backup-r2   # per-ns SealedSecret (reseal of ntfy-backup-r2 to ns uptime-kuma)
+              volumeMounts:
+                - name: data
+                  mountPath: /data          # RW: online .backup needs -wal/-shm
+                - name: scratch
+                  mountPath: /scratch
+          volumes:
+            - name: data
+              persistentVolumeClaim:
+                claimName: uptime-kuma-data
+            - name: scratch
+              emptyDir: {}

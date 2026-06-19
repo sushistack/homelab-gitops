@@ -1,0 +1,27 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+resources:
+  - namespace.yaml
+  - pvc.yaml
+  - sealedsecret.yaml      # uptime-kuma-backup-r2 (resealed live) — Secret exists before the backup CronJob
+  - service.yaml
+  - ingressroute.yaml      # web->websecure (TLS serve + HTTP->HTTPS redirect); host tokenized
+  - certificate.yaml       # per-host cert-manager Certificate -> uptime-kuma-tls (letsencrypt-prod)
+  # CUTOVER STAGING (legacy-teardown.md E1): deployment + backup are held OUT until the PVC is
+  # pre-populated with the migrated kuma.db, so kuma never boots an empty DB onto the volume (the
+  # 4.8 pre-populate-before-app-create pattern; dodges the appset selfHeal/empty-init race). Ingest
+  # via _cutover/ingest-job.yaml, byte-verify, then uncomment these two and push.
+  # - deployment.yaml
+  # - backup-cronjob.yaml  # the reusable backup actor (copied from ntfy); co-locates on the app node
+# NOT included on purpose:
+#   _cutover/          -> one-shot ingest Job, applied by hand during the cutover (must NOT be ArgoCD-managed)
+
+labels:
+  - includeSelectors: false
+    pairs:
+      app.kubernetes.io/name: uptime-kuma
+      app.kubernetes.io/instance: uptime-kuma
+      app.kubernetes.io/part-of: uptime-kuma
+      app.kubernetes.io/managed-by: argocd
+      app.kubernetes.io/component: app

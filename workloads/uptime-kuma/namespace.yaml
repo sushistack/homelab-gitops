@@ -1,0 +1,8 @@
+# Story 5.8 (AC6a) — uptime-kuma moves from the retiring Compose/NPM host (.20) INTO k3s as a
+# full stateful workload. It is the LAST infra service NPM fronted; once it serves from k3s the five
+# remaining external hosts go onto Traefik (workloads/edge-proxies) and NPM is deleted (AC6d).
+# SQLite-backed (kuma.db) — same DB-class golden path as ntfy/navidrome/vaultwarden.
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: uptime-kuma

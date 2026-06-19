@@ -1,0 +1,14 @@
+# Story 5.8 (AC6a) — uptime-kuma ClusterIP. Public exposure is via the Traefik IngressRoute, not a
+# host port (Compose bound a host port behind NPM).
+apiVersion: v1
+kind: Service
+metadata:
+  name: uptime-kuma
+spec:
+  type: ClusterIP
+  selector:
+    app.kubernetes.io/name: uptime-kuma
+  ports:
+    - name: http
+      port: 3001
+      targetPort: 3001

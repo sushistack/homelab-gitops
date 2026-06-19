@@ -1,0 +1,83 @@
+# Story 5.8 (AC6b) — Traefik front for the immich host (was an NPM proxy-host on .20).
+# Backend = http://${SECRET:IP_IMMICH}:2283. immich LXC. CONFIRMED against live NPM (6.conf: http :2283).
+#
+# Selector-less headless Service + manual EndpointSlice: k8s won't manage endpoints (no pod selector),
+# so Traefik routes to the IP in the EndpointSlice. The public cert (immich-tls) is browser-trusted;
+# the Traefik->backend hop is LAN-internal.
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: immich-tls
+  namespace: edge-proxies
+spec:
+  secretName: immich-tls
+  dnsNames:
+    - "${SECRET:DOMAIN_IMMICH}"
+  issuerRef:
+    name: letsencrypt-prod
+    kind: ClusterIssuer
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: immich-backend
+  namespace: edge-proxies
+spec:
+  clusterIP: None        # headless; endpoints come from the manual EndpointSlice below
+  ports:
+    - name: http
+      port: 2283
+      targetPort: 2283
+      protocol: TCP
+---
+apiVersion: discovery.k8s.io/v1
+kind: EndpointSlice
+metadata:
+  name: immich-backend-1
+  namespace: edge-proxies
+  labels:
+    kubernetes.io/service-name: immich-backend   # associates this slice with the Service above
+addressType: IPv4
+ports:
+  - name: http
+    port: 2283
+    protocol: TCP
+endpoints:
+  - addresses:
+      - "${SECRET:IP_IMMICH}"                          # backend IP (tokenized — never a raw .x in git)
+---
+apiVersion: traefik.io/v1alpha1
+kind: IngressRoute
+metadata:
+  name: immich
+  namespace: edge-proxies
+spec:
+  entryPoints:
+    - websecure
+  routes:
+    - match: Host(`${SECRET:DOMAIN_IMMICH}`)
+      kind: Rule
+      services:
+        - name: immich-backend
+          port: 2283
+          scheme: http
+  tls:
+    secretName: immich-tls
+---
+apiVersion: traefik.io/v1alpha1
+kind: IngressRoute
+metadata:
+  name: immich-redirect
+  namespace: edge-proxies
+spec:
+  entryPoints:
+    - web
+  routes:
+    - match: Host(`${SECRET:DOMAIN_IMMICH}`)
+      kind: Rule
+      middlewares:
+        - name: redirect-https
+      services:
+        - name: immich-backend
+          port: 2283
+          scheme: http

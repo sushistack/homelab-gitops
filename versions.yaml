@@ -160,3 +160,8 @@ workloads:
   beszel-agent:
     manifest: workloads/beszel/daemonset-agent.yaml
     image: henrygd/beszel-agent:0.18.7
+  # Story 5.8 — uptime-kuma migrated INTO k3s (was Compose/NPM on .20). Pinned to the exact digest
+  # the live host ran (:latest == 1.23.17) so the migrated kuma.db schema matches (AR29).
+  uptime-kuma:
+    manifest: workloads/uptime-kuma/deployment.yaml
+    image: louislam/uptime-kuma@sha256:3d632903e6af34139a37f18055c4f1bfd9b7205ae1138f1e5e8940ddc1d176f9

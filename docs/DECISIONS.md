@@ -590,3 +590,46 @@ material, IP, or `*.<zone>` host appears; Plane 0 secrets stay off-repo.
   **reproducible config** — losing it costs minutes of re-clicking, not data loss. So no R2 backup
   CronJob, no backup actor. (Contrast 5.6's komga/calibre reading-progress DBs, which got R2 actors.)
   | Story 5.7
+
+## Final legacy teardown + R2 monitor + ntfy topic split + full NPM retirement (Story 5.8, Epic 5 / Phase 3 — opportunistic)
+
+- 2026-06-19 | **Rollback net torn down — forward-only, the net's whole purpose is now served.** 5.4
+  kept the parked app Compose volumes + `*.retired-5.4` files AS the rollback net; the migration is
+  DONE with restores verified from R2 in scratch namespaces (Epic 4), and the operator's stance is
+  forward-only (memory `cutover_no_rollback`), so removing the net is correct — but irreversible, on
+  the live shared-project host. Deleted by **explicit volume name** (never `compose down -v` —
+  cloudflared/Plane 0 shares the project). | Story 5.8 (AC1)
+- 2026-06-19 | **Full NPM retirement — the interim "keep NPM" decision is REVERSED.** NPM fronted SIX
+  hosts (`jellyfin`/`immich`/`proxmox`/`openwrt`/`kvm` + `kuma`), not three. All six move to Traefik:
+  **kuma becomes a real k3s workload** (PVC + R2 backup actor, data byte-verified per
+  `cutover_data_consistency`); the **five stateless externals are EndpointSlice-fronted** (headless
+  Service + manual EndpointSlice → external IP:port, per-host Certificate + IngressRoute — zero
+  migration, k3s just reverse-proxies them). Then **NPM container + volume are deleted** and the legacy
+  CF DNS token **`ca7e70a5` is revoked** (cert-manager keeps `3b2b473a`). This completes
+  `architecture.md:145` (Traefik absorbs the NPM role) and is the deferred completion of 5.5's charter;
+  the original memory `cloudflare_dns_tokens` note ("retire NPM token after Compose") is **restored**.
+  Accepted gap: in-cluster kuma can't be its own out-of-band watcher for a total k3s outage → one
+  external ping (Cloudflare Health Check / free monitor) covers it; recovery for proxmox/openwrt/kvm
+  during a k3s outage is the **LAN IP**, not the public host (documented in the runbook). cloudflared untouched;
+  NPM/token deleted ONLY after all six verify on Traefik. | Story 5.8 (AC6)
+- 2026-06-19 | **R2 backup monitoring folded INTO the ops-alerter — not a new system.** The `*/15`
+  poller (4.2/5.1) gains three R2 checks via the reused bucket-scoped cred (reseal of `ntfy-backup-r2`):
+  per-bucket **capacity** (before the ~10 GB free tier), per-`<svc>/` **freshness** (newest object stale
+  ⇒ a backup actor silently broke), and per-`<svc>/` **rotation** (oldest object too old ⇒ retention
+  failing — the blind spot 4.8 left behind `\|\| true`). A standalone monitor Deployment would
+  re-litigate NFR15's deliberate rejection of a heavy metrics stack. `rclone size` + one recursive
+  `lsjson` per bucket; no Cloudflare GraphQL analytics. No NetworkPolicy delta (the existing
+  `0.0.0.0/0:443` egress already covers R2 + the apk CDN). | Story 5.8 (AC2)
+- 2026-06-19 | **ntfy split by CONCERN, not per-app (answering the operator's "앱 별?").** Three topics:
+  `homelab-critical` (NFR15a stateful/backup failures + R2 — wake me), `homelab-ops` (NFR15b drift/health
+  — review when convenient), `homelab-monitor` (Beszel node-resource — glance). **Per-app topics (15 of
+  them) deliberately NOT done**: 15 subscriptions of mostly-silence is management noise, not value.
+  Per-app filtering stays available **within** a topic via the app-name title prefix the alerts already
+  carry + ntfy tags/priority. ntfy is `deny-all`, so the existing token user is granted `wo` on the new
+  topics via `ntfy access` (no server.yml change, no SealedSecret reseal — same user, more grants). |
+  Story 5.8 (AC3)
+- 2026-06-19 | **Heimdall tile list lives in the runbook (reproducibility, honoring 5.7's claim).** 5.7
+  shipped Heimdall with no backup actor on the claim its config is "trivially reproducible." Hand-clicking
+  tiles and walking away would quietly break that, so the **runbook tile-list (or an exported JSON) is the
+  deliverable** and the clicking just applies it. No tile-as-code automation (YAGNI for one operator). |
+  Story 5.8 (AC4)

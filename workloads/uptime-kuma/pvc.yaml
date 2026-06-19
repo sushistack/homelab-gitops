@@ -1,0 +1,17 @@
+# Story 5.8 (AC6a) — uptime-kuma durable state (kuma.db + uploads) on Longhorn. RWO single-node
+# attach; the backup CronJob co-locates onto the pod's node to share it (ntfy RWO-trap pattern).
+# Prune=false + Longhorn Retain: ArgoCD must NEVER delete this and the volume survives PVC removal —
+# this is real monitoring config/history, not disposable (AR15).
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: uptime-kuma-data
+  annotations:
+    argocd.argoproj.io/sync-options: Prune=false
+spec:
+  accessModes:
+    - ReadWriteOnce
+  storageClassName: longhorn
+  resources:
+    requests:
+      storage: 2Gi   # kuma.db + screenshot/heartbeat history; grow via PR if it fills

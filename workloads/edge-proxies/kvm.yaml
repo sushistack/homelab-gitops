@@ -1,0 +1,83 @@
+# Story 5.8 (AC6b) — Traefik front for the kvm host (was an NPM proxy-host on .20).
+# Backend = http://${SECRET:IP_KVM}:80. NanoKVM (.100). CONFIRMED against live NPM (11.conf: http :80).
+#
+# Selector-less headless Service + manual EndpointSlice: k8s won't manage endpoints (no pod selector),
+# so Traefik routes to the IP in the EndpointSlice. The public cert (kvm-tls) is browser-trusted;
+# the Traefik->backend hop is LAN-internal.
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: kvm-tls
+  namespace: edge-proxies
+spec:
+  secretName: kvm-tls
+  dnsNames:
+    - "${SECRET:DOMAIN_KVM}"
+  issuerRef:
+    name: letsencrypt-prod
+    kind: ClusterIssuer
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: kvm-backend
+  namespace: edge-proxies
+spec:
+  clusterIP: None        # headless; endpoints come from the manual EndpointSlice below
+  ports:
+    - name: http
+      port: 80
+      targetPort: 80
+      protocol: TCP
+---
+apiVersion: discovery.k8s.io/v1
+kind: EndpointSlice
+metadata:
+  name: kvm-backend-1
+  namespace: edge-proxies
+  labels:
+    kubernetes.io/service-name: kvm-backend   # associates this slice with the Service above
+addressType: IPv4
+ports:
+  - name: http
+    port: 80
+    protocol: TCP
+endpoints:
+  - addresses:
+      - "${SECRET:IP_KVM}"                          # backend IP (tokenized — never a raw .x in git)
+---
+apiVersion: traefik.io/v1alpha1
+kind: IngressRoute
+metadata:
+  name: kvm
+  namespace: edge-proxies
+spec:
+  entryPoints:
+    - websecure
+  routes:
+    - match: Host(`${SECRET:DOMAIN_KVM}`)
+      kind: Rule
+      services:
+        - name: kvm-backend
+          port: 80
+          scheme: http
+  tls:
+    secretName: kvm-tls
+---
+apiVersion: traefik.io/v1alpha1
+kind: IngressRoute
+metadata:
+  name: kvm-redirect
+  namespace: edge-proxies
+spec:
+  entryPoints:
+    - web
+  routes:
+    - match: Host(`${SECRET:DOMAIN_KVM}`)
+      kind: Rule
+      middlewares:
+        - name: redirect-https
+      services:
+        - name: kvm-backend
+          port: 80
+          scheme: http

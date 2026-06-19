@@ -1,0 +1,13 @@
+# Story 5.8 (AC6b) — Traefik fronts the five external hosts NPM used to reverse-proxy
+# (jellyfin / immich / proxmox / openwrt / kvm). None of these become k3s workloads — k3s only
+# reverse-proxies them. Per host: a selector-less headless Service + a manual EndpointSlice pointing
+# at the real backend IP:port, a per-host cert-manager Certificate, and IngressRoute x2 (web->websecure
+# redirect). This is the LAST piece of full NPM retirement (architecture.md:145); once all five + kuma
+# serve from Traefik, NPM + token ca7e70a5 are deleted (AC6d, operator-live).
+#
+# # ponytail: one namespace, one shared ServersTransport + redirect Middleware (common.yaml), five
+#   near-identical host files. No per-host namespace, no templating engine — five files is fine.
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: edge-proxies

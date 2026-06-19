@@ -1,0 +1,15 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+resources:
+  - namespace.yaml
+  - common.yaml          # shared ServersTransport (insecure-backend) + redirect Middleware
+  - proxmox.yaml         # https 8006 (self-signed)
+  - openwrt.yaml         # https 443 (self-signed; Plane 0 gateway)
+  - jellyfin.yaml        # http 8096  (confirm vs live NPM conf at cutover)
+  - immich.yaml          # http 2283  (confirm vs live NPM conf at cutover)
+  - kvm.yaml             # http 80    (confirm vs live NPM conf at cutover)
+
+# No `labels:` block: these are selector-less Services with manual EndpointSlices, and a
+# commonLabels/labels transformer that touched the Service selector would break the manual-endpoint
+# association (kubernetes.io/service-name is the only label that may match). Keep it minimal.
