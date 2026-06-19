@@ -8,12 +8,10 @@ resources:
   - service.yaml
   - ingressroute.yaml      # web->websecure (TLS serve + HTTP->HTTPS redirect); host tokenized
   - certificate.yaml       # per-host cert-manager Certificate -> uptime-kuma-tls (letsencrypt-prod)
-  # CUTOVER STAGING (legacy-teardown.md E1): deployment + backup are held OUT until the PVC is
-  # pre-populated with the migrated kuma.db, so kuma never boots an empty DB onto the volume (the
-  # 4.8 pre-populate-before-app-create pattern; dodges the appset selfHeal/empty-init race). Ingest
-  # via _cutover/ingest-job.yaml, byte-verify, then uncomment these two and push.
-  # - deployment.yaml
-  # - backup-cronjob.yaml  # the reusable backup actor (copied from ntfy); co-locates on the app node
+  # Enabled after the PVC was pre-populated with the migrated kuma.db (byte-verified) — the 4.8
+  # pre-populate-before-app-create pattern dodged the empty-DB/selfHeal race.
+  - deployment.yaml
+  - backup-cronjob.yaml    # the reusable backup actor (copied from ntfy); co-locates on the app node
 # NOT included on purpose:
 #   _cutover/          -> one-shot ingest Job, applied by hand during the cutover (must NOT be ArgoCD-managed)
 
