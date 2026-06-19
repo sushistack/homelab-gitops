@@ -138,7 +138,7 @@ workloads:
     image: ghcr.io/sushistack/trade.monitor@sha256:b20dc1dca1860ae5dcd69a5f07a77f70ea7dd361ef4ba71ff874bf282c8a5478   # fonts-dejavu-core build (0.1.0 / sha-e304111)
   komga:
     manifest: workloads/komga/deployment-komga.yaml
-    image: gotson/komga:1.21.0
+    image: gotson/komga:1.24.4   # must match the LXC DB schema (older = TEMP_STRING_LIST breakage)
   suwayomi:
     manifest: workloads/komga/deployment-suwayomi.yaml
     image: ghcr.io/suwayomi/tachidesk:stable
