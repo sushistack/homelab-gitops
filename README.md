@@ -1,4 +1,4 @@
-# home-server-gitops
+# homelab-gitops
 
 A ~14-service home server migrated from a single Docker Compose host to a
 **GitOps-reconciled k3s cluster** — Git is the source of truth, ArgoCD

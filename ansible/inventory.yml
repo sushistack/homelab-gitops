@@ -32,4 +32,4 @@ all:
     node1_ip: ${SECRET:IP_CLUSTER_NODE_A}
     argocd_namespace: argocd
     certmanager_namespace: cert-manager   # where the Cloudflare DNS-01 token Secret lands (Story 2.4 consumes it)
-    gitops_repo_url: https://github.com/sushistack/home-server-gitops.git
+    gitops_repo_url: https://github.com/sushistack/homelab-gitops.git

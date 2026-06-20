@@ -5,7 +5,7 @@
 # Denylist is expressed as PATTERNS, never as a literal list of the real house's
 # addresses — a literal list in a public file would itself be the leak.
 
-title = "home-server-gitops exposure gate"
+title = "homelab-gitops exposure gate"
 
 [extend]
 useDefault = true   # keep gitleaks' built-in secret rules; ours are additive
