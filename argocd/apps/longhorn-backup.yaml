@@ -12,7 +12,7 @@ metadata:
 spec:
   project: homelab
   source:
-    repoURL: https://github.com/sushistack/home-server-gitops.git
+    repoURL: https://github.com/sushistack/homelab-gitops.git
     targetRevision: HEAD
     path: infra/longhorn-backup
   destination:

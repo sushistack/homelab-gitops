@@ -28,7 +28,7 @@ Story 3.4 Validation Gate with no open "would lose data" finding. (epics.md Epic
 ## Pre-flight checklist (do not skip a line)
 
 1. **Both entry gates green** (above). If 3.4 is not `done`, STOP.
-2. **`home-server-gitops` manifests merged + ArgoCD `Synced`/`Healthy`** for `<service>`
+2. **`homelab-gitops` manifests merged + ArgoCD `Synced`/`Healthy`** for `<service>`
    (Deployment, Service, PVC, ConfigMap, IngressRoute, Certificate, backup CronJob).
 3. **PVC bound** — `kubectl get pvc -n <ns> <service>-data` → `Bound`.
 4. **Backup actor has succeeded once** — trigger the CronJob and confirm an archive lands in

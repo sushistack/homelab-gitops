@@ -31,7 +31,7 @@ spec:
       helm:
         valueFiles:
           - $values/ansible/argocd-values.yaml
-    - repoURL: https://github.com/sushistack/home-server-gitops.git
+    - repoURL: https://github.com/sushistack/homelab-gitops.git
       targetRevision: HEAD
       ref: values   # provides $values for the chart's valueFiles above
   destination:
