@@ -37,6 +37,11 @@ spec:
           defaultDataEngine: v1
           v2DataEngine: false       # belt to the suspenders above: keep V2 disabled entirely, not just non-default
           defaultReplicaCount: 3    # cluster-wide default == the SC's defaultClassReplicaCount (docs assert "3" everywhere)
+          # Single physical host (ADR-0003): keep each volume's I/O on the node its pod runs on
+          # instead of hopping VM->VM over the bridge for every read/write. Cuts inter-VM disk
+          # I/O (the fan-noise source) with no durability change — replica count is unchanged.
+          # Applies to new volumes / rebuilds, not retroactively.
+          dataLocality: best-effort
           # On UNPLANNED node-down the workload pod gets stuck Terminating and the RWO volume stays
           # attached to the dead node, blocking reschedule. Force-delete the stuck pod so the volume
           # detaches + re-attaches on a healthy node — the AC2 self-heal proof (Story 2.5 / FR7 / NFR3).
