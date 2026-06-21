@@ -36,6 +36,15 @@ data:
     NTFY_TOPIC_CRITICAL="${NTFY_TOPIC_CRITICAL:-homelab-critical}"
     NTFY_TOPIC_OPS="${NTFY_TOPIC_OPS:-homelab-ops}"
 
+    # Action button (ntfy `actions`): one-tap jump to the triage console. ArgoCD shows cert/service/
+    # backup/drift/node state for nearly every alert here, so it's the DEFAULT; R2 capacity/reachability
+    # is a Cloudflare-side concern -> those override to the CF dashboard. URLs are STATIC — a `view`
+    # action 400s on an empty url (learned from the kuma webhook), so never interpolate a maybe-empty
+    # field here. ${SECRET:DOMAIN_ARGOCD} is substituted by the render CMP at sync time (gitleaks-safe
+    # token in git; the CMP fails closed if it is ever unresolved, so a broken literal never deploys).
+    ARGO_BTN='[{"action":"view","label":"Open ArgoCD","url":"https://${SECRET:DOMAIN_ARGOCD}"}]'
+    CF_BTN='[{"action":"view","label":"Open Cloudflare","url":"https://dash.cloudflare.com"}]'
+
     # Make the egress gotcha LOUD, not silent: if the apiserver is unreachable (the #1 predictable
     # failure once network-baseline default-deny lands without our egress allow), exit non-zero so
     # the Job goes Failed and is visible — rather than every check silently reading nothing.
@@ -44,14 +53,16 @@ data:
 
     now=$(date -u +%s)
 
-    notify() {  # $1 topic, $2 title, $3 rows-JSON (a jq array of {key,value,status?,meter?,icon?})
-      # Structured KV card: tag `card` + body = JSON spec (docs/ntfy-custom-message-format.md §2.1).
-      # JSON publish (not X-Title/-d headers): HTTP headers are latin-1, so emoji in the title would
-      # mojibake. jq builds the payload (safe escaping); `message` is the spec STRINGIFIED (the body is
-      # text that must PARSE to JSON). Failure to publish is logged, never aborts the poll.
-      payload=$(jq -nc --arg topic "$1" --arg t "$2" --argjson rows "$3" \
+    notify() {  # $1 topic, $2 title, $3 rows-JSON (jq array of {key,value,status?,meter?,icon?}), $4 (opt) actions-JSON
+      # Structured KV card: tag `card` + body = JSON spec (docs/ntfy-custom-message-format.md §2.1) +
+      # a `view` action button ($4, default ARGO_BTN). JSON publish (not X-Title/-d headers): HTTP
+      # headers are latin-1, so emoji in the title would mojibake. jq builds the payload (safe escaping);
+      # `message` is the spec STRINGIFIED (the body is text that must PARSE to JSON). Publish failure
+      # is logged, never aborts the poll.
+      acts="${4:-$ARGO_BTN}"
+      payload=$(jq -nc --arg topic "$1" --arg t "$2" --argjson rows "$3" --argjson acts "$acts" \
         '{topic:$topic, title:$t, priority:5, tags:["card"],
-          message: ({type:"kv", rows:$rows} | tojson)}') \
+          message: ({type:"kv", rows:$rows} | tojson), actions:$acts}') \
         || { echo "ERROR: payload build failed [$2]"; return 0; }   # guard: under set -eu a bare $(…) failure aborts the whole poll
       # POST to the ntfy ROOT url (topic is in the JSON body, not the path). Content-Type makes the
       # JSON-publish contract explicit instead of relying on ntfy's lenient root-url body sniffing.
@@ -226,7 +237,7 @@ data:
             {key:"State", value:"unreachable", status:"error"},
             {key:"Impact", value:"capacity / freshness / rotation checks skipped (backup monitoring blind)"},
             {key:"Fix", value:"Check R2 credentials / network / endpoint", icon:"exit"}]') || rows='[]'
-          notify "$NTFY_TOPIC_OPS" "🔌 R2 unreachable" "$rows"
+          notify "$NTFY_TOPIC_OPS" "🔌 R2 unreachable" "$rows" "$CF_BTN"
         else
           # (a) capacity — total bytes per bucket vs threshold
           for b in "$SVC_BUCKET" "$LH_BUCKET"; do
@@ -238,7 +249,7 @@ data:
                 {key:"Size", value:"\($gb)GiB", status:"error"},
                 {key:"Threshold", value:"\($thr)GiB (free tier ~10GB)"},
                 {key:"Fix", value:"Prune old backups or raise the limit", icon:"exit"}]') || rows='[]'
-              notify "$NTFY_TOPIC_CRITICAL" "💽 R2 capacity: $b" "$rows"
+              notify "$NTFY_TOPIC_CRITICAL" "💽 R2 capacity: $b" "$rows" "$CF_BTN"
             fi
           done
 
@@ -279,7 +290,7 @@ data:
           {key:"State", value:"rclone install failed", status:"error"},
           {key:"Impact", value:"R2 capacity / freshness / rotation skipped this poll"},
           {key:"Fix", value:"Check the apk CDN egress", icon:"exit"}]') || rows='[]'
-        notify "$NTFY_TOPIC_OPS" "🔌 R2 unreachable" "$rows"
+        notify "$NTFY_TOPIC_OPS" "🔌 R2 unreachable" "$rows" "$CF_BTN"
       fi
     fi
 

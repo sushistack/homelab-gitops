@@ -1,8 +1,8 @@
 # Story 4.2 — the NFR15a critical-alerting poller as a late-wave infra Application.
 # Self-authored manifests (kustomize) -> source path is infra/ops-alerts in THIS repo (the same
 # pattern as cluster-issuer.yaml, not a Helm vendor source). The app-of-apps root recurses argocd/
-# and adopts this. No ${SECRET:*} tokens -> the render CMP build is a no-op (ntfy FQDN is literal,
-# token lives in the SealedSecret).
+# and adopts this. The render CMP substitutes ${SECRET:DOMAIN_ARGOCD} (the alert cards' "Open ArgoCD"
+# action-button URL) at sync time; the ntfy FQDN stays literal and the ntfy token lives in the SealedSecret.
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
