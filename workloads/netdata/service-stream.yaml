@@ -1,0 +1,23 @@
+# Parent streaming receiver exposed on the LAN for NON-k8s streaming children (e.g. the Proxmox host).
+# Why a second Service: Traefik (the dashboard IngressRoute → the ClusterIP `netdata` svc) is an HTTP
+# reverse proxy and CANNOT carry Netdata's streaming connection-upgrade protocol — an external child
+# negotiating through it fails with "remote node response is not understood, is it Netdata?". In-cluster
+# children avoid this by dialing the ClusterIP directly; an off-cluster host needs the same DIRECT, plain
+# path. k3s ServiceLB publishes :19999 on each node IP, so the Proxmox child streams to <node-ip>:19999.
+#
+# ponytail: exposes :19999 (dashboard + stream receiver, unauthenticated) on the node LAN IPs. Marginal
+#   over the status quo — the dashboard is already LAN-reachable at netdata.eli.kr — and it's LAN-only
+#   (10.0.0.0/24); the stream push is gated by the shared api key. Lock down with a NetworkPolicy
+#   (allow :19999 from the pod network + the Proxmox IP only) if the extra surface ever matters.
+apiVersion: v1
+kind: Service
+metadata:
+  name: netdata-stream
+spec:
+  type: LoadBalancer
+  selector:
+    app.kubernetes.io/name: netdata     # the parent pod (same as the dashboard svc)
+  ports:
+    - name: stream
+      port: 19999
+      targetPort: 19999

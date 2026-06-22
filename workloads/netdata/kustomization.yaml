@@ -11,6 +11,7 @@ resources:
   - deployment-parent.yaml
   - daemonset-children.yaml
   - service.yaml
+  - service-stream.yaml        # LoadBalancer :19999 — direct LAN path for non-k8s streaming children (Proxmox)
   - ingressroute.yaml
   - certificate.yaml
   - sealedsecret.yaml          # netdata-stream: the parent/child stream.conf (shared api key)
