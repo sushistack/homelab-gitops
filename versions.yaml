@@ -154,12 +154,7 @@ workloads:
   heimdall:
     manifest: workloads/heimdall/deployment.yaml
     image: lscr.io/linuxserver/heimdall:2.6.3
-  beszel:
-    manifest: workloads/beszel/deployment-hub.yaml
-    image: henrygd/beszel:0.18.7
-  beszel-agent:
-    manifest: workloads/beszel/daemonset-agent.yaml
-    image: henrygd/beszel-agent:0.18.7
+  # Beszel decommissioned 2026-06-22 — superseded by Netdata (node + per-pod + Proxmox-child). See DECISIONS.md.
   # Netdata — heavier-detail node + per-pod monitoring (parent dashboard/dbengine + children DaemonSet
   # streaming). SAME image for both roles (role = config). Tag pinned now (lint passes); SWAP TO @sha256
   # at cutover (AR29):  docker buildx imagetools inspect netdata/netdata:v2.10.3

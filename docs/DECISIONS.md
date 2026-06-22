@@ -566,6 +566,15 @@ material, IP, or `*.<zone>` host appears; Plane 0 secrets stay off-repo.
   SQLite); the heavy Prometheus/Grafana/node-exporter stack stays rejected (NFR15 = ntfy alerting). A
   fourth, kuma-blind cluster-internal monitor was NOT built (the 5.5 AC2 warning) — Beszel is a
   different layer, not a duplicate. | Story 5.7 (fills the 5.5 AC2 / architecture.md 162–164 gap)
+- 2026-06-22 | **SUPERSEDED — Beszel decommissioned, replaced by Netdata.** `workloads/netdata/` (parent
+  Deployment + dbengine history + per-node DaemonSet children, streaming) gives a strict superset of
+  Beszel's role: node CPU/mem/disk/net + history + UI, PLUS per-pod/per-container resource detail (the
+  thing Beszel could not do). The Proxmox host (and any non-k8s host) joins the same parent dashboard as
+  a streaming child (runbook day2-tooling §3), covering Beszel's only other potential — which was never
+  built anyway. Netdata is heavier than Beszel's Go+SQLite but remains an agent + local dbengine, NOT the
+  Prometheus/Grafana/node-exporter stack still rejected (NFR15 = ntfy alerting). Operator consolidation
+  decision: one monitoring UI instead of two overlapping ones. uptime-kuma (HTTP up/down) and the ntfy
+  poller (ArgoCD/k3s drift) are untouched — they remain distinct layers. | netdata-workload
 - 2026-06-19 | **Semaphore manages Plane 0 (OpenWrt) FROM INSIDE k3s — the sanctioned easy path is the
   drift CHECK, not a one-click apply.** OpenWrt is the high-blast-radius gateway the cluster's own LAN
   rides on; a web "Run" button doing a LIVE `playbook-apply.yml --diff` would bypass the mandated

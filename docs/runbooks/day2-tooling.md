@@ -42,8 +42,8 @@ tokens to the live `argocd-render-tokens` Secret, applied the OpenWrt DNS overri
 - **Semaphore** (§1c): log in `admin` / password in operator's `~/.semaphore-admin-pw`; create the
   project + repo + static inventory + key + the `--check` drift template (the review-gated apply
   template stays a deliberate human setup — BITE 1).
-- **Beszel** (§3): first-run create admin in the hub UI, then **Add System** ×3 (`10.0.0.101–103`,
-  port `45876`). Agents are already running and listening.
+- **Netdata** (§3): Beszel decommissioned 2026-06-22 — Netdata (`workloads/netdata/`) now covers node +
+  per-pod monitoring; optionally add the Proxmox host as a streaming child (§3).
 - **Heimdall**: tiles — optional, deferred to Story 5.8.
 
 ---
@@ -169,70 +169,47 @@ reproducibility (there is **no backup actor**: the layout is re-clickable config
 
 ---
 
-## 3. Beszel — fill the agent key (after the hub boots)
+## 3. Netdata — add the Proxmox host as a streaming child
 
-The manifests wire Beszel's **SSH connection mode**: the agent LISTENs on `:45876` and the hub DIALS
-each node (no `TOKEN`/`HUB_URL`). The agent `KEY` is the **hub's public key**, unknown until the hub
-generates it on first boot. (If you instead pick a WebSocket-mode setup, the agent dials out and needs
-`KEY` + `TOKEN` + `HUB_URL` — change `daemonset-agent.yaml` env accordingly.)
+> **SUPERSEDES the former "Beszel — fill the agent key" step.** Beszel was decommissioned 2026-06-22
+> — Netdata (`workloads/netdata/`) now owns node + per-pod monitoring, and the Proxmox host joins the
+> *same* parent dashboard as a streaming child (below). See `docs/DECISIONS.md`.
 
-1. After the hub pod is Healthy, open its UI (`DOMAIN_BESZEL` after §4, or `kubectl -n beszel
-   port-forward svc/beszel 8090:8090` before DNS), create the admin user, **Add System** → copy the
-   shown public key.
-2. Paste it into `workloads/beszel/configmap-agent-key.yaml` (`data.KEY`), commit → ArgoCD syncs.
-3. Restart the agents to pick it up: `kubectl -n beszel rollout restart daemonset/beszel-agent`.
-4. In the hub, add each node (`10.0.0.101–103`) with port `45876`. Expect a pod per node
-   (`kubectl -n beszel get ds beszel-agent`) reporting CPU/mem/disk/net + history.
-- **Optional (AC3d)** `shoutrrr → ntfy` hub alerts: configure in the hub UI (Settings → Notifications)
-  reusing the existing ntfy topic. Not a manifest.
-### 3a. Beszel agent on the Proxmox host (Plane 0) — optional operator step
+The K3s Netdata **parent** already receives the 3 node children. To see the Proxmox host in the *same*
+UI (left-hand node list), run a Netdata **child** on Proxmox that streams to the parent. Proxmox is not
+k8s — no per-pod/RBAC concerns, it just reports host CPU/mem/disk/net (+ its VMs/LXC). **No cluster-side
+change is needed:** the parent's `stream.conf` already authorizes this shared key (`[<UUID>] allow from
+= *`), so the Proxmox child reuses it.
 
-Not GitOps-managed (the hypervisor is outside k3s and outside `ansible/inventory.yml`). Same SSH
-connection model as the in-cluster agents: the binary LISTENs on `:45876`, the hub DIALS it, and the
-`KEY` is the **same hub public key** already in `workloads/beszel/configmap-agent-key.yaml` — so no new
-key. Division of labour: Netdata covers per-pod/k8s detail, Beszel covers node-level + this non-k8s host.
+Reaching the parent from outside the cluster uses the existing Traefik IngressRoute (no new exposure);
+this requires the `netdata.eli.kr` LAN DNS override from §4.
 
-Run on the Proxmox host as root. Pinned to the **same `beszel-agent` version as `versions.yaml`**
-(`0.18.7`); bump both together when the in-cluster DaemonSet bumps.
+1. Read the shared streaming key (lives only in the SealedSecret — never hard-code it):
+   ```sh
+   kubectl -n netdata get secret netdata-stream \
+     -o jsonpath='{.data.stream-child\.conf}' | base64 -d | grep 'api key'
+   ```
+2. On the Proxmox host (Debian), install Netdata with telemetry off and no auto-update (confirm the
+   flags against the current kickstart docs at install):
+   ```sh
+   wget -O /tmp/nd.sh https://get.netdata.cloud/kickstart.sh
+   sh /tmp/nd.sh --stable-channel --disable-telemetry --no-updates --dont-start-it
+   ```
+3. Configure it as a streaming child. `/etc/netdata/stream.conf`:
+   ```ini
+   [stream]
+       enabled = yes
+       destination = netdata.eli.kr:443:SSL
+       api key = <UUID from step 1>
+   ```
+   `/etc/netdata/netdata.conf`: `[health] enabled = no`, `[ml] enabled = no`,
+   `[db] mode = ram` (the parent keeps the history; use `dbengine` instead if you also want local
+   retention on the host). Export `DO_NOT_TRACK=1` for the service, then `systemctl enable --now netdata`.
+4. Verify: parent UI node count goes 4 → 5 (`Receiving` 3 → 4) and Proxmox shows in the left node list.
 
-```sh
-VER=0.18.7
-# static linux/amd64 binary from the pinned release (the filename is unversioned; the /vVER/ path pins it)
-curl -fsSL "https://github.com/henrygd/beszel/releases/download/v${VER}/beszel-agent_linux_amd64.tar.gz" \
-  | tar -xzf - -C /usr/local/bin beszel-agent
-chmod +x /usr/local/bin/beszel-agent
-useradd -r -M -s /usr/sbin/nologin beszel 2>/dev/null || true   # unprivileged service user
-
-# KEY MUST equal data.KEY in workloads/beszel/configmap-agent-key.yaml (the hub's public key).
-cat >/etc/systemd/system/beszel-agent.service <<'UNIT'
-[Unit]
-Description=Beszel Agent
-After=network-online.target
-Wants=network-online.target
-
-[Service]
-ExecStart=/usr/local/bin/beszel-agent
-Environment="LISTEN=45876"
-Environment="KEY=ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAINWEtsmihIfFNqV8abX3+tm2JTDJpM/ruX+LvRO3i5rH"
-User=beszel
-Restart=always
-RestartSec=5
-
-[Install]
-WantedBy=multi-user.target
-UNIT
-
-systemctl daemon-reload && systemctl enable --now beszel-agent
-ss -lntp | grep 45876        # expect beszel-agent LISTENing
-```
-
-Then: allow inbound `:45876` to the Proxmox host from the hub (confirm the hub pod egresses to the
-Proxmox LAN IP — k3s SNATs pod egress to the LAN, so it should reach it), and in the hub UI **Add
-System** → `<Proxmox LAN IP>` port `45876`. The `storage` LXC can be added the same way if wanted.
-
-> Faster alternative (not version-pinned — installs the latest agent + sets up the user/systemd itself):
-> `curl -sL https://get.beszel.dev | sh -s -- -k "<hub public key>" -p 45876`. Prefer the pinned manual
-> install above to stay aligned with the `versions.yaml` SSOT.
+> Fallback if streaming-through-Traefik won't establish (proxy buffering / handshake): expose the
+> parent's `:19999` stream receiver directly on the LAN with a NodePort Service and point the child at
+> `<node-IP>:<nodeport>` instead of `netdata.eli.kr:443:SSL`. Add that Service to `workloads/netdata/`.
 
 ---
 
@@ -247,7 +224,7 @@ System** → `<Proxmox LAN IP>` port `45876`. The `storage` LXC can be added the
 ```yaml
   - "/semaphore.eli.kr/10.0.0.101"   # Story 5.7: Semaphore on k3s, INTERNAL-only (no CF route — LAN-only). node 1; ServiceLB binds :80/:443 on every node → Traefik → semaphore.
   - "/heimdall.eli.kr/10.0.0.101"    # Story 5.7: Heimdall on k3s, INTERNAL-only (no CF route — LAN-only). → Traefik → heimdall.
-  - "/beszel.eli.kr/10.0.0.101"      # Story 5.7: Beszel hub on k3s, INTERNAL-only (no CF route — LAN-only). → Traefik → beszel.
+  - "/netdata.eli.kr/10.0.0.101"     # Netdata parent dashboard, INTERNAL-only (no CF route — LAN-only). → Traefik → netdata. ALSO the Proxmox streaming-child destination (§3). REPLACES the decommissioned beszel.eli.kr — if that override was already applied live, remove it.
 ```
 
 ### Apply (operator)
