@@ -64,8 +64,8 @@ spec:
           volumeMounts:
             - name: cache               # dbengine history — the PVC
               mountPath: /var/cache/netdata
-            - name: lib                 # agent/alarm state — ephemeral is fine
-              mountPath: /var/lib/netdata
+            - name: lib                 # agent identity (MACHINE_GUID) + alarm state — PVC so it
+              mountPath: /var/lib/netdata   # survives restarts (else each restart = a new ghost node)
             - name: config              # netdata.conf (subPath: don't clobber /etc/netdata)
               mountPath: /etc/netdata/netdata.conf
               subPath: netdata-parent.conf
@@ -80,7 +80,8 @@ spec:
           persistentVolumeClaim:
             claimName: netdata-cache
         - name: lib
-          emptyDir: {}
+          persistentVolumeClaim:
+            claimName: netdata-state
         - name: config
           configMap:
             name: netdata-config

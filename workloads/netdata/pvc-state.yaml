@@ -1,0 +1,19 @@
+# Netdata parent IDENTITY + alarm state (/var/lib/netdata). Small, Longhorn RWO, Prune=false.
+# WHY this exists: the parent's MACHINE_GUID lives at /var/lib/netdata/registry/. On emptyDir it is
+# regenerated every pod restart, so netdata registers each restarted parent as a NEW node — the old
+# one becomes a "stale" ghost that eats one of the local dashboard's 5 node slots. Persisting it keeps
+# a stable identity across restarts (no ghosts). Separate from the dbengine cache PVC (different path,
+# different lifecycle); this one is tiny.
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: netdata-state
+  annotations:
+    argocd.argoproj.io/sync-options: Prune=false
+spec:
+  accessModes:
+    - ReadWriteOnce
+  storageClassName: longhorn
+  resources:
+    requests:
+      storage: 1Gi

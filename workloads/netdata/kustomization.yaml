@@ -8,6 +8,7 @@ resources:
   - namespace.yaml
   - serviceaccount.yaml
   - pvc.yaml
+  - pvc-state.yaml             # /var/lib/netdata — stable MACHINE_GUID across restarts (no ghost nodes)
   - deployment-parent.yaml
   - daemonset-children.yaml
   - service.yaml
