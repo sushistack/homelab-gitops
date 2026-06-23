@@ -1,0 +1,94 @@
+# Jellyfin host *arr media stack — deployed by ansible/media-stack/deploy.yml (Semaphore).
+#
+# Secrets (gluetun VPN creds) and the non-secret knobs (PUID/PGID/HOST_DATA/HOST_CONFIG/TZ)
+# arrive via a runtime-rendered `.env` that sits NEXT TO this file in the host deploy dir
+# (repo-外 — never the Semaphore checkout). docker compose auto-loads that `.env`.
+#
+# Images are pinned to @sha256 multi-arch index digests (AR29) — resolved per-platform on the host.
+#    To bump: pick a new tag, `docker buildx imagetools inspect <img>:<tag>`, swap tag + digest together.
+#    `pull_policy: missing` keeps a re-run/`--check` from re-pulling or jumping a tag.
+#
+# qbt reachability: qbittorrent runs in gluetun's network namespace (network_mode: service:gluetun),
+# so radarr/sonarr (separate containers) reach it at `gluetun:8080`, NOT `localhost:8080`.
+
+services:
+  gluetun:                     # VPN — qbittorrent가 이 네트워크로만 나간다 (킬스위치)
+    image: qmcgaw/gluetun:v3.40@sha256:e10584de1f82d8999e5e6c3111901d9d56a2eed21151fb96af060f390bbdfba8   # refresh: docker buildx imagetools inspect qmcgaw/gluetun:<tag>
+    container_name: gluetun
+    cap_add: [NET_ADMIN]
+    devices:
+      - /dev/net/tun:/dev/net/tun   # LXC: needs `lxc.cgroup2.devices.allow` for the tun device + nesting=1
+    environment:
+      VPN_SERVICE_PROVIDER: ${VPN_SERVICE_PROVIDER}
+      VPN_TYPE: ${VPN_TYPE}
+      WIREGUARD_PRIVATE_KEY: ${WIREGUARD_PRIVATE_KEY}
+      WIREGUARD_ADDRESSES: ${WIREGUARD_ADDRESSES}
+      SERVER_CITIES: ${SERVER_CITIES}
+      TZ: ${TZ}
+    ports:
+      - 8080:8080              # qbittorrent UI (gluetun 네트워크에 게시 — qbt가 이 netns를 공유)
+    pull_policy: missing
+    restart: unless-stopped
+
+  qbittorrent:
+    image: lscr.io/linuxserver/qbittorrent:5.0.3@sha256:308d768672fb9e86e800a73504c439176aabe5977bcdf8b99f7561bb603d9b6e   # refresh: docker buildx imagetools inspect <img>:<tag>
+    container_name: qbittorrent
+    network_mode: "service:gluetun"   # VPN 끊기면 토렌트도 차단. gluetun 재생성 시 qbt도 동반 recreate 필요.
+    depends_on:
+      gluetun:
+        condition: service_healthy   # gluetun 이미지 내장 healthcheck — 터널 뜨기 전 qbt 기동 방지
+    environment: {PUID: "${PUID}", PGID: "${PGID}", TZ: "${TZ}", WEBUI_PORT: 8080}
+    volumes:
+      - ${HOST_CONFIG}/qbittorrent:/config
+      - ${HOST_DATA}:/data              # /data/torrents 로 받음 (라이브러리와 같은 fs → 하드링크)
+    pull_policy: missing
+    restart: unless-stopped
+
+  prowlarr:
+    image: lscr.io/linuxserver/prowlarr:1.30.2@sha256:33a605960120eff07b4713f094a4588ce048e8e3aa7a1599f41224cb67122ba5
+    container_name: prowlarr
+    environment: {PUID: "${PUID}", PGID: "${PGID}", TZ: "${TZ}"}
+    volumes: [ "${HOST_CONFIG}/prowlarr:/config" ]
+    ports: [ "9696:9696" ]
+    pull_policy: missing
+    restart: unless-stopped
+
+  radarr:
+    image: lscr.io/linuxserver/radarr:5.21.1@sha256:9a4a7ed79dee5fcc9940b57ddfddfe7c87dea2d13a221ca2fdd2c1c8d9e75c2e
+    container_name: radarr
+    environment: {PUID: "${PUID}", PGID: "${PGID}", TZ: "${TZ}"}
+    volumes:
+      - ${HOST_CONFIG}/radarr:/config
+      - ${HOST_DATA}:/data
+    ports: [ "7878:7878" ]
+    pull_policy: missing
+    restart: unless-stopped
+
+  sonarr:
+    image: lscr.io/linuxserver/sonarr:4.0.13@sha256:b666479159c0ffc17d5c2281737c9a88d78afcaa0aa52cb441b46336f6feba31
+    container_name: sonarr
+    environment: {PUID: "${PUID}", PGID: "${PGID}", TZ: "${TZ}"}
+    volumes:
+      - ${HOST_CONFIG}/sonarr:/config
+      - ${HOST_DATA}:/data
+    ports: [ "8989:8989" ]
+    pull_policy: missing
+    restart: unless-stopped
+
+  jellyseerr:                  # 요청 UI (가족) — Radarr/Sonarr/Jellyfin 연동
+    image: fallenbagel/jellyseerr:2.1.0@sha256:af5563771964282e5bfb6a4f30b05c75c8d30661a920f0399086f575217d0573
+    container_name: jellyseerr
+    environment: {TZ: "${TZ}"}
+    volumes: [ "${HOST_CONFIG}/jellyseerr:/app/config" ]
+    ports: [ "5055:5055" ]
+    pull_policy: missing
+    restart: unless-stopped
+
+  maintainerr:                 # 안 본 콘텐츠 자동 정리
+    image: ghcr.io/jorenn92/maintainerr:2.4.1@sha256:1c2bb5ff1294bd8fa37268c1ac6c4c715d6128c477232af1761b4d7c4771e596
+    container_name: maintainerr
+    environment: {TZ: "${TZ}"}
+    volumes: [ "${HOST_CONFIG}/maintainerr:/opt/data" ]
+    ports: [ "6246:6246" ]
+    pull_policy: missing
+    restart: unless-stopped

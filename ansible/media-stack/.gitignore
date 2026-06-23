@@ -1,0 +1,5 @@
+# Rendered plaintext must never be tracked. The .env is built on the host at runtime (deploy.yml),
+# never in the repo — this is a belt-and-suspenders guard against an accidental local render here.
+*.env
+.env
+rendered/

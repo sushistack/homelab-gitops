@@ -1,0 +1,8 @@
+# SOPS creation rules. age recipients are PUBLIC keys (safe to commit).
+#
+# media-stack VPN secrets use a DEDICATED age key — NOT the cluster DR identity (gate0-dr).
+# Reusing the DR key here would tie a low-value media secret to the crown-jewels recovery key
+# (blast-radius coupling). Generate with `age-keygen` (runbook §2) and paste its public recipient below.
+creation_rules:
+  - path_regex: ansible/media-stack/secrets\.sops\.yaml$
+    age: age1REPLACE_WITH_MEDIA_STACK_RECIPIENT
