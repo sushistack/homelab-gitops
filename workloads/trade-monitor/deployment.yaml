@@ -33,11 +33,28 @@ spec:
           # PUBLIC ghcr.io/sushistack/trade.monitor, pinned by digest (AR29) = fonts-dejavu-core build
           # (PIL needs the system TTF; tag 0.1.0 + sha-e304111). Bump via PR (versions.yaml + this line).
           image: ghcr.io/sushistack/trade.monitor@sha256:b20dc1dca1860ae5dcd69a5f07a77f70ea7dd361ef4ba71ff874bf282c8a5478
-          # Warm loop: persistent container, re-fork the single-shot entrypoint each cycle. `timeout 55`
-          # mirrors the old LXC `timeout 55` (kill a hung run); a non-zero exit just falls through to sleep.
-          command: ["/bin/sh", "-c"]
+          # In-process loop: import matplotlib/pandas ONCE at boot, then call main() each cycle. The old
+          # `sh -c 'while ...; python -m trade_monitor; sleep'` re-forked the interpreter every cycle, so
+          # the heavy import ran every ~235s = a CPU sawtooth (the node-fan driver). chart_renderer closes
+          # its figure (plt.close), so the long-lived process doesn't leak. SIGALRM(55) preserves the old
+          # `timeout 55` hung-run kill; exceptions are caught so one bad cycle doesn't end the loop.
+          command: ["python", "-u", "-c"]
           args:
-            - "while true; do timeout 55 python -m trade_monitor; sleep 180; done"
+            - |
+              import signal, time
+              from trade_monitor.main import main
+              def _timeout(*_):
+                  raise TimeoutError("cycle exceeded 55s")
+              signal.signal(signal.SIGALRM, _timeout)
+              while True:
+                  signal.alarm(55)
+                  try:
+                      main()
+                  except Exception as e:
+                      print("cycle error:", e)
+                  finally:
+                      signal.alarm(0)
+                  time.sleep(120)
           resources:
             requests:
               cpu: 100m
