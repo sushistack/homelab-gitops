@@ -10,12 +10,27 @@
 # Secrets: secrets.sops.yaml is decrypted at runtime with the SINGLE cluster age identity already
 # mounted in the Semaphore pod at /keys/age/keys.txt (same recipient openwrt/oracle use — "zero new
 # keys", DECISIONS.md). See runbook.md.
-- name: Media stack — *arr + downloader on the Jellyfin host
+- name: Media stack — *arr + optional downloader on the Jellyfin host
   hosts: media
   become: true
   gather_facts: false
   environment:
     SOPS_AGE_KEY_FILE: /keys/age/keys.txt   # the existing single cluster age identity (semaphore-age)
+  vars:
+    download_stack_enabled: "{{ DOWNLOAD_STACK_ENABLED | default(false) | bool }}"
+    base_stack_dirs:
+      - "{{ deploy_dir }}"
+      - "{{ HOST_DATA }}/media/movies"
+      - "{{ HOST_DATA }}/media/tv"
+      - "{{ HOST_CONFIG }}/prowlarr"
+      - "{{ HOST_CONFIG }}/radarr"
+      - "{{ HOST_CONFIG }}/sonarr"
+      - "{{ HOST_CONFIG }}/jellyseerr"
+      - "{{ HOST_CONFIG }}/maintainerr"
+    download_stack_dirs:
+      - "{{ HOST_DATA }}/torrents"
+      - "{{ HOST_CONFIG }}/qbittorrent"
+    owned_stack_dirs: "{{ base_stack_dirs + (download_stack_enabled | ternary(download_stack_dirs, [])) }}"
   tasks:
     - name: Ensure Docker engine + compose plugin are present (idempotent)
       # docker.io + docker-compose-v2 are the Ubuntu-native packages; docker-compose-v2 provides the
@@ -40,6 +55,7 @@
         - "{{ HOST_DATA }}/media/tv"
         - "{{ HOST_DATA }}/torrents"
       register: media_dirs_stat
+      when: item != HOST_DATA ~ '/torrents' or download_stack_enabled
 
     - name: Assert any EXISTING library/download dir is owned by PUID:PGID (skip dirs not created yet)
       ansible.builtin.assert:
@@ -54,7 +70,9 @@
       loop: "{{ media_dirs_stat.results }}"
       loop_control:
         label: "{{ item.item }}"
-      when: item.stat.exists
+      when:
+        - not item.skipped | default(false)
+        - item.stat.exists
 
     - name: Create only the directories the stack owns (PUID:PGID) — never the whole media tree
       ansible.builtin.file:
@@ -63,17 +81,7 @@
         owner: "{{ PUID }}"
         group: "{{ PGID }}"
         mode: '0755'
-      loop:
-        - "{{ deploy_dir }}"
-        - "{{ HOST_DATA }}/torrents"
-        - "{{ HOST_DATA }}/media/movies"
-        - "{{ HOST_DATA }}/media/tv"
-        - "{{ HOST_CONFIG }}/qbittorrent"
-        - "{{ HOST_CONFIG }}/prowlarr"
-        - "{{ HOST_CONFIG }}/radarr"
-        - "{{ HOST_CONFIG }}/sonarr"
-        - "{{ HOST_CONFIG }}/jellyseerr"
-        - "{{ HOST_CONFIG }}/maintainerr"
+      loop: "{{ owned_stack_dirs }}"
 
     - name: Decrypt the gluetun VPN secrets (SOPS+age, cluster identity)
       # community.sops.load_vars loads the decrypted keys as task/play vars for the .env template
@@ -82,6 +90,7 @@
       community.sops.load_vars:
         file: "{{ playbook_dir }}/secrets.sops.yaml"
       no_log: true
+      when: download_stack_enabled
 
     - name: Fail fast if secrets.sops.yaml is still the unencrypted template (REPLACE_ME)
       # Without this, the template values flow into .env and gluetun loops forever on invalid VPN
@@ -93,8 +102,9 @@
           - WIREGUARD_PRIVATE_KEY != 'REPLACE_ME'
         fail_msg: >-
           secrets.sops.yaml still holds template values — fill it and `sops -e -i` it (runbook §3)
-          before deploying.
+          before enabling DOWNLOAD_STACK_ENABLED.
         quiet: true
+      when: download_stack_enabled
 
     - name: Render the runtime .env (repo-外, 0600) — docker compose auto-loads it
       ansible.builtin.template:
@@ -116,3 +126,5 @@
         project_src: "{{ deploy_dir }}"
         state: present
         pull: missing
+      environment:
+        COMPOSE_PROFILES: "{{ download_stack_enabled | ternary('download', '') }}"

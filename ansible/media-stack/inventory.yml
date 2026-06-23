@@ -22,3 +22,4 @@ all:
         HOST_DATA: /mnt/media    # library + downloads parent (SAME fs → hardlinks): /mnt/media/{torrents,media/movies,media/tv}
         HOST_CONFIG: /opt/media-stack/config   # per-app config/DB (the ONLY backup target)
         deploy_dir: /opt/media-stack           # repo-外 host path where compose + rendered .env land
+        DOWNLOAD_STACK_ENABLED: false           # true later: enables gluetun + qbittorrent (`download` profile) after VPN secrets are encrypted

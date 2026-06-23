@@ -34,13 +34,22 @@ uses the same — nothing to generate or seal.
 
 ## 3. Encrypt the VPN secrets
 
-Fill the real values in `ansible/media-stack/secrets.sops.yaml`, then encrypt in place and commit
-ONLY the ciphertext:
+Default deploy leaves the download stack OFF: `DOWNLOAD_STACK_ENABLED: false` means `gluetun` and
+`qbittorrent` are not started, and VPN secrets may remain as placeholders. Radarr/Sonarr/Prowlarr,
+Jellyseerr, and Maintainerr can still be deployed first.
+
+When a P2P-capable VPN is ready, fill the real values in
+`ansible/media-stack/secrets.sops.yaml`, then encrypt in place and commit ONLY the ciphertext:
 
 ```sh
 sops -e -i ansible/media-stack/secrets.sops.yaml
 git add ansible/media-stack/secrets.sops.yaml && git commit   # encrypted
 ```
+
+Then set `DOWNLOAD_STACK_ENABLED: true` in the rendered Semaphore inventory and run the live apply.
+This enables the Compose `download` profile, which starts `gluetun` and `qbittorrent`.
+
+> qBittorrent is intentionally the only VPN-routed service. The rest stay on normal LAN networking.
 
 > gitleaks CI is red on master as a baseline — confirm **your diff** introduces no plaintext secret
 > (`git grep -nE 'WIREGUARD_PRIVATE_KEY|SERVER_CITIES' ansible/media-stack/` returns ciphertext only).
@@ -70,14 +79,14 @@ git add ansible/media-stack/secrets.sops.yaml && git commit   # encrypted
 
 ## 6. App connection (post-deploy UI)
 
-1. **qBittorrent** → Options → Default Save Path = **`/data/torrents`** (🔴 MUST be under `/data` so it
+1. **Prowlarr** → 인덱서 추가 → Settings/Apps에 Radarr·Sonarr 등록(API키).
+2. **Radarr/Sonarr** → Root folders: `/data/media/movies` (radarr), `/data/media/tv` (sonarr).
+3. **Jellyseerr** → Jellyfin + Radarr + Sonarr 연동.
+4. **Maintainerr** → Jellyfin + Radarr/Sonarr + Jellyseerr 연동.
+5. Later, after `DOWNLOAD_STACK_ENABLED: true`: **qBittorrent** → Options → Default Save Path = **`/data/torrents`** (🔴 MUST be under `/data` so it
    shares the library fs → hardlinks. The image default `/downloads` forces slow cross-fs copies).
-2. **Prowlarr** → 인덱서 추가 → Settings/Apps에 Radarr·Sonarr 등록(API키).
-3. **Radarr/Sonarr** → Download Client = qBittorrent host **`gluetun`**, port **8080**
+6. Later, after `DOWNLOAD_STACK_ENABLED: true`: **Radarr/Sonarr** → Download Client = qBittorrent host **`gluetun`**, port **8080**
    (🔴 NOT `localhost` — qbt shares gluetun's netns; radarr/sonarr are separate containers).
-   Root folders: `/data/media/movies` (radarr), `/data/media/tv` (sonarr).
-4. **Jellyseerr** → Jellyfin + Radarr + Sonarr 연동.
-5. **Maintainerr** → Jellyfin + Radarr/Sonarr + Jellyseerr 연동.
 
 ## 7. External exposure & backup
 

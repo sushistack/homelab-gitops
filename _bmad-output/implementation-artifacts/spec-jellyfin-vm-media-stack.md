@@ -27,6 +27,7 @@ context:
 - 비밀(VPN 자격증명)은 `secrets.sops.yaml`에만, **단일 클러스터 age recipient**(openwrt/oracle와 동일)로 암호화. 복호는 `/keys/age/keys.txt`. — DECISIONS.md "zero new keys".
 - `.env`는 **repo 체크아웃 밖** 호스트 배포 경로에 0600·`no_log`로 렌더. git 추적 불가.
 - 비-비밀 노브(PUID/PGID/HOST_DATA/HOST_CONFIG/TZ)는 inventory group_vars. 토큰 inventory는 `${SECRET:...}` 컨벤션(운영자가 `bin/render`로 Semaphore static inventory 생성).
+- `DOWNLOAD_STACK_ENABLED` 기본값은 `false`: gluetun/qbittorrent는 Compose `download` profile 뒤에 두고, VPN 준비 전에는 나머지 앱만 배포한다.
 - 디렉터리는 스택이 쓰는 하위 경로만 PUID:PGID로 생성. **기존 미디어 트리에 `chown -R` 금지**(대용량 + Jellyfin 소유 파괴 위험).
 - 작업 후 `ansible-playbook --syntax-check` 검증만. **실제 apply/실행 금지.**
 
@@ -43,7 +44,8 @@ context:
 
 | Scenario | Input / State | Expected Output / Behavior | Error Handling |
 |----------|--------------|---------------------------|----------------|
-| 정상 배포 | sops 복호 OK, docker 존재 | 스택 하위 dir 생성 → `.env` 렌더(repo 밖, 0600) → compose 배치 → `docker_compose_v2` pull=missing+up, 컨테이너 7개 up | N/A |
+| 정상 배포(다운로드 보류) | docker 존재, `DOWNLOAD_STACK_ENABLED=false` | 기본 스택 하위 dir 생성 → `.env` 렌더(repo 밖, 0600) → compose 배치 → `docker_compose_v2` pull=missing+up, 컨테이너 5개 up(gluetun/qbt 제외) | N/A |
+| 다운로드 활성화 | VPN secret 암호화 완료, `DOWNLOAD_STACK_ENABLED=true` | `download` profile 활성화 → gluetun/qbittorrent 포함 7개 컨테이너 up | REPLACE_ME면 fail fast |
 | 재실행(수렴) | 변경 없음, 같은 digest | 모든 task `ok`, 이미지 재-pull/recreate 없음(`pull: missing`) | N/A |
 | `--check` 드리프트 | 호스트가 git과 다름 | changed>0 보고(apply 안 함), 이미지 변동은 0(핀 고정) | N/A |
 | cluster age 키 부재 | `/keys/age/keys.txt` 없음 | decrypt task fail fast, `.env` 안 써짐 | task 실패, 명확 메시지 |
@@ -64,13 +66,13 @@ context:
 ## Tasks & Acceptance
 
 **Execution:**
-- [x] `ansible/media-stack/docker-compose.yml` -- 프롬프트 7개 서비스(gluetun·qbittorrent·prowlarr·radarr·sonarr·jellyseerr·maintainerr). **이미지 digest 핀** + 각 줄에 `docker buildx imagetools inspect` 갱신 커맨드 주석. `${HOST_CONFIG}` 변수 추가. `pull_policy: missing`. gluetun netns 공유/qbt 접근은 `gluetun:8080`임을 주석. LXC `nesting=1`/`/dev/net/tun` 주석. gluetun 재생성 시 qbt 동반 recreate 주석.
+- [x] `ansible/media-stack/docker-compose.yml` -- 프롬프트 7개 서비스(gluetun·qbittorrent·prowlarr·radarr·sonarr·jellyseerr·maintainerr). **이미지 digest 핀** + 각 줄에 `docker buildx imagetools inspect` 갱신 커맨드 주석. `${HOST_CONFIG}` 변수 추가. `pull_policy: missing`. gluetun/qbittorrent는 `download` profile 뒤에 두어 VPN 준비 전 기본 배포에서 제외. gluetun netns 공유/qbt 접근은 `gluetun:8080`임을 주석. LXC `nesting=1`/`/dev/net/tun` 주석. gluetun 재생성 시 qbt 동반 recreate 주석.
 - [x] `ansible/media-stack/inventory.yml` -- group `media`, host `jellyfin`, `ansible_host: ${SECRET:IP_JELLYFIN}`(기존 토큰 재사용), `ansible_ssh_private_key_file: /keys/ssh/jellyfin`. group_vars: PUID/PGID/HOST_DATA(`/mnt/media`)/HOST_CONFIG(`/opt/media-stack/config`)/TZ 기본값. **렌더 소스**(operator `bin/render` → Semaphore static inventory).
 - [x] `ansible/media-stack/secrets.sops.yaml` -- VPN 자격증명 placeholder YAML. **기존 cluster age recipient로** `sops -e -i`(DECISIONS.md "zero new keys"). 평문 커밋 금지.
 - [x] `.sops.yaml` -- `ansible/media-stack/secrets\.sops\.yaml` creation_rule → existing cluster age public recipient(`age1chmmudv…`) 재사용.
 - [x] `ansible/media-stack/env.j2` -- (구현 중 추가) `.env` 렌더용 Jinja 템플릿. secrets(sops 복호) + group_vars 병합.
 - [x] `ansible/media-stack/.gitignore` -- `*.env`, 렌더 산출물 무시(평문 누출 가드).
-- [x] `ansible/media-stack/deploy.yml` -- playbook: ① docker engine + compose plugin 보장 ② **preflight**: 기존 `$HOST_DATA` 소유가 PUID:PGID와 호환인지 assert/warn(blind chown 안 함) ③ 스택 하위 dir만 생성(`torrents`, `media/movies`, `media/tv`, 각 앱 config) owner PUID:PGID ④ `community.sops`로 `secrets.sops.yaml` 복호(`SOPS_AGE_KEY_FILE=/keys/age/keys.txt`, `no_log`) ⑤ `.env`를 **호스트 배포 경로(repo 밖)**에 렌더(secrets+group_vars, 0600, `no_log`) ⑥ compose 복사 ⑦ `community.docker.docker_compose_v2`(state=present, **pull=missing**).
+- [x] `ansible/media-stack/deploy.yml` -- playbook: ① docker engine + compose plugin 보장 ② **preflight**: 기존 `$HOST_DATA` 소유가 PUID:PGID와 호환인지 assert/warn(blind chown 안 함) ③ 스택 하위 dir만 생성(`media/movies`, `media/tv`, 각 앱 config; 다운로드 활성화 시 `torrents`/qbt config 포함) owner PUID:PGID ④ `DOWNLOAD_STACK_ENABLED=true`일 때만 `community.sops`로 `secrets.sops.yaml` 복호(`SOPS_AGE_KEY_FILE=/keys/age/keys.txt`, `no_log`) 및 REPLACE_ME fail-fast ⑤ `.env`를 **호스트 배포 경로(repo 밖)**에 렌더(secrets+group_vars, 0600, `no_log`) ⑥ compose 복사 ⑦ `community.docker.docker_compose_v2`(state=present, **pull=missing**, download profile 조건부).
 - [x] `ansible/media-stack/runbook.md` -- Semaphore 와이어링: (1) `seal-secrets.sh`에 `--from-file=jellyfin=<ssh-key>` 추가+reseal (2) `.sops.yaml`은 existing cluster age recipient 재사용 (3) `secrets.sops.yaml` `sops -e -i` (4) `bin/render ansible/media-stack/inventory.yml` → 결과를 Semaphore static inventory에 붙여넣기 + `community.docker`/`community.sops` collection 설치 step (5) Task Template: apply + `--check` 드리프트 (6) 🔴 **앱 연결: radarr/sonarr Download Client = `gluetun:8080`(`localhost` 아님)** (7) jellyseerr만 cloudflared 터널(`761ca633`) ingress → `http://${IP_JELLYFIN}:5055` (8) 백업=`${HOST_CONFIG}`만 (9) gitleaks CI는 master 베이스라인 red — 본인 diff만 clean 확인 (10) 🔴 LXC면 `nesting=1`.
 
 **Acceptance Criteria:**

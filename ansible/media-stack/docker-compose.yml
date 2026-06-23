@@ -4,6 +4,9 @@
 # arrive via a runtime-rendered `.env` that sits NEXT TO this file in the host deploy dir
 # (repo-外 — never the Semaphore checkout). docker compose auto-loads that `.env`.
 #
+# Download/VPN is deferred by default: gluetun + qbittorrent live behind the `download` profile.
+# Set DOWNLOAD_STACK_ENABLED=true in inventory when VPN credentials are ready.
+#
 # Images are pinned to @sha256 multi-arch index digests (AR29) — resolved per-platform on the host.
 #    To bump: pick a new tag, `docker buildx imagetools inspect <img>:<tag>`, swap tag + digest together.
 #    `pull_policy: missing` keeps a re-run/`--check` from re-pulling or jumping a tag.
@@ -13,17 +16,18 @@
 
 services:
   gluetun:                     # VPN — qbittorrent가 이 네트워크로만 나간다 (킬스위치)
+    profiles: ["download"]
     image: qmcgaw/gluetun:v3.40@sha256:e10584de1f82d8999e5e6c3111901d9d56a2eed21151fb96af060f390bbdfba8   # refresh: docker buildx imagetools inspect qmcgaw/gluetun:<tag>
     container_name: gluetun
     cap_add: [NET_ADMIN]
     devices:
       - /dev/net/tun:/dev/net/tun   # LXC: needs `lxc.cgroup2.devices.allow` for the tun device + nesting=1
     environment:
-      VPN_SERVICE_PROVIDER: ${VPN_SERVICE_PROVIDER}
-      VPN_TYPE: ${VPN_TYPE}
-      WIREGUARD_PRIVATE_KEY: ${WIREGUARD_PRIVATE_KEY}
-      WIREGUARD_ADDRESSES: ${WIREGUARD_ADDRESSES}
-      SERVER_CITIES: ${SERVER_CITIES}
+      VPN_SERVICE_PROVIDER: ${VPN_SERVICE_PROVIDER:-}
+      VPN_TYPE: ${VPN_TYPE:-}
+      WIREGUARD_PRIVATE_KEY: ${WIREGUARD_PRIVATE_KEY:-}
+      WIREGUARD_ADDRESSES: ${WIREGUARD_ADDRESSES:-}
+      SERVER_CITIES: ${SERVER_CITIES:-}
       TZ: ${TZ}
     ports:
       - 8080:8080              # qbittorrent UI (gluetun 네트워크에 게시 — qbt가 이 netns를 공유)
@@ -31,6 +35,7 @@ services:
     restart: unless-stopped
 
   qbittorrent:
+    profiles: ["download"]
     image: lscr.io/linuxserver/qbittorrent:5.0.3@sha256:308d768672fb9e86e800a73504c439176aabe5977bcdf8b99f7561bb603d9b6e   # refresh: docker buildx imagetools inspect <img>:<tag>
     container_name: qbittorrent
     network_mode: "service:gluetun"   # VPN 끊기면 토렌트도 차단. gluetun 재생성 시 qbt도 동반 recreate 필요.
