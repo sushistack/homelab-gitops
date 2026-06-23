@@ -8,9 +8,10 @@ headerStyle: clean
 # (CSS background-image), not the pod, so a public URL needs zero cluster egress/upload.
 # Swap the URL to taste; brightness darkens it so tile text stays readable.
 background:
-  image: https://images.unsplash.com/photo-1465101162946-4377e57745c3?auto=format&fit=crop&w=2560&q=80
+  # Own image committed to this repo (assets/); browser fetches it via raw GitHub.
+  image: https://raw.githubusercontent.com/sushistack/homelab-gitops/master/workloads/homepage/assets/dark-background.png
   blur: sm
-  brightness: 18
+  brightness: 50
   saturate: 80
 cardBlur: sm
 # `columns` is the MAX at the widest breakpoint; Homepage collapses to fewer (down to 1)
