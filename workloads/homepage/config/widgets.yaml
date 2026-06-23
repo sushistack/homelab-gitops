@@ -1,11 +1,5 @@
 ---
-# Top info bar (screenshot-style): system resources + clock + weather + search.
-- resources:
-    label: System
-    cpu: true
-    memory: true
-    disk: /
-    expanded: true
+# Top info bar: clock + weather + search. (resources widget removed)
 - datetime:
     text_size: xl
     format:
