@@ -1,0 +1,24 @@
+---
+# Top info bar (screenshot-style): system resources + clock + weather + search.
+- resources:
+    label: System
+    cpu: true
+    memory: true
+    disk: /
+    expanded: true
+- datetime:
+    text_size: xl
+    format:
+      timeStyle: short
+      dateStyle: short
+      hourCycle: h23
+- openmeteo:
+    label: Seoul
+    latitude: 37.5665
+    longitude: 126.9780
+    timezone: Asia/Seoul
+    units: metric
+    cache: 5
+- search:
+    provider: duckduckgo
+    target: _blank

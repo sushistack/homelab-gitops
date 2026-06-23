@@ -1,0 +1,12 @@
+---
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: homepage-tls
+spec:
+  secretName: homepage-tls
+  dnsNames:
+    - "${SECRET:DOMAIN_HOMEPAGE}"
+  issuerRef:
+    name: letsencrypt-prod
+    kind: ClusterIssuer

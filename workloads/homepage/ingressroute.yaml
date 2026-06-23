@@ -1,0 +1,49 @@
+---
+# homepage HTTPS (websecure :443) — INTERNAL-only (LAN): NO CF tunnel rule, LAN DNS override
+# only (homepage.eli.kr → 10.0.0.101 Traefik). CF Access is layered on separately by the operator.
+# external-dns HARD-LOCK: never publish a public record (proxmox model, edge-proxies/proxmox.yaml).
+apiVersion: traefik.io/v1alpha1
+kind: IngressRoute
+metadata:
+  name: homepage
+  annotations:
+    external-dns.alpha.kubernetes.io/controller: none
+spec:
+  entryPoints:
+    - websecure
+  routes:
+    - match: Host(`${SECRET:DOMAIN_HOMEPAGE}`)
+      kind: Rule
+      services:
+        - name: homepage
+          port: 3000
+  tls:
+    secretName: homepage-tls
+---
+# homepage HTTP (web :80) — 301 to HTTPS.
+apiVersion: traefik.io/v1alpha1
+kind: Middleware
+metadata:
+  name: homepage-redirect-https
+spec:
+  redirectScheme:
+    scheme: https
+    permanent: true
+---
+apiVersion: traefik.io/v1alpha1
+kind: IngressRoute
+metadata:
+  name: homepage-redirect
+  annotations:
+    external-dns.alpha.kubernetes.io/controller: none
+spec:
+  entryPoints:
+    - web
+  routes:
+    - match: Host(`${SECRET:DOMAIN_HOMEPAGE}`)
+      kind: Rule
+      middlewares:
+        - name: homepage-redirect-https
+      services:
+        - name: homepage
+          port: 3000

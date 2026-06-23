@@ -1,0 +1,62 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: homepage
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: homepage
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: homepage
+    spec:
+      containers:
+        - name: homepage
+          # Re-resolve on deliberate bump:
+          #   docker buildx imagetools inspect ghcr.io/gethomepage/homepage:vX.Y.Z
+          image: ghcr.io/gethomepage/homepage@sha256:a0b71c8e757298d02560186bab9fbe3fc2d375c523a62cc1019177b37e48aa28  # v1.13.2 @ 2026-06-23
+          ports:
+            - containerPort: 3000
+          env:
+            - name: TZ
+              value: Asia/Seoul
+            # Homepage rejects requests whose Host isn't allow-listed.
+            - name: HOMEPAGE_ALLOWED_HOSTS
+              value: ${SECRET:DOMAIN_HOMEPAGE}
+          # Proxmox widget token (HOMEPAGE_VAR_PROXMOX_TOKEN_ID/_SECRET) from homepage-secrets.
+          # optional: workload starts even if the Secret is absent; the widget just 401s until then.
+          # No NODE_TLS relaxation needed — the widget targets proxmox.eli.kr (valid Traefik LE cert).
+          envFrom:
+            - secretRef:
+                name: homepage-secrets
+                optional: true
+          volumeMounts:
+            - name: config
+              mountPath: /app/config   # read-only ConfigMap; Homepage logs harmless EROFS for absent optional files
+          startupProbe:
+            httpGet:
+              path: /
+              port: 3000
+            failureThreshold: 30
+            periodSeconds: 5
+          readinessProbe:
+            httpGet:
+              path: /
+              port: 3000
+          livenessProbe:
+            httpGet:
+              path: /
+              port: 3000
+          resources:
+            requests:
+              cpu: 50m
+              memory: 128Mi
+            limits:
+              memory: 256Mi
+      volumes:
+        - name: config
+          configMap:
+            name: homepage-config
