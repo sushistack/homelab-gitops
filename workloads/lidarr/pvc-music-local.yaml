@@ -1,13 +1,13 @@
-# Session 2 — the music library lives on the SAME dedicated 200G disk as the manga library
-# (k3s-cp-1, /mnt/manga, the Story 5.6 node-local pattern), in the subdir /mnt/manga/music. Off
-# Longhorn via a static `local` PV — NEVER RWX-Longhorn (komga pvc-manga-local.yaml is the reference).
+# Session 2 — the music library lives on its OWN dedicated 200G disk (k3s-cp-1 scsi3, mounted /mnt/music),
+# the Story 5.6 node-local pattern. Off Longhorn via a static `local` PV — NEVER RWX-Longhorn (komga
+# pvc-manga-local.yaml is the reference). Separate disk from the manga library (komga, /mnt/manga) —
+# music and manga no longer share a failure domain or capacity.
 #
 # A `local` PV REQUIRES nodeAffinity (k8s enforces it), which PINS every consumer pod to k3s-cp-1 —
 # so lidarr + slskd auto-co-locate here, both mounting this RWX PV read-write (lidarr = library root +
-# import; slskd = downloads into /mnt/manga/music/.incoming, same fs -> Lidarr hardlink import).
+# import; slskd = downloads into /mnt/music/.incoming, same fs -> Lidarr hardlink import).
 #
-# ⚠️ SHARED PHYSICAL DISK with the manga library (komga-manga-local, same /mnt/manga). Capacity + SPOF
-# are shared (currently ~90G of 200G used, headroom OK). Grow online: `qm resize 101 scsi2 +Ng` ->
+# Dedicated disk = music SPOF is its own. Grow online: `qm resize 101 scsi3 +Ng` ->
 # `growpart`+`resize2fs` on k3s-cp-1 (see runbook.md). Navidrome shares the SAME path via its OWN PV
 # (workloads/navidrome/pvc-music-local.yaml) — a `local` PV has one claimRef/ns, so each ns gets its own.
 ---
@@ -25,7 +25,7 @@ spec:
   persistentVolumeReclaimPolicy: Retain
   storageClassName: ""
   local:
-    path: /mnt/manga/music
+    path: /mnt/music
   nodeAffinity:
     required:
       nodeSelectorTerms:

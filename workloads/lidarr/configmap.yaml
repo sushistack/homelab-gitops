@@ -23,8 +23,8 @@ data:
         disabled: true
     remote_configuration: false
     directories:
-      incomplete: /mnt/manga/music/.incomplete
-      downloads: /mnt/manga/music/.incoming
+      incomplete: /mnt/music/.incomplete
+      downloads: /mnt/music/.incoming
     shares:
       directories: []
     soulseek:

@@ -4,7 +4,7 @@ kind: Kustomization
 resources:
   - namespace.yaml
   - pvc.yaml                # navidrome-data (DB-class; music moved to node-local pvc-music-local.yaml)
-  - pvc-music-local.yaml    # Session 2: node-local music PV (/mnt/manga/music) shared w/ lidarr; deployment repointed here
+  - pvc-music-local.yaml    # Session 2: node-local music PV (/mnt/music) shared w/ lidarr; deployment repointed here
 
   - configmap.yaml          # navidrome-config: non-secret ND_* env (envFrom: configMapRef)
   - deployment.yaml

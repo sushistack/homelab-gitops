@@ -1,7 +1,7 @@
 # Session 2 — soularr (community): reads Lidarr wanted/missing -> searches + downloads via the slskd
 # API -> imports into Lidarr. NO UI. 🔴 It DOES need the music volume: soularr chdir()s into the slskd
 # download dir to process completed albums (verified at runtime — the deploy-prompt's "no media mount"
-# assumption was wrong; without it soularr crashes FileNotFoundError on /mnt/manga/music/.incoming).
+# assumption was wrong; without it soularr crashes FileNotFoundError on /mnt/music/.incoming).
 # Mounting it pins soularr to k3s-cp-1 (same as lidarr/slskd). Runs an in-process loop (interval in
 # config.ini); the mrusse08/soularr image loops on its own, so this is a long-lived pod.
 #
@@ -60,7 +60,7 @@ spec:
               mountPath: /data/config.ini
               subPath: config.ini              # secret config overlaid read-only
             - name: music
-              mountPath: /mnt/manga/music       # soularr chdir()s into .incoming to process completed albums
+              mountPath: /mnt/music       # soularr chdir()s into .incoming to process completed albums
       volumes:
         - name: data
           persistentVolumeClaim:

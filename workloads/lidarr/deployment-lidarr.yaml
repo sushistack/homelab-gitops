@@ -2,10 +2,10 @@
 # + organization). The wishlist soularr reads. LinuxServer image: runs as root via s6, drops to
 # PUID/PGID and chowns /config itself, so no data-fix initContainer needed for /config.
 #
-# 🔴 LIBRARY PATH: the music library (node-local PV) mounts at /mnt/manga/music in lidarr AND slskd at
-# the SAME path, so the slskd download dir (/mnt/manga/music/.incoming) is identical across both pods
+# 🔴 LIBRARY PATH: the music library (node-local PV) mounts at /mnt/music in lidarr AND slskd at
+# the SAME path, so the slskd download dir (/mnt/music/.incoming) is identical across both pods
 # and soularr's config — Lidarr imports by hardlink with NO remote-path-mapping. Root folder in the
-# Lidarr UI = /mnt/manga/music. The PV dir is pre-owned uid 1000 at disk-prep time (see runbook).
+# Lidarr UI = /mnt/music. The PV dir is pre-owned uid 1000 at disk-prep time (see runbook).
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -65,7 +65,7 @@ spec:
             - name: config
               mountPath: /config           # lidarr.db + logs.db on Longhorn (LSIO chowns to PUID)
             - name: music
-              mountPath: /mnt/manga/music  # library root + import target, READ-WRITE; same path as slskd
+              mountPath: /mnt/music  # library root + import target, READ-WRITE; same path as slskd
       volumes:
         - name: config
           persistentVolumeClaim:

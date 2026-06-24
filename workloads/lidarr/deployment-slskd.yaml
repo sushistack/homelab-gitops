@@ -5,7 +5,7 @@
 #
 # Config: non-secret slskd.yml from the ConfigMap (read-only at /app/slskd.yml); Soulseek creds via env
 # from the slskd-soulseek SealedSecret (env OVERRIDES yaml in slskd). Downloads land in
-# /mnt/manga/music/.incoming (child of the shared music volume) -> same-fs Lidarr hardlink import.
+# /mnt/music/.incoming (child of the shared music volume) -> same-fs Lidarr hardlink import.
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -90,7 +90,7 @@ spec:
               mountPath: /app/slskd.yml
               subPath: slskd.yml                     # non-secret config overlaid read-only
             - name: music
-              mountPath: /mnt/manga/music            # downloads -> /mnt/manga/music/.incoming, READ-WRITE
+              mountPath: /mnt/music            # downloads -> /mnt/music/.incoming, READ-WRITE
       volumes:
         - name: config
           persistentVolumeClaim:

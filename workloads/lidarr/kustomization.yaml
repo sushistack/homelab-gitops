@@ -7,7 +7,7 @@ kind: Kustomization
 # excluded). Music library co-locates all consumers on k3s-cp-1 via the local PV's nodeAffinity.
 resources:
   - namespace.yaml
-  - pvc-music-local.yaml   # static node-local PV -> k3s-cp-1:/mnt/manga/music (RWX, off-Longhorn; shares the manga disk)
+  - pvc-music-local.yaml   # static node-local PV -> k3s-cp-1:/mnt/music (RWX, off-Longhorn; dedicated music disk)
   - pvc-config.yaml        # lidarr-config + slskd-config + soularr-data (small Longhorn RWO)
   - configmap.yaml         # slskd.yml non-secret config (auth disabled; download dir on the shared volume)
   - deployment-lidarr.yaml
