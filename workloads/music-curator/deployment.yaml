@@ -1,0 +1,59 @@
+# music-curator — long-lived APScheduler pod for quarterly playlist lifecycle management.
+# No HTTP endpoint, no Service, no Ingress — pure scheduled background workload.
+# Strategy Recreate: single scheduler instance; two pods running simultaneously would fire
+# duplicate jobs and create duplicate playlist entries.
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: music-curator
+  namespace: music-curator
+spec:
+  replicas: 1
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: music-curator
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: music-curator
+    spec:
+      terminationGracePeriodSeconds: 30
+      containers:
+        - name: music-curator
+          # ghcr.io/astral-sh/uv:python3.12-bookworm-slim — digest-pinned (no :latest).
+          # Re-resolve on deliberate bump:
+          #   docker buildx imagetools inspect ghcr.io/astral-sh/uv:python3.12-bookworm-slim
+          # amd64 digest captured 2026-06-24.
+          image: ghcr.io/astral-sh/uv:python3.12-bookworm-slim@sha256:5d275ca5f0da33c3368ac8fbb85fafabad023b3b8a7cff39a94ac0baecfd9a50
+          command: ["uv", "run", "/scripts/curator.py"]
+          envFrom:
+            - configMapRef:
+                name: music-curator-config
+            - secretRef:
+                name: music-curator-secrets
+          resources:
+            requests:
+              cpu: 50m
+              memory: 64Mi
+            limits:
+              cpu: 200m
+              memory: 128Mi
+          # No HTTP port → exec startupProbe: script writes /tmp/started after APScheduler
+          # initialises (absorbs ~15s uv cold-start dep install + scheduler setup).
+          # failureThreshold 60 × periodSeconds 5 = 5-minute startup window.
+          startupProbe:
+            exec:
+              command: ["sh", "-c", "test -f /tmp/started"]
+            failureThreshold: 60
+            periodSeconds: 5
+          # No readiness or liveness probe — Recreate + restart-policy is sufficient.
+          volumeMounts:
+            - name: script
+              mountPath: /scripts/curator.py
+              subPath: curator.py   # ConfigMap-mounted script (PEP 723 inline deps)
+      volumes:
+        - name: script
+          configMap:
+            name: music-curator-script
