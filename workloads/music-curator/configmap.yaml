@@ -14,9 +14,16 @@ data:
   LASTFM_USER: JongminGim
   TZ: Asia/Seoul
   GRACE_PERIOD_DAYS: "28"
-  # Comma-separated Last.fm tag blocklist — similar artists WITH any of these tags
-  # are skipped when adding to Lidarr. Empty string = block nothing.
-  DISCOVERY_BLOCKED_TAGS: "arabic,khaleeji,arabic pop,arabic music,middle eastern,turkish,hindi,bollywood,punjabi,bhangra,indian pop,latin pop,reggaeton,afrobeats,amapiano,cumbia,banda"
+  # Comma-separated Last.fm tag whitelist — similar artists without any of these tags
+  # are skipped when adding to Lidarr. Empty string = allow all.
+  DISCOVERY_ALLOWED_TAGS: >-
+    j-pop,jpop,j-rock,jrock,anime,vocaloid,japanese,anisong,idol,doujin,
+    visual kei,city pop,j-indie,touhou,niconico,
+    k-pop,kpop,korean,k-indie,
+    pop,rock,indie,alternative,electronic,ambient,
+    soundtrack,film score,orchestral,instrumental,
+    post-rock,synthpop,synth-pop,new wave,dream pop,shoegaze,electropop,
+    singer-songwriter,art pop,indie pop,indie rock,alt-pop
   # Lidarr quality profile id — "1" is the default "Any" profile; override if custom profile exists
   LIDARR_QUALITY_PROFILE_ID: "1"
 ---
@@ -60,15 +67,10 @@ data:
     LASTFM_USER = os.environ["LASTFM_USER"]
     LASTFM_API_KEY = os.environ["LASTFM_API_KEY"]
     LASTFM_API_SECRET = os.environ["LASTFM_API_SECRET"]
-    # Comma-separated Last.fm tag blocklist for Lidarr adds. Empty = block nothing.
-    _BLOCKED_TAGS: frozenset[str] = frozenset(
+    # Comma-separated Last.fm tag whitelist for Lidarr adds. Empty = allow all.
+    _ALLOWED_TAGS: frozenset[str] = frozenset(
         t.strip().lower()
-        for t in os.getenv(
-            "DISCOVERY_BLOCKED_TAGS",
-            "arabic,khaleeji,arabic pop,arabic music,middle eastern,turkish,"
-            "hindi,bollywood,punjabi,bhangra,indian pop,latin pop,reggaeton,"
-            "afrobeats,amapiano,cumbia,banda",
-        ).split(",")
+        for t in os.getenv("DISCOVERY_ALLOWED_TAGS", "").split(",")
         if t.strip()
     )
 
@@ -240,16 +242,16 @@ data:
 
 
     def _sim_artist_allowed(artist_obj) -> bool:
-        """Return False if artist has any tag in _BLOCKED_TAGS (fail-open on errors)."""
-        if not _BLOCKED_TAGS:
+        """Return True if artist has at least one tag in _ALLOWED_TAGS (fail-open on errors)."""
+        if not _ALLOWED_TAGS:
             return True
         try:
             tags = artist_obj.get_top_tags(limit=5)
             artist_tags = {t.item.name.lower() for t in tags}
-            blocked = bool(artist_tags & _BLOCKED_TAGS)
-            if blocked:
-                log.debug("_sim_artist_allowed: skip %r — blocked tags=%s", artist_obj.name, artist_tags & _BLOCKED_TAGS)
-            return not blocked
+            allowed = bool(artist_tags & _ALLOWED_TAGS)
+            if not allowed:
+                log.debug("_sim_artist_allowed: skip %r — no matching tags (got %s)", artist_obj.name, artist_tags)
+            return allowed
         except Exception:
             return True  # fail open — don't block on Last.fm tag errors
 
