@@ -87,7 +87,11 @@ data:
         url = f"{ND_URL}/rest/{path}"
         resp = requests.get(url, params={**params, **auth}, timeout=30)
         resp.raise_for_status()
-        return resp.json()["subsonic-response"]
+        sr = resp.json()["subsonic-response"]
+        if sr.get("status") == "failed":
+            err = sr.get("error", {})
+            raise RuntimeError(f"Subsonic {path} failed [{err.get('code')}]: {err.get('message')}")
+        return sr
 
 
     def get_or_create_playlist(name: str) -> str:
@@ -99,7 +103,15 @@ data:
                 return pl["id"]
         # Not found — create it
         data = subsonic_get("createPlaylist", name=name)
-        return data["playlist"]["id"]
+        if "playlist" in data:
+            return data["playlist"]["id"]
+        # ponytail: some Navidrome versions don't return playlist on createPlaylist — re-fetch
+        data = subsonic_get("getPlaylists")
+        playlists = data.get("playlists", {}).get("playlist", [])
+        for pl in playlists:
+            if pl["name"] == name:
+                return pl["id"]
+        raise RuntimeError(f"Created playlist '{name}' but could not find its ID after re-fetch")
 
 
     def playlist_entries(pid: str) -> list[dict]:
