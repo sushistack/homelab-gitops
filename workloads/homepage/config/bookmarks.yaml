@@ -1,4 +1,17 @@
 ---
+- Apps:
+    - Suwayomi:
+        - icon: suwayomi.png
+          href: https://${SECRET:DOMAIN_SUWAYOMI}
+          description: Comics admin
+    - Semaphore:
+        - icon: semaphore.png
+          href: https://${SECRET:DOMAIN_SEMAPHORE}
+          description: Ansible Semaphore
+    - NanoKVM:
+        - icon: mdi-monitor-dashboard
+          href: https://${SECRET:DOMAIN_KVM}
+          description: KVM console
 - Links:
     - GitOps repo:
         - icon: github.png

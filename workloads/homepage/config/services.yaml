@@ -4,7 +4,6 @@
 # NOTE: never write a real token shape here — this comment ships inside the ConfigMap and
 # an unresolved token shape would trip the render fail-closed guard.
 - Tools:
-    
     - n8n:
         href: https://${SECRET:DOMAIN_N8N}
         icon: n8n.png
@@ -17,23 +16,6 @@
         href: https://${SECRET:DOMAIN_DRAW}
         icon: excalidraw.png
         description: Excalidraw
-    - notify:
-        href: https://${SECRET:DOMAIN_NTFY_WEB}
-        icon: ntfy.png
-        description: ntfy notifications
-        widgets:
-          - type: ntfy
-            url: https://${SECRET:DOMAIN_NTFY}
-            topic: homelab-critical
-            key: "{{HOMEPAGE_VAR_NTFY_API_KEY}}"
-          - type: ntfy
-            url: https://${SECRET:DOMAIN_NTFY}
-            topic: homelab-monitor
-            key: "{{HOMEPAGE_VAR_NTFY_API_KEY}}"
-          - type: ntfy
-            url: https://${SECRET:DOMAIN_NTFY}
-            topic: homelab-ops
-            key: "{{HOMEPAGE_VAR_NTFY_API_KEY}}"
 
 - Reads:
     - keep:
@@ -52,10 +34,6 @@
           type: komga
           url: https://${SECRET:DOMAIN_KOMGA}
           key: "{{HOMEPAGE_VAR_KOMGA_API_KEY}}"
-    - comics-admin:
-        href: https://${SECRET:DOMAIN_SUWAYOMI}
-        icon: suwayomi.png
-        description: Suwayomi
     - book:
         href: https://${SECRET:DOMAIN_CALIBRE}
         icon: calibre.png
@@ -91,6 +69,23 @@
         widget:
           type: netdata
           url: https://${SECRET:DOMAIN_NETDATA}
+    - notify:
+        href: https://${SECRET:DOMAIN_NTFY_WEB}
+        icon: ntfy.png
+        description: ntfy notifications
+        widgets:
+          - type: ntfy
+            url: https://${SECRET:DOMAIN_NTFY}
+            topic: homelab-critical
+            key: "{{HOMEPAGE_VAR_NTFY_API_KEY}}"
+          - type: ntfy
+            url: https://${SECRET:DOMAIN_NTFY}
+            topic: homelab-monitor
+            key: "{{HOMEPAGE_VAR_NTFY_API_KEY}}"
+          - type: ntfy
+            url: https://${SECRET:DOMAIN_NTFY}
+            topic: homelab-ops
+            key: "{{HOMEPAGE_VAR_NTFY_API_KEY}}"
 
 - Media:
     - jellyfin:
@@ -152,10 +147,6 @@
           type: argocd
           url: https://${SECRET:DOMAIN_ARGOCD}
           key: "{{HOMEPAGE_VAR_ARGOCD_API_KEY}}"
-    - semaphore:
-        href: https://${SECRET:DOMAIN_SEMAPHORE}
-        icon: semaphore.png
-        description: Ansible Semaphore
     - traefik:
         href: https://${SECRET:DOMAIN_TRAEFIK}/dashboard/
         icon: traefik.png
@@ -187,7 +178,3 @@
           url: https://${SECRET:DOMAIN_OPENWRT}
           username: "{{HOMEPAGE_VAR_OPENWRT_USER}}"
           password: "{{HOMEPAGE_VAR_OPENWRT_PASSWORD}}"
-    - kvm:
-        href: https://${SECRET:DOMAIN_KVM}
-        icon: mdi-monitor-dashboard
-        description: NanoKVM

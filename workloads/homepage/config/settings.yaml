@@ -3,35 +3,28 @@ title: Homelab
 theme: dark
 color: slate
 headerStyle: clean
-# Glassmorphism look (screenshot): background photo + translucent blurred cards.
-# Native Homepage feature — no plugin/custom CSS. Background is loaded by the BROWSER
-# (CSS background-image), not the pod, so a public URL needs zero cluster egress/upload.
-# Swap the URL to taste; brightness darkens it so tile text stays readable.
 background:
-  # Own image committed to this repo (assets/); browser fetches it via raw GitHub.
   image: https://raw.githubusercontent.com/sushistack/homelab-gitops/master/workloads/homepage/assets/dark-background.png
   blur: sm
   brightness: 50
   saturate: 80
 cardBlur: sm
-# `columns` is the MAX at the widest breakpoint; Homepage collapses to fewer (down to 1)
-# as the viewport narrows — so 4 fills a wide screen yet still works as a narrow sidebar.
 layout:
   Tools:
     style: row
-    columns: 4
+    columns: 3
   Reads:
     style: row
     columns: 4
   Monitoring:
     style: row
-    columns: 4
+    columns: 3
   Media:
     style: row
-    columns: 4
+    columns: 5
   Ops:
     style: row
-    columns: 4
+    columns: 2
   Infra:
     style: row
-    columns: 4
+    columns: 2
