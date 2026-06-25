@@ -8,7 +8,7 @@ resources:
   - service.yaml
   - ingressroute.yaml      # INTERNAL (CF Access); host homepage.eli.kr
   - certificate.yaml       # letsencrypt-prod DNS-01
-  - sealedsecret.yaml      # homepage-secrets: Proxmox API token (HOMEPAGE_VAR_PROXMOX_*)
+  - sealedsecret.yaml      # homepage-secrets: Proxmox + Jellyfin/Immich/Navidrome/Lidarr/Miniflux API keys
 
 # Hashed name suffix → editing any config file rolls the Deployment automatically.
 configMapGenerator:

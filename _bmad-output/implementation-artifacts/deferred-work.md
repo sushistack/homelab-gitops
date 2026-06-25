@@ -24,6 +24,10 @@ Active work this session: **Stage 1 — external-dns (Cloudflare)**. Below are t
 ## Pre-existing (not netdata) — trade-monitor version-lint failure
 - `bin/version-lint` is RED on master: `versions.yaml` `trade-monitor` still points at `workloads/trade-monitor/cronjob.yaml`, but commit `036772f` renamed it to `deployment.yaml`. One-line fix (`manifest:` path), unrelated to netdata — fix in a separate PR so CI goes green.
 
+## Deferred from: homepage service widgets (2026-06-25)
+
+- **Navidrome widget credentials scope:** Navidrome has no read-only role or scoped API token — `HOMEPAGE_VAR_NAVIDROME_USER/PASSWORD` exposes a reusable account password. Mitigation options: dedicated low-privilege account with a long random password, or wait for Navidrome to add API key support. `music.eli.kr` is publicly accessible (CF tunnel, no CF Access) so this is a real exposure.
+
 ## Deferred from: code review of spec-music-lidarr (2026-06-23)
 
 - All media stacks (komga/suwayomi/lidarr/slskd/soularr/navidrome) are pinned to k3s-cp-1 via node-local PVs → single-node SPOF + resource contention. Track in capacity monitoring (netdata/ops-alerts); revisit if the node gets tight or HA becomes a requirement.
