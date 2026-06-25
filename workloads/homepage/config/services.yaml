@@ -30,6 +30,10 @@
         href: https://${SECRET:DOMAIN_RSS}
         icon: miniflux.png
         description: Miniflux
+        widget:
+          type: miniflux
+          url: https://${SECRET:DOMAIN_RSS}
+          key: "{{HOMEPAGE_VAR_MINIFLUX_API_KEY}}"
     - comics:
         href: https://${SECRET:DOMAIN_KOMGA}
         icon: komga.png
@@ -48,6 +52,11 @@
         href: https://${SECRET:DOMAIN_KUMA}
         icon: uptime-kuma.png
         description: Uptime Kuma
+        widget:
+          type: uptimekuma
+          url: https://${SECRET:DOMAIN_KUMA}
+          # ponytail: slug is public (status page URL) — no secret needed; change if slug differs
+          slug: default
     - netdata:
         href: https://${SECRET:DOMAIN_NETDATA}
         icon: netdata.png
@@ -58,18 +67,36 @@
         href: https://${SECRET:DOMAIN_JELLYFIN}
         icon: jellyfin.png
         description: Media server
+        widget:
+          type: jellyfin
+          url: https://${SECRET:DOMAIN_JELLYFIN}
+          key: "{{HOMEPAGE_VAR_JELLYFIN_API_KEY}}"
+          enableBlocks: true
     - immich:
         href: https://${SECRET:DOMAIN_IMMICH}
         icon: immich.png
         description: Photos
+        widget:
+          type: immich
+          url: https://${SECRET:DOMAIN_IMMICH}
+          key: "{{HOMEPAGE_VAR_IMMICH_API_KEY}}"
     - music:
         href: https://${SECRET:DOMAIN_NAVIDROME}
         icon: navidrome.png
         description: Navidrome
+        widget:
+          type: navidrome
+          url: https://${SECRET:DOMAIN_NAVIDROME}
+          user: "{{HOMEPAGE_VAR_NAVIDROME_USER}}"
+          password: "{{HOMEPAGE_VAR_NAVIDROME_PASSWORD}}"
     - lidarr:
         href: https://${SECRET:DOMAIN_LIDARR}
         icon: lidarr.png
         description: Music collection
+        widget:
+          type: lidarr
+          url: https://${SECRET:DOMAIN_LIDARR}
+          key: "{{HOMEPAGE_VAR_LIDARR_API_KEY}}"
     - slskd:
         href: https://${SECRET:DOMAIN_SLSKD}
         icon: slskd.png
