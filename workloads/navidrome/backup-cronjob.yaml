@@ -13,6 +13,7 @@ apiVersion: batch/v1
 kind: CronJob
 metadata:
   name: navidrome-backup
+  namespace: navidrome
 spec:
   schedule: "5 */6 * * *"          # ≤6h (the freed Compose navidrome-backup slot); NFR5 cadence
   timeZone: Asia/Seoul
