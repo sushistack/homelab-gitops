@@ -1,0 +1,64 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+ENV_FILE="$SCRIPT_DIR/secrets.env"
+
+if [[ ! -f "$ENV_FILE" ]]; then
+  echo "ERROR: $ENV_FILE not found" >&2
+  exit 1
+fi
+
+set -a
+# shellcheck source=/dev/null
+source "$ENV_FILE"
+set +a
+
+# Verify no empty required vars
+for var in \
+  HOMEPAGE_VAR_PROXMOX_TOKEN_ID \
+  HOMEPAGE_VAR_PROXMOX_TOKEN_SECRET \
+  HOMEPAGE_VAR_JELLYFIN_API_KEY \
+  HOMEPAGE_VAR_IMMICH_API_KEY \
+  HOMEPAGE_VAR_MINIFLUX_API_KEY \
+  HOMEPAGE_VAR_LIDARR_API_KEY \
+  HOMEPAGE_VAR_NAVIDROME_USER \
+  HOMEPAGE_VAR_NAVIDROME_TOKEN \
+  HOMEPAGE_VAR_NAVIDROME_SALT \
+  HOMEPAGE_VAR_KARAKEEP_API_KEY \
+  HOMEPAGE_VAR_KOMGA_API_KEY \
+  HOMEPAGE_VAR_CALIBRE_USER \
+  HOMEPAGE_VAR_CALIBRE_PASSWORD \
+  HOMEPAGE_VAR_ARGOCD_API_KEY \
+  HOMEPAGE_VAR_OPENWRT_USER \
+  HOMEPAGE_VAR_OPENWRT_PASSWORD; do
+  if [[ -z "${!var:-}" ]]; then
+    echo "ERROR: $var is empty in secrets.env" >&2
+    exit 1
+  fi
+done
+
+kubectl create secret generic homepage-secrets -n homepage \
+  --from-literal=HOMEPAGE_VAR_PROXMOX_TOKEN_ID="$HOMEPAGE_VAR_PROXMOX_TOKEN_ID" \
+  --from-literal=HOMEPAGE_VAR_PROXMOX_TOKEN_SECRET="$HOMEPAGE_VAR_PROXMOX_TOKEN_SECRET" \
+  --from-literal=HOMEPAGE_VAR_JELLYFIN_API_KEY="$HOMEPAGE_VAR_JELLYFIN_API_KEY" \
+  --from-literal=HOMEPAGE_VAR_IMMICH_API_KEY="$HOMEPAGE_VAR_IMMICH_API_KEY" \
+  --from-literal=HOMEPAGE_VAR_MINIFLUX_API_KEY="$HOMEPAGE_VAR_MINIFLUX_API_KEY" \
+  --from-literal=HOMEPAGE_VAR_LIDARR_API_KEY="$HOMEPAGE_VAR_LIDARR_API_KEY" \
+  --from-literal=HOMEPAGE_VAR_NAVIDROME_USER="$HOMEPAGE_VAR_NAVIDROME_USER" \
+  --from-literal=HOMEPAGE_VAR_NAVIDROME_TOKEN="$HOMEPAGE_VAR_NAVIDROME_TOKEN" \
+  --from-literal=HOMEPAGE_VAR_NAVIDROME_SALT="$HOMEPAGE_VAR_NAVIDROME_SALT" \
+  --from-literal=HOMEPAGE_VAR_KARAKEEP_API_KEY="$HOMEPAGE_VAR_KARAKEEP_API_KEY" \
+  --from-literal=HOMEPAGE_VAR_KOMGA_API_KEY="$HOMEPAGE_VAR_KOMGA_API_KEY" \
+  --from-literal=HOMEPAGE_VAR_CALIBRE_USER="$HOMEPAGE_VAR_CALIBRE_USER" \
+  --from-literal=HOMEPAGE_VAR_CALIBRE_PASSWORD="$HOMEPAGE_VAR_CALIBRE_PASSWORD" \
+  --from-literal=HOMEPAGE_VAR_ARGOCD_API_KEY="$HOMEPAGE_VAR_ARGOCD_API_KEY" \
+  --from-literal=HOMEPAGE_VAR_OPENWRT_USER="$HOMEPAGE_VAR_OPENWRT_USER" \
+  --from-literal=HOMEPAGE_VAR_OPENWRT_PASSWORD="$HOMEPAGE_VAR_OPENWRT_PASSWORD" \
+  --dry-run=client -o yaml | \
+  kubeseal \
+    --controller-name sealed-secrets \
+    --controller-namespace sealed-secrets \
+    -o yaml > "$SCRIPT_DIR/sealedsecret.yaml"
+
+echo "Done → sealedsecret.yaml updated"
