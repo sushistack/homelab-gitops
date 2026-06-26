@@ -46,6 +46,13 @@ spec:
       destination:
         server: https://kubernetes.default.svc
         namespace: '{{.path.basename}}'
+      ignoreDifferences:
+        # local-path-retain PVCs have volumeName set by the binding controller after migration.
+        # Git manifests intentionally omit volumeName (cluster-specific). Ignore to stay Synced.
+        - group: ""
+          kind: PersistentVolumeClaim
+          jsonPointers:
+            - /spec/volumeName
       syncPolicy:
         automated:
           prune: true
@@ -53,3 +60,4 @@ spec:
         syncOptions:
           - CreateNamespace=true
           - ServerSideApply=true
+          - RespectIgnoreDifferences=true
