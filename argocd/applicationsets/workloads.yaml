@@ -53,6 +53,11 @@ spec:
           kind: PersistentVolumeClaim
           jsonPointers:
             - /spec/volumeName
+        # scale-to-0 backup actors temporarily set replicas=0; selfHeal would fight the quiesce.
+        - group: apps
+          kind: Deployment
+          jsonPointers:
+            - /spec/replicas
       syncPolicy:
         automated:
           prune: true
