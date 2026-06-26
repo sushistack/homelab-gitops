@@ -1,0 +1,71 @@
+# Semaphore backup actor — scale-to-0 pattern (file-class, not SQLite online dump).
+# Semaphore uses BoltDB/SQLite under /var/lib/semaphore; no hot-copy API exists, so the writer
+# must be stopped before tar. Mirrors the anytype-backup quiesce pattern (Story 4.4).
+# R2 cred: semaphore-backup-r2 SealedSecret (operator must seal — see seal-secrets.sh).
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: semaphore-backup
+spec:
+  schedule: "10 */6 * * *"          # ~6h; offset so it doesn't fire at the same time as other actors
+  timeZone: Asia/Seoul
+  concurrencyPolicy: Forbid
+  startingDeadlineSeconds: 300
+  successfulJobsHistoryLimit: 3
+  failedJobsHistoryLimit: 3
+  jobTemplate:
+    spec:
+      activeDeadlineSeconds: 600     # apk + scale-down + tar + rclone ceiling
+      backoffLimit: 1                # a failed quiesce rescales to 0 on retry — bound the flap
+      template:
+        metadata:
+          labels:
+            app.kubernetes.io/name: semaphore-backup
+            app.kubernetes.io/component: backup
+        spec:
+          restartPolicy: OnFailure
+          serviceAccountName: semaphore-backup
+          affinity:
+            podAffinity:
+              requiredDuringSchedulingIgnoredDuringExecution:
+                - labelSelector:
+                    matchLabels:
+                      app.kubernetes.io/name: semaphore
+                  topologyKey: kubernetes.io/hostname
+          containers:
+            - name: backup
+              image: alpine:3.20
+              command:
+                - /bin/sh
+                - -ceu
+                - |
+                  apk add --no-cache rclone kubectl ca-certificates tzdata
+                  trap 'kubectl scale deploy/semaphore -n semaphore --replicas=1 || true' EXIT INT TERM
+                  ts=$(date +%Y-%m-%dT%H-%M-%S)
+                  kubectl scale deploy/semaphore -n semaphore --replicas=0
+                  kubectl wait --for=delete pod -l app.kubernetes.io/name=semaphore -n semaphore --timeout=120s || true
+                  if [ -n "$(kubectl get pod -l app.kubernetes.io/name=semaphore -n semaphore -o name 2>/dev/null)" ]; then
+                    echo "semaphore pod still present after quiesce timeout — aborting to avoid torn backup" >&2
+                    exit 1
+                  fi
+                  tar -C /data -czf "/scratch/semaphore-${ts}.tar.gz" .
+                  rclone copy "/scratch/semaphore-${ts}.tar.gz" "r2:homelab-k3s-services-backup/semaphore/"
+                  rclone delete --min-age 720h "r2:homelab-k3s-services-backup/semaphore/" || true   # 30d retention
+              env:
+                - name: RCLONE_CONFIG_R2_NO_CHECK_BUCKET
+                  value: "true"
+              envFrom:
+                - secretRef:
+                    name: semaphore-backup-r2
+              volumeMounts:
+                - name: data
+                  mountPath: /data
+                  readOnly: true
+                - name: scratch
+                  mountPath: /scratch
+          volumes:
+            - name: data
+              persistentVolumeClaim:
+                claimName: semaphore-data
+            - name: scratch
+              emptyDir: {}

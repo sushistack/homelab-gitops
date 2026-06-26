@@ -67,12 +67,26 @@ kubectl create secret generic semaphore-age -n "$NS" \
   --from-file=keys.txt="$AGE_KEY" \
   --dry-run=client -o yaml | seal > "$DIR/sealedsecret-age.yaml"
 
+echo "→ sealing semaphore-backup-r2"
+# Reuses the same bucket-scoped R2 token as all other service backups (internal/r2-k3s.env).
+# Load the shared cred file first: set -a; . internal/r2-k3s.env; set +a
+: "${R2_ACCESS_KEY_ID:?R2_ACCESS_KEY_ID not set — source internal/r2-k3s.env first}"
+: "${R2_SECRET_ACCESS_KEY:?R2_SECRET_ACCESS_KEY not set}"
+: "${R2_ENDPOINT:?R2_ENDPOINT not set}"
+kubectl create secret generic semaphore-backup-r2 -n "$NS" \
+  --from-literal=RCLONE_CONFIG_R2_TYPE=s3 \
+  --from-literal=RCLONE_CONFIG_R2_PROVIDER=Cloudflare \
+  --from-literal=RCLONE_CONFIG_R2_ACCESS_KEY_ID="$R2_ACCESS_KEY_ID" \
+  --from-literal=RCLONE_CONFIG_R2_SECRET_ACCESS_KEY="$R2_SECRET_ACCESS_KEY" \
+  --from-literal=RCLONE_CONFIG_R2_ENDPOINT="$R2_ENDPOINT" \
+  --dry-run=client -o yaml | seal > "$DIR/sealedsecret-backup-r2.yaml"
+
 cat <<EOF
 
-✅ Sealed → sealedsecret-{admin,ssh,age}.yaml (real ciphertext, safe to commit).
+✅ Sealed → sealedsecret-{admin,ssh,age,backup-r2}.yaml (real ciphertext, safe to commit).
 
 Next:
-  1. Uncomment the 3 'sealedsecret-*.yaml' lines in kustomization.yaml.
+  1. Uncomment the 4th 'sealedsecret-backup-r2.yaml' line in kustomization.yaml.
   2. kubectl kustomize workloads/semaphore   # must still build
   3. git add -A workloads/semaphore && git commit && git push   # ArgoCD syncs → pod starts
   4. Configure the Semaphore project (runbook §1c), then run the --check drift template (§1d).

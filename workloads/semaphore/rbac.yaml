@@ -1,0 +1,37 @@
+# Least-privilege RBAC for the semaphore-backup scale-to-0 actor. Mirrors the anytype-backup
+# pattern (AR: file-class services that scale-to-0 get a Role for deployments/scale).
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: semaphore-backup
+  namespace: semaphore
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  name: semaphore-backup
+  namespace: semaphore
+rules:
+  - apiGroups: ["apps"]
+    resources: ["deployments/scale"]
+    verbs: ["get", "patch"]
+  - apiGroups: ["apps"]
+    resources: ["deployments"]
+    verbs: ["get"]
+  - apiGroups: [""]
+    resources: ["pods"]
+    verbs: ["get", "list", "watch"]
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: semaphore-backup
+  namespace: semaphore
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: Role
+  name: semaphore-backup
+subjects:
+  - kind: ServiceAccount
+    name: semaphore-backup
+    namespace: semaphore

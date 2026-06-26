@@ -142,7 +142,7 @@ data:
           {key:"Job", value:$job, icon:"status"},
           {key:"Failed", value:$failed, status:"error", icon:"error"},
           {key:"Fix", value:"kubectl logs job/<name>; re-run after fixing creds / R2 / disk", icon:"exit"}]') || rows='[]'
-        notify "$NTFY_TOPIC_CRITICAL" "❌ Backup/restore failed: $job" "$rows"
+        notify "$NTFY_TOPIC_CRITICAL" "🚨 Backup/restore failed: $job" "$rows"
       done
 
     # ---- NFR15b: version/config drift (Story 5.1) ------------------------------------------------
@@ -224,7 +224,7 @@ data:
         R2_DAILY_SVCS="${R2_DAILY_SVCS:-anytype anytype-heart}"      # svcs on daily (not 6h) cadence — anytype relaxed to 24h RPO (gitops c1c11c1)
         R2_RETENTION_DAYS="${R2_RETENTION_DAYS:-35}"   # oldest object older than this => rotation (4.8 `|| true`) broke
         SVC_BUCKET=homelab-k3s-services-backup
-        LH_BUCKET=homelab-k3s-backup
+        # LH_BUCKET (homelab-k3s-backup) removed — Longhorn offsite backup decommissioned
 
         # Reachability gate (Story 5.8 review): if R2 itself is unreachable (cred expiry, network,
         # R2 5xx), the checks below would silently degrade — `rclone size` -> 0 (never trips capacity)
@@ -240,8 +240,8 @@ data:
             {key:"Fix", value:"Check R2 credentials / network / endpoint", icon:"exit"}]') || rows='[]'
           notify "$NTFY_TOPIC_OPS" "🔌 R2 unreachable" "$rows" "$CF_BTN"
         else
-          # (a) capacity — total bytes per bucket vs threshold
-          for b in "$SVC_BUCKET" "$LH_BUCKET"; do
+          # (a) capacity — total bytes in the services bucket vs threshold
+          for b in "$SVC_BUCKET"; do
             bytes=$(rclone size "r2:$b" --json 2>/dev/null | jq -r '.bytes // 0' 2>/dev/null || echo 0)
             gb=$(( bytes / 1073741824 ))
             if [ "$gb" -ge "$R2_THRESHOLD_GB" ]; then
@@ -255,8 +255,7 @@ data:
           done
 
           # (b) freshness (broke backup actor) + (c) rotation (broke retention) — ONE recursive listing
-          #     of the services bucket, grouped by <svc>/ prefix. Longhorn's bucket uses its own layout
-          #     (not <svc>/), so it gets the capacity check only; its job health is the RecurringJob's.
+          #     of the services bucket, grouped by <svc>/ prefix.
           stale=$(( R2_STALE_HOURS * 3600 )); staled=$(( R2_STALE_HOURS_DAILY * 3600 )); ret=$(( R2_RETENTION_DAYS * 86400 ))
           rclone lsjson -R --files-only "r2:$SVC_BUCKET" 2>/dev/null \
           | jq -r --argjson now "$now" --argjson stale "$stale" --argjson staled "$staled" --arg daily "$R2_DAILY_SVCS" --argjson ret "$ret" '

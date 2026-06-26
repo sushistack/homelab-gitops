@@ -15,6 +15,11 @@ resources:
   - sealedsecret-admin.yaml
   - sealedsecret-ssh.yaml
   - sealedsecret-age.yaml
+  # Backup actor (scale-to-0 + tar → R2). Operator must seal sealedsecret-backup-r2.yaml before
+  # uncommenting the SealedSecret line (see seal-secrets.sh semaphore-backup-r2 section).
+  - rbac.yaml
+  - backup-cronjob.yaml
+  # - sealedsecret-backup-r2.yaml   # PLACEHOLDER — reseal with seal-secrets.sh, then uncomment
 
 labels:
   - includeSelectors: false
