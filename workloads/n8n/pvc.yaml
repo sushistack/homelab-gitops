@@ -15,6 +15,7 @@ spec:
   accessModes:
     - ReadWriteOnce
   storageClassName: local-path-retain
+  volumeName: pvc-6afb18fb-80ea-4dac-a3c0-b1b3f4427791
   resources:
     requests:
       storage: 1Gi   # database.sqlite ~745 KB today + nodes/binaryData headroom; grow via PR if it climbs

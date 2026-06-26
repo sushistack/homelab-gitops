@@ -12,6 +12,7 @@ spec:
   accessModes:
     - ReadWriteOnce
   storageClassName: local-path-retain
+  volumeName: pvc-39bad596-a043-4d03-bc08-e22262868626
   resources:
     requests:
       storage: 1Gi   # auth.db + cache.db are small; grow via PR if cache pressure rises

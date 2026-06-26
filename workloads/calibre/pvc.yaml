@@ -12,6 +12,7 @@ spec:
   accessModes:
     - ReadWriteOnce
   storageClassName: local-path-retain
+  volumeName: pvc-5e6f4d13-42e1-4680-adb8-d14dd7426fb9
   resources:
     requests:
       storage: 10Gi   # ~4G library today + app.db/metadata.db + headroom; grow via PR

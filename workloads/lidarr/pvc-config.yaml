@@ -13,6 +13,7 @@ spec:
   accessModes:
     - ReadWriteOnce
   storageClassName: local-path-retain
+  volumeName: pvc-d06e84d1-54a2-4320-babb-fcaa22d043ba
   resources:
     requests:
       storage: 2Gi   # lidarr.db + logs.db + metadata cache; grow via PR
@@ -27,6 +28,7 @@ spec:
   accessModes:
     - ReadWriteOnce
   storageClassName: local-path-retain
+  volumeName: pvc-cdae88e3-5138-47d6-b8ee-1c86a5e26111
   resources:
     requests:
       storage: 2Gi   # slskd.db (peer/search/transfer state) + incomplete downloads; grow via PR
@@ -41,6 +43,7 @@ spec:
   accessModes:
     - ReadWriteOnce
   storageClassName: local-path-retain
+  volumeName: pvc-f45cfea0-2fdf-421b-b217-eb1883fecceb
   resources:
     requests:
       storage: 1Gi   # soularr working dir: run state + logs (config.ini overlaid from the SealedSecret)

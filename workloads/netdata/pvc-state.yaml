@@ -14,6 +14,7 @@ spec:
   accessModes:
     - ReadWriteOnce
   storageClassName: local-path-retain
+  volumeName: pvc-4ca65c83-06e3-4c4c-b986-2a7637a951fe
   resources:
     requests:
       storage: 1Gi

@@ -15,6 +15,7 @@ spec:
   accessModes:
     - ReadWriteOnce
   storageClassName: local-path-retain
+  volumeName: pvc-6d49de13-78dc-45b8-838a-8a35f01c6c0b
   resources:
     requests:
       storage: 2Gi   # database.sqlite + tasks.sqlite + komga thumbnail cache; grow via PR
@@ -29,6 +30,7 @@ spec:
   accessModes:
     - ReadWriteOnce
   storageClassName: local-path-retain
+  volumeName: pvc-9e580170-c8a0-4c85-9d87-321c4a27879f
   resources:
     requests:
       storage: 2Gi   # Tachidesk data dir (DB + sources/extensions + settings); downloads live on NFS, not here

@@ -15,6 +15,7 @@ spec:
   accessModes:
     - ReadWriteOnce
   storageClassName: local-path-retain
+  volumeName: pvc-7c45c7bb-e1b6-43ba-bd75-5736ccb5fd24
   resources:
     requests:
       storage: 2Gi   # navidrome.db (~3 MB today) + cache/covers; grow via PR if it climbs

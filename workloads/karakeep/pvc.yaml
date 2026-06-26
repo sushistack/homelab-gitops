@@ -21,6 +21,7 @@ spec:
   accessModes:
     - ReadWriteOnce
   storageClassName: local-path-retain
+  volumeName: pvc-c04101a8-d514-4ba1-9785-a0577e734dfc
   resources:
     requests:
       storage: 5Gi   # db.db ~0.6 MB today + crawled assets; grow via PR if assets climb
@@ -35,6 +36,7 @@ spec:
   accessModes:
     - ReadWriteOnce
   storageClassName: local-path-retain
+  volumeName: pvc-b927cbfd-7a9f-4462-a24f-ae3c414a13e1
   resources:
     requests:
       storage: 1Gi   # bridge.sqlite dedup map (~12 KB today); grow via PR
@@ -49,6 +51,7 @@ spec:
   accessModes:
     - ReadWriteOnce
   storageClassName: local-path-retain
+  volumeName: pvc-67cb77d3-7687-43f5-bbd2-195a405640ed
   resources:
     requests:
       storage: 2Gi   # rebuilt index; grow via PR

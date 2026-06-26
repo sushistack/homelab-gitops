@@ -16,6 +16,7 @@ spec:
   accessModes:
     - ReadWriteOnce
   storageClassName: local-path-retain
+  volumeName: pvc-8fe7c1da-7b54-4d70-8f2e-55f2e189b88b
   resources:
     requests:
       storage: 5Gi   # BadgerDB + object/file index; grow via PR if it fills
@@ -30,6 +31,7 @@ spec:
   accessModes:
     - ReadWriteOnce
   storageClassName: local-path-retain
+  volumeName: pvc-30332273-a2c8-4438-8917-6b6dafe638bb
   resources:
     requests:
       storage: 2Gi   # account cache; grow via PR

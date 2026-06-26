@@ -12,6 +12,7 @@ spec:
   accessModes:
     - ReadWriteOnce
   storageClassName: local-path-retain
+  volumeName: pvc-5c7c6b4c-61a4-4482-aef6-0d42a8d9e571
   resources:
     requests:
       storage: 2Gi   # kuma.db + screenshot/heartbeat history; grow via PR if it fills

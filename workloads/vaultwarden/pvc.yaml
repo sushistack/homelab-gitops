@@ -17,6 +17,7 @@ spec:
   accessModes:
     - ReadWriteOnce
   storageClassName: local-path-retain
+  volumeName: pvc-0d1a85da-ab0a-40b2-a84f-cb08749578dd
   resources:
     requests:
       storage: 2Gi   # db.sqlite3 is tiny (~MBs); headroom for attachments/sends. Grow via PR if it climbs.
