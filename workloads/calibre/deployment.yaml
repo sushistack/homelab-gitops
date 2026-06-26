@@ -1,8 +1,6 @@
-# Story 5.6 — calibre-web (ebook reader), LinuxServer image. config (app.db) + library (metadata.db +
-# books) are SQLite-backed -> strategy:Recreate + grace 30s + startupProbe (the Epic 4 SQLite pattern).
-# The LinuxServer image runs its s6 init as root and drops to PUID/PGID (1000) itself, chowning /config
-# on the way — so NO chown initContainer is needed here (unlike suwayomi). One Longhorn PVC, two
-# subPaths: /config (app.db) and /books (the library; app.db references this in-container path).
+# calibre-web (ebook reader), LinuxServer image. SQLite-backed -> strategy:Recreate.
+# Storage split: calibre-data (local-path-retain) for /config (app.db only);
+# calibre-books-local (static local PV at /mnt/books, k3s-cp-1) for the ebook library.
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -57,13 +55,15 @@ spec:
               path: /
               port: 8083
           volumeMounts:
-            - name: data
+            - name: config
               mountPath: /config
-              subPath: config       # app.db
-            - name: data
+              subPath: config
+            - name: books
               mountPath: /books
-              subPath: books        # the library + metadata.db (app.db references /books in-container)
       volumes:
-        - name: data
+        - name: config
           persistentVolumeClaim:
             claimName: calibre-data
+        - name: books
+          persistentVolumeClaim:
+            claimName: calibre-books-local

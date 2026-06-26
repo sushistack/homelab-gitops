@@ -6,6 +6,7 @@ kind: Kustomization
 resources:
   - namespace.yaml
   - pvc.yaml
+  - pvc-books-local.yaml
   - deployment.yaml
   - service.yaml
   - ingressroute.yaml     # internal-only host (ACL preserved); tokenized

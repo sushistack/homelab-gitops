@@ -54,17 +54,19 @@ spec:
                 - secretRef:
                     name: calibre-backup-r2
               volumeMounts:
-                - name: data
+                - name: config
                   mountPath: /config
                   subPath: config
-                - name: data
+                - name: books
                   mountPath: /books
-                  subPath: books
                 - name: scratch
                   mountPath: /scratch
           volumes:
-            - name: data
+            - name: config
               persistentVolumeClaim:
                 claimName: calibre-data
+            - name: books
+              persistentVolumeClaim:
+                claimName: calibre-books-local
             - name: scratch
               emptyDir: {}

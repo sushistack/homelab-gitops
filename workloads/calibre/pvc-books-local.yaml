@@ -1,0 +1,50 @@
+# calibre ebook library on a static local PV at /mnt/books (k3s-cp-1).
+# Same pattern as komga pvc-manga-local / navidrome pvc-music-local.
+#
+# /mnt/books must exist on k3s-cp-1 before ArgoCD syncs the deployment change.
+# Data migration order:
+#   1. mkdir -p /mnt/books on k3s-cp-1
+#   2. cp -a <local-path-pvc-dir>/books/. /mnt/books/  (find the pvc dir via kubectl get pv)
+#   3. Sync this file + the updated deployment.yaml
+#   4. Verify calibre serves the library, then trim calibre-data PVC's books/ subPath data
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: calibre-books-local
+  annotations:
+    argocd.argoproj.io/sync-options: Prune=false
+spec:
+  capacity:
+    storage: 50Gi
+  accessModes:
+    - ReadWriteOnce
+  persistentVolumeReclaimPolicy: Retain
+  storageClassName: ""
+  local:
+    path: /mnt/books
+  nodeAffinity:
+    required:
+      nodeSelectorTerms:
+        - matchExpressions:
+            - key: kubernetes.io/hostname
+              operator: In
+              values: ["k3s-cp-1"]
+  claimRef:
+    namespace: calibre
+    name: calibre-books-local
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: calibre-books-local
+  annotations:
+    argocd.argoproj.io/sync-options: Prune=false
+spec:
+  accessModes:
+    - ReadWriteOnce
+  storageClassName: ""
+  volumeName: calibre-books-local
+  resources:
+    requests:
+      storage: 50Gi
