@@ -13,9 +13,10 @@ resources:
   - services.yaml         # komga (25600) + suwayomi (4567) ClusterIP
   - ingressroute.yaml     # komga PUBLIC + suwayomi INTERNAL (ACL preserved); host tokenized
   - certificate.yaml      # per-host letsencrypt-prod certs -> komga-tls / suwayomi-tls
-# NOT included on purpose:
-#   backup-cronjob.yaml  -> Task 6 OPTIONAL: needs the operator-sealed `komga-backup-r2`. Add this
-#                           line AFTER sealing the R2 cred, else the base references a missing Secret.
+  - sealedsecret-backup-r2.yaml
+  - backup-cronjob.yaml
+  - rbac-suwayomi-backup.yaml
+  - backup-cronjob-suwayomi.yaml
 #   No sealedsecret.yaml: these apps need no external API key (AC2f).
 
 # `labels:` (never commonLabels — pollutes selectors; never namePrefix). Only the SHARED identity here;

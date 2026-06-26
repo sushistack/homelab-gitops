@@ -19,7 +19,7 @@ resources:
   # uncommenting the SealedSecret line (see seal-secrets.sh semaphore-backup-r2 section).
   - rbac.yaml
   - backup-cronjob.yaml
-  # - sealedsecret-backup-r2.yaml   # PLACEHOLDER — reseal with seal-secrets.sh, then uncomment
+  - sealedsecret-backup-r2.yaml
 
 labels:
   - includeSelectors: false

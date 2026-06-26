@@ -1,0 +1,70 @@
+# Suwayomi (Tachidesk) scale-to-0 backup. Data dir uses H2 database (not SQLite) — no online dump
+# API exists so the writer must be stopped before tar. Mirrors the anytype/semaphore pattern.
+# Reuses komga-backup-r2 SealedSecret (same namespace). Manga files on NFS are NOT backed up.
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: suwayomi-backup
+spec:
+  schedule: "25 */6 * * *"
+  timeZone: Asia/Seoul
+  concurrencyPolicy: Forbid
+  startingDeadlineSeconds: 300
+  successfulJobsHistoryLimit: 3
+  failedJobsHistoryLimit: 3
+  jobTemplate:
+    spec:
+      activeDeadlineSeconds: 600
+      backoffLimit: 1
+      template:
+        metadata:
+          labels:
+            app.kubernetes.io/name: suwayomi-backup
+            app.kubernetes.io/component: backup
+        spec:
+          restartPolicy: OnFailure
+          serviceAccountName: suwayomi-backup
+          affinity:
+            podAffinity:
+              requiredDuringSchedulingIgnoredDuringExecution:
+                - labelSelector:
+                    matchLabels:
+                      app.kubernetes.io/name: suwayomi
+                  topologyKey: kubernetes.io/hostname
+          containers:
+            - name: backup
+              image: alpine:3.20
+              command:
+                - /bin/sh
+                - -ceu
+                - |
+                  apk add --no-cache rclone kubectl ca-certificates tzdata
+                  trap 'kubectl scale deploy/suwayomi -n komga --replicas=1 || true' EXIT INT TERM
+                  ts=$(date +%Y-%m-%dT%H-%M-%S)
+                  kubectl scale deploy/suwayomi -n komga --replicas=0
+                  kubectl wait --for=delete pod -l app.kubernetes.io/name=suwayomi -n komga --timeout=120s || true
+                  if [ -n "$(kubectl get pod -l app.kubernetes.io/name=suwayomi -n komga -o name 2>/dev/null)" ]; then
+                    echo "suwayomi pod still present after quiesce timeout — aborting" >&2
+                    exit 1
+                  fi
+                  tar -C /data -czf "/scratch/suwayomi-${ts}.tar.gz" .
+                  rclone copy "/scratch/suwayomi-${ts}.tar.gz" "r2:homelab-k3s-services-backup/suwayomi/"
+                  rclone delete --min-age 720h "r2:homelab-k3s-services-backup/suwayomi/" || true
+              env:
+                - name: RCLONE_CONFIG_R2_NO_CHECK_BUCKET
+                  value: "true"
+              envFrom:
+                - secretRef:
+                    name: komga-backup-r2
+              volumeMounts:
+                - name: data
+                  mountPath: /data
+                  readOnly: true
+                - name: scratch
+                  mountPath: /scratch
+          volumes:
+            - name: data
+              persistentVolumeClaim:
+                claimName: suwayomi-config
+            - name: scratch
+              emptyDir: {}
