@@ -1,0 +1,50 @@
+# Exposes the Anki self-hosted sync server (LXC at ${SECRET:IP_ANKI_LXC}:27701) publicly via
+# the Cloudflare tunnel. No CF Access — Anki clients can't do OAuth; sync server uses its own
+# SYNC_USER1 credentials. TLS terminated at Traefik with the cert-manager cert.
+# Clients set: Preferences → Syncing → https://${SECRET:DOMAIN_ANKI_SYNC}/
+---
+apiVersion: traefik.io/v1alpha1
+kind: Middleware
+metadata:
+  name: anki-sync-redirect-https
+  namespace: anki-sync
+spec:
+  redirectScheme:
+    scheme: https
+    permanent: true
+---
+apiVersion: traefik.io/v1alpha1
+kind: IngressRoute
+metadata:
+  name: anki-sync
+  namespace: anki-sync
+  annotations:
+    external-dns.alpha.kubernetes.io/target: 761ca633-e9d6-4af8-8508-727bba00f0a9.cfargotunnel.com
+spec:
+  entryPoints:
+    - websecure
+  routes:
+    - match: Host(`${SECRET:DOMAIN_ANKI_SYNC}`)
+      kind: Rule
+      services:
+        - name: anki-sync
+          port: 27701
+  tls:
+    secretName: anki-sync-tls
+---
+apiVersion: traefik.io/v1alpha1
+kind: IngressRoute
+metadata:
+  name: anki-sync-redirect
+  namespace: anki-sync
+spec:
+  entryPoints:
+    - web
+  routes:
+    - match: Host(`${SECRET:DOMAIN_ANKI_SYNC}`)
+      kind: Rule
+      middlewares:
+        - name: anki-sync-redirect-https
+      services:
+        - name: anki-sync
+          port: 27701

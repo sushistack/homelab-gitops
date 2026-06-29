@@ -1,0 +1,24 @@
+# Routes anki.eli.kr → Anki LXC sync server :27701. No pod in cluster — just Service+Endpoints+IngressRoute.
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: anki-sync
+  namespace: argocd
+  annotations:
+    argocd.argoproj.io/sync-wave: "4"
+spec:
+  project: homelab
+  source:
+    repoURL: https://github.com/sushistack/homelab-gitops.git
+    targetRevision: HEAD
+    path: infra/anki-sync
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: anki-sync
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
+      - ServerSideApply=true

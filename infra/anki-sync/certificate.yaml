@@ -1,0 +1,13 @@
+# TLS cert for anki.eli.kr — same shape as miniflux/ntfy (per-host, letsencrypt-prod, DNS-01).
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: anki-sync-tls
+  namespace: anki-sync
+spec:
+  secretName: anki-sync-tls
+  dnsNames:
+    - "${SECRET:DOMAIN_ANKI_SYNC}"
+  issuerRef:
+    name: letsencrypt-prod
+    kind: ClusterIssuer

@@ -1,0 +1,10 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+# Exposes Anki sync server (LXC anki #202) publicly at ${SECRET:DOMAIN_ANKI_SYNC}.
+# Service+Endpoints route Traefik to the LXC IP; no k8s pod runs here.
+resources:
+  - namespace.yaml
+  - service.yaml
+  - certificate.yaml
+  - ingressroute.yaml

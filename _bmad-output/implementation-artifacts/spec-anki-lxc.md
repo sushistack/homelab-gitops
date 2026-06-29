@@ -2,7 +2,8 @@
 title: 'Always-on Anki host on Proxmox LXC (AnkiConnect + self-hosted sync)'
 type: 'feature'
 created: '2026-06-29'
-status: 'ready-for-dev'
+status: 'done'
+baseline_commit: 'e1c2c8aeff0a73dad940b3fcc9a7337ea07e8cce'
 context:
   - '{project-root}/ansible/README.md'
   - '{project-root}/docs/runbooks/'
@@ -58,8 +59,8 @@ context:
 ## Tasks & Acceptance
 
 **Execution:**
-- [ ] `docs/runbooks/anki-lxc.md` -- the full runbook: (1) Proxmox LXC creation (Ubuntu/Debian, vmbr1, reserved IP, `onboot`, unprivileged, sizing); (2) install Anki at the pinned version + AnkiConnect add-on; (3) AnkiConnect config (`webBindAddress`, `apiKey`, cors) with values tokenized; (4) two systemd units — `anki-headless` (Xvfb + Anki, `Restart=always`) and `anki-syncserver` (`anki --syncserver`, env creds) — plus a `systemd timer` restarting `anki-headless` every 12h (`OnCalendar=*-*-* 03,15:00:00`, TZ Asia/Seoul), offset from the 06:00 workflow; (5) one-time **migration** steps (desktop: final AnkiWeb sync → switch custom sync URL → Upload; phone + LXC client: Download); (6) verification commands; (7) AnkiWeb fallback note.
-- [ ] `versions.yaml` -- add the pinned Anki version (and AnkiConnect add-on note) as SSOT, with a re-resolve/bump comment tying server+client compatibility.
+- [x] `docs/runbooks/anki-lxc.md` -- the full runbook: (1) Proxmox LXC creation (Ubuntu/Debian, vmbr1, reserved IP, `onboot`, unprivileged, sizing); (2) install Anki at the pinned version + AnkiConnect add-on; (3) AnkiConnect config (`webBindAddress`, `apiKey`, cors) with values tokenized; (4) two systemd units — `anki-headless` (Xvfb + Anki, `Restart=always`) and `anki-syncserver` (`anki --syncserver`, env creds) — plus a `systemd timer` restarting `anki-headless` every 12h (`OnCalendar=*-*-* 03,15:00:00`, TZ Asia/Seoul), offset from the 06:00 workflow; (5) one-time **migration** steps (desktop: final AnkiWeb sync → switch custom sync URL → Upload; phone + LXC client: Download); (6) verification commands; (7) AnkiWeb fallback note.
+- [x] `versions.yaml` -- add the pinned Anki version (and AnkiConnect add-on note) as SSOT, with a re-resolve/bump comment tying server+client compatibility.
 
 **Acceptance Criteria:**
 - Given the LXC is up, when a k3s pod runs `curl -s http://<lxc-ip>:8765 -d '{"action":"version","version":6,"key":"<apiKey>"}'`, then it returns a version number (not a connection error or auth failure).

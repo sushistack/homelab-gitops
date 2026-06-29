@@ -182,3 +182,17 @@ workloads:
   external-dns:
     manifest: infra/external-dns/deployment.yaml
     image: registry.k8s.io/external-dns/external-dns:v0.21.0@sha256:f53faaf71cb270d1ca9dce6ea0c94bfebf1a18696263487f0fbc74b9bf2bd7ff
+
+# ─────────────────────────────────────────────────────────────────────────────
+# Host-layer LXCs (hand-provisioned on Proxmox, outside ArgoCD — see docs/runbooks/).
+#
+# Version sensitivity: Anki's sync protocol changes between releases. Server (LXC) and
+# ALL clients (desktop, phone) MUST run the same version. Bump them together — this is
+# the single most likely operational failure. Re-confirm the exact release at install
+# time from https://github.com/ankitects/anki/releases.
+host-layer:
+  anki:
+    # Proxmox LXC anki (#210). Runs anki-headless (AnkiConnect :8765) + anki-syncserver (:27701).
+    # See docs/runbooks/anki-lxc.md. AnkiConnect add-on ID: 2055492159 (installed separately).
+    version: 25.02.7          # CONFIRM at install — must match desktop + phone client versions
+    ankiconnect_addon: "2055492159"
