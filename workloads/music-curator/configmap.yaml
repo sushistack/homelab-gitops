@@ -15,7 +15,7 @@ data:
   TZ: Asia/Seoul
   GRACE_PERIOD_DAYS: "28"
   # Comma-separated Last.fm tag whitelist — similar artists without any of these tags
-  # are skipped when adding to Lidarr. Empty string = allow all.
+  # are skipped during discovery. Empty string = allow all.
   DISCOVERY_ALLOWED_TAGS: >-
     j-pop,jpop,j-rock,jrock,anime,vocaloid,japanese,anisong,idol,doujin,
     visual kei,city pop,j-indie,touhou,niconico,
@@ -26,6 +26,10 @@ data:
     singer-songwriter,art pop,indie pop,indie rock,alt-pop
   # Lidarr quality profile id — "1" is the default "Any" profile; override if custom profile exists
   LIDARR_QUALITY_PROFILE_ID: "1"
+  # slskd (Soulseek client) — track-level download for weekly_discovery
+  SLSKD_URL: http://slskd.lidarr.svc.cluster.local:5030
+  # Max tracks to queue per weekly_discovery run (prevents runaway slskd searches)
+  DISCOVERY_MAX_TRACKS_PER_RUN: "30"
 ---
 apiVersion: v1
 kind: ConfigMap
@@ -50,8 +54,10 @@ data:
     import logging
     import os
     import re
+    import time
     from datetime import datetime, timedelta, timezone
     from pathlib import Path
+    from urllib.parse import quote as url_quote
 
     import pylast
     import requests
@@ -68,7 +74,10 @@ data:
     LASTFM_USER = os.environ["LASTFM_USER"]
     LASTFM_API_KEY = os.environ["LASTFM_API_KEY"]
     LASTFM_API_SECRET = os.environ["LASTFM_API_SECRET"]
-    # Comma-separated Last.fm tag whitelist for Lidarr adds. Empty = allow all.
+    SLSKD_URL = os.environ["SLSKD_URL"]
+    SLSKD_API_KEY = os.environ["SLSKD_API_KEY"]
+    DISCOVERY_MAX_TRACKS_PER_RUN = int(os.getenv("DISCOVERY_MAX_TRACKS_PER_RUN", "30"))
+    # Comma-separated Last.fm tag whitelist for discovery. Empty = allow all.
     _ALLOWED_TAGS: frozenset[str] = frozenset(
         t.strip().lower()
         for t in os.getenv("DISCOVERY_ALLOWED_TAGS", "").split(",")
@@ -157,9 +166,21 @@ data:
     def weekly_discovery() -> None:
         """
         Pull recent Last.fm tracks → find similar artists → search Navidrome →
-        add found songs to the current quarter playlist; POST unknown artists to Lidarr.
+        add found songs to the current quarter playlist.
+        For tracks not yet in the library: search slskd (Soulseek) and queue
+        the individual FLAC file for download (track-level, not album-level).
+        Downloaded tracks appear in Navidrome after its next rescan, ready for
+        the following week's run.
         """
         log.info("weekly_discovery: start")
+
+        # Trigger Navidrome rescan so last week's slskd downloads are visible
+        try:
+            subsonic_get("startScan")
+            log.info("weekly_discovery: triggered Navidrome rescan")
+        except Exception as exc:
+            log.warning("weekly_discovery: rescan trigger failed — %s", exc)
+
         network = pylast.LastFMNetwork(
             api_key=LASTFM_API_KEY, api_secret=LASTFM_API_SECRET
         )
@@ -180,7 +201,8 @@ data:
         existing_ids = {e["id"] for e in playlist_entries(q_pid)}
 
         to_add: list[str] = []
-        lidarr_submitted: set[str] = set()
+        slskd_queued_artists: set[str] = set()   # one track per new artist per run
+        slskd_queued = 0
 
         for artist_name in seen_artists:
             try:
@@ -227,11 +249,15 @@ data:
                             sid = song["id"]
                             if sid not in existing_ids and sid not in to_add:
                                 to_add.append(sid)
-                    else:
-                        # Artist not in library — POST to Lidarr for monitoring
-                        if artist not in lidarr_submitted and _sim_artist_allowed(sim_artist):
-                            _lidarr_add_artist(artist)
-                            lidarr_submitted.add(artist)
+                    elif (
+                        slskd_queued < DISCOVERY_MAX_TRACKS_PER_RUN
+                        and artist not in slskd_queued_artists
+                        and _sim_artist_allowed(sim_artist)
+                    ):
+                        # Track not in library — queue the specific FLAC via slskd
+                        if _slskd_queue_track(artist, title):
+                            slskd_queued_artists.add(artist)
+                            slskd_queued += 1
 
         if to_add:
             _playlist_add(q_pid, to_add)
@@ -239,7 +265,7 @@ data:
         else:
             log.info("weekly_discovery: no new songs found for %s", q_name)
 
-        log.info("weekly_discovery: done")
+        log.info("weekly_discovery: done — slskd queued %d new tracks", slskd_queued)
 
 
     def _sim_artist_allowed(artist_obj) -> bool:
@@ -257,8 +283,105 @@ data:
             return True  # fail open — don't block on Last.fm tag errors
 
 
+    def _slskd_queue_track(artist: str, title: str) -> bool:
+        """
+        Search slskd (Soulseek) for a specific FLAC track and queue it for download.
+        Returns True if successfully enqueued, False if not found or on error.
+        Each track lands in /mnt/music/.incoming/{user}/... and Navidrome picks it up on rescan.
+        """
+        headers = {"X-Api-Key": SLSKD_API_KEY}
+        query = f"{artist} {title}"
+        try:
+            # 1. Initiate search
+            resp = requests.post(
+                f"{SLSKD_URL}/api/v0/searches",
+                json={
+                    "searchText": query,
+                    "searchTimeout": 5000,
+                    "filterResponses": True,
+                    "maximumPeerQueueLength": 50,
+                    "minimumPeerUploadSpeed": 0,
+                },
+                headers=headers,
+                timeout=15,
+            )
+            resp.raise_for_status()
+            search_id = resp.json()["id"]
+
+            # 2. Wait for results (slskd needs a moment to gather responses)
+            time.sleep(6)
+            deadline = time.time() + 8
+            while time.time() < deadline:
+                state = requests.get(
+                    f"{SLSKD_URL}/api/v0/searches/{search_id}",
+                    params={"includeResponses": "false"},
+                    headers=headers,
+                    timeout=10,
+                ).json().get("state", "")
+                if state != "InProgress":
+                    break
+                time.sleep(1)
+
+            # 3. Get results
+            results = requests.get(
+                f"{SLSKD_URL}/api/v0/searches/{search_id}/responses",
+                headers=headers,
+                timeout=10,
+            ).json()
+
+            # 4. Cleanup search
+            requests.delete(f"{SLSKD_URL}/api/v0/searches/{search_id}", headers=headers, timeout=5)
+
+            if not results:
+                log.debug("_slskd_queue_track: no results for %r", query)
+                return False
+
+            # 5. Find best FLAC matching the track title
+            title_norm = re.sub(r"[^\w\s]", "", title.lower())
+            title_words = [w for w in title_norm.split() if len(w) > 1]
+            best: tuple | None = None  # (size, username, file_dict)
+
+            for result in results:
+                username = result.get("username", "")
+                for f in result.get("files", []):
+                    fname = f.get("filename", "")
+                    if not fname.lower().endswith(".flac"):
+                        continue
+                    basename = re.sub(r"[^\w\s]", "", fname.rsplit("\\", 1)[-1].lower())
+                    if not title_words or sum(1 for w in title_words if w in basename) < max(1, len(title_words) // 2):
+                        continue
+                    size = f.get("size", 0)
+                    if best is None or size > best[0]:
+                        best = (size, username, f)
+
+            if not best:
+                log.debug("_slskd_queue_track: no FLAC match for %r — %r", title, query)
+                return False
+
+            # 6. Enqueue
+            _, username, file_dict = best
+            enq = requests.post(
+                f"{SLSKD_URL}/api/v0/transfers/downloads/{url_quote(username)}",
+                json=[{"filename": file_dict["filename"], "size": file_dict["size"]}],
+                headers=headers,
+                timeout=10,
+            )
+            if enq.ok:
+                log.info(
+                    "_slskd_queue_track: queued %r — %r from %r",
+                    title, file_dict["filename"].rsplit("\\", 1)[-1], username,
+                )
+                return True
+            log.debug("_slskd_queue_track: enqueue failed for %r: %s", query, enq.text)
+            return False
+
+        except Exception as exc:
+            log.warning("_slskd_queue_track: error for %r — %s", query, exc)
+            return False
+
+
     def _lidarr_add_artist(artist_name: str) -> None:
-        """Look up artist in Lidarr and POST for monitoring if found. Swallows 400 (already exists)."""
+        """Keep for manual use / Lidarr UI management. Not called from weekly_discovery."""
         headers = {"X-Api-Key": LIDARR_API_KEY}
         try:
             resp = requests.get(
@@ -270,17 +393,12 @@ data:
             resp.raise_for_status()
             results = resp.json()
             if not results:
-                log.debug("_lidarr_add_artist: %r not found in Lidarr lookup", artist_name)
                 return
 
             artist_data = results[0]
             artist_data["monitored"] = True
-            artist_data["qualityProfileId"] = int(
-                os.getenv("LIDARR_QUALITY_PROFILE_ID", "1")
-            )
-            artist_data["metadataProfileId"] = int(
-                os.getenv("LIDARR_METADATA_PROFILE_ID", "1")
-            )
+            artist_data["qualityProfileId"] = int(os.getenv("LIDARR_QUALITY_PROFILE_ID", "1"))
+            artist_data["metadataProfileId"] = int(os.getenv("LIDARR_METADATA_PROFILE_ID", "1"))
             artist_data["rootFolderPath"] = artist_data.get("rootFolderPath", "/music")
             artist_data["monitorNewItems"] = "all"
             artist_data["addOptions"] = {"monitor": "all", "searchForMissingAlbums": True}
@@ -291,11 +409,9 @@ data:
                 headers=headers,
                 timeout=30,
             )
-            if post_resp.status_code == 400:
-                log.debug("_lidarr_add_artist: %r already monitored", artist_name)
-                return
-            post_resp.raise_for_status()
-            log.info("_lidarr_add_artist: added %r to Lidarr", artist_name)
+            if post_resp.status_code != 400:
+                post_resp.raise_for_status()
+                log.info("_lidarr_add_artist: added %r", artist_name)
         except Exception as exc:
             log.warning("_lidarr_add_artist: error adding %r — %s", artist_name, exc)
 
