@@ -417,11 +417,14 @@ data:
 
 
     def _playlist_add(pid: str, song_ids: list[str]) -> None:
-        """Add song IDs to a Subsonic playlist via updatePlaylist."""
+        """Add song IDs to a Subsonic playlist and auto-star each one."""
         auth = [("u", ND_USER), ("p", ND_PASSWORD), ("v", "1.16.1"), ("c", "curator"), ("f", "json")]
         params = auth + [("playlistId", pid)] + [("songIdToAdd", sid) for sid in song_ids]
         resp = requests.get(f"{ND_URL}/rest/updatePlaylist", params=params, timeout=30)
         resp.raise_for_status()
+        # Auto-star so daily_prune only removes songs the user explicitly unstarred
+        star_params = auth + [("id", sid) for sid in song_ids]
+        requests.get(f"{ND_URL}/rest/star", params=star_params, timeout=30).raise_for_status()
 
 
     # ---------------------------------------------------------------------------
@@ -429,7 +432,10 @@ data:
     # ---------------------------------------------------------------------------
 
     def daily_prune() -> None:
-        """Delete unstarred songs older than GRACE_PERIOD_DAYS from ALL YYYY-QN playlists."""
+        """Delete unstarred songs from ALL YYYY-QN playlists.
+
+        Songs are auto-starred on add, so unstarred = user explicitly removed heart.
+        """
         data = subsonic_get("getPlaylists")
         all_pls = data.get("playlists", {}).get("playlist", [])
         if isinstance(all_pls, dict):
@@ -439,19 +445,11 @@ data:
             log.info("daily_prune: no quarterly playlists found")
             return
         stars = starred_ids()
-        grace_days = int(os.getenv("GRACE_PERIOD_DAYS", "28"))
-        grace_cutoff = datetime.now(timezone.utc) - timedelta(days=grace_days)
         for pl in quarterly_pls:
             entries = playlist_entries(pl["id"])
             to_remove: list[int] = []
             for idx, entry in enumerate(entries):
-                if entry["id"] in stars:
-                    continue
-                try:
-                    created_dt = datetime.fromisoformat(entry.get("created", "").replace("Z", "+00:00"))
-                except (ValueError, AttributeError):
-                    continue
-                if created_dt < grace_cutoff:
+                if entry["id"] not in stars:
                     _delete_track_file(entry)
                     to_remove.append(idx)
             if not to_remove:
