@@ -429,39 +429,38 @@ data:
     # ---------------------------------------------------------------------------
 
     def daily_prune() -> None:
-        """Delete unstarred songs older than GRACE_PERIOD_DAYS from the current quarter playlist."""
-        current_q = current_quarter()
+        """Delete unstarred songs older than GRACE_PERIOD_DAYS from ALL YYYY-QN playlists."""
         data = subsonic_get("getPlaylists")
         all_pls = data.get("playlists", {}).get("playlist", [])
         if isinstance(all_pls, dict):
             all_pls = [all_pls]
-        pl = next((p for p in all_pls if p["name"] == current_q), None)
-        if not pl:
-            log.info("daily_prune: no playlist for %s yet", current_q)
+        quarterly_pls = [p for p in all_pls if re.match(r"^\d{4}-Q[1-4]$", p["name"])]
+        if not quarterly_pls:
+            log.info("daily_prune: no quarterly playlists found")
             return
-        entries = playlist_entries(pl["id"])
         stars = starred_ids()
         grace_days = int(os.getenv("GRACE_PERIOD_DAYS", "28"))
         grace_cutoff = datetime.now(timezone.utc) - timedelta(days=grace_days)
-        to_remove: list[int] = []
-        for idx, entry in enumerate(entries):
-            if entry["id"] in stars:
+        for pl in quarterly_pls:
+            entries = playlist_entries(pl["id"])
+            to_remove: list[int] = []
+            for idx, entry in enumerate(entries):
+                if entry["id"] in stars:
+                    continue
+                try:
+                    created_dt = datetime.fromisoformat(entry.get("created", "").replace("Z", "+00:00"))
+                except (ValueError, AttributeError):
+                    continue
+                if created_dt < grace_cutoff:
+                    _delete_track_file(entry)
+                    to_remove.append(idx)
+            if not to_remove:
                 continue
-            try:
-                created_dt = datetime.fromisoformat(entry.get("created", "").replace("Z", "+00:00"))
-            except (ValueError, AttributeError):
-                continue
-            if created_dt < grace_cutoff:
-                _delete_track_file(entry)
-                to_remove.append(idx)
-        if not to_remove:
-            log.info("daily_prune: nothing to remove from %s", current_q)
-            return
-        to_remove.sort(reverse=True)
-        auth = [("u", ND_USER), ("p", ND_PASSWORD), ("v", "1.16.1"), ("c", "curator"), ("f", "json")]
-        params = auth + [("playlistId", pl["id"])] + [("songIndexToRemove", i) for i in to_remove]
-        requests.get(f"{ND_URL}/rest/updatePlaylist", params=params, timeout=30).raise_for_status()
-        log.info("daily_prune: removed %d unstarred songs from %s", len(to_remove), current_q)
+            to_remove.sort(reverse=True)
+            auth = [("u", ND_USER), ("p", ND_PASSWORD), ("v", "1.16.1"), ("c", "curator"), ("f", "json")]
+            params = auth + [("playlistId", pl["id"])] + [("songIndexToRemove", i) for i in to_remove]
+            requests.get(f"{ND_URL}/rest/updatePlaylist", params=params, timeout=30).raise_for_status()
+            log.info("daily_prune: removed %d unstarred songs from %s", len(to_remove), pl["name"])
 
     # ---------------------------------------------------------------------------
     # Quarterly archive
