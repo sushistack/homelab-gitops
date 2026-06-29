@@ -36,10 +36,10 @@ spec:
           resources:
             requests:
               cpu: 50m
-              memory: 64Mi
-            limits:
-              cpu: 200m
               memory: 128Mi
+            limits:
+              cpu: 500m
+              memory: 384Mi
           # No HTTP port → exec startupProbe: script writes /tmp/started after APScheduler
           # initialises (absorbs ~15s uv cold-start dep install + scheduler setup).
           # failureThreshold 60 × periodSeconds 5 = 5-minute startup window.
