@@ -380,7 +380,7 @@
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.2,
       "position": [
-        2860,
+        3060,
         300
       ],
       "parameters": {
@@ -400,16 +400,53 @@
       }
     },
     {
-      "id": "node-13b-move-deck",
-      "name": "Move to Deck",
-      "type": "n8n-nodes-base.code",
-      "typeVersion": 2,
+      "id": "node-13b-find-cards",
+      "name": "Find Cards",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
       "position": [
         2660,
         300
       ],
       "parameters": {
-        "jsCode": "const config = $('Set Config').first().json;\nconst noteId = $('Add Note').item.json.result;\nif (!noteId) return [{json: {skipped: true}}];\n\nconst ankiUrl = config.ANKI_CONNECT_URL;\nconst apiKey  = config.ANKI_CONNECT_KEY;\nconst deck    = config.TARGET_DECK;\n\n// Find cards for this note\nconst findResp = await $helpers.httpRequest({\n  method: 'POST',\n  url: ankiUrl,\n  body: JSON.stringify({action:'findCards',version:6,key:apiKey,params:{query:'nid:'+noteId}}),\n  headers: {'Content-Type':'application/json'},\n  returnFullResponse: false\n});\nconst cardIds = findResp.result || [];\nif (!cardIds.length) return [{json: {noteId, skipped: 'no cards'}}];\n\n// Move to target deck\nconst moveResp = await $helpers.httpRequest({\n  method: 'POST',\n  url: ankiUrl,\n  body: JSON.stringify({action:'changeDeck',version:6,key:apiKey,params:{cards:cardIds,deck:deck}}),\n  headers: {'Content-Type':'application/json'},\n  returnFullResponse: false\n});\nreturn [{json: {noteId, cardIds, deck, moved: moveResp.error === null}}];"
+        "method": "POST",
+        "url": "={{ $('Set Config').first().json.ANKI_CONNECT_URL }}",
+        "authentication": "genericCredentialType",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\"action\":\"findCards\",\"version\":6,\"key\":\"{{ $('Set Config').first().json.ANKI_CONNECT_KEY }}\",\"params\":{\"query\":\"nid:{{ $('Add Note').first().json.result }}\"}}",
+        "genericAuthType": "httpCustomAuth"
+      },
+      "credentials": {
+        "httpCustomAuth": {
+          "id": "ankiApiKey",
+          "name": "AnkiConnect API Key"
+        }
+      }
+    },
+    {
+      "id": "node-13c-change-deck",
+      "name": "Change Deck",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        2860,
+        300
+      ],
+      "parameters": {
+        "method": "POST",
+        "url": "={{ $('Set Config').first().json.ANKI_CONNECT_URL }}",
+        "authentication": "genericCredentialType",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\"action\":\"changeDeck\",\"version\":6,\"key\":\"{{ $('Set Config').first().json.ANKI_CONNECT_KEY }}\",\"params\":{\"cards\":{{ JSON.stringify($json.result) }},\"deck\":\"{{ $('Set Config').first().json.TARGET_DECK }}\"}}",
+        "genericAuthType": "httpCustomAuth"
+      },
+      "credentials": {
+        "httpCustomAuth": {
+          "id": "ankiApiKey",
+          "name": "AnkiConnect API Key"
+        }
       }
     }
   ],
@@ -547,14 +584,25 @@
       "main": [
         [
           {
-            "node": "Move to Deck",
+            "node": "Find Cards",
             "type": "main",
             "index": 0
           }
         ]
       ]
     },
-    "Move to Deck": {
+    "Find Cards": {
+      "main": [
+        [
+          {
+            "node": "Change Deck",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Change Deck": {
       "main": [
         [
           {
