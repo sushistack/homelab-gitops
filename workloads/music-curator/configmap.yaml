@@ -425,6 +425,45 @@ data:
 
 
     # ---------------------------------------------------------------------------
+    # Daily prune — current quarter
+    # ---------------------------------------------------------------------------
+
+    def daily_prune() -> None:
+        """Delete unstarred songs older than GRACE_PERIOD_DAYS from the current quarter playlist."""
+        current_q = current_quarter()
+        data = subsonic_get("getPlaylists")
+        all_pls = data.get("playlists", {}).get("playlist", [])
+        if isinstance(all_pls, dict):
+            all_pls = [all_pls]
+        pl = next((p for p in all_pls if p["name"] == current_q), None)
+        if not pl:
+            log.info("daily_prune: no playlist for %s yet", current_q)
+            return
+        entries = playlist_entries(pl["id"])
+        stars = starred_ids()
+        grace_days = int(os.getenv("GRACE_PERIOD_DAYS", "28"))
+        grace_cutoff = datetime.now(timezone.utc) - timedelta(days=grace_days)
+        to_remove: list[int] = []
+        for idx, entry in enumerate(entries):
+            if entry["id"] in stars:
+                continue
+            try:
+                created_dt = datetime.fromisoformat(entry.get("created", "").replace("Z", "+00:00"))
+            except (ValueError, AttributeError):
+                continue
+            if created_dt < grace_cutoff:
+                _delete_track_file(entry)
+                to_remove.append(idx)
+        if not to_remove:
+            log.info("daily_prune: nothing to remove from %s", current_q)
+            return
+        to_remove.sort(reverse=True)
+        auth = [("u", ND_USER), ("p", ND_PASSWORD), ("v", "1.16.1"), ("c", "curator"), ("f", "json")]
+        params = auth + [("playlistId", pl["id"])] + [("songIndexToRemove", i) for i in to_remove]
+        requests.get(f"{ND_URL}/rest/updatePlaylist", params=params, timeout=30).raise_for_status()
+        log.info("daily_prune: removed %d unstarred songs from %s", len(to_remove), current_q)
+
+    # ---------------------------------------------------------------------------
     # Quarterly archive
     # ---------------------------------------------------------------------------
 
@@ -613,6 +652,7 @@ data:
 
     scheduler = BlockingScheduler(timezone="Asia/Seoul")
     scheduler.add_job(weekly_discovery, "cron", day_of_week="mon", hour=3)
+    scheduler.add_job(daily_prune, "cron", hour=4)
     scheduler.add_job(quarterly_archive, "cron", month="1,4,7,10", day=1, hour=2)
     scheduler.add_job(annual_best_of, "cron", month=1, day=1, hour=3)
 
