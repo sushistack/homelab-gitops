@@ -57,7 +57,7 @@
             {
               "id": "a4",
               "name": "TARGET_DECK",
-              "value": "English",
+              "value": "English::DailySentence",
               "type": "string"
             },
             {
