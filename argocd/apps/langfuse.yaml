@@ -66,16 +66,16 @@ spec:
               resources:
                 requests:
                   cpu: 100m
-                  memory: 256Mi
+                  memory: 512Mi
                 limits:
-                  memory: 1Gi
+                  memory: 2Gi
             worker:
               resources:
                 requests:
                   cpu: 50m
-                  memory: 128Mi
+                  memory: 256Mi
                 limits:
-                  memory: 512Mi
+                  memory: 1Gi
 
           # ── PostgreSQL (bitnamilegacy subchart) ───────────────────────────────
           # ponytail: single primary, no HA — upgrade path is Bitnami Postgres HA chart if needed.
