@@ -58,7 +58,7 @@ spec:
                 key: encryption-key
             features:
               telemetryEnabled: false   # no SaaS phone-home
-              signUpDisabled: false     # allow first admin account creation; set true after
+              signUpDisabled: true      # first admin account created 2026-07-01; no new signups
             # Traefik IngressRoute is in infra/langfuse/ — disable chart's standard Ingress.
             ingress:
               enabled: false
