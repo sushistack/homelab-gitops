@@ -122,7 +122,8 @@ spec:
                 cpu: 200m
                 memory: 512Mi
               limits:
-                memory: 2Gi
+                cpu: 2000m   # cap background merge CPU — was unbounded, driving node/fan load up
+                memory: 3Gi  # was 2Gi; crashed mid-merge (OOM) at that limit
 
           # ── Redis / Valkey (queue + cache) ────────────────────────────────────
           redis:
