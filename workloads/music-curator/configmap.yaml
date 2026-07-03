@@ -26,7 +26,7 @@ data:
   # Lidarr quality profile id — "1" is the default "Any" profile; override if custom profile exists
   LIDARR_QUALITY_PROFILE_ID: "1"
   # slskd (Soulseek client) — track-level download for weekly_discovery
-  SLSKD_URL: http://slskd.lidarr.svc.cluster.local:5030
+  SLSKD_URL: http://slskd.slskd.svc.cluster.local:5030
   # Max tracks to queue per weekly_discovery run (prevents runaway slskd searches)
   DISCOVERY_MAX_TRACKS_PER_RUN: "30"
 ---

@@ -3,9 +3,9 @@
 # pvc-manga-local.yaml is the reference). Separate disk from the manga library (komga, /mnt/manga) —
 # music and manga no longer share a failure domain or capacity.
 #
-# A `local` PV REQUIRES nodeAffinity (k8s enforces it), which PINS every consumer pod to k3s-cp-1 —
-# so lidarr + slskd auto-co-locate here, both mounting this RWX PV read-write (lidarr = library root +
-# import; slskd = downloads into /mnt/music/.incoming, same fs -> Lidarr hardlink import).
+# A `local` PV REQUIRES nodeAffinity (k8s enforces it), which PINS the consumer pod to k3s-cp-1 —
+# slskd mounts this RWX PV read-write and downloads into /mnt/music/.incoming (child of the shared
+# music volume). Navidrome reaches the SAME library via its own PV (see below).
 #
 # Dedicated disk = music SPOF is its own. Grow online: `qm resize 101 scsi3 +Ng` ->
 # `growpart`+`resize2fs` on k3s-cp-1 (see runbook.md). Navidrome shares the SAME path via its OWN PV
@@ -14,14 +14,14 @@
 apiVersion: v1
 kind: PersistentVolume
 metadata:
-  name: lidarr-music-local
+  name: slskd-music-local
   annotations:
     argocd.argoproj.io/sync-options: Prune=false   # never let ArgoCD delete the PV binding to real data
 spec:
   capacity:
     storage: 200Gi          # the shared disk size (informational for local volumes; grow the disk to expand)
   accessModes:
-    - ReadWriteMany         # lidarr (rw) + slskd (rw) both mount — legal for a local PV when co-located on the node
+    - ReadWriteMany         # slskd (rw) mounts; RWX kept so any node-local music consumer can co-mount
   persistentVolumeReclaimPolicy: Retain
   storageClassName: ""
   local:
@@ -34,20 +34,20 @@ spec:
               operator: In
               values: ["k3s-cp-1"]
   claimRef:
-    namespace: lidarr
-    name: lidarr-music-local
+    namespace: slskd
+    name: slskd-music-local
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: lidarr-music-local
+  name: slskd-music-local
   annotations:
     argocd.argoproj.io/sync-options: Prune=false
 spec:
   accessModes:
     - ReadWriteMany
   storageClassName: ""
-  volumeName: lidarr-music-local   # bind to the static local PV above (1:1 via claimRef)
+  volumeName: slskd-music-local   # bind to the static local PV above (1:1 via claimRef)
   resources:
     requests:
       storage: 200Gi

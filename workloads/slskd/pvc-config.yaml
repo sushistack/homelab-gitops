@@ -1,3 +1,5 @@
+# slskd.db = peer/search/transfer state — regenerable, so this is a FRESH local-path-retain claim in
+# the slskd ns (the old lidarr-ns PV is not rebound; slskd re-inits from slskd.yml + creds on start).
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim
@@ -9,7 +11,6 @@ spec:
   accessModes:
     - ReadWriteOnce
   storageClassName: local-path-retain
-  volumeName: pvc-cdae88e3-5138-47d6-b8ee-1c86a5e26111
   resources:
     requests:
       storage: 2Gi   # slskd.db (peer/search/transfer state)

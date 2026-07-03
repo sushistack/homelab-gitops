@@ -7,7 +7,7 @@ kind: Kustomization
 resources:
   - namespace.yaml
   - pvc-music-local.yaml   # static node-local PV -> k3s-cp-1:/mnt/music (RWX, off-Longhorn; dedicated music disk)
-  - pvc-config.yaml        # slskd-config only (Longhorn RWO); lidarr-config + soularr-data kept for data safety
+  - pvc-config.yaml        # slskd-config (local-path-retain RWO)
   - configmap.yaml         # slskd.yml non-secret config (auth disabled; download dir on the shared volume)
   - deployment-slskd.yaml
   - services.yaml          # slskd (5030) ClusterIP
@@ -16,12 +16,11 @@ resources:
   - sealedsecret-slskd.yaml    # slskd-soulseek (Soulseek creds)
 
 # `labels:` (never commonLabels — pollutes selectors; never namePrefix — breaks the name+ns SealedSecret
-# binding). Only the SHARED identity here; app.kubernetes.io/name + /component DIFFER per component
-# (hand-written inline on each resource; every Service selector targets `name`). part-of: lidarr ties
-# the three components to one logical service.
+# binding). Only the SHARED identity here; app.kubernetes.io/name + /component are hand-written inline
+# on each resource (every Service selector targets `name`).
 labels:
   - includeSelectors: false
     pairs:
-      app.kubernetes.io/instance: lidarr
-      app.kubernetes.io/part-of: lidarr
+      app.kubernetes.io/instance: slskd
+      app.kubernetes.io/part-of: slskd
       app.kubernetes.io/managed-by: argocd
