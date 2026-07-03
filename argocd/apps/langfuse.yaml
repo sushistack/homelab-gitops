@@ -140,6 +140,31 @@ spec:
                   </default>
                 </profiles>
               </clickhouse>
+            # Belt-and-suspenders: system.trace_log/metric_log have no TTL by default and
+            # server-recreates metric_log automatically (1 row/sec, unaffected by the
+            # profiler settings above since it's server-level, not a session setting) —
+            # without a TTL it will refill and hit the same giant-merge-OOM-retry-loop
+            # again in a few weeks. Short TTL since nobody looks at these in a homelab.
+            extraOverrides: |
+              <clickhouse>
+                <trace_log>
+                  <database>system</database>
+                  <table>trace_log</table>
+                  <partition_by>toYYYYMM(event_date)</partition_by>
+                  <ttl>event_date + INTERVAL 3 DAY</ttl>
+                  <flush_interval_milliseconds>7500</flush_interval_milliseconds>
+                  <flush_on_crash>false</flush_on_crash>
+                  <symbolize>true</symbolize>
+                </trace_log>
+                <metric_log>
+                  <database>system</database>
+                  <table>metric_log</table>
+                  <ttl>event_date + INTERVAL 3 DAY</ttl>
+                  <flush_interval_milliseconds>7500</flush_interval_milliseconds>
+                  <collect_interval_milliseconds>1000</collect_interval_milliseconds>
+                  <flush_on_crash>false</flush_on_crash>
+                </metric_log>
+              </clickhouse>
 
           # ── Redis / Valkey (queue + cache) ────────────────────────────────────
           redis:
