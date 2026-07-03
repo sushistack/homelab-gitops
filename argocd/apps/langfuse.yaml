@@ -141,30 +141,21 @@ spec:
                 </profiles>
               </clickhouse>
             # Belt-and-suspenders: system.trace_log/metric_log have no TTL by default and
-            # server-recreates metric_log automatically (1 row/sec, unaffected by the
-            # profiler settings above since it's server-level, not a session setting) —
-            # without a TTL it will refill and hit the same giant-merge-OOM-retry-loop
-            # again in a few weeks. Short TTL since nobody looks at these in a homelab.
-            extraOverrides: |
-              <clickhouse>
-                <trace_log>
-                  <database>system</database>
-                  <table>trace_log</table>
-                  <partition_by>toYYYYMM(event_date)</partition_by>
-                  <ttl>event_date + INTERVAL 3 DAY</ttl>
-                  <flush_interval_milliseconds>7500</flush_interval_milliseconds>
-                  <flush_on_crash>false</flush_on_crash>
-                  <symbolize>true</symbolize>
-                </trace_log>
-                <metric_log>
-                  <database>system</database>
-                  <table>metric_log</table>
-                  <ttl>event_date + INTERVAL 3 DAY</ttl>
-                  <flush_interval_milliseconds>7500</flush_interval_milliseconds>
-                  <collect_interval_milliseconds>1000</collect_interval_milliseconds>
-                  <flush_on_crash>false</flush_on_crash>
-                </metric_log>
-              </clickhouse>
+            # metric_log refills on its own (1 row/sec, server-level — unaffected by the
+            # profiler settings above) even after being dropped. Without a TTL it rebuilds
+            # into the same giant-merge-OOM-retry-loop that pegged a CPU core in a few weeks.
+            # NOTE: tried setting <ttl> via extraOverrides (config.d XML) first — ClickHouse's
+            # config merge did not apply it reliably (verified via SHOW CREATE TABLE after a
+            # restart: no TTL landed, and the merged config.xml showed the override text
+            # bleeding into an unrelated table's block). ALTER TABLE via startdbScripts is
+            # simple, idempotent, and verified to survive a pod restart — use that instead.
+            startdbScripts:
+              99-system-log-ttl.sh: |
+                #!/bin/bash
+                clickhouse-client --password "$CLICKHOUSE_ADMIN_PASSWORD" -q \
+                  "ALTER TABLE system.trace_log MODIFY TTL event_date + INTERVAL 3 DAY;" || true
+                clickhouse-client --password "$CLICKHOUSE_ADMIN_PASSWORD" -q \
+                  "ALTER TABLE system.metric_log MODIFY TTL event_date + INTERVAL 3 DAY;" || true
 
           # ── Redis / Valkey (queue + cache) ────────────────────────────────────
           redis:
