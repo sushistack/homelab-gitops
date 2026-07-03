@@ -21,7 +21,7 @@ layout:
     columns: 3
   Media:
     style: row
-    columns: 5
+    columns: 4
   Ops:
     style: row
     columns: 2
