@@ -124,16 +124,19 @@ spec:
               limits:
                 cpu: 2000m   # cap background merge CPU — was unbounded, driving node/fan load up
                 memory: 3Gi  # was 2Gi; crashed mid-merge (OOM) at that limit
-            # Default query profiler samples every running thread every 1s into
-            # system.trace_log regardless of actual Langfuse traffic — this table hit
-            # 315M rows / 5GB in 3 days and its background flush/merge was the real
-            # driver of the climbing CPU (not real trace ingestion, which is tiny).
+            # Default profilers write to system.trace_log regardless of actual Langfuse
+            # traffic: query profiler samples every thread every 1s, and the memory
+            # profiler (memory_profiler_step, default 4MiB) logs an entry on every 4MB
+            # alloc/dealloc step across all background threads (merges, etc). Together
+            # these grew trace_log to 315M rows / 5GB in 3 days — that background
+            # flush/merge, not real trace ingestion (tiny), was driving the climbing CPU.
             usersExtraOverrides: |
               <clickhouse>
                 <profiles>
                   <default>
                     <query_profiler_real_time_period_ns>0</query_profiler_real_time_period_ns>
                     <query_profiler_cpu_time_period_ns>0</query_profiler_cpu_time_period_ns>
+                    <memory_profiler_step>0</memory_profiler_step>
                   </default>
                 </profiles>
               </clickhouse>
