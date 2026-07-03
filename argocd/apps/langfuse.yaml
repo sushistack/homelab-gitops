@@ -150,18 +150,24 @@ spec:
             # bleeding into an unrelated table's block). ALTER TABLE via startdbScripts is
             # simple and idempotent — but this script is sourced right as the server reports
             # "started successfully", which can race the system log tables' own creation, so
-            # retry for up to a minute rather than firing once.
+            # retry for up to a minute rather than firing once. Bitnami sources this file
+            # (warns "any error may cause initialization to fail" — i.e. runs under set -e),
+            # so failed attempts must go through `if`, not a bare `&&` chain, or the very
+            # first failure aborts the whole entrypoint (observed as leftover temp-instance
+            # ports still bound, causing "Address already in use" on the real server start).
             startdbScripts:
               99-system-log-ttl.sh: |
                 #!/bin/bash
                 for i in $(seq 1 30); do
-                  clickhouse-client --password "$CLICKHOUSE_ADMIN_PASSWORD" -q \
-                    "ALTER TABLE system.trace_log MODIFY TTL event_date + INTERVAL 3 DAY;" 2>/dev/null \
-                  && clickhouse-client --password "$CLICKHOUSE_ADMIN_PASSWORD" -q \
-                    "ALTER TABLE system.metric_log MODIFY TTL event_date + INTERVAL 3 DAY;" 2>/dev/null \
-                  && break
+                  if clickhouse-client --password "$CLICKHOUSE_ADMIN_PASSWORD" -q \
+                       "ALTER TABLE system.trace_log MODIFY TTL event_date + INTERVAL 3 DAY;" 2>/dev/null \
+                     && clickhouse-client --password "$CLICKHOUSE_ADMIN_PASSWORD" -q \
+                       "ALTER TABLE system.metric_log MODIFY TTL event_date + INTERVAL 3 DAY;" 2>/dev/null; then
+                    break
+                  fi
                   sleep 2
                 done
+                true
 
           # ── Redis / Valkey (queue + cache) ────────────────────────────────────
           redis:
