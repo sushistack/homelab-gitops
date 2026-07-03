@@ -8,6 +8,7 @@ resources:
   - sealedsecret.yaml    # langfuse-secrets: all credentials (8 keys). MUST be sealed before first sync.
   - certificate.yaml     # cert-manager Certificate -> langfuse-tls (letsencrypt-prod, DNS-01)
   - ingressroute.yaml    # Traefik IngressRoute (websecure) + HTTP->HTTPS redirect middleware
+  - cronjob-clickhouse-log-ttl.yaml   # caps clickhouse's own trace_log/metric_log growth
 
 labels:
   - includeSelectors: false

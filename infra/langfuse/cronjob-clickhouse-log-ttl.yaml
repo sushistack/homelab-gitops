@@ -1,0 +1,45 @@
+# Applies a short TTL to clickhouse's own system.trace_log / system.metric_log tables.
+# These are ClickHouse's internal diagnostic logs (query profiler + 1s metric snapshots),
+# not Langfuse trace data — they have no default TTL and grow forever, and their
+# background merges eventually exceed the memory limit and retry-loop forever, pegging
+# a CPU core (see _bmad-output/implementation-artifacts/investigations/
+# langfuse-fan-noise-investigation.md). Setting TTL via the Helm chart's config XML
+# (extraOverrides) and startdbScripts both proved unreliable — the former didn't merge
+# into the table's actual DDL, the latter runs during clickhouse's temporary bootstrap
+# instance before these tables exist. A periodic idempotent ALTER via CronJob sidesteps
+# both: it targets the real running server over the network, so it always succeeds.
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: langfuse-clickhouse-log-ttl
+  namespace: langfuse
+spec:
+  schedule: "0 */6 * * *"
+  timeZone: Asia/Seoul
+  concurrencyPolicy: Forbid
+  successfulJobsHistoryLimit: 3
+  failedJobsHistoryLimit: 3
+  jobTemplate:
+    spec:
+      activeDeadlineSeconds: 120
+      template:
+        spec:
+          restartPolicy: OnFailure
+          containers:
+            - name: set-ttl
+              image: docker.io/bitnamilegacy/clickhouse:25.2.1-debian-12-r0
+              env:
+                - name: CLICKHOUSE_PASSWORD
+                  valueFrom:
+                    secretKeyRef:
+                      name: langfuse-secrets
+                      key: clickhouse-password
+              command:
+                - /bin/bash
+                - -c
+                - |
+                  set -e
+                  clickhouse-client --host langfuse-clickhouse --password "$CLICKHOUSE_PASSWORD" -q \
+                    "ALTER TABLE system.trace_log MODIFY TTL event_date + INTERVAL 3 DAY;"
+                  clickhouse-client --host langfuse-clickhouse --password "$CLICKHOUSE_PASSWORD" -q \
+                    "ALTER TABLE system.metric_log MODIFY TTL event_date + INTERVAL 3 DAY;"

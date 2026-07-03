@@ -140,34 +140,12 @@ spec:
                   </default>
                 </profiles>
               </clickhouse>
-            # Belt-and-suspenders: system.trace_log/metric_log have no TTL by default and
-            # metric_log refills on its own (1 row/sec, server-level — unaffected by the
-            # profiler settings above) even after being dropped. Without a TTL it rebuilds
-            # into the same giant-merge-OOM-retry-loop that pegged a CPU core in a few weeks.
-            # NOTE: tried setting <ttl> via extraOverrides (config.d XML) first — ClickHouse's
-            # config merge did not apply it reliably (verified via SHOW CREATE TABLE after a
-            # restart: no TTL landed, and the merged config.xml showed the override text
-            # bleeding into an unrelated table's block). ALTER TABLE via startdbScripts is
-            # simple and idempotent — but this script is sourced right as the server reports
-            # "started successfully", which can race the system log tables' own creation, so
-            # retry for up to a minute rather than firing once. Bitnami sources this file
-            # (warns "any error may cause initialization to fail" — i.e. runs under set -e),
-            # so failed attempts must go through `if`, not a bare `&&` chain, or the very
-            # first failure aborts the whole entrypoint (observed as leftover temp-instance
-            # ports still bound, causing "Address already in use" on the real server start).
-            startdbScripts:
-              99-system-log-ttl.sh: |
-                #!/bin/bash
-                for i in $(seq 1 30); do
-                  if clickhouse-client --password "$CLICKHOUSE_ADMIN_PASSWORD" -q \
-                       "ALTER TABLE system.trace_log MODIFY TTL event_date + INTERVAL 3 DAY;" 2>/dev/null \
-                     && clickhouse-client --password "$CLICKHOUSE_ADMIN_PASSWORD" -q \
-                       "ALTER TABLE system.metric_log MODIFY TTL event_date + INTERVAL 3 DAY;" 2>/dev/null; then
-                    break
-                  fi
-                  sleep 2
-                done
-                true
+            # system.trace_log/metric_log TTL: tried extraOverrides (config.d XML) and
+            # startdbScripts here — neither worked reliably (config merge didn't land the
+            # <ttl> on the actual table DDL; startdbScripts runs against clickhouse's
+            # temporary bootstrap instance, before these tables exist). Handled instead by
+            # a CronJob (infra/langfuse/cronjob-clickhouse-log-ttl.yaml) that ALTERs the
+            # real running server directly — see that file for the full story.
 
           # ── Redis / Valkey (queue + cache) ────────────────────────────────────
           redis:
