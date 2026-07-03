@@ -61,7 +61,7 @@ spec:
                   tar -C /scratch -czf "/scratch/n8n-${ts}.tar.gz" database.sqlite
                   rclone copy "/scratch/n8n-${ts}.tar.gz" "r2:homelab-k3s-services-backup/n8n/"
                   # ~30-day retention (offen semantics) + n8n- prefix preserved.
-                  rclone delete --min-age 720h "r2:homelab-k3s-services-backup/n8n/" || true
+                  rclone delete --min-age 72h "r2:homelab-k3s-services-backup/n8n/" || true
               env:
                 # bucket-scoped token (Object R&W) can't ListBuckets/CreateBucket -> rclone's default
                 # bucket probe 403s; no_check_bucket skips it and PUTs straight to the existing bucket.

@@ -53,7 +53,7 @@ spec:
                   sqlite3 /config/tasks.sqlite    ".backup /scratch/tasks.sqlite"
                   tar -C /scratch -czf "/scratch/komga-${ts}.tar.gz" database.sqlite tasks.sqlite
                   rclone copy "/scratch/komga-${ts}.tar.gz" "r2:homelab-k3s-services-backup/komga/"
-                  rclone delete --min-age 720h "r2:homelab-k3s-services-backup/komga/" || true
+                  rclone delete --min-age 72h "r2:homelab-k3s-services-backup/komga/" || true
               env:
                 - name: RCLONE_CONFIG_R2_NO_CHECK_BUCKET
                   value: "true"

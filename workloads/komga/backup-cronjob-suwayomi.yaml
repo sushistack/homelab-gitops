@@ -47,9 +47,11 @@ spec:
                     echo "suwayomi pod still present after quiesce timeout — aborting" >&2
                     exit 1
                   fi
-                  tar -C /data -czf "/scratch/suwayomi-${ts}.tar.gz" .
+                  # ponytail: explicit include — skip cache(80M)/webUI(9.4M)/logs/bin (all regenerable)
+                  tar -C /data -czf "/scratch/suwayomi-${ts}.tar.gz" \
+                    database.mv.db settings server.conf extensions backups local
                   rclone copy "/scratch/suwayomi-${ts}.tar.gz" "r2:homelab-k3s-services-backup/suwayomi/"
-                  rclone delete --min-age 720h "r2:homelab-k3s-services-backup/suwayomi/" || true
+                  rclone delete --min-age 72h "r2:homelab-k3s-services-backup/suwayomi/" || true
               env:
                 - name: RCLONE_CONFIG_R2_NO_CHECK_BUCKET
                   value: "true"

@@ -46,7 +46,7 @@ spec:
                   sqlite3 /books/metadata.db    ".backup /scratch/metadata.db"
                   tar -C /scratch -czf "/scratch/calibre-${ts}.tar.gz" app.db metadata.db
                   rclone copy "/scratch/calibre-${ts}.tar.gz" "r2:homelab-k3s-services-backup/calibre/"
-                  rclone delete --min-age 720h "r2:homelab-k3s-services-backup/calibre/" || true
+                  rclone delete --min-age 72h "r2:homelab-k3s-services-backup/calibre/" || true
               env:
                 - name: RCLONE_CONFIG_R2_NO_CHECK_BUCKET
                   value: "true"

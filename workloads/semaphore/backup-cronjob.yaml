@@ -50,7 +50,7 @@ spec:
                   fi
                   tar -C /data -czf "/scratch/semaphore-${ts}.tar.gz" .
                   rclone copy "/scratch/semaphore-${ts}.tar.gz" "r2:homelab-k3s-services-backup/semaphore/"
-                  rclone delete --min-age 720h "r2:homelab-k3s-services-backup/semaphore/" || true   # 30d retention
+                  rclone delete --min-age 72h "r2:homelab-k3s-services-backup/semaphore/" || true   # 30d retention
               env:
                 - name: RCLONE_CONFIG_R2_NO_CHECK_BUCKET
                   value: "true"

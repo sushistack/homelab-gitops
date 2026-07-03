@@ -67,7 +67,7 @@ spec:
                   # DEDICATED k3s-service bucket (not shared with the Compose offen backups), so this
                   # prefix only holds our own archives. // ponytail: rclone delete is the lazy port;
                   # swap to an R2 lifecycle rule if you'd rather not grant the cred delete scope.
-                  rclone delete --min-age 720h "r2:homelab-k3s-services-backup/ntfy/" || true
+                  rclone delete --min-age 72h "r2:homelab-k3s-services-backup/ntfy/" || true
               env:
                 # The R2 token is bucket-scoped (Object R&W), so it CANNOT ListBuckets/CreateBucket
                 # (account-level). rclone probes/creates the bucket before upload by default -> 403.

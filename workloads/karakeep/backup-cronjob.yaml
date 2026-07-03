@@ -74,7 +74,7 @@ spec:
                   # ~30-day retention (offen semantics). The karakeep/ prefix holds BOTH web
                   # (karakeep-<ts>) and bridge (karakeep-bridge-<ts>) archives, so scope this prune to
                   # the web ones — an unfiltered delete would also drop the bridge dedup-map backups.
-                  rclone delete --min-age 720h --include "karakeep-2*" "r2:homelab-k3s-services-backup/karakeep/" || true
+                  rclone delete --min-age 72h --include "karakeep-2*" "r2:homelab-k3s-services-backup/karakeep/" || true
               env:
                 # bucket-scoped token (Object R&W) can't ListBuckets/CreateBucket -> rclone's default
                 # bucket probe 403s; no_check_bucket skips it and PUTs straight to the existing bucket.
@@ -137,7 +137,7 @@ spec:
                   sqlite3 /data/bridge.sqlite ".backup /scratch/bridge.sqlite"
                   tar -C /scratch -czf "/scratch/karakeep-bridge-${ts}.tar.gz" bridge.sqlite
                   rclone copy "/scratch/karakeep-bridge-${ts}.tar.gz" "r2:homelab-k3s-services-backup/karakeep/"
-                  rclone delete --min-age 720h --include "karakeep-bridge-*" "r2:homelab-k3s-services-backup/karakeep/" || true
+                  rclone delete --min-age 72h --include "karakeep-bridge-*" "r2:homelab-k3s-services-backup/karakeep/" || true
               env:
                 - name: RCLONE_CONFIG_R2_NO_CHECK_BUCKET
                   value: "true"

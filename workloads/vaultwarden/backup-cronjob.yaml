@@ -74,7 +74,7 @@ spec:
                   rclone copy "/scratch/vaultwarden-${ts}.tar.gz" "r2:homelab-k3s-services-backup/vaultwarden/"
                   # ~30-day retention (offen semantics). homelab-k3s-services-backup is the dedicated
                   # k3s-service bucket, so this prefix only holds our own archives.
-                  rclone delete --min-age 720h "r2:homelab-k3s-services-backup/vaultwarden/" || true
+                  rclone delete --min-age 72h "r2:homelab-k3s-services-backup/vaultwarden/" || true
               env:
                 # bucket-scoped token (Object R&W) can't ListBuckets/CreateBucket -> rclone's default
                 # bucket probe 403s; no_check_bucket skips it and PUTs straight to the existing bucket.

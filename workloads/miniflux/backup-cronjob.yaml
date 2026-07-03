@@ -59,7 +59,7 @@ spec:
                   # ~30-day retention (offen semantics). Dedicated services bucket -> this prefix only
                   # holds our archives. // ponytail: rclone delete is the lazy port; swap to an R2
                   # lifecycle rule if you'd rather not grant the cred delete scope.
-                  rclone delete --min-age 720h "r2:homelab-k3s-services-backup/miniflux/" || true
+                  rclone delete --min-age 72h "r2:homelab-k3s-services-backup/miniflux/" || true
               env:
                 # pg_dump auth: map the secret's POSTGRES_PASSWORD -> the libpq PGPASSWORD var.
                 - name: PGPASSWORD
