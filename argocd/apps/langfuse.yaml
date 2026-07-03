@@ -148,14 +148,20 @@ spec:
             # config merge did not apply it reliably (verified via SHOW CREATE TABLE after a
             # restart: no TTL landed, and the merged config.xml showed the override text
             # bleeding into an unrelated table's block). ALTER TABLE via startdbScripts is
-            # simple, idempotent, and verified to survive a pod restart — use that instead.
+            # simple and idempotent — but this script is sourced right as the server reports
+            # "started successfully", which can race the system log tables' own creation, so
+            # retry for up to a minute rather than firing once.
             startdbScripts:
               99-system-log-ttl.sh: |
                 #!/bin/bash
-                clickhouse-client --password "$CLICKHOUSE_ADMIN_PASSWORD" -q \
-                  "ALTER TABLE system.trace_log MODIFY TTL event_date + INTERVAL 3 DAY;" || true
-                clickhouse-client --password "$CLICKHOUSE_ADMIN_PASSWORD" -q \
-                  "ALTER TABLE system.metric_log MODIFY TTL event_date + INTERVAL 3 DAY;" || true
+                for i in $(seq 1 30); do
+                  clickhouse-client --password "$CLICKHOUSE_ADMIN_PASSWORD" -q \
+                    "ALTER TABLE system.trace_log MODIFY TTL event_date + INTERVAL 3 DAY;" 2>/dev/null \
+                  && clickhouse-client --password "$CLICKHOUSE_ADMIN_PASSWORD" -q \
+                    "ALTER TABLE system.metric_log MODIFY TTL event_date + INTERVAL 3 DAY;" 2>/dev/null \
+                  && break
+                  sleep 2
+                done
 
           # ── Redis / Valkey (queue + cache) ────────────────────────────────────
           redis:
