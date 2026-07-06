@@ -1,20 +1,23 @@
-# Applies a short TTL to clickhouse's own system.trace_log / system.metric_log tables.
-# These are ClickHouse's internal diagnostic logs (query profiler + 1s metric snapshots),
-# not Langfuse trace data — they have no default TTL and grow forever, and their
-# background merges eventually exceed the memory limit and retry-loop forever, pegging
-# a CPU core (see _bmad-output/implementation-artifacts/investigations/
-# langfuse-fan-noise-investigation.md). Setting TTL via the Helm chart's config XML
-# (extraOverrides) and startdbScripts both proved unreliable — the former didn't merge
-# into the table's actual DDL, the latter runs during clickhouse's temporary bootstrap
-# instance before these tables exist. A periodic idempotent ALTER via CronJob sidesteps
-# both: it targets the real running server over the network, so it always succeeds.
+# Keeps clickhouse's own system.trace_log / system.metric_log tables from growing
+# unbounded. These are ClickHouse's internal diagnostic logs (query profiler + 1s
+# metric snapshots), not Langfuse trace data (see _bmad-output/implementation-artifacts/
+# investigations/langfuse-fan-noise-investigation.md for the full incident history).
+#
+# v1 of this job set a 3-day TTL via ALTER TABLE ... MODIFY TTL. That recurred: TTL
+# enforcement itself runs as a background merge, and metric_log (1 row/sec) had piled
+# up 13,000+ tiny parts by the time the first 3-day-old partition needed merging away —
+# too much to merge in one shot, so it OOM'd and retry-looped forever, pegging a CPU
+# core again (2026-07-07, three days after the TTL was first applied).
+#
+# Fix: TRUNCATE hourly instead of relying on TTL-triggered merges. Truncate just drops
+# parts, no merge required, so it can never accumulate a backlog large enough to OOM.
 apiVersion: batch/v1
 kind: CronJob
 metadata:
   name: langfuse-clickhouse-log-ttl
   namespace: langfuse
 spec:
-  schedule: "0 */6 * * *"
+  schedule: "0 * * * *"
   timeZone: Asia/Seoul
   concurrencyPolicy: Forbid
   successfulJobsHistoryLimit: 3
@@ -26,7 +29,7 @@ spec:
         spec:
           restartPolicy: OnFailure
           containers:
-            - name: set-ttl
+            - name: truncate-system-logs
               image: docker.io/bitnamilegacy/clickhouse:25.2.1-debian-12-r0
               env:
                 - name: CLICKHOUSE_PASSWORD
@@ -40,6 +43,6 @@ spec:
                 - |
                   set -e
                   clickhouse-client --host langfuse-clickhouse --password "$CLICKHOUSE_PASSWORD" -q \
-                    "ALTER TABLE system.trace_log MODIFY TTL event_date + INTERVAL 3 DAY;"
+                    "TRUNCATE TABLE IF EXISTS system.trace_log;"
                   clickhouse-client --host langfuse-clickhouse --password "$CLICKHOUSE_PASSWORD" -q \
-                    "ALTER TABLE system.metric_log MODIFY TTL event_date + INTERVAL 3 DAY;"
+                    "TRUNCATE TABLE IF EXISTS system.metric_log;"
