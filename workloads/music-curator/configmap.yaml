@@ -158,6 +158,19 @@ data:
         return {s["id"] for s in songs}
 
 
+    def all_quarterly_song_ids() -> set[str]:
+        """Union of song IDs across every YYYY-QN playlist (all quarters, not just current)."""
+        data = subsonic_get("getPlaylists")
+        all_pls = data.get("playlists", {}).get("playlist", [])
+        if isinstance(all_pls, dict):
+            all_pls = [all_pls]
+        ids: set[str] = set()
+        for pl in all_pls:
+            if re.match(r"^\d{4}-Q[1-4]$", pl["name"]):
+                ids.update(e["id"] for e in playlist_entries(pl["id"]))
+        return ids
+
+
     # ---------------------------------------------------------------------------
     # Weekly discovery
     # ---------------------------------------------------------------------------
@@ -197,7 +210,10 @@ data:
         # Current quarter playlist
         q_name = current_quarter()
         q_pid = get_or_create_playlist(q_name)
-        existing_ids = {e["id"] for e in playlist_entries(q_pid)}
+        # Dedup against ALL quarters, not just this one — otherwise the same
+        # similar-artist discoveries (recent scrobbles barely change week to
+        # week) reappear every time a new quarter starts.
+        existing_ids = all_quarterly_song_ids()
 
         to_add: list[str] = []
         slskd_queued_artists: set[str] = set()   # one track per new artist per run
