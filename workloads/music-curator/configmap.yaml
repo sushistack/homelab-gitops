@@ -302,7 +302,7 @@ data:
         """
         Search slskd (Soulseek) for a specific FLAC track and queue it for download.
         Returns True if successfully enqueued, False if not found or on error.
-        Each track lands in /mnt/music/.incoming/{user}/... and Navidrome picks it up on rescan.
+        Each track lands in /mnt/music/incoming/{user}/... and Navidrome picks it up on rescan.
         """
         headers = {"X-Api-Key": SLSKD_API_KEY}
         query = f"{artist} {title}"

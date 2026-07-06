@@ -8,10 +8,13 @@
 # the deliberate INTERNAL stance (same as the other CF-Access-fronted admin UIs, e.g. netdata).
 # remoteConfiguration: false (default) — slskd never rewrites this file, so the read-only mount is safe.
 #
-# directories: BOTH incomplete and downloads live on the shared music volume so completion is an atomic
+# directories: incomplete + downloads live on the shared music volume so completion is an atomic
 # same-fs rename (NOT a cross-device copy) AND in-progress FLACs don't fill the small Longhorn /app PVC.
-# Both are dot-prefixed (.incomplete/.incoming) so Navidrome's scanner skips them (hidden entries) and
-# never indexes partial downloads; Lidarr imports completed files OUT of .incoming into the library.
+# incomplete stays dot-prefixed (.incomplete) so Navidrome's scanner never indexes partial downloads.
+# downloads is NOT dot-prefixed (plain `incoming`, not `.incoming`) — Lidarr used to import completed
+# files OUT of the hidden .incoming into the library; now that Lidarr is gone (music-curator queues
+# slskd directly, track-level), nothing else promotes files out of a hidden dir, so completed downloads
+# must land somewhere Navidrome actually scans.
 apiVersion: v1
 kind: ConfigMap
 metadata:
@@ -24,7 +27,7 @@ data:
     remote_configuration: false
     directories:
       incomplete: /mnt/music/.incomplete
-      downloads: /mnt/music/.incoming
+      downloads: /mnt/music/incoming
     shares:
       directories: []
     soulseek:
