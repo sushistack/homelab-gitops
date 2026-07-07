@@ -109,6 +109,14 @@ spec:
             deploy: true
             replicaCount: 1
             clusterEnabled: false
+            # ponytail: clusterEnabled/replicaCount only disable ClickHouse's own
+            # clustering — zookeeper is a separate bitnami subchart dependency and
+            # keeps running (3 pods) unless disabled here too. Confirmed unused:
+            # config.xml's <zookeeper> block is the commented-out default and
+            # system.tables has 0 Replicated* engines. Was OOM-alerting at 96-98%
+            # of its 384Mi limit for no reason.
+            zookeeper:
+              enabled: false
             auth:
               username: default
               existingSecret: langfuse-secrets
