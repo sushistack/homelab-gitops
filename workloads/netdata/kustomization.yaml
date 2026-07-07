@@ -29,6 +29,7 @@ configMapGenerator:
     files:
       - netdata-parent.conf
       - netdata-child.conf
+      - netdata-homelab-alarms.conf   # health.d override — parent only, see deployment-parent.yaml
 
 # Only the SHARED identity here (komga/beszel rule): app.kubernetes.io/name + /component DIFFER per
 # component (parent=netdata, child=netdata-children), hand-written inline — putting `name` here would

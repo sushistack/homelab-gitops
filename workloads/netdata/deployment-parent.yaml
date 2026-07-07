@@ -69,6 +69,9 @@ spec:
             - name: config              # netdata.conf (subPath: don't clobber /etc/netdata)
               mountPath: /etc/netdata/netdata.conf
               subPath: netdata-parent.conf
+            - name: config              # custom health.d alarms (stock alarm set stays, this adds to it)
+              mountPath: /etc/netdata/health.d/homelab-custom.conf
+              subPath: netdata-homelab-alarms.conf
             - name: stream              # stream.conf (holds the shared key) — from the SealedSecret
               mountPath: /etc/netdata/stream.conf
               subPath: stream-parent.conf
