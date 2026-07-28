@@ -18,6 +18,10 @@ spec:
         app.kubernetes.io/name: memos
     spec:
       terminationGracePeriodSeconds: 30
+      # The `memos` Service otherwise makes kubelet auto-inject `MEMOS_PORT=tcp://<clusterIP>:80`
+      # (the legacy <SVCNAME>_PORT service-link convention), which collides with and overrides
+      # Memos' own MEMOS_PORT config var (a plain port number) -> app listens on port 0.
+      enableServiceLinks: false
       containers:
         - name: memos
           # neosmemo/memos:stable floats -> pinned by digest (AR29). v0.30.0, amd64.
