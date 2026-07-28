@@ -1,0 +1,21 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+resources:
+  - namespace.yaml
+  - pvc.yaml
+  - deployment.yaml
+  - service.yaml
+  - ingressroute.yaml      # web->websecure (TLS serve + HTTP->HTTPS redirect); host tokenized
+  - certificate.yaml       # per-host cert-manager Certificate -> memos-tls Secret (letsencrypt-prod)
+  - backup-cronjob.yaml    # the reusable backup actor (ntfy pattern)
+  - sealedsecret.yaml      # memos-backup-r2: R2 cred for the CronJob (sealed to name+ns; safe to commit)
+
+labels:
+  - includeSelectors: false
+    pairs:
+      app.kubernetes.io/name: memos
+      app.kubernetes.io/instance: memos
+      app.kubernetes.io/part-of: memos
+      app.kubernetes.io/managed-by: argocd
+      app.kubernetes.io/component: app

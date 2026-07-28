@@ -1,0 +1,29 @@
+# Restore-time scratch pod (ntfy _cutover/ingest-job.yaml pattern, generalized for ongoing disaster
+# recovery rather than a one-time Compose migration). THROWAWAY: NOT listed in
+# workloads/memos/kustomization.yaml, so ArgoCD never manages it (// ponytail: let ArgoCD own this
+# and it fights you mid-restore). Apply by hand, use, delete — see runbook.md "Backup/restore".
+#
+# It only parks a pod that holds memos-data open so the operator can `kubectl cp` a restored
+# memos_prod.db into it, then exits. RWO: this Job and the app pod must not hold the volume on
+# different nodes at once — scale the memos Deployment to 0 before applying this.
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: memos-ingest
+  namespace: memos
+spec:
+  backoffLimit: 0
+  template:
+    spec:
+      restartPolicy: Never
+      containers:
+        - name: ingest
+          image: alpine:3.20   # only needs a shell for `kubectl cp`; pin by digest if desired
+          command: ["/bin/sh", "-c", "echo 'ready for kubectl cp into /data; sleeping'; sleep 3600"]
+          volumeMounts:
+            - name: data
+              mountPath: /data
+      volumes:
+        - name: data
+          persistentVolumeClaim:
+            claimName: memos-data

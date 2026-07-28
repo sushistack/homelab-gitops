@@ -1,0 +1,72 @@
+# The reusable backup actor (ntfy pattern), adapted: single db file (memos_prod.db), R2 path
+# homelab-k3s-services-backup/memos/, filename prefix memos-, ~6h cadence, 72h retention (see the
+# `rclone delete --min-age` below — keep this comment and that flag in sync if either changes).
+#
+# RWO multi-mount trap: memos-data is RWO -> local-path-retain attaches to one node. This Job
+# co-schedules onto the memos pod's node via podAffinity and mounts the PVC read-write (online
+# `sqlite3 .backup` needs the -wal/-shm files), writing the dump to an emptyDir /scratch — NEVER
+# back onto /data. The app is NOT scaled to 0 (online backup needs no quiesce).
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: memos-backup
+spec:
+  schedule: "40 */6 * * *"
+  timeZone: Asia/Seoul
+  concurrencyPolicy: Forbid
+  startingDeadlineSeconds: 300
+  successfulJobsHistoryLimit: 3
+  failedJobsHistoryLimit: 3
+  jobTemplate:
+    spec:
+      activeDeadlineSeconds: 900
+      template:
+        metadata:
+          # NOT `app.kubernetes.io/name: memos` — that is the Service selector, and this pod has no
+          # listener, so sharing it would add a dead endpoint to the memos Service every run.
+          labels:
+            app.kubernetes.io/name: memos-backup
+            app.kubernetes.io/component: backup
+        spec:
+          restartPolicy: OnFailure
+          affinity:
+            podAffinity:
+              requiredDuringSchedulingIgnoredDuringExecution:
+                - labelSelector:
+                    matchLabels:
+                      app.kubernetes.io/name: memos
+                  topologyKey: kubernetes.io/hostname
+          containers:
+            - name: backup
+              # sqlite3 + rclone in one small image. PIN AT CUTOVER: replace with a digest.
+              # // ponytail: runtime `apk add` floats tool versions and needs egress to the alpine
+              # CDN — fine under today's allow-all; bake a pinned image if that default ever changes.
+              image: alpine:3.20
+              command:
+                - /bin/sh
+                - -ceu
+                - |
+                  apk add --no-cache sqlite rclone ca-certificates tzdata
+                  ts=$(date +%Y-%m-%dT%H-%M-%S)
+                  sqlite3 /data/memos_prod.db ".backup /scratch/memos_prod.db"
+                  tar -C /scratch -czf "/scratch/memos-${ts}.tar.gz" memos_prod.db
+                  rclone copy "/scratch/memos-${ts}.tar.gz" "r2:homelab-k3s-services-backup/memos/"
+                  rclone delete --min-age 72h "r2:homelab-k3s-services-backup/memos/" || true
+              env:
+                # bucket-scoped R2 token can't ListBuckets/CreateBucket -> skip rclone's bucket probe
+                - name: RCLONE_CONFIG_R2_NO_CHECK_BUCKET
+                  value: "true"
+              envFrom:
+                - secretRef:
+                    name: memos-backup-r2   # per-ns SealedSecret: R2 creds + rclone remote (sealedsecret.yaml)
+              volumeMounts:
+                - name: data
+                  mountPath: /data
+                - name: scratch
+                  mountPath: /scratch
+          volumes:
+            - name: data
+              persistentVolumeClaim:
+                claimName: memos-data
+            - name: scratch
+              emptyDir: {}

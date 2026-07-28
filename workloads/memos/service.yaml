@@ -1,0 +1,13 @@
+# Memos ClusterIP. Public exposure is via the Traefik IngressRoute (ingressroute.yaml).
+apiVersion: v1
+kind: Service
+metadata:
+  name: memos
+spec:
+  type: ClusterIP
+  selector:
+    app.kubernetes.io/name: memos
+  ports:
+    - name: http
+      port: 80
+      targetPort: 5230

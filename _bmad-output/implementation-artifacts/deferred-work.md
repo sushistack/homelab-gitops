@@ -39,3 +39,9 @@ Active work this session: **Stage 1 — external-dns (Cloudflare)**. Below are t
 ## Deferred from: code review of spec-music-lidarr (2026-06-23)
 
 - All media stacks (komga/suwayomi/lidarr/slskd/soularr/navidrome) are pinned to k3s-cp-1 via node-local PVs → single-node SPOF + resource contention. Track in capacity monitoring (netdata/ops-alerts); revisit if the node gets tight or HA becomes a requirement.
+
+## Deferred from: code review of spec-memos-workload (2026-07-28)
+
+- **No backup-failure alerting.** `memos-backup` CronJob failures (bad R2 creds, egress cut, apk mirror down) are invisible — ArgoCD Application health doesn't reflect CronJob/Job failures. Same fleet-wide gap as ntfy/miniflux/karakeep; revisit once Epic 4.2/5.1-style alerting lands.
+- **No PVC capacity alerting.** `memos-data` is 2Gi with no usage monitoring; a full disk fails writes silently behind TCP-only probes (which stay green on a full disk since the port stays open). Same gap as every other stateful workload in this repo.
+- **TCP-only health probes can't detect an app-level hang.** Memos has no documented `/healthz`; a wedged-but-listening process would pass startup/readiness/liveness indefinitely. Revisit if Memos ever documents a real health endpoint.

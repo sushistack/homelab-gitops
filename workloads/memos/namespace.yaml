@@ -1,0 +1,6 @@
+# Memos — self-hosted quick-notes app (SQLite-backed, own login). Same "public utility with its
+# own auth" class as ntfy/karakeep/miniflux, not the CF-Access admin/monitoring tier.
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: memos

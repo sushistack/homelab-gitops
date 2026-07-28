@@ -1,0 +1,20 @@
+# Memos durable state (SQLite memos_prod.db) on Longhorn/local-path-retain. RWO (single-node
+# attach); the backup CronJob co-locates onto the pod's node to share it (ntfy Reconciliation 1 /
+# RWO trap). Prune=false + Retain: ArgoCD must NEVER delete this — real data, not disposable.
+#
+# volumeName intentionally omitted — this is a brand-new PVC (not a migration), so the
+# local-path-retain provisioner binds a fresh PV on first apply. The workloads ApplicationSet
+# ignoreDifferences on /spec/volumeName keeps this Synced once the controller sets it.
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: memos-data
+  annotations:
+    argocd.argoproj.io/sync-options: Prune=false
+spec:
+  accessModes:
+    - ReadWriteOnce
+  storageClassName: local-path-retain
+  resources:
+    requests:
+      storage: 2Gi

@@ -110,6 +110,9 @@ workloads:
   ntfy:
     manifest: workloads/ntfy/deployment.yaml
     image: binwiederhier/ntfy@sha256:f8a9b104313b87cc24ae4f775f39e6328205b57dff6ede3eaf098a91e5d79f59
+  memos:
+    manifest: workloads/memos/deployment.yaml
+    image: neosmemo/memos@sha256:51a4cef418b1f173ac37139ad99de08da5b8662136007231d3ac8a0498a3095a   # v0.30.0
   navidrome:
     manifest: workloads/navidrome/deployment.yaml
     image: deluan/navidrome@sha256:c4b5cb36a790b3eb63ca6a68bbe2fe149c2d7fa2e586f7a480e61db630e6664b

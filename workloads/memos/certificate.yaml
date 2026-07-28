@@ -1,0 +1,14 @@
+# Per-host production TLS for memos. cert-manager issues a browser-trusted cert for the single
+# host ${SECRET:DOMAIN_MEMOS} from the PRODUCTION DNS-01 ClusterIssuer (letsencrypt-prod) into the
+# `memos-tls` Secret in THIS namespace, which the websecure IngressRoute serves.
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: memos-tls
+spec:
+  secretName: memos-tls
+  dnsNames:
+    - "${SECRET:DOMAIN_MEMOS}"
+  issuerRef:
+    name: letsencrypt-prod
+    kind: ClusterIssuer

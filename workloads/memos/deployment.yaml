@@ -1,0 +1,56 @@
+# Memos on k3s. SQLite on an RWO volume: strategy MUST be Recreate (never RollingUpdate — two pods
+# sharing one SQLite file is the same anti-pattern ntfy guards against).
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: memos
+spec:
+  replicas: 1
+  progressDeadlineSeconds: 120
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: memos
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: memos
+    spec:
+      terminationGracePeriodSeconds: 30
+      containers:
+        - name: memos
+          # neosmemo/memos:stable floats -> pinned by digest (AR29). v0.30.0, amd64.
+          # Upgrade = re-pin the digest for the new tag via PR (GitOps-revertible).
+          image: neosmemo/memos@sha256:51a4cef418b1f173ac37139ad99de08da5b8662136007231d3ac8a0498a3095a
+          ports:
+            - containerPort: 5230
+          env:
+            - name: TZ
+              value: Asia/Seoul
+          resources:
+            requests:
+              cpu: 100m
+              memory: 64Mi
+            limits:
+              memory: 256Mi   # memory limit only — NO cpu limit (avoids CFS throttling)
+          # No documented /healthz -- TCP probe on 5230 is the right gate (template default).
+          # startupProbe holds liveness back until the port first opens (up to 30*5s = 150s).
+          startupProbe:
+            tcpSocket:
+              port: 5230
+            failureThreshold: 30
+            periodSeconds: 5
+          readinessProbe:
+            tcpSocket:
+              port: 5230
+          livenessProbe:
+            tcpSocket:
+              port: 5230
+          volumeMounts:
+            - name: data
+              mountPath: /var/opt/memos   # memos_prod.db (the Longhorn/local-path-retain PVC)
+      volumes:
+        - name: data
+          persistentVolumeClaim:
+            claimName: memos-data
