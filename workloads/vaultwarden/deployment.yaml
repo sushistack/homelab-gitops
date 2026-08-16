@@ -30,12 +30,12 @@ spec:
       containers:
         - name: vaultwarden
           # vaultwarden/server is :latest in Compose (AR29 forbids :latest) -> pinned by digest.
-          # PINNED at the 2026-06-19 cutover to the EXACT digest of the image then running on Compose,
-          # so the cutover did NOT trigger a surprise DB schema migration. This digest IS the version
-          # SSOT for vaultwarden (workload images live in their manifest, not versions.yaml). To bump:
+          # Originally pinned at the 2026-06-19 cutover to avoid a surprise DB schema migration.
+          # Upgraded to 1.37.1 on 2026-08-16 for Bitwarden clients 2026.7+ compatibility. This digest
+          # is the version SSOT for vaultwarden (workload images live in their manifest). To bump:
           # capture the new digest (`docker buildx imagetools inspect vaultwarden/server:<tag>`) and
           # replace below via PR (GitOps-revertible).
-          image: vaultwarden/server@sha256:d626d04934cd1192ad8ced1adb975099fca78cec33ab467d2d3c923cde7f3b0c
+          image: vaultwarden/server@sha256:ebdfe70701c60ac0c28c697e787cea767d7972940b786037b29fe0d507f821e8
           ports:
             - containerPort: 80   # vaultwarden internal port (Compose host-mapped ${VAULTWARDEN_PORT:-8012} -> 80)
           # Non-secret config from the ConfigMap; ADMIN_TOKEN from the SealedSecret. envFrom (NOT

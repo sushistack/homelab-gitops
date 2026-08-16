@@ -145,7 +145,7 @@ workloads:
     image: ghcr.io/sushistack/home.server/karakeep-anytype-bridge@sha256:d39011c4002edb387ffda07cd12c7cfcd41cc8951627e415d90dab4714414afb
   vaultwarden:
     manifest: workloads/vaultwarden/deployment.yaml
-    image: vaultwarden/server@sha256:d626d04934cd1192ad8ced1adb975099fca78cec33ab467d2d3c923cde7f3b0c
+    image: vaultwarden/server@sha256:ebdfe70701c60ac0c28c697e787cea767d7972940b786037b29fe0d507f821e8
   # Story 5.6 — standalone-LXC consolidation. Tags pinned now (lint passes); SWAP TO @sha256 digests
   # at cutover (AR29 — the manifest comments carry the `imagetools inspect` command for each).
   komga:
