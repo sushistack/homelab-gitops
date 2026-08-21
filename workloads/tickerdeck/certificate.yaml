@@ -1,0 +1,14 @@
+# Per-host cert from the PRODUCTION ClusterIssuer (LE prod + Cloudflare DNS-01), same shape as
+# netdata/traefik-dashboard. Browser-trusted so the Pi's Chromium kiosk gets no interstitial
+# and the unit's `curl -fsS $TICKERDECK_URL/healthz` needs no --insecure.
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: tickerdeck-tls
+spec:
+  secretName: tickerdeck-tls
+  dnsNames:
+    - "${SECRET:DOMAIN_TICKER}"
+  issuerRef:
+    name: letsencrypt-prod
+    kind: ClusterIssuer

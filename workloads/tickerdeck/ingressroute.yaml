@@ -1,0 +1,45 @@
+# INTERNAL-ONLY host — a LAN kiosk display has no reason to be reachable from the internet.
+# NO external-dns annotation and NO cloudflared tunnel rule: external resolution falls through
+# to the wildcard 404. Reachable only via the LAN DNS override (OpenWrt) -> the cluster Traefik address (see internal/tokens.env).
+# Same stance as netdata/kuma/traefik-dashboard.
+---
+apiVersion: traefik.io/v1alpha1
+kind: Middleware
+metadata:
+  name: tickerdeck-redirect-https
+spec:
+  redirectScheme:
+    scheme: https
+    permanent: true
+---
+apiVersion: traefik.io/v1alpha1
+kind: IngressRoute
+metadata:
+  name: tickerdeck
+spec:
+  entryPoints:
+    - websecure
+  routes:
+    - match: Host(`${SECRET:DOMAIN_TICKER}`)
+      kind: Rule
+      services:
+        - name: tickerdeck
+          port: 80
+  tls:
+    secretName: tickerdeck-tls
+---
+apiVersion: traefik.io/v1alpha1
+kind: IngressRoute
+metadata:
+  name: tickerdeck-redirect
+spec:
+  entryPoints:
+    - web
+  routes:
+    - match: Host(`${SECRET:DOMAIN_TICKER}`)
+      kind: Rule
+      middlewares:
+        - name: tickerdeck-redirect-https
+      services:
+        - name: tickerdeck   # required by the IngressRoute schema; middleware redirects before it's hit
+          port: 80
