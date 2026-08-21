@@ -1,0 +1,13 @@
+# ClusterIP, not the app repo's NodePort 30080 — Traefik fronts every workload in this cluster
+# (Story 5.8); a NodePort would be a second, undocumented ingress path.
+apiVersion: v1
+kind: Service
+metadata:
+  name: tickerdeck
+spec:
+  selector:
+    app.kubernetes.io/name: tickerdeck
+  ports:
+    - name: http
+      port: 80
+      targetPort: http

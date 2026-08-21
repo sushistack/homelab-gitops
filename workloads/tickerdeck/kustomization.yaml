@@ -1,0 +1,18 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+resources:
+  - namespace.yaml
+  - deployment.yaml
+  - service.yaml
+  - ingressroute.yaml
+  - certificate.yaml
+
+# `labels:` (never commonLabels — pollutes selectors). Shared identity only;
+# app.kubernetes.io/name is hand-written inline on each resource.
+labels:
+  - includeSelectors: false
+    pairs:
+      app.kubernetes.io/instance: tickerdeck
+      app.kubernetes.io/part-of: tickerdeck
+      app.kubernetes.io/managed-by: argocd
