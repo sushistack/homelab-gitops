@@ -38,7 +38,7 @@ spec:
         - name: tickerdeck
           # Immutable sha tag from the app repo's GHCR workflow (NOT :latest — version-lint
           # rejects floating refs). Upgrade = bump here via PR; mirrored in versions.yaml.
-          image: ghcr.io/sushistack/ticker.deck:sha-d3c4ce3
+          image: ghcr.io/sushistack/ticker.deck:sha-e310b16
           env:
             - name: NODE_ENV
               value: production

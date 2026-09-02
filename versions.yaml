@@ -129,7 +129,7 @@ workloads:
     manifest: workloads/tickerdeck/deployment.yaml
     # Own app (github.com/sushistack/ticker.deck), built by its container.yml -> GHCR multi-arch.
     # Immutable sha-<short> tag from that workflow; bump on each app release.
-    image: ghcr.io/sushistack/ticker.deck:sha-d3c4ce3
+    image: ghcr.io/sushistack/ticker.deck:sha-e310b16
   anytype-heart:
     manifest: workloads/anytype/deployment-heart.yaml
     image: ghcr.io/sushistack/home.server/anytype-heart@sha256:8f1de0ea70e34ef976b98a2cbdc9622fd7ee24c713c724d301500a066f8aac73
