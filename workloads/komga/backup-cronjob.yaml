@@ -3,14 +3,11 @@
 # library metadata (database.sqlite + tasks.sqlite). Does NOT back up the 90G manga (re-downloadable
 # via Suwayomi; file-class -> Longhorn/NFS only, never R2 — the Story 4.1 bulk-media rule).
 #
-# Suwayomi's DB is intentionally NOT here: its on-disk format is not a guaranteed SQLite file, so the
-# online `.backup` actor doesn't apply — if a suwayomi backup is ever wanted, tar its data-dir PVC
-# (file-class, crash-consistent); these apps are below the DONE/NFR alerting bar so it's optional.
+# Suwayomi's DB is NOT here: its H2 format has no online dump, so it gets the scale-to-0 tar actor
+# in backup-cronjob-suwayomi.yaml instead.
 #
-# 🔴 OPERATOR: this references a SealedSecret `komga-backup-r2` that must be sealed against the LIVE
-# cluster key (reuse the live ntfy-backup-r2 R2 cred; memory kubeseal-controller-ns). Until it is
-# sealed + this file is added to kustomization.yaml, the backup does NOT run. Left OUT of
-# kustomization.yaml on purpose so the base stays ArgoCD-Healthy without the live secret.
+# Reads the `komga-backup-r2` SealedSecret (sealed against the live cluster key, shares the
+# ntfy-backup-r2 R2 cred). Live and running every 6h.
 apiVersion: batch/v1
 kind: CronJob
 metadata:
@@ -47,13 +44,17 @@ spec:
                 - /bin/sh
                 - -ceu
                 - |
-                  apk add --no-cache sqlite rclone ca-certificates tzdata
+                  # ponytail: timeout every network/lock step so a hang exits non-zero and OnFailure
+                  # retries WITH logs, instead of dying logless when activeDeadlineSeconds deletes the
+                  # pod (what happened 2026-09-22). INVARIANT: these timeouts sum to 660s and must stay
+                  # under activeDeadlineSeconds (900) — a whole run normally takes ~20s.
+                  timeout 180 apk add --no-cache sqlite rclone ca-certificates tzdata
                   ts=$(date +%Y-%m-%dT%H-%M-%S)
-                  sqlite3 /config/database.sqlite ".backup /scratch/database.sqlite"
-                  sqlite3 /config/tasks.sqlite    ".backup /scratch/tasks.sqlite"
+                  timeout 90 sqlite3 /config/database.sqlite ".backup /scratch/database.sqlite"
+                  timeout 90 sqlite3 /config/tasks.sqlite    ".backup /scratch/tasks.sqlite"
                   tar -C /scratch -czf "/scratch/komga-${ts}.tar.gz" database.sqlite tasks.sqlite
-                  rclone copy "/scratch/komga-${ts}.tar.gz" "r2:homelab-k3s-services-backup/komga/"
-                  rclone delete --min-age 72h "r2:homelab-k3s-services-backup/komga/" || true
+                  timeout 240 rclone copy "/scratch/komga-${ts}.tar.gz" "r2:homelab-k3s-services-backup/komga/"
+                  timeout 60 rclone delete --min-age 72h "r2:homelab-k3s-services-backup/komga/" || true
               env:
                 - name: RCLONE_CONFIG_R2_NO_CHECK_BUCKET
                   value: "true"
