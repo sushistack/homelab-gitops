@@ -40,9 +40,10 @@ spec:
                 - |
                   # ponytail: same timeouts as komga-backup, and MORE load-bearing here — a hung step
                   # dies at the job deadline with suwayomi still scaled to 0, so fail fast while the
-                  # EXIT trap can still scale it back. INVARIANT: bounded steps sum to 540s (180 apk +
-                  # 120 wait + 180 copy + 60 delete), under activeDeadlineSeconds (600); a run is ~20s.
-                  timeout 180 apk add --no-cache rclone kubectl ca-certificates tzdata
+                  # EXIT trap can still scale it back. See komga-backup.yaml for why `-k` is required.
+                  # INVARIANT: 330s of timeouts + 120s wait + 3*10s kill-grace = 480s, under the
+                  # tighter activeDeadlineSeconds (600) here. A run is ~20s.
+                  timeout -k 10 150 apk add --no-cache rclone kubectl ca-certificates tzdata
                   trap 'kubectl scale deploy/suwayomi -n komga --replicas=1 || true' EXIT INT TERM
                   ts=$(date +%Y-%m-%dT%H-%M-%S)
                   kubectl scale deploy/suwayomi -n komga --replicas=0
@@ -54,8 +55,8 @@ spec:
                   # ponytail: explicit include — skip cache(80M)/webUI(9.4M)/logs/bin (all regenerable)
                   tar -C /data -czf "/scratch/suwayomi-${ts}.tar.gz" \
                     database.mv.db settings server.conf extensions backups local
-                  timeout 180 rclone copy "/scratch/suwayomi-${ts}.tar.gz" "r2:homelab-k3s-services-backup/suwayomi/"
-                  timeout 60 rclone delete --min-age 72h "r2:homelab-k3s-services-backup/suwayomi/" || true
+                  timeout -k 10 150 rclone copy "/scratch/suwayomi-${ts}.tar.gz" "r2:homelab-k3s-services-backup/suwayomi/"
+                  timeout -k 10 30 rclone delete --min-age 72h "r2:homelab-k3s-services-backup/suwayomi/" || true
               env:
                 - name: RCLONE_CONFIG_R2_NO_CHECK_BUCKET
                   value: "true"
