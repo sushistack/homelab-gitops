@@ -46,15 +46,20 @@ spec:
                 - |
                   # ponytail: timeout every network/lock step so a hang exits non-zero and OnFailure
                   # retries WITH logs, instead of dying logless when activeDeadlineSeconds deletes the
-                  # pod (what happened 2026-09-22). INVARIANT: these timeouts sum to 660s and must stay
-                  # under activeDeadlineSeconds (900) — a whole run normally takes ~20s.
-                  timeout 180 apk add --no-cache sqlite rclone ca-certificates tzdata
+                  # pod (what happened 2026-09-22).
+                  # `-k` IS LOAD-BEARING: busybox timeout only sends SIGTERM, and a process that ignores
+                  # it (apk mid-transaction does) runs to completion and returns ITS OWN exit 0 — the
+                  # timeout silently does nothing. -k follows up with SIGKILL. Verified: without -k a
+                  # TERM-ignoring 20s sleep returned exit 0; with -k it returned 137.
+                  # INVARIANT: 660s of timeouts + 5*10s kill-grace = 710s, under
+                  # activeDeadlineSeconds (900). A whole run normally takes ~20s.
+                  timeout -k 10 180 apk add --no-cache sqlite rclone ca-certificates tzdata
                   ts=$(date +%Y-%m-%dT%H-%M-%S)
-                  timeout 90 sqlite3 /config/database.sqlite ".backup /scratch/database.sqlite"
-                  timeout 90 sqlite3 /config/tasks.sqlite    ".backup /scratch/tasks.sqlite"
+                  timeout -k 10 90 sqlite3 /config/database.sqlite ".backup /scratch/database.sqlite"
+                  timeout -k 10 90 sqlite3 /config/tasks.sqlite    ".backup /scratch/tasks.sqlite"
                   tar -C /scratch -czf "/scratch/komga-${ts}.tar.gz" database.sqlite tasks.sqlite
-                  timeout 240 rclone copy "/scratch/komga-${ts}.tar.gz" "r2:homelab-k3s-services-backup/komga/"
-                  timeout 60 rclone delete --min-age 72h "r2:homelab-k3s-services-backup/komga/" || true
+                  timeout -k 10 240 rclone copy "/scratch/komga-${ts}.tar.gz" "r2:homelab-k3s-services-backup/komga/"
+                  timeout -k 10 60 rclone delete --min-age 72h "r2:homelab-k3s-services-backup/komga/" || true
               env:
                 - name: RCLONE_CONFIG_R2_NO_CHECK_BUCKET
                   value: "true"
