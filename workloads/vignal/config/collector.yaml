@@ -1,5 +1,5 @@
-# Copy of vignal repo config/collector.yaml (keep in sync). Domain and Cloudflare ids are
-# ${SECRET:*} render tokens (ADR-0006); everything else must match the vignal repo value.
+# Copy of vignal repo config/collector.yaml (keep in sync). Domain and Cloudflare ids below are
+# render tokens (ADR-0006); everything else must match the vignal repo value.
 # config/collector.yaml — C-3 collector 설정 (contracts.md)
 #
 # 값은 코드에 없다. 비밀은 여기 없다(Conventions "설정"). ConfigMap 으로 주입된다
