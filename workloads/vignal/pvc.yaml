@@ -1,0 +1,17 @@
+# vignal collector state: ONE SQLite file (vignal.db + WAL) on ONE local PV (vignal AD-14:
+# "로컬 PV 하나, 공유 NFS 금지"). local-path-retain -> node-pinned; the CronJob pod follows the PV.
+# Prune=false + Retain: ArgoCD must never delete this; the encrypted off-cluster copy is the
+# collector's own backup stage (vignal-private/backups, 14 kept) — no separate backup CronJob.
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: vignal-data
+  annotations:
+    argocd.argoproj.io/sync-options: Prune=false
+spec:
+  accessModes:
+    - ReadWriteOnce
+  storageClassName: local-path-retain
+  resources:
+    requests:
+      storage: 2Gi   # 30-day retention keeps the DB small; grow via PR if needed

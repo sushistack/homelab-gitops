@@ -1,0 +1,124 @@
+# Copy of vignal repo config/collector.yaml (keep in sync). Domain and Cloudflare ids are
+# ${SECRET:*} render tokens (ADR-0006); everything else must match the vignal repo value.
+# config/collector.yaml — C-3 collector 설정 (contracts.md)
+#
+# 값은 코드에 없다. 비밀은 여기 없다(Conventions "설정"). ConfigMap 으로 주입된다
+# (Structural Seed). 스파인에 없는 값은 각 줄에 `# [ASSUMPTION]` 을 남긴다.
+
+# AD-8: 통합 쿼터 버킷 일일 상한과 API 호출 단위 비용.
+# 상한 = min(daily_cap, 0.8 × 10,000). daily_cap 은 이 값 자체다.
+# search.list 버킷 예산은 MVP 에서 0(발굴은 운영자 큐레이션 + 추적 요청).
+quota:
+  daily_cap: 8000
+  unit_costs:
+    channels.list: 1
+    playlistItems.list: 1
+    videos.list: 1
+    search.list: 0 # [ASSUMPTION] MVP 예산 0, 실제 단가는 100(참고용, 미사용)
+
+# AD-8: 429/5xx 재시도(지수 백오프 + full jitter, Retry-After 우선). 쿼터 소진(403)은 재시도하지 않는다.
+# Retry-After 가 max_wait_s 를 넘으면 기다리지 않고 실패한다(실행 잠금을 붙잡지 않도록).
+retry:
+  max_attempts: 4 # [ASSUMPTION] 스파인 미기재, 첫 시도 포함 총 시도 횟수
+  base_backoff_ms: 500 # [ASSUMPTION] 스파인 미기재, 백오프 기준값
+  max_wait_s: 60 # [ASSUMPTION] 스파인 미기재, 한 번 대기의 상한
+
+# AD-8: 실행당 상한값. 코드가 아니라 여기서 읽는다.
+caps:
+  pages_per_channel: 3
+  inbox_per_run: 50 # [ASSUMPTION] 스파인 미기재, intake 실행당 처리 상한
+  channels_per_run: 900 # AD-8 산술 U(C) ≈ 8.82·C, 예산 8,000 ⇒ C ≲ 900
+  alerts_per_run: 20 # [ASSUMPTION] 스파인 미기재, report 실행당 알림 발송 상한
+  alert_dedupe_hours: 24
+
+# AD-8: 작업 종류 우선순위는 코드 순서(intake > discover > 영상 통계 > 채널 통계)이며
+# 나이별 주기만 여기서 값을 받는다. "≤3일 매 실행" 은 주기 게이트가 없다는 뜻이라
+# cadence_hours 를 0 으로 둔다(6시간마다 도는 CronJob, AD-7, 이 곧 "매 실행").
+cadence:
+  video_stats:
+    age_le_3d_hours: 0 # 매 실행(주기 게이트 없음)
+    age_le_14d_hours: 24
+    age_le_30d_hours: 72
+  channel_stats_hours: 24
+
+# AD-8: 같은 작업 종류 안의 채널 우선순위 점수. 순서(내림차순)는 스파인이 고정하고
+# 가중치 값 자체는 [ASSUMPTION](상대 크기만 스파인 순서를 따른다, Phase 0 이후 G-3 로 조정).
+priority_weights:
+  track_request_count: 50 # [ASSUMPTION] 추적 요청 수(관심 목록 등록 수의 MVP 대리값, OQ-A8)
+  recent_upload: 40 # [ASSUMPTION] 최근 업로드 여부
+  topic_coverage_balance: 30 # [ASSUMPTION] 주제별 커버리지 균형(주제당 채널 수가 적을수록 우선)
+  prior_quota_delayed: 20 # [ASSUMPTION] 직전 실행 quota_delayed 여부
+  expiry_urgency: 10 # [ASSUMPTION] 삭제·만료 확인 기한 임박
+
+# AD-6: retention_days 의 단일 출처. ingest·publish(meta.retention_days)가 공유한다.
+retention_days: 30
+
+# AD-2/AD-7: meta.refresh_interval_hours 로 그대로 발행된다. CronJob 주기(6시간)와 같다.
+refresh_interval_hours: 6
+
+# AD-8 산술 U(C) 에 쓰는 채널당 관측 영상 수(최근 N개). channels.json 의 observed_window 와
+# 같은 개념이며 여기서는 기본값을 정의한다.
+observed_window: 60
+
+# AD-11: 영상 형식 판정 규칙. 버전이 오르면 다음 실행에서 전부 다시 판정한다.
+# 해시가 바뀌었는데 버전이 같으면 publish 가 실패한다(AD-11, AD-13).
+format_rules:
+  version: 1
+  shorts_max_s: 180 # [ASSUMPTION] Shorts 3분 상한, Phase 0 재확인(G-3)
+
+# AD-10 meta.size_buckets 로 그대로 발행되는 채널 규모 경계값(구독자 수 기준, FR-2 규모 4구간).
+# 경계값 자체(1만/10만/100만)는 Q-3 미정 [ASSUMPTION: Phase 0(G-3 실측) 후 조정].
+size_buckets: [10000, 100000, 1000000]
+
+# D-2: 추적 상태 전이 기준. G-3 실측(채널 20개)으로 조정 대상.
+tracking_state:
+  warm_after_days: 30 # [ASSUMPTION] D-2, active → warm 전이 기준일
+  dormant_after_days: 90 # [ASSUMPTION] D-2, warm → dormant 전이 기준일
+
+# AD-12: 예상 월 비용 계산에 쓰는 단가표와 상한(H-5). R2·Workers 무료분 이후 단가는
+# 공개 요금표 기준이며 실제 청구는 ops/billing/{yyyy-mm}.json 이 별도로 기록한다.
+pricing:
+  monthly_budget_krw: 20000 # H-5(1인 개발 인프라 예산 가설), epic-1-context 참조
+  krw_per_usd: 1400 # [ASSUMPTION] Story 2.9 예상 비용의 원화 환산율(참고용)
+  r2:
+    storage_usd_per_gb_month: 0.015 # [ASSUMPTION] Cloudflare R2 공개 요금표
+    class_a_usd_per_million_ops: 4.50 # [ASSUMPTION] 쓰기류 작업, 무료분 이후
+    class_b_usd_per_million_ops: 0.36 # [ASSUMPTION] 읽기류 작업, 무료분 이후
+    egress_usd_per_gb: 0 # R2 는 아웃바운드 전송료 없음
+    free_storage_gb: 10 # [ASSUMPTION] R2 월 무료 저장량
+    free_class_a_million: 1 # [ASSUMPTION] R2 월 무료 쓰기류 작업(백만)
+    free_class_b_million: 10 # [ASSUMPTION] R2 월 무료 읽기류 작업(백만)
+  workers:
+    base_usd_per_month: 5 # [ASSUMPTION] Workers Paid
+    included_requests_per_month: 10000000 # [ASSUMPTION] 유료 플랜 월 포함 요청 수
+    usd_per_million_requests_over_included: 0.30 # [ASSUMPTION]
+
+# AD-7 실행 잠금(Story 1.2). heartbeat_at 이 이보다 오래된 running 행은 죽은 실행으로
+# 보고 잠금을 넘겨받아 재개한다(자동 대기 없이 즉시 실패하는 것은 신선한 잠금에서만).
+run:
+  run_lock_stale_minutes: 120 # [ASSUMPTION] 스파인 미기재, 크론 주기(6시간)보다 충분히 짧다
+
+# AD-13/AD-14 (Story 2.7): prod 공개 버킷과 공개 URL. 비밀(R2 키)은 env 에만 있다
+# (R2_ENDPOINT, R2_ACCESS_KEY_ID, R2_SECRET_ACCESS_KEY). 대상은 env
+# VIGNAL_PUBLISH_TARGET=r2|local(기본 local)로 고른다.
+publish:
+  public_bucket: vignal-public
+  public_base_url: https://${SECRET:DOMAIN_VIGNAL_DATA}
+  # Story 2.8: backups/ 가 들어가는 비공개 버킷(r2 대상). local 은 env VIGNAL_BACKUP_DIR.
+  private_bucket: vignal-private
+
+# AD-6(5)/NFR-6.6.5 (Story 2.8): age 로 암호화한 vignal.db 백업을 최신 keep 개만 남긴다.
+# 수신자 공개키는 env AGE_RECIPIENT 에만 있다(r2 에서는 필수). 개인키는 어디에도 두지 않는다.
+backup:
+  keep: 14
+
+# AD-6(6) purge-by-URL. zone_id 는 공개값(docs/ops/cloudflare.md). 토큰은 env CF_API_TOKEN 에만 있다.
+# api_base 는 테스트가 덮어쓴다.
+cloudflare:
+  zone_id: ${SECRET:VIGNAL_CF_ZONE_ID}
+  api_base: https://api.cloudflare.com/client/v4
+  # Story 2.9: report 가 GraphQL Analytics(workersInvocationsAdaptive)로 Worker 의 지난 24시간
+  # 트래픽을 읽는다. 같은 CF_API_TOKEN(Account Analytics Read)을 쓴다. 값은 공개값이다.
+  account_id: ${SECRET:VIGNAL_CF_ACCOUNT_ID}
+  worker_script: vignal-web
+  graphql_url: https://api.cloudflare.com/client/v4/graphql

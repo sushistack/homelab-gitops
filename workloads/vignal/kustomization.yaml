@@ -1,0 +1,31 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+resources:
+  - namespace.yaml
+  - pvc.yaml
+  - cronjob.yaml
+  - sealedsecret.yaml        # vignal-secrets: collector API/R2/CF/ntfy/ping/age-recipient (sealed to name+ns)
+  - sealedsecret-ghcr.yaml   # ghcr-sushistack: pull cred for the PRIVATE collector image (re-sealed for ns vignal)
+# NOT included on purpose: seal.sh / secrets.env.example (operator tooling; secrets.env is git-ignored).
+# No Service / Ingress: the collector has no public inbound (vignal AD-1).
+
+# config/ -> vignal-config ConfigMap mounted at /config. Copy of the vignal repo's config/ with the
+# domain + Cloudflare ids tokenized (${SECRET:*}, ADR-0006). Stable name for the CronJob volume.
+configMapGenerator:
+  - name: vignal-config
+    files:
+      - config/collector.yaml
+      - config/policy.json
+      - config/topics.yaml
+generatorOptions:
+  disableNameSuffixHash: true
+
+# `labels:` only — never commonLabels (selector pollution) or namePrefix (breaks SealedSecret
+# name+ns binding).
+labels:
+  - includeSelectors: false
+    pairs:
+      app.kubernetes.io/instance: vignal
+      app.kubernetes.io/part-of: vignal
+      app.kubernetes.io/managed-by: argocd

@@ -1,0 +1,91 @@
+# vignal collector — ONE CronJob, every 6h, `vignal run` (ten stages, single-process run lock).
+# Own image, built by the app repo's CI `image` job -> GHCR (private; pulled with ghcr-sushistack).
+#
+# KILL SWITCH = commit `spec.suspend: true` here (PR -> merge). `kubectl patch ... suspend` is NOT
+# a kill switch: ArgoCD selfHeal reverts it. The in-code daily quota cap is the second layer.
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: vignal
+spec:
+  schedule: "0 */6 * * *"
+  timeZone: Asia/Seoul
+  concurrencyPolicy: Forbid
+  # suspend: true until the web (vignal-web Worker) is live — publish preflight checks the live
+  # schema-support.json (vignal AD-3) and would fail every run before that. Flip via PR.
+  suspend: true
+  # A hung run + Forbid would silently skip later runs; bound it so it fails visibly.
+  startingDeadlineSeconds: 600
+  successfulJobsHistoryLimit: 3
+  failedJobsHistoryLimit: 3
+  jobTemplate:
+    spec:
+      backoffLimit: 0            # a failed run is a failed run (vignal AD-7); next schedule resumes
+      activeDeadlineSeconds: 5400
+      template:
+        metadata:
+          labels:
+            app.kubernetes.io/name: vignal
+            app.kubernetes.io/component: collector
+        spec:
+          restartPolicy: Never
+          automountServiceAccountToken: false
+          imagePullSecrets:
+            - name: ghcr-sushistack
+          securityContext:
+            runAsNonRoot: true
+            runAsUser: 65532
+            runAsGroup: 65532
+            fsGroup: 65532
+            seccompProfile:
+              type: RuntimeDefault
+          containers:
+            - name: vignal
+              # Immutable sha tag from the app repo's CI (NOT :latest — version-lint rejects
+              # floating refs). Upgrade = bump here + versions.yaml in one PR.
+              image: ghcr.io/sushistack/vignal:sha-b0e2b51
+              args: ["run"]
+              env:
+                - name: TZ
+                  value: Asia/Seoul
+                - name: VIGNAL_PUBLISH_TARGET
+                  value: r2
+                - name: VIGNAL_DB
+                  value: /data/vignal.db
+                - name: VIGNAL_CONFIG_DIR
+                  value: /config
+                - name: VIGNAL_SCHEMA_SUPPORT_URL
+                  value: https://${SECRET:DOMAIN_VIGNAL_SITE}/schema-support.json
+                - name: TMPDIR
+                  value: /tmp
+              envFrom:
+                - secretRef:
+                    name: vignal-secrets
+              resources:
+                requests:
+                  cpu: 50m
+                  memory: 128Mi
+                limits:
+                  memory: 512Mi
+              securityContext:
+                allowPrivilegeEscalation: false
+                readOnlyRootFilesystem: true
+                capabilities:
+                  drop: ["ALL"]
+              volumeMounts:
+                - name: data
+                  mountPath: /data
+                - name: config
+                  mountPath: /config
+                  readOnly: true
+                - name: tmp
+                  mountPath: /tmp
+          volumes:
+            - name: data
+              persistentVolumeClaim:
+                claimName: vignal-data
+            - name: config
+              configMap:
+                name: vignal-config
+            - name: tmp
+              emptyDir: {}

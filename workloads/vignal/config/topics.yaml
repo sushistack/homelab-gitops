@@ -1,0 +1,15 @@
+# config/topics.yaml — C-5 주제 사전 (contracts.md)
+#
+# 형태: 슬러그·한국어 라벨·표시 순서를 가진 사전. 내용과 분류 방식은 Q-14 미정(차단 아님).
+# collector CLI `vignal approve --topic <slug>` 는 이 사전의 값만 받는다. 생략하면 채널의
+# topic 은 null(주제 미확인)로 기록된다(AD-9). web 은 이 목록 순서를 그대로 주제 필터 옵션으로
+# 쓰며 하드코딩하지 않는다(AD-10, meta.topics).
+#
+# 아래 topics 배열은 표시 순서다. 지금은 실제 항목이 없다(Q-14 판정 전). 예시 한 건만 주석으로
+# 남겨 형태를 보인다:
+#
+# topics:
+#   - slug: tech-review
+#     label: '테크 리뷰'
+
+topics: []
