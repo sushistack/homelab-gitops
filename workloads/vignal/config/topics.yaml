@@ -5,11 +5,24 @@
 # topic 은 null(주제 미확인)로 기록된다(AD-9). web 은 이 목록 순서를 그대로 주제 필터 옵션으로
 # 쓰며 하드코딩하지 않는다(AD-10, meta.topics).
 #
-# 아래 topics 배열은 표시 순서다. 지금은 실제 항목이 없다(Q-14 판정 전). 예시 한 건만 주석으로
-# 남겨 형태를 보인다:
-#
-# topics:
-#   - slug: tech-review
-#     label: '테크 리뷰'
+# 아래 topics 배열은 표시 순서다. Q-14 의 분류 방식은 여전히 미정(차단 아님)이고, 이 목록은
+# 2026-09-30 페르소나 평가 지적(주제 라벨 0개)에 대한 임시 사전이다. 추적 채널 25개의 최근
+# 영상 제목을 보고 채널 단위로 정했다.
 
-topics: []
+topics:
+  - slug: game
+    label: '게임'
+  - slug: movie-review
+    label: '영화·애니 리뷰'
+  - slug: mukbang
+    label: '먹방'
+  - slug: mystery
+    label: '공포·미스터리'
+  - slug: beauty-life
+    label: '뷰티·라이프'
+  - slug: tech
+    label: '테크'
+  - slug: news
+    label: '뉴스·시사'
+  - slug: web-drama
+    label: '웹드라마'
