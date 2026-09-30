@@ -7,7 +7,6 @@ resources:
   - cronjob.yaml
   - sealedsecret.yaml        # vignal-secrets: collector API/R2/CF/ntfy/ping/age-recipient (sealed to name+ns)
   - sealedsecret-ghcr.yaml   # ghcr-sushistack: pull cred for the PRIVATE collector image (re-sealed for ns vignal)
-  - approve-seeds-job.yaml   # ONE-OFF (2026-09-30): approve 24 seed channels; remove in a follow-up PR once complete
 # NOT included on purpose: seal.sh / secrets.env.example (operator tooling; secrets.env is git-ignored).
 # No Service / Ingress: the collector has no public inbound (vignal AD-1).
 
