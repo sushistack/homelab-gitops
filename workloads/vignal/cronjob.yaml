@@ -11,9 +11,9 @@ spec:
   schedule: "0 */6 * * *"
   timeZone: Asia/Seoul
   concurrencyPolicy: Forbid
-  # suspend: true until the web (vignal-web Worker) is live — publish preflight checks the live
-  # schema-support.json (vignal AD-3) and would fail every run before that. Flip via PR.
-  suspend: true
+  # suspend: false since 2026-09-30 — vignal-web is live on vignal.kr (schema-support.json served),
+  # so the publish preflight (vignal AD-3) can pass. KILL SWITCH: set back to true via PR.
+  suspend: false
   # A hung run + Forbid would silently skip later runs; bound it so it fails visibly.
   startingDeadlineSeconds: 600
   successfulJobsHistoryLimit: 3
