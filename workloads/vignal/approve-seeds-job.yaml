@@ -1,0 +1,998 @@
+# ONE-OFF Job (2026-09-30): approve the 24 G-3 seed channels in prod
+# (vignal repo docs/analysis/g3-channel-20-measurement.md). Only UCdUcjkyZtf-1WJyPPiETF1g was
+# approved at the Story 2.10 deploy check; the G-3 approvals lived in a local DB.
+#
+# `vignal approve` takes one channel id and the image is distroless (no shell), so each id is its
+# own initContainer, run one after another (they share the collector run lock; a CronJob run in
+# progress makes approve fail fast). The final container prints `estimate --channels 25`.
+#
+# Lifecycle: PR adds this file -> ArgoCD syncs -> Job runs once. After it completes, a follow-up
+# PR REMOVES this file and its kustomization entry (prune deletes the Job). No ttlSeconds:
+# a TTL-deleted Job would be re-created by selfHeal and approve would run again.
+#
+# initContainer -> channel:
+#   approve-01: 드림텔러 DREAM TELLER
+#   approve-02: 깡스필름
+#   approve-03: 쿄잘tv
+#   approve-04: 다씨네_ Da Cine
+#   approve-05: 헬무비: Hell Movie
+#   approve-06: 라이크둠칫
+#   approve-07: 발스타홍구
+#   approve-08: [ALTUBE] 김성현TV
+#   approve-09: 박사장
+#   approve-10: 회사원A
+#   approve-11: 지냐 Jinyaa
+#   approve-12: 야식이
+#   approve-13: 상해기SangHyuk
+#   approve-14: tzuyang쯔양
+#   approve-15: MBCNEWS
+#   approve-16: YTN
+#   approve-17: 괴물연구소
+#   approve-18: 유령시티
+#   approve-19: 검은 도서관 B. Library
+#   approve-20: 홍시네마
+#   approve-21: 심심한게이머
+#   approve-22: 스톤코어
+#   approve-23: 토리센세
+#   approve-24: 개굴덱
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: vignal-approve-seeds-20260930
+  namespace: vignal
+spec:
+  backoffLimit: 0
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: vignal
+        app.kubernetes.io/component: approve
+    spec:
+      restartPolicy: Never
+      automountServiceAccountToken: false
+      imagePullSecrets:
+      - name: ghcr-sushistack
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 65532
+        runAsGroup: 65532
+        fsGroup: 65532
+        seccompProfile:
+          type: RuntimeDefault
+      initContainers:
+      - image: ghcr.io/sushistack/vignal:sha-b0e2b51
+        env:
+        - name: TZ
+          value: Asia/Seoul
+        - name: VIGNAL_DB
+          value: /data/vignal.db
+        - name: VIGNAL_CONFIG_DIR
+          value: /config
+        - name: TMPDIR
+          value: /tmp
+        envFrom:
+        - secretRef:
+            name: vignal-secrets
+        resources:
+          requests:
+            cpu: 50m
+            memory: 128Mi
+          limits:
+            memory: 512Mi
+        securityContext:
+          allowPrivilegeEscalation: false
+          readOnlyRootFilesystem: true
+          capabilities:
+            drop:
+            - ALL
+        volumeMounts:
+        - name: data
+          mountPath: /data
+        - name: config
+          mountPath: /config
+          readOnly: true
+        - name: tmp
+          mountPath: /tmp
+        name: approve-01
+        args:
+        - approve
+        - UCpCiIDf9UrfRqte55FHWlYQ
+      - image: ghcr.io/sushistack/vignal:sha-b0e2b51
+        env:
+        - name: TZ
+          value: Asia/Seoul
+        - name: VIGNAL_DB
+          value: /data/vignal.db
+        - name: VIGNAL_CONFIG_DIR
+          value: /config
+        - name: TMPDIR
+          value: /tmp
+        envFrom:
+        - secretRef:
+            name: vignal-secrets
+        resources:
+          requests:
+            cpu: 50m
+            memory: 128Mi
+          limits:
+            memory: 512Mi
+        securityContext:
+          allowPrivilegeEscalation: false
+          readOnlyRootFilesystem: true
+          capabilities:
+            drop:
+            - ALL
+        volumeMounts:
+        - name: data
+          mountPath: /data
+        - name: config
+          mountPath: /config
+          readOnly: true
+        - name: tmp
+          mountPath: /tmp
+        name: approve-02
+        args:
+        - approve
+        - UCKuUYspmBI6-dNB1YebhD3w
+      - image: ghcr.io/sushistack/vignal:sha-b0e2b51
+        env:
+        - name: TZ
+          value: Asia/Seoul
+        - name: VIGNAL_DB
+          value: /data/vignal.db
+        - name: VIGNAL_CONFIG_DIR
+          value: /config
+        - name: TMPDIR
+          value: /tmp
+        envFrom:
+        - secretRef:
+            name: vignal-secrets
+        resources:
+          requests:
+            cpu: 50m
+            memory: 128Mi
+          limits:
+            memory: 512Mi
+        securityContext:
+          allowPrivilegeEscalation: false
+          readOnlyRootFilesystem: true
+          capabilities:
+            drop:
+            - ALL
+        volumeMounts:
+        - name: data
+          mountPath: /data
+        - name: config
+          mountPath: /config
+          readOnly: true
+        - name: tmp
+          mountPath: /tmp
+        name: approve-03
+        args:
+        - approve
+        - UCFA-pXsXiIfrS1J9mFDkwKg
+      - image: ghcr.io/sushistack/vignal:sha-b0e2b51
+        env:
+        - name: TZ
+          value: Asia/Seoul
+        - name: VIGNAL_DB
+          value: /data/vignal.db
+        - name: VIGNAL_CONFIG_DIR
+          value: /config
+        - name: TMPDIR
+          value: /tmp
+        envFrom:
+        - secretRef:
+            name: vignal-secrets
+        resources:
+          requests:
+            cpu: 50m
+            memory: 128Mi
+          limits:
+            memory: 512Mi
+        securityContext:
+          allowPrivilegeEscalation: false
+          readOnlyRootFilesystem: true
+          capabilities:
+            drop:
+            - ALL
+        volumeMounts:
+        - name: data
+          mountPath: /data
+        - name: config
+          mountPath: /config
+          readOnly: true
+        - name: tmp
+          mountPath: /tmp
+        name: approve-04
+        args:
+        - approve
+        - UCfNpXQxq5VCGrt4Sv8zaKxA
+      - image: ghcr.io/sushistack/vignal:sha-b0e2b51
+        env:
+        - name: TZ
+          value: Asia/Seoul
+        - name: VIGNAL_DB
+          value: /data/vignal.db
+        - name: VIGNAL_CONFIG_DIR
+          value: /config
+        - name: TMPDIR
+          value: /tmp
+        envFrom:
+        - secretRef:
+            name: vignal-secrets
+        resources:
+          requests:
+            cpu: 50m
+            memory: 128Mi
+          limits:
+            memory: 512Mi
+        securityContext:
+          allowPrivilegeEscalation: false
+          readOnlyRootFilesystem: true
+          capabilities:
+            drop:
+            - ALL
+        volumeMounts:
+        - name: data
+          mountPath: /data
+        - name: config
+          mountPath: /config
+          readOnly: true
+        - name: tmp
+          mountPath: /tmp
+        name: approve-05
+        args:
+        - approve
+        - UCYuOOjRoyXbhJHrN01yHOnA
+      - image: ghcr.io/sushistack/vignal:sha-b0e2b51
+        env:
+        - name: TZ
+          value: Asia/Seoul
+        - name: VIGNAL_DB
+          value: /data/vignal.db
+        - name: VIGNAL_CONFIG_DIR
+          value: /config
+        - name: TMPDIR
+          value: /tmp
+        envFrom:
+        - secretRef:
+            name: vignal-secrets
+        resources:
+          requests:
+            cpu: 50m
+            memory: 128Mi
+          limits:
+            memory: 512Mi
+        securityContext:
+          allowPrivilegeEscalation: false
+          readOnlyRootFilesystem: true
+          capabilities:
+            drop:
+            - ALL
+        volumeMounts:
+        - name: data
+          mountPath: /data
+        - name: config
+          mountPath: /config
+          readOnly: true
+        - name: tmp
+          mountPath: /tmp
+        name: approve-06
+        args:
+        - approve
+        - UCl22RiXFscUiaZ02UWAYjyQ
+      - image: ghcr.io/sushistack/vignal:sha-b0e2b51
+        env:
+        - name: TZ
+          value: Asia/Seoul
+        - name: VIGNAL_DB
+          value: /data/vignal.db
+        - name: VIGNAL_CONFIG_DIR
+          value: /config
+        - name: TMPDIR
+          value: /tmp
+        envFrom:
+        - secretRef:
+            name: vignal-secrets
+        resources:
+          requests:
+            cpu: 50m
+            memory: 128Mi
+          limits:
+            memory: 512Mi
+        securityContext:
+          allowPrivilegeEscalation: false
+          readOnlyRootFilesystem: true
+          capabilities:
+            drop:
+            - ALL
+        volumeMounts:
+        - name: data
+          mountPath: /data
+        - name: config
+          mountPath: /config
+          readOnly: true
+        - name: tmp
+          mountPath: /tmp
+        name: approve-07
+        args:
+        - approve
+        - UC4P7F8qenDo1O_5NvgBb_cg
+      - image: ghcr.io/sushistack/vignal:sha-b0e2b51
+        env:
+        - name: TZ
+          value: Asia/Seoul
+        - name: VIGNAL_DB
+          value: /data/vignal.db
+        - name: VIGNAL_CONFIG_DIR
+          value: /config
+        - name: TMPDIR
+          value: /tmp
+        envFrom:
+        - secretRef:
+            name: vignal-secrets
+        resources:
+          requests:
+            cpu: 50m
+            memory: 128Mi
+          limits:
+            memory: 512Mi
+        securityContext:
+          allowPrivilegeEscalation: false
+          readOnlyRootFilesystem: true
+          capabilities:
+            drop:
+            - ALL
+        volumeMounts:
+        - name: data
+          mountPath: /data
+        - name: config
+          mountPath: /config
+          readOnly: true
+        - name: tmp
+          mountPath: /tmp
+        name: approve-08
+        args:
+        - approve
+        - UCOTJtP0Z9DjpPU43B5m1V6A
+      - image: ghcr.io/sushistack/vignal:sha-b0e2b51
+        env:
+        - name: TZ
+          value: Asia/Seoul
+        - name: VIGNAL_DB
+          value: /data/vignal.db
+        - name: VIGNAL_CONFIG_DIR
+          value: /config
+        - name: TMPDIR
+          value: /tmp
+        envFrom:
+        - secretRef:
+            name: vignal-secrets
+        resources:
+          requests:
+            cpu: 50m
+            memory: 128Mi
+          limits:
+            memory: 512Mi
+        securityContext:
+          allowPrivilegeEscalation: false
+          readOnlyRootFilesystem: true
+          capabilities:
+            drop:
+            - ALL
+        volumeMounts:
+        - name: data
+          mountPath: /data
+        - name: config
+          mountPath: /config
+          readOnly: true
+        - name: tmp
+          mountPath: /tmp
+        name: approve-09
+        args:
+        - approve
+        - UCqbx_XBQEA80FHsnLQOKXrw
+      - image: ghcr.io/sushistack/vignal:sha-b0e2b51
+        env:
+        - name: TZ
+          value: Asia/Seoul
+        - name: VIGNAL_DB
+          value: /data/vignal.db
+        - name: VIGNAL_CONFIG_DIR
+          value: /config
+        - name: TMPDIR
+          value: /tmp
+        envFrom:
+        - secretRef:
+            name: vignal-secrets
+        resources:
+          requests:
+            cpu: 50m
+            memory: 128Mi
+          limits:
+            memory: 512Mi
+        securityContext:
+          allowPrivilegeEscalation: false
+          readOnlyRootFilesystem: true
+          capabilities:
+            drop:
+            - ALL
+        volumeMounts:
+        - name: data
+          mountPath: /data
+        - name: config
+          mountPath: /config
+          readOnly: true
+        - name: tmp
+          mountPath: /tmp
+        name: approve-10
+        args:
+        - approve
+        - UCnekLiljel-Px4ClMC7b3mg
+      - image: ghcr.io/sushistack/vignal:sha-b0e2b51
+        env:
+        - name: TZ
+          value: Asia/Seoul
+        - name: VIGNAL_DB
+          value: /data/vignal.db
+        - name: VIGNAL_CONFIG_DIR
+          value: /config
+        - name: TMPDIR
+          value: /tmp
+        envFrom:
+        - secretRef:
+            name: vignal-secrets
+        resources:
+          requests:
+            cpu: 50m
+            memory: 128Mi
+          limits:
+            memory: 512Mi
+        securityContext:
+          allowPrivilegeEscalation: false
+          readOnlyRootFilesystem: true
+          capabilities:
+            drop:
+            - ALL
+        volumeMounts:
+        - name: data
+          mountPath: /data
+        - name: config
+          mountPath: /config
+          readOnly: true
+        - name: tmp
+          mountPath: /tmp
+        name: approve-11
+        args:
+        - approve
+        - UCRiIf6rt91BVfZVtURRXlOw
+      - image: ghcr.io/sushistack/vignal:sha-b0e2b51
+        env:
+        - name: TZ
+          value: Asia/Seoul
+        - name: VIGNAL_DB
+          value: /data/vignal.db
+        - name: VIGNAL_CONFIG_DIR
+          value: /config
+        - name: TMPDIR
+          value: /tmp
+        envFrom:
+        - secretRef:
+            name: vignal-secrets
+        resources:
+          requests:
+            cpu: 50m
+            memory: 128Mi
+          limits:
+            memory: 512Mi
+        securityContext:
+          allowPrivilegeEscalation: false
+          readOnlyRootFilesystem: true
+          capabilities:
+            drop:
+            - ALL
+        volumeMounts:
+        - name: data
+          mountPath: /data
+        - name: config
+          mountPath: /config
+          readOnly: true
+        - name: tmp
+          mountPath: /tmp
+        name: approve-12
+        args:
+        - approve
+        - UCsNVs68quFJMaDmR6frfUsQ
+      - image: ghcr.io/sushistack/vignal:sha-b0e2b51
+        env:
+        - name: TZ
+          value: Asia/Seoul
+        - name: VIGNAL_DB
+          value: /data/vignal.db
+        - name: VIGNAL_CONFIG_DIR
+          value: /config
+        - name: TMPDIR
+          value: /tmp
+        envFrom:
+        - secretRef:
+            name: vignal-secrets
+        resources:
+          requests:
+            cpu: 50m
+            memory: 128Mi
+          limits:
+            memory: 512Mi
+        securityContext:
+          allowPrivilegeEscalation: false
+          readOnlyRootFilesystem: true
+          capabilities:
+            drop:
+            - ALL
+        volumeMounts:
+        - name: data
+          mountPath: /data
+        - name: config
+          mountPath: /config
+          readOnly: true
+        - name: tmp
+          mountPath: /tmp
+        name: approve-13
+        args:
+        - approve
+        - UCPVENfTGbgD-CUuvrN7rRGQ
+      - image: ghcr.io/sushistack/vignal:sha-b0e2b51
+        env:
+        - name: TZ
+          value: Asia/Seoul
+        - name: VIGNAL_DB
+          value: /data/vignal.db
+        - name: VIGNAL_CONFIG_DIR
+          value: /config
+        - name: TMPDIR
+          value: /tmp
+        envFrom:
+        - secretRef:
+            name: vignal-secrets
+        resources:
+          requests:
+            cpu: 50m
+            memory: 128Mi
+          limits:
+            memory: 512Mi
+        securityContext:
+          allowPrivilegeEscalation: false
+          readOnlyRootFilesystem: true
+          capabilities:
+            drop:
+            - ALL
+        volumeMounts:
+        - name: data
+          mountPath: /data
+        - name: config
+          mountPath: /config
+          readOnly: true
+        - name: tmp
+          mountPath: /tmp
+        name: approve-14
+        args:
+        - approve
+        - UCfpaSruWW3S4dibonKXENjA
+      - image: ghcr.io/sushistack/vignal:sha-b0e2b51
+        env:
+        - name: TZ
+          value: Asia/Seoul
+        - name: VIGNAL_DB
+          value: /data/vignal.db
+        - name: VIGNAL_CONFIG_DIR
+          value: /config
+        - name: TMPDIR
+          value: /tmp
+        envFrom:
+        - secretRef:
+            name: vignal-secrets
+        resources:
+          requests:
+            cpu: 50m
+            memory: 128Mi
+          limits:
+            memory: 512Mi
+        securityContext:
+          allowPrivilegeEscalation: false
+          readOnlyRootFilesystem: true
+          capabilities:
+            drop:
+            - ALL
+        volumeMounts:
+        - name: data
+          mountPath: /data
+        - name: config
+          mountPath: /config
+          readOnly: true
+        - name: tmp
+          mountPath: /tmp
+        name: approve-15
+        args:
+        - approve
+        - UCF4Wxdo3inmxP-Y59wXDsFw
+      - image: ghcr.io/sushistack/vignal:sha-b0e2b51
+        env:
+        - name: TZ
+          value: Asia/Seoul
+        - name: VIGNAL_DB
+          value: /data/vignal.db
+        - name: VIGNAL_CONFIG_DIR
+          value: /config
+        - name: TMPDIR
+          value: /tmp
+        envFrom:
+        - secretRef:
+            name: vignal-secrets
+        resources:
+          requests:
+            cpu: 50m
+            memory: 128Mi
+          limits:
+            memory: 512Mi
+        securityContext:
+          allowPrivilegeEscalation: false
+          readOnlyRootFilesystem: true
+          capabilities:
+            drop:
+            - ALL
+        volumeMounts:
+        - name: data
+          mountPath: /data
+        - name: config
+          mountPath: /config
+          readOnly: true
+        - name: tmp
+          mountPath: /tmp
+        name: approve-16
+        args:
+        - approve
+        - UChlgI3UHCOnwUGzWzbJ3H5w
+      - image: ghcr.io/sushistack/vignal:sha-b0e2b51
+        env:
+        - name: TZ
+          value: Asia/Seoul
+        - name: VIGNAL_DB
+          value: /data/vignal.db
+        - name: VIGNAL_CONFIG_DIR
+          value: /config
+        - name: TMPDIR
+          value: /tmp
+        envFrom:
+        - secretRef:
+            name: vignal-secrets
+        resources:
+          requests:
+            cpu: 50m
+            memory: 128Mi
+          limits:
+            memory: 512Mi
+        securityContext:
+          allowPrivilegeEscalation: false
+          readOnlyRootFilesystem: true
+          capabilities:
+            drop:
+            - ALL
+        volumeMounts:
+        - name: data
+          mountPath: /data
+        - name: config
+          mountPath: /config
+          readOnly: true
+        - name: tmp
+          mountPath: /tmp
+        name: approve-17
+        args:
+        - approve
+        - UCiHJKtLc7Vu4oEv5IhFSNdA
+      - image: ghcr.io/sushistack/vignal:sha-b0e2b51
+        env:
+        - name: TZ
+          value: Asia/Seoul
+        - name: VIGNAL_DB
+          value: /data/vignal.db
+        - name: VIGNAL_CONFIG_DIR
+          value: /config
+        - name: TMPDIR
+          value: /tmp
+        envFrom:
+        - secretRef:
+            name: vignal-secrets
+        resources:
+          requests:
+            cpu: 50m
+            memory: 128Mi
+          limits:
+            memory: 512Mi
+        securityContext:
+          allowPrivilegeEscalation: false
+          readOnlyRootFilesystem: true
+          capabilities:
+            drop:
+            - ALL
+        volumeMounts:
+        - name: data
+          mountPath: /data
+        - name: config
+          mountPath: /config
+          readOnly: true
+        - name: tmp
+          mountPath: /tmp
+        name: approve-18
+        args:
+        - approve
+        - UCBUNoFJ4u6sw9Oh8e1DixNQ
+      - image: ghcr.io/sushistack/vignal:sha-b0e2b51
+        env:
+        - name: TZ
+          value: Asia/Seoul
+        - name: VIGNAL_DB
+          value: /data/vignal.db
+        - name: VIGNAL_CONFIG_DIR
+          value: /config
+        - name: TMPDIR
+          value: /tmp
+        envFrom:
+        - secretRef:
+            name: vignal-secrets
+        resources:
+          requests:
+            cpu: 50m
+            memory: 128Mi
+          limits:
+            memory: 512Mi
+        securityContext:
+          allowPrivilegeEscalation: false
+          readOnlyRootFilesystem: true
+          capabilities:
+            drop:
+            - ALL
+        volumeMounts:
+        - name: data
+          mountPath: /data
+        - name: config
+          mountPath: /config
+          readOnly: true
+        - name: tmp
+          mountPath: /tmp
+        name: approve-19
+        args:
+        - approve
+        - UCblDE5zVbojFbwDzwK7ACJA
+      - image: ghcr.io/sushistack/vignal:sha-b0e2b51
+        env:
+        - name: TZ
+          value: Asia/Seoul
+        - name: VIGNAL_DB
+          value: /data/vignal.db
+        - name: VIGNAL_CONFIG_DIR
+          value: /config
+        - name: TMPDIR
+          value: /tmp
+        envFrom:
+        - secretRef:
+            name: vignal-secrets
+        resources:
+          requests:
+            cpu: 50m
+            memory: 128Mi
+          limits:
+            memory: 512Mi
+        securityContext:
+          allowPrivilegeEscalation: false
+          readOnlyRootFilesystem: true
+          capabilities:
+            drop:
+            - ALL
+        volumeMounts:
+        - name: data
+          mountPath: /data
+        - name: config
+          mountPath: /config
+          readOnly: true
+        - name: tmp
+          mountPath: /tmp
+        name: approve-20
+        args:
+        - approve
+        - UCtwxuughKbSAV0e4bnz4ORg
+      - image: ghcr.io/sushistack/vignal:sha-b0e2b51
+        env:
+        - name: TZ
+          value: Asia/Seoul
+        - name: VIGNAL_DB
+          value: /data/vignal.db
+        - name: VIGNAL_CONFIG_DIR
+          value: /config
+        - name: TMPDIR
+          value: /tmp
+        envFrom:
+        - secretRef:
+            name: vignal-secrets
+        resources:
+          requests:
+            cpu: 50m
+            memory: 128Mi
+          limits:
+            memory: 512Mi
+        securityContext:
+          allowPrivilegeEscalation: false
+          readOnlyRootFilesystem: true
+          capabilities:
+            drop:
+            - ALL
+        volumeMounts:
+        - name: data
+          mountPath: /data
+        - name: config
+          mountPath: /config
+          readOnly: true
+        - name: tmp
+          mountPath: /tmp
+        name: approve-21
+        args:
+        - approve
+        - UCUFgG-7nNz20vtyW-uMSNjg
+      - image: ghcr.io/sushistack/vignal:sha-b0e2b51
+        env:
+        - name: TZ
+          value: Asia/Seoul
+        - name: VIGNAL_DB
+          value: /data/vignal.db
+        - name: VIGNAL_CONFIG_DIR
+          value: /config
+        - name: TMPDIR
+          value: /tmp
+        envFrom:
+        - secretRef:
+            name: vignal-secrets
+        resources:
+          requests:
+            cpu: 50m
+            memory: 128Mi
+          limits:
+            memory: 512Mi
+        securityContext:
+          allowPrivilegeEscalation: false
+          readOnlyRootFilesystem: true
+          capabilities:
+            drop:
+            - ALL
+        volumeMounts:
+        - name: data
+          mountPath: /data
+        - name: config
+          mountPath: /config
+          readOnly: true
+        - name: tmp
+          mountPath: /tmp
+        name: approve-22
+        args:
+        - approve
+        - UCuZNGzyFgRNQbjde7e3I3wg
+      - image: ghcr.io/sushistack/vignal:sha-b0e2b51
+        env:
+        - name: TZ
+          value: Asia/Seoul
+        - name: VIGNAL_DB
+          value: /data/vignal.db
+        - name: VIGNAL_CONFIG_DIR
+          value: /config
+        - name: TMPDIR
+          value: /tmp
+        envFrom:
+        - secretRef:
+            name: vignal-secrets
+        resources:
+          requests:
+            cpu: 50m
+            memory: 128Mi
+          limits:
+            memory: 512Mi
+        securityContext:
+          allowPrivilegeEscalation: false
+          readOnlyRootFilesystem: true
+          capabilities:
+            drop:
+            - ALL
+        volumeMounts:
+        - name: data
+          mountPath: /data
+        - name: config
+          mountPath: /config
+          readOnly: true
+        - name: tmp
+          mountPath: /tmp
+        name: approve-23
+        args:
+        - approve
+        - UC1Y2aXbYd1Zlx4pvVeX1FeA
+      - image: ghcr.io/sushistack/vignal:sha-b0e2b51
+        env:
+        - name: TZ
+          value: Asia/Seoul
+        - name: VIGNAL_DB
+          value: /data/vignal.db
+        - name: VIGNAL_CONFIG_DIR
+          value: /config
+        - name: TMPDIR
+          value: /tmp
+        envFrom:
+        - secretRef:
+            name: vignal-secrets
+        resources:
+          requests:
+            cpu: 50m
+            memory: 128Mi
+          limits:
+            memory: 512Mi
+        securityContext:
+          allowPrivilegeEscalation: false
+          readOnlyRootFilesystem: true
+          capabilities:
+            drop:
+            - ALL
+        volumeMounts:
+        - name: data
+          mountPath: /data
+        - name: config
+          mountPath: /config
+          readOnly: true
+        - name: tmp
+          mountPath: /tmp
+        name: approve-24
+        args:
+        - approve
+        - UCqavSqZRmJX9w1Ozck3fu4A
+      containers:
+      - image: ghcr.io/sushistack/vignal:sha-b0e2b51
+        env:
+        - name: TZ
+          value: Asia/Seoul
+        - name: VIGNAL_DB
+          value: /data/vignal.db
+        - name: VIGNAL_CONFIG_DIR
+          value: /config
+        - name: TMPDIR
+          value: /tmp
+        envFrom:
+        - secretRef:
+            name: vignal-secrets
+        resources:
+          requests:
+            cpu: 50m
+            memory: 128Mi
+          limits:
+            memory: 512Mi
+        securityContext:
+          allowPrivilegeEscalation: false
+          readOnlyRootFilesystem: true
+          capabilities:
+            drop:
+            - ALL
+        volumeMounts:
+        - name: data
+          mountPath: /data
+        - name: config
+          mountPath: /config
+          readOnly: true
+        - name: tmp
+          mountPath: /tmp
+        name: done
+        args:
+        - estimate
+        - --channels
+        - '25'
+      volumes:
+      - name: data
+        persistentVolumeClaim:
+          claimName: vignal-data
+      - name: config
+        configMap:
+          name: vignal-config
+      - name: tmp
+        emptyDir: {}
