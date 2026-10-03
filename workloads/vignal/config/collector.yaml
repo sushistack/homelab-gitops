@@ -41,6 +41,12 @@ cadence:
     age_le_30d_hours: 72
   channel_stats_hours: 24
 
+# AD-16 (Story 6.3): 발행 24시간/7일 지점 관측 스냅샷의 허용 오차(±시간).
+# 나이별 주기 게이트를 건너뛰고 이 창에 든 영상을 우선 관측한다. Epic 7 채널
+# 배수가 같은 나이 표본을 비교하려면 이 수집이 승인 전에 먼저 쌓여야 한다.
+snapshots:
+  tolerance_hours: 3
+
 # AD-8: 같은 작업 종류 안의 채널 우선순위 점수. 순서(내림차순)는 스파인이 고정하고
 # 가중치 값 자체는 [ASSUMPTION](상대 크기만 스파인 순서를 따른다, Phase 0 이후 G-3 로 조정).
 priority_weights:
