@@ -1,0 +1,59 @@
+name: vignal-scout-pr
+
+# Weekly-ish review PR for the vignal candidate scout (vignal FR-40 / FR-30a,
+# workloads/vignal/runbook.md "Scout candidates").
+# Daily: read vignal-private/ops/scout/candidates-latest.yaml (read-only R2
+# token) and, when there are new candidates and no open `vignal-scout` PR,
+# open ONE PR appending them to workloads/vignal/config/approvals.yaml.
+# Merging that PR is the approval. All logic + rules: bin/vignal-scout-pr.
+
+on:
+  schedule:
+    - cron: "30 16 * * *" # after the 15:00 UTC collector run
+  workflow_dispatch:
+  pull_request:
+    paths:
+      - bin/vignal-scout-pr
+      - .github/workflows/vignal-scout-pr.yml
+
+permissions:
+  contents: write
+  pull-requests: write
+
+concurrency:
+  group: vignal-scout-pr
+  cancel-in-progress: false
+
+jobs:
+  scout-pr:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - name: deps
+        run: pip install --quiet pyyaml
+      - name: selftest
+        run: python3 bin/vignal-scout-pr --selftest
+      - name: fetch draft (read-only R2)
+        if: github.event_name != 'pull_request'
+        id: draft
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.VIGNAL_R2_RO_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.VIGNAL_R2_RO_SECRET_ACCESS_KEY }}
+          AWS_DEFAULT_REGION: auto
+          R2_ENDPOINT: ${{ secrets.VIGNAL_R2_ENDPOINT }}
+        run: |
+          if [ -z "$AWS_ACCESS_KEY_ID" ] || [ -z "$R2_ENDPOINT" ]; then
+            echo "::notice::VIGNAL_R2_* secrets not set; skipping (see workloads/vignal/runbook.md)"
+            echo "path=" >> "$GITHUB_OUTPUT"; exit 0
+          fi
+          if aws s3 cp --endpoint-url "$R2_ENDPOINT" --only-show-errors \
+               s3://vignal-private/ops/scout/candidates-latest.yaml "$RUNNER_TEMP/draft.yaml"; then
+            echo "path=$RUNNER_TEMP/draft.yaml" >> "$GITHUB_OUTPUT"
+          else
+            echo "::notice::no scout draft yet"; echo "path=" >> "$GITHUB_OUTPUT"
+          fi
+      - name: open review PR
+        if: github.event_name != 'pull_request' && steps.draft.outputs.path != ''
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: python3 bin/vignal-scout-pr "${{ steps.draft.outputs.path }}"
