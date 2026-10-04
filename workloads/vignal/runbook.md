@@ -61,7 +61,9 @@ To resume, commit `suspend: false`. The in-code daily quota cap (`quota.daily_ca
 
 The collector's scout stage (vignal FR-40) writes a draft of candidate channels to `vignal-private/ops/scout/candidates-latest.yaml` about once a week. The `vignal-scout-pr` workflow runs daily. It reads that draft and, when there are new candidates and no open PR labelled `vignal-scout`, opens ONE PR appending them to `config/approvals.yaml`. The logic and the rules are in `bin/vignal-scout-pr`.
 
-**Reviewing (the only recurring task):**
+**Auto-merge window (until 2026-12-05):** the bot merges its own PR right away, with at most 10 channels per PR. The rest wait for the next daily run, mention/search first and then popular. It stops auto-merging once `approvals.yaml` lists 600 approve entries (below AD-8's ~700-channel adjustment point). After the date, or at the ceiling, it falls back to the review mode below on its own. To end early or change the limits, edit `AUTO_MERGE_UNTIL` / `AUTO_MAX_PER_PR` / `AUTO_STOP_AT` in `bin/vignal-scout-pr`. To remove a wrongly added channel, move it from `approve:` to `untrack:` with a reason.
+
+**Reviewing (review mode):**
 
 - Merge → the next collector run (≤ 6h) starts tracking them.
 - Remove some → delete that channel's 4 lines in *Files changed*, commit, then merge.

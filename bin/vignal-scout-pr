@@ -17,6 +17,9 @@ Rules:
     derived from the closed PRs themselves, so there is no state file.
   - The edited approvals.yaml is validated (id pattern, topics.yaml slug,
     non-empty note, no duplicate, no approve/untrack overlap) before pushing.
+  - Auto-merge window (AUTO_* constants below): until AUTO_MERGE_UNTIL the
+    bot merges its own PR with at most AUTO_MAX_PER_PR channels, and stops
+    auto-merging at AUTO_STOP_AT approve entries; otherwise review mode.
 
 Usage:
   bin/vignal-scout-pr <draft.yaml>       # needs gh (GH_TOKEN) and git
@@ -37,6 +40,16 @@ APPROVALS = "workloads/vignal/config/approvals.yaml"
 TOPICS = "workloads/vignal/config/topics.yaml"
 LABEL = "vignal-scout"
 SKIP_DAYS = 90
+# Auto-merge window (operator decision 2026-10-05): until AUTO_MERGE_UNTIL the
+# bot merges its own PR, at most AUTO_MAX_PER_PR channels per PR (the rest wait
+# for the next daily run), and stops auto-merging once approvals.yaml lists
+# AUTO_STOP_AT approve entries (below AD-8's ~700-channel adjustment point).
+# After the date, or at the ceiling, it falls back to review mode (open the
+# PR, a human merges). To end early, set AUTO_MERGE_UNTIL to a past date.
+AUTO_MERGE_UNTIL = dt.date(2026, 12, 5)
+AUTO_MAX_PER_PR = 10
+AUTO_STOP_AT = 600
+VIA_ORDER = {"mention": 0, "search": 1, "popular": 2}
 MARKER_RE = re.compile(r"<!-- vignal-scout-proposed: ([A-Za-z0-9_,-]*) -->")
 ID_RE = re.compile(r"^UC[0-9A-Za-z_-]{22}$")
 
@@ -144,13 +157,17 @@ def validate(approvals_text, slugs):
     return probs
 
 
-def pr_body(entries, undecided, today):
+def pr_body(entries, undecided, today, auto=False):
     rows = "\n".join(
         f"| [{one_line(e.get('title') or e['channel_id'])}](https://www.youtube.com/channel/{e['channel_id']})"
         f" | `{e['topic']}` | {one_line(e['note'])} |" for e in entries)
-    body = f"""vignal scout 가 {today} 기준으로 고른 후보 {len(entries)}개를 `approvals.yaml` 에 추가합니다.
-
-**검토 방법**
+    head = f"vignal scout 가 {today} 기준으로 고른 후보 {len(entries)}개를 `approvals.yaml` 에 추가합니다.\n"
+    if auto:
+        head += (f"\n**자동 머지됨** ({AUTO_MERGE_UNTIL} 까지, PR 당 최대 {AUTO_MAX_PER_PR}개, "
+                 f"approve {AUTO_STOP_AT}개에서 중단). 잘못 들어간 채널은 `approve:` 에서 빼고 "
+                 "`untrack:` 에 이유와 함께 옮겨 커밋하세요.\n")
+    body = head + f"""
+**검토 방법** (검토 모드일 때)
 - 모두 괜찮으면 → **Merge**. 다음 collector 실행(6시간 이내)에서 추적이 시작됩니다.
 - 일부만 빼려면 → *Files changed* 에서 그 채널의 4줄(주석·channel_id·topic·note)을 지우고 커밋한 뒤 Merge.
 - 전부 원치 않으면 → **Close**. 빠진 채널은 {SKIP_DAYS}일 동안 다시 제안하지 않습니다.
@@ -165,6 +182,24 @@ def pr_body(entries, undecided, today):
         body += "\n".join(f"- {one_line(u)}" for u in undecided) + "\n"
     ids = ",".join(e["channel_id"] for e in entries)
     return body + f"\n<!-- vignal-scout-proposed: {ids} -->\n"
+
+
+def auto_quota(approvals_text, today):
+    """How many channels this run may auto-merge (0 = review mode)."""
+    if today > AUTO_MERGE_UNTIL:
+        return 0
+    approve, _ = listed_ids(approvals_text)
+    return max(0, min(AUTO_MAX_PER_PR, AUTO_STOP_AT - len(approve)))
+
+
+def via(entry):
+    m = re.match(r"scout:(\w+)", str(entry.get("note") or ""))
+    return VIA_ORDER.get(m.group(1) if m else "", 9)
+
+
+def take_for_auto(candidates, n):
+    """First n candidates, mention/search before popular, draft order kept."""
+    return sorted(candidates, key=via)[:n]
 
 
 def plan(draft_text, approvals_text, closed_prs, now):
@@ -205,6 +240,9 @@ def run(draft_path):
     if not candidates:
         print("no new candidates; nothing to do")
         return 0
+    auto_n = auto_quota(approvals_text, now.date())
+    if auto_n:
+        candidates = take_for_auto(candidates, auto_n)
     new_text = append_to_approvals(approvals_text, candidates, today)
     slugs = {t["slug"] for t in (yaml.safe_load((REPO / TOPICS).read_text()) or {}).get("topics", [])}
     probs = validate(new_text, slugs)
@@ -222,11 +260,17 @@ def run(draft_path):
     sh("gh", "label", "create", LABEL, "--color", "5319e7",
        "--description", "vignal scout weekly candidates", "--force")
     with tempfile.NamedTemporaryFile("w", suffix=".md", delete=False) as f:
-        f.write(pr_body(candidates, undecided, today))
+        f.write(pr_body(candidates, undecided, today, auto=bool(auto_n)))
+    title = (f"vignal scout 후보 {today} ({len(candidates)}개) — 자동 머지" if auto_n
+             else f"vignal scout 후보 {today} ({len(candidates)}개) — 검토 후 Merge")
     url = sh("gh", "pr", "create", "--base", "master", "--head", branch, "--label", LABEL,
-             "--title", f"vignal scout 후보 {today} ({len(candidates)}개) — 검토 후 Merge",
-             "--body-file", f.name)
-    print(url.strip())
+             "--title", title, "--body-file", f.name).strip()
+    print(url)
+    if auto_n:
+        # A failed merge leaves the PR open (review mode until someone acts)
+        # and fails the job, so GitHub reports it.
+        sh("gh", "pr", "merge", url, "--merge", "--delete-branch")
+        print(f"auto-merged {len(candidates)} channel(s)")
     return 0
 
 
@@ -306,6 +350,22 @@ def selftest():
     assert MARKER_RE.search(body).group(1) == "UCaaaaaaaaaaaaaaaaaaaaaa,UCbbbbbbbbbbbbbbbbbbbbbb", body
     assert "https://www.youtube.com/channel/UCaaaaaaaaaaaaaaaaaaaaaa" in body
     assert "주제 미정" in body
+    assert "자동 머지됨" in pr_body(cands, [], "d", auto=True) and "자동 머지됨" not in body
+
+    # auto-merge window: date cutoff, per-PR cap, approve ceiling
+    one = APPROVALS_FIXTURE  # 1 approve entry
+    assert auto_quota(one, dt.date(2026, 12, 5)) == AUTO_MAX_PER_PR
+    assert auto_quota(one, dt.date(2026, 12, 6)) == 0
+    many = "approve:\n" + "".join(
+        f"  - channel_id: UC{i:022d}\n    topic: game\n    note: x\n" for i in range(AUTO_STOP_AT - 3))
+    assert auto_quota(many, dt.date(2026, 10, 10)) == 3
+    full = many + "".join(f"  - channel_id: UC{i:022d}\n    topic: game\n    note: x\n"
+                          for i in range(AUTO_STOP_AT, AUTO_STOP_AT + 5))
+    assert auto_quota(full, dt.date(2026, 10, 10)) == 0
+    # mention/search before popular, then draft order; capped
+    pool = [{"channel_id": "p1", "note": "scout:popular a"}, {"channel_id": "m1", "note": "scout:mention a"},
+            {"channel_id": "p2", "note": "scout:popular b"}, {"channel_id": "s1", "note": "scout:search a"}]
+    assert [c["channel_id"] for c in take_for_auto(pool, 3)] == ["m1", "s1", "p1"]
     print("selftest ok")
     return 0
 
