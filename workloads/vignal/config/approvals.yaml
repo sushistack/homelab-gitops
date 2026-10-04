@@ -185,4 +185,44 @@ approve:
   - channel_id: UCCshApLKfQqY1wKB07jGiuA
     topic: game
     note: "scout:popular 구독 701000 롱폼 5/10 최근 업로드 2026-10-04"
+  # 남봉 (scout 2026-10-04)
+  - channel_id: UCjLam2TWjQ2BG0y0H4Q9RbQ
+    topic: game
+    note: "scout:popular 구독 33700 롱폼 10/10 최근 업로드 2026-10-04"
+  # 후닝 (scout 2026-10-04)
+  - channel_id: UCq6bX1rAJqwt3LmYuHrDPqg
+    topic: game
+    note: "scout:popular 구독 56200 롱폼 7/10 최근 업로드 2026-10-04"
+  # 전설 (scout 2026-10-04)
+  - channel_id: UCrRp1aQsImkBqbO5FwZTA_w
+    topic: game
+    note: "scout:popular 구독 23000 롱폼 7/10 최근 업로드 2026-10-04"
+  # 찬해 (scout 2026-10-04)
+  - channel_id: UCzQ8Rk-dGDYK4c-4indH0_g
+    topic: game
+    note: "scout:popular 구독 39700 롱폼 10/10 최근 업로드 2026-10-04"
+  # 괴물쥐 유튜브 (scout 2026-10-04)
+  - channel_id: UCDBAVzfX3yZ1hah0FHnOoaA
+    topic: game
+    note: "scout:popular 구독 1210000 롱폼 10/10 최근 업로드 2026-10-04"
+  # 근가놈 (scout 2026-10-04)
+  - channel_id: UCEWqfxUKLIpqyMzebADGUlg
+    topic: game
+    note: "scout:popular 구독 302000 롱폼 9/10 최근 업로드 2026-10-03"
+  # 매일신문 (scout 2026-10-04)
+  - channel_id: UCGrraKQiTF-ml0KqPQ8mrUA
+    topic: news
+    note: "scout:popular 구독 896000 롱폼 6/10 최근 업로드 2026-10-04"
+  # 뜨뜨뜨뜨 (scout 2026-10-04)
+  - channel_id: UCHxKSivB6JLZ1SEMdxd1fAg
+    topic: game
+    note: "scout:popular 구독 1490000 롱폼 10/10 최근 업로드 2026-10-03"
+  # 강 지 (scout 2026-10-04)
+  - channel_id: UCIVFv8AiQLqM9oLHTixrNYw
+    topic: game
+    note: "scout:popular 구독 765000 롱폼 8/10 최근 업로드 2026-10-04"
+  # 전략적죽음 (scout 2026-10-04)
+  - channel_id: UCJmsB6NAU0sp2htDL4KmX0A
+    topic: game
+    note: "scout:popular 구독 184000 롱폼 10/10 최근 업로드 2026-10-03"
 untrack: []
