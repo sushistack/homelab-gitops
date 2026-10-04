@@ -29,9 +29,9 @@
   },
   {
     "feature": "trend_30d",
-    "decision": "disabled",
-    "authority_ref": "PRD §9.4 2a (FR-25 30-day view trend, Phase 2a, no derived-metrics-policy approval needed); developer policy §III.E.4.f (\"historical API Data … presented accurately in context of time\") and §III.E.4.d (30-day retention) (docs/analysis/g1-policy-review.md trend_30d row). Stays disabled until Story 6.5 turns it on.",
-    "reviewed_at": "2026-10-03T00:00:00Z",
+    "decision": "allowed",
+    "authority_ref": "PRD §9.4 2a (FR-25 30-day view trend, Phase 2a, no derived-metrics-policy approval needed); developer policy §III.E.4.f (\"historical API Data … presented accurately in context of time\") and §III.E.4.d (30-day retention) (docs/analysis/g1-policy-review.md trend_30d row). Enabled 2026-10-04 by Story 6.5 (operator).",
+    "reviewed_at": "2026-10-04T00:00:00Z",
     "expires_at": "2027-01-01T00:00:00Z"
   },
   {
