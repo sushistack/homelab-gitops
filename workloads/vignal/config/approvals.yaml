@@ -13,5 +13,136 @@
 #
 # 같은 channel_id 를 approve 와 untrack 양쪽에 두면 파일 전체가 거부된다.
 # 로컬 검증: vignal approvals validate approvals.yaml
-approve: []
+#
+# 2026-10-04 첫 씨앗 43개 (vignal docs/ops/seeds/seed-2026-10-04.yaml, Story 9.5, D-19).
+approve:
+  - channel_id: UCrFlv9c4LItVlIMCC2p6LOg
+    topic: beauty-life
+    note: "deemd 딤디 · 구독자 964,000 · 최근 10개 중 롱폼 10 · 최근 업로드 2026-09-20 (2026-10-04 API 확인)"
+  - channel_id: UCUrCIBJ3ScRAOLgPElscZqA
+    topic: beauty-life
+    note: "INBORA인보라 · 구독자 539,000 · 최근 10개 중 롱폼 5 · 최근 업로드 2026-10-01 (2026-10-04 API 확인)"
+  - channel_id: UCChdHmdkgTpk0iyuODYxJIw
+    topic: beauty-life
+    note: "해니 haeni beauty · 구독자 479,000 · 최근 10개 중 롱폼 5 · 최근 업로드 2026-10-01 (2026-10-04 API 확인)"
+  - channel_id: UClsaLJyAdDlXjyAizmKt-1Q
+    topic: beauty-life
+    note: "민제 meenje · 구독자 177,000 · 최근 10개 중 롱폼 7 · 최근 업로드 2026-09-30 (2026-10-04 API 확인)"
+  - channel_id: UCOno0QRUz5huGHiCAT7Dysg
+    topic: beauty-life
+    note: "정명히 · 구독자 70,200 · 최근 10개 중 롱폼 6 · 최근 업로드 2026-09-27 (2026-10-04 API 확인)"
+  - channel_id: UCoCxuPrH7NwbBprRjSD2IKw
+    topic: beauty-life
+    note: "호기심대장 김몽몽  𝐦𝐨𝐧𝐠𝐦𝐨𝐧𝐠 · 구독자 46,400 · 최근 10개 중 롱폼 7 · 최근 업로드 2026-10-03 (2026-10-04 API 확인)"
+  - channel_id: UCcdlIcleb4oIK6of1ugSJ7w
+    topic: game
+    note: "옥냥이 RoofTopCAT · 구독자 684,000 · 최근 10개 중 롱폼 10 · 최근 업로드 2026-10-02 (2026-10-04 API 확인)"
+  - channel_id: UC2U8C7lmbQpfBeAW8fTP_jg
+    topic: game
+    note: "말 많은 게이머 듀리 · 구독자 71,600 · 최근 10개 중 롱폼 10 · 최근 업로드 2026-10-03 (2026-10-04 API 확인)"
+  - channel_id: UCNR3K4HA6LyO9tz0oZoSJIA
+    topic: movie-review
+    note: "백수골방 · 구독자 416,000 · 최근 10개 중 롱폼 5 · 최근 업로드 2026-09-28 (2026-10-04 API 확인)"
+  - channel_id: UCLwCHoQ9h7DPXvLwx5XwTQg
+    topic: mukbang
+    note: "먹보스 쭈엽이 · 구독자 670,000 · 최근 10개 중 롱폼 6 · 최근 업로드 2026-10-02 (2026-10-04 API 확인)"
+  - channel_id: UCK_4dhuuChRz7ozliMjGQbQ
+    topic: mukbang
+    note: "키다리짬뽕아저씨 · 구독자 92,100 · 최근 10개 중 롱폼 10 · 최근 업로드 2026-10-02 (2026-10-04 API 확인)"
+  - channel_id: UCmgKzCmRtNBOMJrzybUQLXg
+    topic: mystery
+    note: "숫노루 TV · 구독자 380,000 · 최근 10개 중 롱폼 10 · 최근 업로드 2026-09-19 (2026-10-04 API 확인)"
+  - channel_id: UCRQqdcMWDdBaz6lAat82oZg
+    topic: mystery
+    note: "괴담실록 [조선·동아시아 야사·괴담] · 구독자 223,000 · 최근 10개 중 롱폼 10 · 최근 업로드 2026-09-24 (2026-10-04 API 확인)"
+  - channel_id: UCQbKk4fa3B23YDmVXjv-j4w
+    topic: mystery
+    note: "공포학과 · 구독자 125,000 · 최근 10개 중 롱폼 10 · 최근 업로드 2026-10-01 (2026-10-04 API 확인)"
+  - channel_id: UCl8ra5mVtvzwE9pYhCNdXPA
+    topic: mystery
+    note: "라플레르 · 구독자 23,600 · 최근 10개 중 롱폼 10 · 최근 업로드 2026-09-29 (2026-10-04 API 확인)"
+  - channel_id: UCL5ufpbwK-GixzHQueR6Q-g
+    topic: mystery
+    note: "꺼림칙한 이야기 괴곰 · 구독자 17,500 · 최근 10개 중 롱폼 9 · 최근 업로드 2026-10-02 (2026-10-04 API 확인)"
+  - channel_id: UChlv4GSd7OQl3js-jkLOnFA
+    topic: economy
+    note: "삼프로TV 3PROTV · 구독자 3,040,000 · 최근 10개 중 롱폼 10 · 최근 업로드 2026-10-04 (2026-10-04 API 확인)"
+  - channel_id: UCaJdckl6MBdDPDf75Ec_bJA
+    topic: economy
+    note: "신사임당 · 구독자 2,820,000 · 최근 10개 중 롱폼 10 · 최근 업로드 2026-10-04 (2026-10-04 API 확인)"
+  - channel_id: UCDSj40X9FFUAnx1nv7gQhcA
+    topic: economy
+    note: "월급쟁이부자들TV · 구독자 2,120,000 · 최근 10개 중 롱폼 5 · 최근 업로드 2026-10-02 (2026-10-04 API 확인)"
+  - channel_id: UCr7XsrSrvAn_WcU4kF99bbQ
+    topic: economy
+    note: "박곰희TV · 구독자 1,270,000 · 최근 10개 중 롱폼 9 · 최근 업로드 2026-10-02 (2026-10-04 API 확인)"
+  - channel_id: UCC3yfxS5qC6PCwDzetUuEWg
+    topic: economy
+    note: "소수몽키 · 구독자 1,160,000 · 최근 10개 중 롱폼 10 · 최근 업로드 2026-10-01 (2026-10-04 API 확인)"
+  - channel_id: UCiHCmazdsMM9j3Jbqx3p7Ig
+    topic: economy
+    note: "김짠부 · 구독자 1,150,000 · 최근 10개 중 롱폼 7 · 최근 업로드 2026-10-03 (2026-10-04 API 확인)"
+  - channel_id: UCDnIfMiHBNs1RP7y6B6wf1Q
+    topic: economy
+    note: "염블리와 함께 [LS증권] · 구독자 267,000 · 최근 10개 중 롱폼 10 · 최근 업로드 2026-10-04 (2026-10-04 API 확인)"
+  - channel_id: UC2aLhOkPPZEfxTGV7OqffbQ
+    topic: economy
+    note: "경제학 똑똑 · 구독자 258,000 · 최근 10개 중 롱폼 10 · 최근 업로드 2026-10-03 (2026-10-04 API 확인)"
+  - channel_id: UC_0oo0GPlDUU88ubLDnJkSQ
+    topic: tech
+    note: "UNDERkg · 구독자 819,000 · 최근 10개 중 롱폼 10 · 최근 업로드 2026-10-02 (2026-10-04 API 확인)"
+  - channel_id: UCMYJw-gH6-_LNQzhqfYgDbg
+    topic: tech
+    note: "뻘짓연구소 · 구독자 508,000 · 최근 10개 중 롱폼 9 · 최근 업로드 2026-10-01 (2026-10-04 API 확인)"
+  - channel_id: UCLJVJoj_SeZBs34w6V-etPg
+    topic: tech
+    note: "JN테크리뷰 · 구독자 75,900 · 최근 10개 중 롱폼 7 · 최근 업로드 2026-09-24 (2026-10-04 API 확인)"
+  - channel_id: UCDLlMjELbrJdETmSiAB68AA
+    topic: tech
+    note: "시민개발자 구씨 · 구독자 57,900 · 최근 10개 중 롱폼 10 · 최근 업로드 2026-10-03 (2026-10-04 API 확인)"
+  - channel_id: UCPP1HVcKyFThWlpO-JJdXdg
+    topic: tech
+    note: "감자나라ai · 구독자 57,300 · 최근 10개 중 롱폼 10 · 최근 업로드 2026-10-03 (2026-10-04 API 확인)"
+  - channel_id: UCZ2lBenV4YTCqIhYX2-vGaQ
+    topic: tech
+    note: "아론황테크튜브 · 구독자 55,500 · 최근 10개 중 롱폼 9 · 최근 업로드 2026-10-03 (2026-10-04 API 확인)"
+  - channel_id: UCv2q4s0ZAJW6eCb0ubzE08g
+    topic: tech
+    note: "행글라이터 · 구독자 40,200 · 최근 10개 중 롱폼 5 · 최근 업로드 2026-09-27 (2026-10-04 API 확인)"
+  - channel_id: UClXcRTeim6fyVFydKovZaxg
+    topic: tech
+    note: "YC리뷰 · 구독자 33,100 · 최근 10개 중 롱폼 8 · 최근 업로드 2026-09-30 (2026-10-04 API 확인)"
+  - channel_id: UCJ-ofC67CjMxBRmRIb6s9-w
+    topic: web-drama
+    note: "PANGPANG STUDIO · 구독자 831,000 · 최근 10개 중 롱폼 6 · 최근 업로드 2026-10-03 (2026-10-04 API 확인)"
+  - channel_id: UCdOjVxkj5JA0iDu3_xcsTyQ
+    topic: economy
+    note: "증시각도기TV · 구독자 477,000 · 최근 10개 중 롱폼 6 · 최근 업로드 2026-10-04 (2026-10-04 API 확인)"
+  - channel_id: UCBW_PhuXoHk40xF6nO0Q64w
+    topic: game
+    note: "깐 · 구독자 25,100 · 최근 10개 중 롱폼 8 · 최근 업로드 2026-10-02 (2026-10-04 API 확인)"
+  - channel_id: UCVE-zq_yK_InhsVaJPQEttw
+    topic: movie-review
+    note: "캡틴라미[captain ramy] · 구독자 687,000 · 최근 10개 중 롱폼 8 · 최근 업로드 2026-09-20 (2026-10-04 API 확인)"
+  - channel_id: UC5URebNxtMvObHq7aKSyUSQ
+    topic: movie-review
+    note: "무비쀼 · 구독자 119,000 · 최근 10개 중 롱폼 10 · 최근 업로드 2026-10-02 (2026-10-04 API 확인)"
+  - channel_id: UCu4SDxJgLoSnNwdWG4SDj7A
+    topic: movie-review
+    note: "영화리뷰하는사람 · 구독자 30,400 · 최근 10개 중 롱폼 10 · 최근 업로드 2026-09-20 (2026-10-04 API 확인)"
+  - channel_id: UC11A8CPmI7QboPTwF270Www
+    topic: mystery
+    note: "미스스한 이야기 · 구독자 362,000 · 최근 10개 중 롱폼 10 · 최근 업로드 2026-09-30 (2026-10-04 API 확인)"
+  - channel_id: UCBvdpHntlA9Qbmjs71rmUIw
+    topic: mystery
+    note: "괴담록│괴담 들려주는 낚시꾼 · 구독자 22,800 · 최근 10개 중 롱폼 9 · 최근 업로드 2026-10-04 (2026-10-04 API 확인)"
+  - channel_id: UCYUGo6ZfQZCTMrK9rMDijNQ
+    topic: news
+    note: "뉴스토마토 · 구독자 1,100,000 · 최근 10개 중 롱폼 6 · 최근 업로드 2026-10-03 (2026-10-04 API 확인)"
+  - channel_id: UCaVuYo_tiiNzTSmlnM-A2kQ
+    topic: news
+    note: "시사IN(시사인) · 구독자 694,000 · 최근 10개 중 롱폼 10 · 최근 업로드 2026-10-02 (2026-10-04 API 확인)"
+  - channel_id: UC749ed-Qfdk64DyyKpoItEg
+    topic: web-drama
+    note: "Sukfilm · 구독자 470,000 · 최근 10개 중 롱폼 8 · 최근 업로드 2026-10-01 (2026-10-04 API 확인)"
 untrack: []

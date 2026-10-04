@@ -24,5 +24,9 @@ topics:
     label: '테크'
   - slug: news
     label: '뉴스·시사'
+  - slug: economy
+    label: '경제·재테크'
+  # 2026-10-04: 롱폼 웹드라마가 드물어(대부분 Shorts 로 이동) 범위를 롱폼 코미디·예능으로 넓혔다.
+  # 슬러그는 이미 부여된 채널·공유 링크 때문에 유지하고 라벨만 바꾼다(운영자 결정, Story 9.5).
   - slug: web-drama
-    label: '웹드라마'
+    label: '코미디·예능'
