@@ -50,6 +50,10 @@ AUTO_MERGE_UNTIL = dt.date(2026, 12, 5)
 AUTO_MAX_PER_PR = 10
 AUTO_STOP_AT = 600
 VIA_ORDER = {"mention": 0, "search": 1, "popular": 2}
+# vignal coverage target bucket (config/collector.yaml coverage.target_bucket_lower
+# .. next size_buckets boundary, D-19): auto-merge picks these first.
+TARGET_SUBS = (10_000, 100_000)
+SUBS_RE = re.compile(r"구독 (\d+)")
 MARKER_RE = re.compile(r"<!-- vignal-scout-proposed: ([A-Za-z0-9_,-]*) -->")
 ID_RE = re.compile(r"^UC[0-9A-Za-z_-]{22}$")
 
@@ -197,9 +201,18 @@ def via(entry):
     return VIA_ORDER.get(m.group(1) if m else "", 9)
 
 
+def in_target(entry):
+    """True when the note's public subscriber count is in the D-19 target
+    bucket (hidden counts are not)."""
+    m = SUBS_RE.search(str(entry.get("note") or ""))
+    return bool(m) and TARGET_SUBS[0] <= int(m.group(1)) < TARGET_SUBS[1]
+
+
 def take_for_auto(candidates, n):
-    """First n candidates, mention/search before popular, draft order kept."""
-    return sorted(candidates, key=via)[:n]
+    """First n candidates: target-bucket channels first, then
+    mention/search before popular, draft order kept within a tie. Larger
+    channels are not blocked, only ordered later."""
+    return sorted(candidates, key=lambda e: (not in_target(e), via(e)))[:n]
 
 
 def plan(draft_text, approvals_text, closed_prs, now):
@@ -366,6 +379,14 @@ def selftest():
     pool = [{"channel_id": "p1", "note": "scout:popular a"}, {"channel_id": "m1", "note": "scout:mention a"},
             {"channel_id": "p2", "note": "scout:popular b"}, {"channel_id": "s1", "note": "scout:search a"}]
     assert [c["channel_id"] for c in take_for_auto(pool, 3)] == ["m1", "s1", "p1"]
+    # target bucket (10k..100k) first, regardless of path; hidden and big after
+    pool = [{"channel_id": "big", "note": "scout:mention 구독 3100000 롱폼 9/10"},
+            {"channel_id": "hid", "note": "scout:mention 구독 비공개 롱폼 9/10"},
+            {"channel_id": "t_pop", "note": "scout:popular 구독 38900 롱폼 9/10"},
+            {"channel_id": "edge_hi", "note": "scout:popular 구독 100000 롱폼 9/10"},
+            {"channel_id": "t_men", "note": "scout:mention 구독 10000 롱폼 9/10"}]
+    assert [c["channel_id"] for c in take_for_auto(pool, 4)] == ["t_men", "t_pop", "big", "hid"], \
+        take_for_auto(pool, 4)
     print("selftest ok")
     return 0
 
