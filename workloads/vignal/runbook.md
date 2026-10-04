@@ -57,6 +57,30 @@ To resume, commit `suspend: false`. The in-code daily quota cap (`quota.daily_ca
   5. Resume. The first run does a full refresh before it can publish.
 - **Export** (free-tier exit): `vignal export --out /tmp/vignal-export.tar` from a debug pod mounting the PVC.
 
+## Scout candidates (weekly review PR)
+
+The collector's scout stage (vignal FR-40) writes a draft of candidate channels to `vignal-private/ops/scout/candidates-latest.yaml` about once a week. The `vignal-scout-pr` workflow runs daily. It reads that draft and, when there are new candidates and no open PR labelled `vignal-scout`, opens ONE PR appending them to `config/approvals.yaml`. The logic and the rules are in `bin/vignal-scout-pr`.
+
+**Reviewing (the only recurring task):**
+
+- Merge → the next collector run (≤ 6h) starts tracking them.
+- Remove some → delete that channel's 4 lines in *Files changed*, commit, then merge.
+- Reject all → close the PR.
+- Rejected channels (closed PR, or lines deleted before merge) are not proposed again for 90 days.
+- While a bot PR is open, the bot opens no other PR, so an open PR is the reminder.
+
+**One-time setup (needed before the first PR):**
+
+1. Cloudflare dashboard → R2 → *Manage API tokens* → create a token with **Object Read only**, scoped to bucket `vignal-private`. Keep the Access Key ID, the Secret Access Key and the S3 endpoint (`https://<account id>.r2.cloudflarestorage.com`).
+2. Store them as repo secrets (values are never committed; this repo is public):
+   - `gh secret set VIGNAL_R2_ENDPOINT --repo sushistack/homelab-gitops`
+   - `gh secret set VIGNAL_R2_RO_ACCESS_KEY_ID --repo sushistack/homelab-gitops`
+   - `gh secret set VIGNAL_R2_RO_SECRET_ACCESS_KEY --repo sushistack/homelab-gitops`
+3. Repo *Settings → Actions → General → Workflow permissions* must allow "GitHub Actions to create and approve pull requests". Otherwise PR creation fails.
+4. Try it: `gh workflow run vignal-scout-pr --repo sushistack/homelab-gitops`. The run log says "no scout draft yet" until the collector has written one.
+
+Without the secrets the workflow skips with a notice, so nothing breaks. To stop the bot, disable the workflow (`gh workflow disable vignal-scout-pr`).
+
 ## Secrets
 
 `vignal-secrets` holds `YOUTUBE_API_KEY`, the three `R2_*` values, `CF_API_TOKEN`, `NTFY_URL`, `NTFY_TOKEN`, `HEALTHCHECKS_URL` and `AGE_RECIPIENT`.

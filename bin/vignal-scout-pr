@@ -1,0 +1,323 @@
+#!/usr/bin/env python3
+"""Weekly vignal scout review PR (vignal FR-40 / FR-30a).
+
+The vignal collector writes an approvals-file-shaped draft of candidate
+channels to vignal-private/ops/scout/candidates-latest.yaml. This script turns
+that draft into ONE pull request that appends the candidates to
+workloads/vignal/config/approvals.yaml. Reviewing the PR is the approval:
+delete the lines of channels you do not want and merge, or close the PR.
+
+Rules:
+  - If a bot PR (label vignal-scout) is already open, do nothing (never
+    overwrite a PR someone may be editing).
+  - Never propose a channel already in approvals.yaml (approve or untrack).
+  - A channel proposed in a bot PR closed within the last SKIP_DAYS days and
+    NOT in approvals.yaml now was rejected (PR closed, or its lines deleted
+    before merge): do not propose it again until the window passes. This is
+    derived from the closed PRs themselves, so there is no state file.
+  - The edited approvals.yaml is validated (id pattern, topics.yaml slug,
+    non-empty note, no duplicate, no approve/untrack overlap) before pushing.
+
+Usage:
+  bin/vignal-scout-pr <draft.yaml>       # needs gh (GH_TOKEN) and git
+  bin/vignal-scout-pr --selftest         # offline checks, no network
+"""
+import datetime as dt
+import json
+import pathlib
+import re
+import subprocess
+import sys
+import tempfile
+
+import yaml
+
+REPO = pathlib.Path(__file__).resolve().parent.parent
+APPROVALS = "workloads/vignal/config/approvals.yaml"
+TOPICS = "workloads/vignal/config/topics.yaml"
+LABEL = "vignal-scout"
+SKIP_DAYS = 90
+MARKER_RE = re.compile(r"<!-- vignal-scout-proposed: ([A-Za-z0-9_,-]*) -->")
+ID_RE = re.compile(r"^UC[0-9A-Za-z_-]{22}$")
+
+
+# ---------- pure functions (covered by --selftest) ----------
+
+def parse_draft(text):
+    """Draft -> (entries, undecided). entries: dicts with channel_id, topic,
+    note, title (from the `# title` comment line right above the entry).
+    undecided: the `# 주제 미정: ...` comment lines, verbatim."""
+    data = yaml.safe_load(text) or {}
+    entries = [dict(e) for e in (data.get("approve") or [])]
+    titles, pending = {}, None
+    for line in text.splitlines():
+        s = line.strip()
+        if line.startswith("  # "):
+            pending = s[2:]
+        elif s.startswith("- channel_id:"):
+            if pending is not None:
+                titles[s.split(":", 1)[1].strip().strip('"')] = pending
+            pending = None
+        else:
+            pending = None
+    for e in entries:
+        e["title"] = titles.get(e["channel_id"], "")
+    undecided = [l.strip()[2:] for l in text.splitlines() if l.startswith("# 주제 미정:")]
+    return entries, undecided
+
+
+def listed_ids(approvals_text):
+    data = yaml.safe_load(approvals_text) or {}
+    approve = {e["channel_id"] for e in (data.get("approve") or [])}
+    untrack = {e["channel_id"] for e in (data.get("untrack") or [])}
+    return approve, untrack
+
+
+def rejected_ids(closed_prs, approve, untrack, now):
+    """closed_prs: [{body, closedAt}] of bot PRs. Proposed ids that are not
+    listed now and whose PR closed within SKIP_DAYS are rejected."""
+    since = now - dt.timedelta(days=SKIP_DAYS)
+    out = set()
+    for pr in closed_prs:
+        closed = dt.datetime.fromisoformat(pr["closedAt"].replace("Z", "+00:00"))
+        if closed < since:
+            continue
+        m = MARKER_RE.search(pr.get("body") or "")
+        if m:
+            out |= {i for i in m.group(1).split(",") if i} - approve - untrack
+    return out
+
+
+def one_line(s):
+    return " ".join(str(s).split())
+
+
+def render_entries(entries, today):
+    out = []
+    for e in entries:
+        title = one_line(e.get("title") or "")
+        out.append(f"  # {title} (scout {today})" if title else f"  # scout {today}")
+        out.append(f"  - channel_id: {e['channel_id']}")
+        out.append(f"    topic: {e['topic']}")
+        out.append(f"    note: {json.dumps(one_line(e['note']), ensure_ascii=False)}")
+    return out
+
+
+def append_to_approvals(text, entries, today):
+    """Insert entries at the end of the top-level `approve:` list, keeping
+    every existing line and comment."""
+    lines = text.split("\n")
+    new = render_entries(entries, today)
+    for i, line in enumerate(lines):
+        if re.match(r"^approve:\s*\[\]\s*$", line):
+            return "\n".join(lines[:i] + ["approve:"] + new + lines[i + 1:])
+        if re.match(r"^approve:\s*(#.*)?$", line):
+            end = len(lines)
+            for j in range(i + 1, len(lines)):
+                if re.match(r"^[^\s#]", lines[j]):
+                    end = j
+                    break
+            while end > i + 1 and lines[end - 1].strip() == "":
+                end -= 1
+            return "\n".join(lines[:end] + new + lines[end:])
+    sep = "" if text.endswith("\n") or not text else "\n"
+    return text + sep + "approve:\n" + "\n".join(new) + "\n"
+
+
+def validate(approvals_text, slugs):
+    data = yaml.safe_load(approvals_text) or {}
+    probs, seen = [], set()
+    for e in data.get("approve") or []:
+        cid = e.get("channel_id", "")
+        if not ID_RE.match(cid):
+            probs.append(f"bad channel_id {cid!r}")
+        if e.get("topic") not in slugs:
+            probs.append(f"{cid}: topic {e.get('topic')!r} not in topics.yaml")
+        if not str(e.get("note") or "").strip():
+            probs.append(f"{cid}: empty note")
+        if cid in seen:
+            probs.append(f"{cid}: duplicate in approve")
+        seen.add(cid)
+    for e in data.get("untrack") or []:
+        if e.get("channel_id") in seen:
+            probs.append(f"{e.get('channel_id')}: in both approve and untrack")
+    return probs
+
+
+def pr_body(entries, undecided, today):
+    rows = "\n".join(
+        f"| [{one_line(e.get('title') or e['channel_id'])}](https://www.youtube.com/channel/{e['channel_id']})"
+        f" | `{e['topic']}` | {one_line(e['note'])} |" for e in entries)
+    body = f"""vignal scout 가 {today} 기준으로 고른 후보 {len(entries)}개를 `approvals.yaml` 에 추가합니다.
+
+**검토 방법**
+- 모두 괜찮으면 → **Merge**. 다음 collector 실행(6시간 이내)에서 추적이 시작됩니다.
+- 일부만 빼려면 → *Files changed* 에서 그 채널의 4줄(주석·channel_id·topic·note)을 지우고 커밋한 뒤 Merge.
+- 전부 원치 않으면 → **Close**. 빠진 채널은 {SKIP_DAYS}일 동안 다시 제안하지 않습니다.
+- 주제를 바꾸려면 → 그 항목의 `topic:` 을 `topics.yaml` 슬러그로 고쳐 커밋.
+
+| 채널 | 주제 | 근거 |
+|---|---|---|
+{rows}
+"""
+    if undecided:
+        body += "\n**주제 미정 후보** (자동으로 넣지 않음. 원하면 주제를 정해 `approve:` 에 직접 추가)\n"
+        body += "\n".join(f"- {one_line(u)}" for u in undecided) + "\n"
+    ids = ",".join(e["channel_id"] for e in entries)
+    return body + f"\n<!-- vignal-scout-proposed: {ids} -->\n"
+
+
+def plan(draft_text, approvals_text, closed_prs, now):
+    """-> (candidates, undecided). Pure: decides what the PR proposes."""
+    entries, undecided = parse_draft(draft_text)
+    approve, untrack = listed_ids(approvals_text)
+    skip = rejected_ids(closed_prs, approve, untrack, now) | approve | untrack
+    return [e for e in entries if e["channel_id"] not in skip], undecided
+
+
+# ---------- side effects ----------
+
+def sh(*args, input_text=None):
+    r = subprocess.run(args, cwd=REPO, text=True, capture_output=True, input=input_text)
+    if r.returncode != 0:
+        raise SystemExit(f"{' '.join(args[:3])} failed: {r.stderr.strip()}")
+    return r.stdout
+
+
+def gh_json(*args):
+    return json.loads(sh("gh", *args) or "[]")
+
+
+def run(draft_path):
+    now = dt.datetime.now(dt.timezone.utc)
+    today = now.date().isoformat()
+    if gh_json("pr", "list", "--label", LABEL, "--state", "open", "--json", "number"):
+        print("a vignal-scout PR is already open; nothing to do")
+        return 0
+    draft = pathlib.Path(draft_path)
+    if not draft.exists():
+        print("no draft; nothing to do")
+        return 0
+    closed = gh_json("pr", "list", "--label", LABEL, "--state", "closed",
+                     "--limit", "100", "--json", "body,closedAt")
+    approvals_text = (REPO / APPROVALS).read_text()
+    candidates, undecided = plan(draft.read_text(), approvals_text, closed, now)
+    if not candidates:
+        print("no new candidates; nothing to do")
+        return 0
+    new_text = append_to_approvals(approvals_text, candidates, today)
+    slugs = {t["slug"] for t in (yaml.safe_load((REPO / TOPICS).read_text()) or {}).get("topics", [])}
+    probs = validate(new_text, slugs)
+    if probs:
+        raise SystemExit("edited approvals.yaml is invalid:\n  " + "\n  ".join(probs))
+
+    branch = f"vignal-scout/{today}"
+    sh("git", "checkout", "-B", branch)
+    (REPO / APPROVALS).write_text(new_text)
+    sh("git", "add", APPROVALS)
+    sh("git", "-c", "user.name=github-actions[bot]",
+       "-c", "user.email=41898282+github-actions[bot]@users.noreply.github.com",
+       "commit", "-m", f"feat(vignal): scout candidates {today} ({len(candidates)})")
+    sh("git", "push", "--force", "origin", branch)
+    sh("gh", "label", "create", LABEL, "--color", "5319e7",
+       "--description", "vignal scout weekly candidates", "--force")
+    with tempfile.NamedTemporaryFile("w", suffix=".md", delete=False) as f:
+        f.write(pr_body(candidates, undecided, today))
+    url = sh("gh", "pr", "create", "--base", "master", "--head", branch, "--label", LABEL,
+             "--title", f"vignal scout 후보 {today} ({len(candidates)}개) — 검토 후 Merge",
+             "--body-file", f.name)
+    print(url.strip())
+    return 0
+
+
+# ---------- selftest ----------
+
+DRAFT = """# vignal scout draft
+approve:
+  # 채널 하나
+  - channel_id: UCaaaaaaaaaaaaaaaaaaaaaa
+    topic: tech
+    note: "scout:popular 구독 12000 롱폼 7/10 최근 업로드 2026-10-01"
+  # Two "quoted"
+  - channel_id: UCbbbbbbbbbbbbbbbbbbbbbb
+    topic: game
+    note: "scout:mention 구독 비공개 롱폼 6/10 최근 업로드 2026-09-30"
+  - channel_id: UCcccccccccccccccccccccc
+    topic: game
+    note: "scout:popular 구독 5000 롱폼 5/10 최근 업로드 2026-09-29"
+# 주제 미정: UCdddddddddddddddddddddd scout:popular 구독 1 롱폼 5/10 최근 업로드 2026-09-28 (채널)
+"""
+
+APPROVALS_FIXTURE = """# header comment
+approve:
+  - channel_id: UCcccccccccccccccccccccc
+    topic: game
+    note: "seed"   # keep this comment
+
+untrack:
+  - channel_id: UCeeeeeeeeeeeeeeeeeeeeee
+    reason: other
+    note: "x"
+"""
+
+
+def selftest():
+    now = dt.datetime(2026, 10, 10, tzinfo=dt.timezone.utc)
+    entries, undecided = parse_draft(DRAFT)
+    assert [e["title"] for e in entries] == ["채널 하나", 'Two "quoted"', ""], entries
+    assert len(undecided) == 1 and undecided[0].startswith("주제 미정: UCddd"), undecided
+
+    # already approved (UCccc) is never proposed
+    cands, _ = plan(DRAFT, APPROVALS_FIXTURE, [], now)
+    assert [c["channel_id"][:5] for c in cands] == ["UCaaa", "UCbbb"], cands
+
+    # rejected in a recent closed PR -> skipped; an old rejection has expired
+    recent = {"closedAt": "2026-10-01T00:00:00Z",
+              "body": "x <!-- vignal-scout-proposed: UCaaaaaaaaaaaaaaaaaaaaaa,UCcccccccccccccccccccccc -->"}
+    old = {"closedAt": "2026-06-01T00:00:00Z",
+           "body": "<!-- vignal-scout-proposed: UCbbbbbbbbbbbbbbbbbbbbbb -->"}
+    cands, _ = plan(DRAFT, APPROVALS_FIXTURE, [recent, old], now)
+    assert [c["channel_id"][:5] for c in cands] == ["UCbbb"], cands
+
+    # append keeps comments and untrack, lands inside approve, validates
+    cands, _ = plan(DRAFT, APPROVALS_FIXTURE, [], now)
+    out = append_to_approvals(APPROVALS_FIXTURE, cands, "2026-10-10")
+    assert "# header comment" in out and "# keep this comment" in out, out
+    assert out.index("UCbbbbbbbbbbbbbbbbbbbbbb") < out.index("untrack:"), out
+    data = yaml.safe_load(out)
+    assert [e["channel_id"][:5] for e in data["approve"]] == ["UCccc", "UCaaa", "UCbbb"], data
+    assert data["untrack"][0]["channel_id"].startswith("UCeee"), data
+    assert data["approve"][2]["note"].startswith("scout:mention"), data
+    assert validate(out, {"tech", "game"}) == [], validate(out, {"tech", "game"})
+    assert validate(out, {"tech"}) != []
+
+    # empty list form and missing key
+    empty = append_to_approvals("approve: []\nuntrack: []\n", cands, "d")
+    assert len(yaml.safe_load(empty)["approve"]) == 2, empty
+    bare = append_to_approvals("# only comments\n", cands, "d")
+    assert len(yaml.safe_load(bare)["approve"]) == 2, bare
+
+    # overlap and bad id are caught
+    bad = APPROVALS_FIXTURE.replace("UCeeeeeeeeeeeeeeeeeeeeee", "UCcccccccccccccccccccccc")
+    assert any("both" in p for p in validate(bad, {"game"})), validate(bad, {"game"})
+
+    # PR body: marker round-trips, links present
+    body = pr_body(cands, undecided, "2026-10-10")
+    assert MARKER_RE.search(body).group(1) == "UCaaaaaaaaaaaaaaaaaaaaaa,UCbbbbbbbbbbbbbbbbbbbbbb", body
+    assert "https://www.youtube.com/channel/UCaaaaaaaaaaaaaaaaaaaaaa" in body
+    assert "주제 미정" in body
+    print("selftest ok")
+    return 0
+
+
+def main(argv):
+    if argv == ["--selftest"]:
+        return selftest()
+    if len(argv) != 1:
+        print(__doc__, file=sys.stderr)
+        return 2
+    return run(argv[0])
+
+
+if __name__ == "__main__":
+    sys.exit(main(sys.argv[1:]))
