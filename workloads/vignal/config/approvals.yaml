@@ -145,4 +145,44 @@ approve:
   - channel_id: UC749ed-Qfdk64DyyKpoItEg
     topic: web-drama
     note: "Sukfilm · 구독자 470,000 · 최근 10개 중 롱폼 8 · 최근 업로드 2026-10-01 (2026-10-04 API 확인)"
+  # 김대종 경제한방 (scout 2026-10-04)
+  - channel_id: UCJd_yS5GPB9qES4JpNUa0rg
+    topic: economy
+    note: "scout:mention 구독 1750 롱폼 5/10 최근 업로드 2026-09-29"
+  # 정우영의 진짜주식TV (scout 2026-10-04)
+  - channel_id: UCfjdJc3pGfaowHruuGW3MfA
+    topic: economy
+    note: "scout:mention 구독 38900 롱폼 10/10 최근 업로드 2026-10-02"
+  # 김데데 (scout 2026-10-04)
+  - channel_id: UC-9v2ASxz8f313YpiMF55eg
+    topic: game
+    note: "scout:popular 구독 257000 롱폼 10/10 최근 업로드 2026-10-03"
+  # 채현찌 (scout 2026-10-04)
+  - channel_id: UC5wINXUndIRbjygmnFWvf0g
+    topic: game
+    note: "scout:popular 구독 164000 롱폼 5/10 최근 업로드 2026-10-04"
+  # 혜안 (scout 2026-10-04)
+  - channel_id: UC8CIM3d3zDYMk-3T5aAz0yw
+    topic: game
+    note: "scout:popular 구독 3100000 롱폼 10/10 최근 업로드 2026-10-04"
+  # 뉴스데일리베스트 (scout 2026-10-04)
+  - channel_id: UC8p2BFLsMGSfBdpwNs4Zq1A
+    topic: news
+    note: "scout:popular 구독 1030000 롱폼 9/10 최근 업로드 2026-10-04"
+  # 김어준의 겸손은힘들다 뉴스공장 (scout 2026-10-04)
+  - channel_id: UCAAvO0ehWox1bbym3rXKBZw
+    topic: news
+    note: "scout:popular 구독 2300000 롱폼 10/10 최근 업로드 2026-10-04"
+  # 튜브김민교 (scout 2026-10-04)
+  - channel_id: UCBA9XaL5wCdHnC5EmEzwrqw
+    topic: game
+    note: "scout:popular 구독 809000 롱폼 10/10 최근 업로드 2026-10-04"
+  # 불도그 (scout 2026-10-04)
+  - channel_id: UCBjPppB6FOLloYBUvgbqE_A
+    topic: game
+    note: "scout:popular 구독 269000 롱폼 10/10 최근 업로드 2026-10-04"
+  # 싸모스 (scout 2026-10-04)
+  - channel_id: UCCshApLKfQqY1wKB07jGiuA
+    topic: game
+    note: "scout:popular 구독 701000 롱폼 5/10 최근 업로드 2026-10-04"
 untrack: []
