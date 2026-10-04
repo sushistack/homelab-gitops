@@ -47,6 +47,22 @@ cadence:
 snapshots:
   tolerance_hours: 3
 
+# AD-17 (Story 7.3): r24 채널 배수 계산기 설정. version 이 오르면 meta.metric_versions.r24
+# 로 그대로 발행된다. 해시가 바뀌었는데 버전이 같으면 publish 가 실패한다(checkMetricHashes,
+# AD-11 과 같은 패턴). r24 는 G-5 승인 전까지 config/policy.json 에서 disabled 로 남는다.
+metrics:
+  version: 1
+  baseline_max: 10 # AD-17: 같은 채널·같은 타깃 스냅샷의 최근 N 개(발행일 내림차순)
+  baseline_min: 5 # AD-17: 표본이 이보다 적으면 배수 없음(insufficient)
+  low_base_views: 100 # [ASSUMPTION] H-4, 운영자 결정(epic-7-decisions.md #4): 중앙값이 이보다 낮으면 low_base
+  baseline_revalidate_days: 7 # AD-17 (Story 7.4): 표본에 든 영상을 이 주기(일)마다 videos.list 로 재관측한다
+  # AD-17 (Story 8.2): aux_ratios 광고 조회수 의심 판정 임계값. 자체 version/해시를 가지며 r24 해시에는
+  # 들어가지 않는다. 해시가 바뀌었는데 version 이 같으면 publish 가 실패한다.
+  ad_suspect:
+    version: 1
+    min_views: 10000 # [ASSUMPTION] FR-26: 공개 조회수가 이 값 이상인 영상에만 판정을 적용
+    max_like_ratio: 0.001 # [ASSUMPTION] FR-26: likes/views 가 이 값(0.1%) 미만이면 광고 조회수 의심
+
 # AD-8: 같은 작업 종류 안의 채널 우선순위 점수. 순서(내림차순)는 스파인이 고정하고
 # 가중치 값 자체는 [ASSUMPTION](상대 크기만 스파인 순서를 따른다, Phase 0 이후 G-3 로 조정).
 priority_weights:
@@ -58,6 +74,13 @@ priority_weights:
 
 # AD-6: retention_days 의 단일 출처. ingest·publish(meta.retention_days)가 공유한다.
 retention_days: 30
+
+# AD-6 rule 1 예외 (Story 7.2): video_age_snapshots 행만 이 값을 쓴다. 기본값은
+# retention_days 와 같고, policy.json 의 observation_history 가 effectively
+# allowed 일 때만(G-5 승인 이후) 최대 1095일(36개월)까지 늘어난다. allowed 가
+# 아니면 코드가 retention_days 로 되돌린다(Q-15). 생략 시 retention_days 와
+# 동일, retention_days 미만이거나 1095 초과면 설정 오류.
+stats_retention_days: 30
 
 # AD-2/AD-7: meta.refresh_interval_hours 로 그대로 발행된다. CronJob 주기(6시간)와 같다.
 refresh_interval_hours: 6
@@ -128,3 +151,11 @@ cloudflare:
   account_id: ${SECRET:VIGNAL_CF_ACCOUNT_ID}
   worker_script: vignal-web
   graphql_url: https://api.cloudflare.com/client/v4/graphql
+
+# D-19/FR-32: `vignal candidates --coverage` 가 부족분을 계산하는 커버리지 목표. 코드에 두지 않는다.
+# 주제 상한은 경고만 하고 승인을 거부하지 않는다.
+coverage:
+  per_topic_target: 10 # 주제당 추적(active|warm) 채널 목표 수
+  target_bucket_lower: 10000 # 목표 규모 구간 하한. size_buckets 의 마지막이 아닌 경계값이어야 한다(상한은 다음 경계)
+  target_bucket_min_ratio: 0.4 # 공개 구독자 수 기준 목표 구간 최소 비율
+  topic_cap: 30 # 주제당 상한(초과 시 경고)
