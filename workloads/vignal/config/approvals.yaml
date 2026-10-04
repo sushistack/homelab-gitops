@@ -1,0 +1,17 @@
+# vignal approvals 파일 (Story 9.6, FR-30a). 홈랩 GitOps 저장소의
+# workloads/vignal/config/approvals.yaml 로 둔다. 매 run 의 intake 시작에 적용된다.
+#
+# 형식:
+#   approve:   # 이 목록의 채널은 매 run 마다 이 주제로 승인된다 (다른 주제면 덮어씀)
+#     - channel_id: UCxxxxxxxxxxxxxxxxxxxxxx   # UC + 22자
+#       topic: tech                            # config/topics.yaml 의 slug
+#       note: "승인 근거 (필수, DB·로그·공개 데이터에는 남지 않음)"
+#   untrack:   # active|warm|dormant 채널을 추적 중단 (그 외 상태는 변화 없음)
+#     - channel_id: UCxxxxxxxxxxxxxxxxxxxxxx
+#       reason: inactive                       # not_korean_content|inactive|duplicate|policy|channel_not_found|quota_delayed|other
+#       note: "중단 근거 (필수, 비공개 excluded_note 에만 저장)"
+#
+# 같은 channel_id 를 approve 와 untrack 양쪽에 두면 파일 전체가 거부된다.
+# 로컬 검증: vignal approvals validate approvals.yaml
+approve: []
+untrack: []

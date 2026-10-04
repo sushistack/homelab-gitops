@@ -18,6 +18,7 @@ configMapGenerator:
       - config/collector.yaml
       - config/policy.json
       - config/topics.yaml
+      - config/approvals.yaml   # Story 9.6 (FR-30a): git approvals file, source of truth lives only here
 generatorOptions:
   disableNameSuffixHash: true
 
