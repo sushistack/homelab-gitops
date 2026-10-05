@@ -225,4 +225,44 @@ approve:
   - channel_id: UCJmsB6NAU0sp2htDL4KmX0A
     topic: game
     note: "scout:popular 구독 184000 롱폼 10/10 최근 업로드 2026-10-03"
+  # 살림남매 (scout 2026-10-05)
+  - channel_id: UCI3bXUVuHXHMAiurKj3Wm9A
+    topic: tech
+    note: "scout:popular 구독 26700 롱폼 5/10 최근 업로드 2026-10-04"
+  # MBC강원영동NEWS (scout 2026-10-05)
+  - channel_id: UCvB3ZkjUpbYsHXYr6z0WSQA
+    topic: news
+    note: "scout:popular 구독 81000 롱폼 7/10 최근 업로드 2026-10-05"
+  # 청묘 (scout 2026-10-05)
+  - channel_id: UCCL77mfaS0LwgJqry7ph_zA
+    topic: game
+    note: "scout:mention 구독 107000 롱폼 10/10 최근 업로드 2026-10-03"
+  # 긴데데 (scout 2026-10-05)
+  - channel_id: UCVNdAacha6pZqmCksiRbWNQ
+    topic: game
+    note: "scout:mention 구독 8270 롱폼 10/10 최근 업로드 2026-10-02"
+  # 인피쉰 (scout 2026-10-05)
+  - channel_id: UC-okJdotaXPlzivRzHFqzuA
+    topic: game
+    note: "scout:popular 구독 644000 롱폼 8/10 최근 업로드 2026-10-05"
+  # 저라뎃 JUSTLIKETHAT (scout 2026-10-05)
+  - channel_id: UC1dG3vI9FfHnH3YgyeKUz_A
+    topic: game
+    note: "scout:popular 구독 728000 롱폼 9/10 최근 업로드 2026-10-04"
+  # 마플 마인크래프트 채널 (scout 2026-10-05)
+  - channel_id: UC1q4Ihlv_YhLELw-ijE0Diw
+    topic: game
+    note: "scout:popular 구독 870000 롱폼 10/10 최근 업로드 2026-10-04"
+  # 플래그 (scout 2026-10-05)
+  - channel_id: UC2eGI7us9gmMahbByyPnTwg
+    topic: game
+    note: "scout:popular 구독 135000 롱폼 10/10 최근 업로드 2026-10-04"
+  # 박성태의 뉴스쇼 (scout 2026-10-05)
+  - channel_id: UC4Aa3OPkMenwTANpf0oWVRQ
+    topic: news
+    note: "scout:popular 구독 1640000 롱폼 8/10 최근 업로드 2026-10-05"
+  # 한길록 Hangilog (scout 2026-10-05)
+  - channel_id: UC75fFr-vRB-iya__9SCpmIQ
+    topic: news
+    note: "scout:popular 구독 141000 롱폼 6/10 최근 업로드 2026-10-04"
 untrack: []
