@@ -1,0 +1,10 @@
+# config/revenue-exclusions.yaml — 예상 수익을 계산하지 않을 채널 (FR-49, AD-22).
+#
+# 형식: 채널 ID(UC + 22자)의 YAML 목록. 비어 있으면 `[]` 한 줄만 둔다.
+# 크리에이터가 자기 채널의 예상 수익 표시를 원치 않아 처리방침 연락처로 요청하면
+# 운영자가 확인 후 아래에 한 줄씩 더하고 커밋한다(커밋이 기록). 목록에 있는 채널은
+# 채널 합계와 그 채널의 영상별 값이 모두 계산·발행되지 않는다.
+# 예:
+#   - UCxxxxxxxxxxxxxxxxxxxxxx
+# collector 는 이 파일을 vignal-config ConfigMap 으로 읽는다(docs/ops/revenue-estimate.md).
+[]

@@ -21,6 +21,13 @@
     "expires_at": "2026-12-27T00:00:00Z"
   },
   {
+    "feature": "revenue_estimate",
+    "decision": "disabled",
+    "authority_ref": "PRD FR-49 (영상·채널 예상 광고 수익), developer policy §III.E.4.h (derived metrics need approval), Q-15 (ask for approval and name revenue estimates in the permitted use); shipped disabled by Story 14.6 (D-27)",
+    "reviewed_at": "2026-10-05T00:00:00Z",
+    "expires_at": "2027-01-03T00:00:00Z"
+  },
+  {
     "feature": "observation_history",
     "decision": "disabled",
     "authority_ref": "G-1 2026-09-29 (docs/analysis/g1-policy-review.md #2): >30-day history needs derived-metrics-policy acceptance",
