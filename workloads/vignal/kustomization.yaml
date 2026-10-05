@@ -19,6 +19,8 @@ configMapGenerator:
       - config/policy.json
       - config/topics.yaml
       - config/approvals.yaml   # Story 9.6 (FR-30a): git approvals file, source of truth lives only here
+      - config/rpm.yaml   # Story 14.6 (FR-49): RPM ranges, copy of vignal config/rpm.yaml
+      - config/revenue-exclusions.yaml   # Story 14.6: channels excluded from revenue estimates
 generatorOptions:
   disableNameSuffixHash: true
 

@@ -1,0 +1,585 @@
+# config/rpm.yaml — RPM 참고 범위 (FR-41, AD-22). 단일 출처.
+#
+# 단위: 조회 1,000회당 원(KRW, 크리에이터 몫). topic: null = 전체 주제.
+# 출처 URL 없는 숫자는 넣지 않는다(sources 비어 있으면 빌드 실패).
+# 형식마다 topic: null 행이 정확히 하나 있어야 하고, (format, topic) 중복은 불가.
+# basis: reports 는 n>=5 와 median/p25/p75 가 필요하다.
+# 반영 절차: 운영자가 제보를 검토해 이 파일을 수정·커밋한다(커밋이 기록, docs/ops/rpm-reports.md (Story 14.3) 참조).
+# web 빌드(npm run gen:rpm)가 검증 후 web/src/generated/rpm.json 으로 묶는다.
+
+version: 1
+reviewed_at: 2026-10-04
+ranges:
+  - format: long
+    topic: null
+    low: 1000
+    high: 4500
+    basis: blog
+    sources:
+      - title: '유튜브 수익 계산법 2026 — 조회수로 수익 추정하는 RPM·CPM 완벽 정리'
+        url: 'https://snsboost.kr/blog/44'
+        published: 2026-06-13
+  - format: shorts
+    topic: null
+    low: 50
+    high: 500
+    basis: blog
+    sources:
+      - title: '유튜브 쇼츠 수익 도대체 얼마나 버는거야?'
+        url: 'https://brunch.co.kr/@shortsman/21'
+        published: 2024-11-18
+  - format: long
+    topic: game
+    low: 1500
+    high: 2200
+    basis: model
+    median: 1900
+    model_version: '2026-10-05'
+    sources:
+      - title: 'Threads @hey.chanyoung — 롱폼·Shorts 조회당 수익 공개 글'
+        url: 'https://www.threads.com/@hey.chanyoung/post/DL32K4HT3Ej'
+        published: 2025-07-08
+      - title: '디시인사이드 크리에이터 마이너 갤러리 — 게임 영상 수익 공개 글'
+        url: 'https://gall.dcinside.com/mgallery/board/view/?id=creator&no=68752'
+        published: 2024-06-12
+      - title: '클리앙 — 유튜브 RPM·CPM 공개 글 (2020, 오래된 자료)'
+        url: 'https://www.clien.net/service/board/park/15279503'
+        published: 2020-08-16
+      - title: 'OutlierKit — 유튜브 니치별 RPM 가이드 (미국 기준 벤치마크)'
+        url: 'https://outlierkit.com/resources/youtube-niches-guide/'
+        published: 2026-09-13
+      - title: 'FluxNote — 2026 니치별 유튜브 RPM'
+        url: 'https://fluxnote.io/blog/youtube-rpm-by-niche-2026'
+        published: 2026-05-02
+      - title: 'MakeAIVideo — 2026 니치별 유튜브 CPM·RPM'
+        url: 'https://makeaivideo.ai/blog/youtube-cpm-rpm-by-niche-2026'
+        published: 2026-05-31
+      - title: 'YTMoneyCalculator — 유튜브 평균 RPM'
+        url: 'https://ytmoneycalculator.com/blog/average-youtube-rpm/'
+        published: 2026-03-17
+      - title: 'TubeAnalytics — 한국 유튜브 벤치마크 (표본 없는 모델 추정)'
+        url: 'https://www.tubeanalytics.net/benchmarks/south-korea'
+        published: 2026-05-08
+  - format: shorts
+    topic: game
+    low: 200
+    high: 400
+    basis: model
+    median: 300
+    model_version: '2026-10-05'
+    sources:
+      - title: 'Threads @hey.chanyoung — 롱폼·Shorts 조회당 수익 공개 글'
+        url: 'https://www.threads.com/@hey.chanyoung/post/DL32K4HT3Ej'
+        published: 2025-07-08
+      - title: '디시인사이드 크리에이터 마이너 갤러리 — 게임 영상 수익 공개 글'
+        url: 'https://gall.dcinside.com/mgallery/board/view/?id=creator&no=68752'
+        published: 2024-06-12
+      - title: '클리앙 — 유튜브 RPM·CPM 공개 글 (2020, 오래된 자료)'
+        url: 'https://www.clien.net/service/board/park/15279503'
+        published: 2020-08-16
+      - title: 'OutlierKit — 유튜브 니치별 RPM 가이드 (미국 기준 벤치마크)'
+        url: 'https://outlierkit.com/resources/youtube-niches-guide/'
+        published: 2026-09-13
+      - title: 'FluxNote — 2026 니치별 유튜브 RPM'
+        url: 'https://fluxnote.io/blog/youtube-rpm-by-niche-2026'
+        published: 2026-05-02
+      - title: 'MakeAIVideo — 2026 니치별 유튜브 CPM·RPM'
+        url: 'https://makeaivideo.ai/blog/youtube-cpm-rpm-by-niche-2026'
+        published: 2026-05-31
+      - title: 'YTMoneyCalculator — 유튜브 평균 RPM'
+        url: 'https://ytmoneycalculator.com/blog/average-youtube-rpm/'
+        published: 2026-03-17
+      - title: 'TubeAnalytics — 한국 유튜브 벤치마크 (표본 없는 모델 추정)'
+        url: 'https://www.tubeanalytics.net/benchmarks/south-korea'
+        published: 2026-05-08
+      - title: 'Digiday — Shorts 와 롱폼 수익 비교 (크리에이터 인터뷰)'
+        url: 'https://digiday.com/media/how-youtube-shorts-revenue-compares-to-long-form-video-revenue-for-creators/'
+        published: 2025-02-25
+      - title: 'AIR Media-Tech — Shorts RPM 과 롱폼 비교'
+        url: 'https://air.io/en/air-data-findings/youtube-shorts-rpm-vs-long-form-how-much-do-shorts-earn-in-2026'
+        published: 2026-09-16
+      - title: '브런치 shortsman — 유튜브 쇼츠 수익 공개 글'
+        url: 'https://brunch.co.kr/@shortsman/21'
+        published: 2024-11-18
+  - format: long
+    topic: movie-review
+    low: 1800
+    high: 2800
+    basis: model
+    median: 2300
+    model_version: '2026-10-05'
+    sources:
+      - title: 'Threads @hey.chanyoung — 롱폼·Shorts 조회당 수익 공개 글'
+        url: 'https://www.threads.com/@hey.chanyoung/post/DL32K4HT3Ej'
+        published: 2025-07-08
+      - title: '디시인사이드 크리에이터 마이너 갤러리 — 게임 영상 수익 공개 글'
+        url: 'https://gall.dcinside.com/mgallery/board/view/?id=creator&no=68752'
+        published: 2024-06-12
+      - title: '클리앙 — 유튜브 RPM·CPM 공개 글 (2020, 오래된 자료)'
+        url: 'https://www.clien.net/service/board/park/15279503'
+        published: 2020-08-16
+      - title: 'FluxNote — 2026 니치별 유튜브 RPM'
+        url: 'https://fluxnote.io/blog/youtube-rpm-by-niche-2026'
+        published: 2026-05-02
+      - title: 'OutlierKit — 유튜브 니치별 RPM 가이드 (미국 기준 벤치마크)'
+        url: 'https://outlierkit.com/resources/youtube-niches-guide/'
+        published: 2026-09-13
+  - format: shorts
+    topic: movie-review
+    low: 200
+    high: 500
+    basis: model
+    median: 300
+    model_version: '2026-10-05'
+    sources:
+      - title: 'Threads @hey.chanyoung — 롱폼·Shorts 조회당 수익 공개 글'
+        url: 'https://www.threads.com/@hey.chanyoung/post/DL32K4HT3Ej'
+        published: 2025-07-08
+      - title: '디시인사이드 크리에이터 마이너 갤러리 — 게임 영상 수익 공개 글'
+        url: 'https://gall.dcinside.com/mgallery/board/view/?id=creator&no=68752'
+        published: 2024-06-12
+      - title: '클리앙 — 유튜브 RPM·CPM 공개 글 (2020, 오래된 자료)'
+        url: 'https://www.clien.net/service/board/park/15279503'
+        published: 2020-08-16
+      - title: 'FluxNote — 2026 니치별 유튜브 RPM'
+        url: 'https://fluxnote.io/blog/youtube-rpm-by-niche-2026'
+        published: 2026-05-02
+      - title: 'OutlierKit — 유튜브 니치별 RPM 가이드 (미국 기준 벤치마크)'
+        url: 'https://outlierkit.com/resources/youtube-niches-guide/'
+        published: 2026-09-13
+      - title: 'Digiday — Shorts 와 롱폼 수익 비교 (크리에이터 인터뷰)'
+        url: 'https://digiday.com/media/how-youtube-shorts-revenue-compares-to-long-form-video-revenue-for-creators/'
+        published: 2025-02-25
+      - title: 'AIR Media-Tech — Shorts RPM 과 롱폼 비교'
+        url: 'https://air.io/en/air-data-findings/youtube-shorts-rpm-vs-long-form-how-much-do-shorts-earn-in-2026'
+        published: 2026-09-16
+      - title: '브런치 shortsman — 유튜브 쇼츠 수익 공개 글'
+        url: 'https://brunch.co.kr/@shortsman/21'
+        published: 2024-11-18
+  - format: long
+    topic: mukbang
+    low: 1600
+    high: 2500
+    basis: model
+    median: 2000
+    model_version: '2026-10-05'
+    sources:
+      - title: 'Threads @hey.chanyoung — 롱폼·Shorts 조회당 수익 공개 글'
+        url: 'https://www.threads.com/@hey.chanyoung/post/DL32K4HT3Ej'
+        published: 2025-07-08
+      - title: '디시인사이드 크리에이터 마이너 갤러리 — 게임 영상 수익 공개 글'
+        url: 'https://gall.dcinside.com/mgallery/board/view/?id=creator&no=68752'
+        published: 2024-06-12
+      - title: '클리앙 — 유튜브 RPM·CPM 공개 글 (2020, 오래된 자료)'
+        url: 'https://www.clien.net/service/board/park/15279503'
+        published: 2020-08-16
+      - title: 'OutlierKit — 유튜브 니치별 RPM 가이드 (미국 기준 벤치마크)'
+        url: 'https://outlierkit.com/resources/youtube-niches-guide/'
+        published: 2026-09-13
+      - title: 'FluxNote — 2026 니치별 유튜브 RPM'
+        url: 'https://fluxnote.io/blog/youtube-rpm-by-niche-2026'
+        published: 2026-05-02
+  - format: shorts
+    topic: mukbang
+    low: 200
+    high: 400
+    basis: model
+    median: 300
+    model_version: '2026-10-05'
+    sources:
+      - title: 'Threads @hey.chanyoung — 롱폼·Shorts 조회당 수익 공개 글'
+        url: 'https://www.threads.com/@hey.chanyoung/post/DL32K4HT3Ej'
+        published: 2025-07-08
+      - title: '디시인사이드 크리에이터 마이너 갤러리 — 게임 영상 수익 공개 글'
+        url: 'https://gall.dcinside.com/mgallery/board/view/?id=creator&no=68752'
+        published: 2024-06-12
+      - title: '클리앙 — 유튜브 RPM·CPM 공개 글 (2020, 오래된 자료)'
+        url: 'https://www.clien.net/service/board/park/15279503'
+        published: 2020-08-16
+      - title: 'OutlierKit — 유튜브 니치별 RPM 가이드 (미국 기준 벤치마크)'
+        url: 'https://outlierkit.com/resources/youtube-niches-guide/'
+        published: 2026-09-13
+      - title: 'FluxNote — 2026 니치별 유튜브 RPM'
+        url: 'https://fluxnote.io/blog/youtube-rpm-by-niche-2026'
+        published: 2026-05-02
+      - title: 'Digiday — Shorts 와 롱폼 수익 비교 (크리에이터 인터뷰)'
+        url: 'https://digiday.com/media/how-youtube-shorts-revenue-compares-to-long-form-video-revenue-for-creators/'
+        published: 2025-02-25
+      - title: 'AIR Media-Tech — Shorts RPM 과 롱폼 비교'
+        url: 'https://air.io/en/air-data-findings/youtube-shorts-rpm-vs-long-form-how-much-do-shorts-earn-in-2026'
+        published: 2026-09-16
+      - title: '브런치 shortsman — 유튜브 쇼츠 수익 공개 글'
+        url: 'https://brunch.co.kr/@shortsman/21'
+        published: 2024-11-18
+  - format: long
+    topic: mystery
+    low: 2100
+    high: 3500
+    basis: model
+    median: 2700
+    model_version: '2026-10-05'
+    sources:
+      - title: 'Threads @hey.chanyoung — 롱폼·Shorts 조회당 수익 공개 글'
+        url: 'https://www.threads.com/@hey.chanyoung/post/DL32K4HT3Ej'
+        published: 2025-07-08
+      - title: '디시인사이드 크리에이터 마이너 갤러리 — 게임 영상 수익 공개 글'
+        url: 'https://gall.dcinside.com/mgallery/board/view/?id=creator&no=68752'
+        published: 2024-06-12
+      - title: '클리앙 — 유튜브 RPM·CPM 공개 글 (2020, 오래된 자료)'
+        url: 'https://www.clien.net/service/board/park/15279503'
+        published: 2020-08-16
+      - title: 'OutlierKit — 유튜브 니치별 RPM 가이드 (미국 기준 벤치마크)'
+        url: 'https://outlierkit.com/resources/youtube-niches-guide/'
+        published: 2026-09-13
+  - format: shorts
+    topic: mystery
+    low: 300
+    high: 600
+    basis: model
+    median: 400
+    model_version: '2026-10-05'
+    sources:
+      - title: 'Threads @hey.chanyoung — 롱폼·Shorts 조회당 수익 공개 글'
+        url: 'https://www.threads.com/@hey.chanyoung/post/DL32K4HT3Ej'
+        published: 2025-07-08
+      - title: '디시인사이드 크리에이터 마이너 갤러리 — 게임 영상 수익 공개 글'
+        url: 'https://gall.dcinside.com/mgallery/board/view/?id=creator&no=68752'
+        published: 2024-06-12
+      - title: '클리앙 — 유튜브 RPM·CPM 공개 글 (2020, 오래된 자료)'
+        url: 'https://www.clien.net/service/board/park/15279503'
+        published: 2020-08-16
+      - title: 'OutlierKit — 유튜브 니치별 RPM 가이드 (미국 기준 벤치마크)'
+        url: 'https://outlierkit.com/resources/youtube-niches-guide/'
+        published: 2026-09-13
+      - title: 'Digiday — Shorts 와 롱폼 수익 비교 (크리에이터 인터뷰)'
+        url: 'https://digiday.com/media/how-youtube-shorts-revenue-compares-to-long-form-video-revenue-for-creators/'
+        published: 2025-02-25
+      - title: 'AIR Media-Tech — Shorts RPM 과 롱폼 비교'
+        url: 'https://air.io/en/air-data-findings/youtube-shorts-rpm-vs-long-form-how-much-do-shorts-earn-in-2026'
+        published: 2026-09-16
+      - title: '브런치 shortsman — 유튜브 쇼츠 수익 공개 글'
+        url: 'https://brunch.co.kr/@shortsman/21'
+        published: 2024-11-18
+  - format: long
+    topic: beauty-life
+    low: 2500
+    high: 3800
+    basis: model
+    median: 3100
+    model_version: '2026-10-05'
+    sources:
+      - title: 'Threads @hey.chanyoung — 롱폼·Shorts 조회당 수익 공개 글'
+        url: 'https://www.threads.com/@hey.chanyoung/post/DL32K4HT3Ej'
+        published: 2025-07-08
+      - title: '디시인사이드 크리에이터 마이너 갤러리 — 게임 영상 수익 공개 글'
+        url: 'https://gall.dcinside.com/mgallery/board/view/?id=creator&no=68752'
+        published: 2024-06-12
+      - title: '클리앙 — 유튜브 RPM·CPM 공개 글 (2020, 오래된 자료)'
+        url: 'https://www.clien.net/service/board/park/15279503'
+        published: 2020-08-16
+      - title: 'OutlierKit — 유튜브 니치별 RPM 가이드 (미국 기준 벤치마크)'
+        url: 'https://outlierkit.com/resources/youtube-niches-guide/'
+        published: 2026-09-13
+      - title: 'FluxNote — 2026 니치별 유튜브 RPM'
+        url: 'https://fluxnote.io/blog/youtube-rpm-by-niche-2026'
+        published: 2026-05-02
+      - title: 'MakeAIVideo — 2026 니치별 유튜브 CPM·RPM'
+        url: 'https://makeaivideo.ai/blog/youtube-cpm-rpm-by-niche-2026'
+        published: 2026-05-31
+      - title: 'TubeAnalytics — 한국 유튜브 벤치마크 (표본 없는 모델 추정)'
+        url: 'https://www.tubeanalytics.net/benchmarks/south-korea'
+        published: 2026-05-08
+  - format: shorts
+    topic: beauty-life
+    low: 300
+    high: 600
+    basis: model
+    median: 500
+    model_version: '2026-10-05'
+    sources:
+      - title: 'Threads @hey.chanyoung — 롱폼·Shorts 조회당 수익 공개 글'
+        url: 'https://www.threads.com/@hey.chanyoung/post/DL32K4HT3Ej'
+        published: 2025-07-08
+      - title: '디시인사이드 크리에이터 마이너 갤러리 — 게임 영상 수익 공개 글'
+        url: 'https://gall.dcinside.com/mgallery/board/view/?id=creator&no=68752'
+        published: 2024-06-12
+      - title: '클리앙 — 유튜브 RPM·CPM 공개 글 (2020, 오래된 자료)'
+        url: 'https://www.clien.net/service/board/park/15279503'
+        published: 2020-08-16
+      - title: 'OutlierKit — 유튜브 니치별 RPM 가이드 (미국 기준 벤치마크)'
+        url: 'https://outlierkit.com/resources/youtube-niches-guide/'
+        published: 2026-09-13
+      - title: 'FluxNote — 2026 니치별 유튜브 RPM'
+        url: 'https://fluxnote.io/blog/youtube-rpm-by-niche-2026'
+        published: 2026-05-02
+      - title: 'MakeAIVideo — 2026 니치별 유튜브 CPM·RPM'
+        url: 'https://makeaivideo.ai/blog/youtube-cpm-rpm-by-niche-2026'
+        published: 2026-05-31
+      - title: 'TubeAnalytics — 한국 유튜브 벤치마크 (표본 없는 모델 추정)'
+        url: 'https://www.tubeanalytics.net/benchmarks/south-korea'
+        published: 2026-05-08
+      - title: 'Digiday — Shorts 와 롱폼 수익 비교 (크리에이터 인터뷰)'
+        url: 'https://digiday.com/media/how-youtube-shorts-revenue-compares-to-long-form-video-revenue-for-creators/'
+        published: 2025-02-25
+      - title: 'AIR Media-Tech — Shorts RPM 과 롱폼 비교'
+        url: 'https://air.io/en/air-data-findings/youtube-shorts-rpm-vs-long-form-how-much-do-shorts-earn-in-2026'
+        published: 2026-09-16
+      - title: '브런치 shortsman — 유튜브 쇼츠 수익 공개 글'
+        url: 'https://brunch.co.kr/@shortsman/21'
+        published: 2024-11-18
+  - format: long
+    topic: tech
+    low: 3800
+    high: 6000
+    basis: model
+    median: 4800
+    model_version: '2026-10-05'
+    sources:
+      - title: 'Threads @hey.chanyoung — 롱폼·Shorts 조회당 수익 공개 글'
+        url: 'https://www.threads.com/@hey.chanyoung/post/DL32K4HT3Ej'
+        published: 2025-07-08
+      - title: '디시인사이드 크리에이터 마이너 갤러리 — 게임 영상 수익 공개 글'
+        url: 'https://gall.dcinside.com/mgallery/board/view/?id=creator&no=68752'
+        published: 2024-06-12
+      - title: '클리앙 — 유튜브 RPM·CPM 공개 글 (2020, 오래된 자료)'
+        url: 'https://www.clien.net/service/board/park/15279503'
+        published: 2020-08-16
+      - title: 'OutlierKit — 유튜브 니치별 RPM 가이드 (미국 기준 벤치마크)'
+        url: 'https://outlierkit.com/resources/youtube-niches-guide/'
+        published: 2026-09-13
+      - title: 'FluxNote — 2026 니치별 유튜브 RPM'
+        url: 'https://fluxnote.io/blog/youtube-rpm-by-niche-2026'
+        published: 2026-05-02
+      - title: 'MakeAIVideo — 2026 니치별 유튜브 CPM·RPM'
+        url: 'https://makeaivideo.ai/blog/youtube-cpm-rpm-by-niche-2026'
+        published: 2026-05-31
+      - title: 'YTMoneyCalculator — 유튜브 평균 RPM'
+        url: 'https://ytmoneycalculator.com/blog/average-youtube-rpm/'
+        published: 2026-03-17
+      - title: 'TubeAnalytics — 한국 유튜브 벤치마크 (표본 없는 모델 추정)'
+        url: 'https://www.tubeanalytics.net/benchmarks/south-korea'
+        published: 2026-05-08
+  - format: shorts
+    topic: tech
+    low: 500
+    high: 1000
+    basis: model
+    median: 700
+    model_version: '2026-10-05'
+    sources:
+      - title: 'Threads @hey.chanyoung — 롱폼·Shorts 조회당 수익 공개 글'
+        url: 'https://www.threads.com/@hey.chanyoung/post/DL32K4HT3Ej'
+        published: 2025-07-08
+      - title: '디시인사이드 크리에이터 마이너 갤러리 — 게임 영상 수익 공개 글'
+        url: 'https://gall.dcinside.com/mgallery/board/view/?id=creator&no=68752'
+        published: 2024-06-12
+      - title: '클리앙 — 유튜브 RPM·CPM 공개 글 (2020, 오래된 자료)'
+        url: 'https://www.clien.net/service/board/park/15279503'
+        published: 2020-08-16
+      - title: 'OutlierKit — 유튜브 니치별 RPM 가이드 (미국 기준 벤치마크)'
+        url: 'https://outlierkit.com/resources/youtube-niches-guide/'
+        published: 2026-09-13
+      - title: 'FluxNote — 2026 니치별 유튜브 RPM'
+        url: 'https://fluxnote.io/blog/youtube-rpm-by-niche-2026'
+        published: 2026-05-02
+      - title: 'MakeAIVideo — 2026 니치별 유튜브 CPM·RPM'
+        url: 'https://makeaivideo.ai/blog/youtube-cpm-rpm-by-niche-2026'
+        published: 2026-05-31
+      - title: 'YTMoneyCalculator — 유튜브 평균 RPM'
+        url: 'https://ytmoneycalculator.com/blog/average-youtube-rpm/'
+        published: 2026-03-17
+      - title: 'TubeAnalytics — 한국 유튜브 벤치마크 (표본 없는 모델 추정)'
+        url: 'https://www.tubeanalytics.net/benchmarks/south-korea'
+        published: 2026-05-08
+      - title: 'Digiday — Shorts 와 롱폼 수익 비교 (크리에이터 인터뷰)'
+        url: 'https://digiday.com/media/how-youtube-shorts-revenue-compares-to-long-form-video-revenue-for-creators/'
+        published: 2025-02-25
+      - title: 'AIR Media-Tech — Shorts RPM 과 롱폼 비교'
+        url: 'https://air.io/en/air-data-findings/youtube-shorts-rpm-vs-long-form-how-much-do-shorts-earn-in-2026'
+        published: 2026-09-16
+      - title: '브런치 shortsman — 유튜브 쇼츠 수익 공개 글'
+        url: 'https://brunch.co.kr/@shortsman/21'
+        published: 2024-11-18
+  - format: long
+    topic: news
+    low: 3200
+    high: 5000
+    basis: model
+    median: 4000
+    model_version: '2026-10-05'
+    sources:
+      - title: 'Threads @hey.chanyoung — 롱폼·Shorts 조회당 수익 공개 글'
+        url: 'https://www.threads.com/@hey.chanyoung/post/DL32K4HT3Ej'
+        published: 2025-07-08
+      - title: '디시인사이드 크리에이터 마이너 갤러리 — 게임 영상 수익 공개 글'
+        url: 'https://gall.dcinside.com/mgallery/board/view/?id=creator&no=68752'
+        published: 2024-06-12
+      - title: '클리앙 — 유튜브 RPM·CPM 공개 글 (2020, 오래된 자료)'
+        url: 'https://www.clien.net/service/board/park/15279503'
+        published: 2020-08-16
+      - title: 'FluxNote — 2026 니치별 유튜브 RPM'
+        url: 'https://fluxnote.io/blog/youtube-rpm-by-niche-2026'
+        published: 2026-05-02
+  - format: shorts
+    topic: news
+    low: 400
+    high: 800
+    basis: model
+    median: 600
+    model_version: '2026-10-05'
+    sources:
+      - title: 'Threads @hey.chanyoung — 롱폼·Shorts 조회당 수익 공개 글'
+        url: 'https://www.threads.com/@hey.chanyoung/post/DL32K4HT3Ej'
+        published: 2025-07-08
+      - title: '디시인사이드 크리에이터 마이너 갤러리 — 게임 영상 수익 공개 글'
+        url: 'https://gall.dcinside.com/mgallery/board/view/?id=creator&no=68752'
+        published: 2024-06-12
+      - title: '클리앙 — 유튜브 RPM·CPM 공개 글 (2020, 오래된 자료)'
+        url: 'https://www.clien.net/service/board/park/15279503'
+        published: 2020-08-16
+      - title: 'FluxNote — 2026 니치별 유튜브 RPM'
+        url: 'https://fluxnote.io/blog/youtube-rpm-by-niche-2026'
+        published: 2026-05-02
+      - title: 'Digiday — Shorts 와 롱폼 수익 비교 (크리에이터 인터뷰)'
+        url: 'https://digiday.com/media/how-youtube-shorts-revenue-compares-to-long-form-video-revenue-for-creators/'
+        published: 2025-02-25
+      - title: 'AIR Media-Tech — Shorts RPM 과 롱폼 비교'
+        url: 'https://air.io/en/air-data-findings/youtube-shorts-rpm-vs-long-form-how-much-do-shorts-earn-in-2026'
+        published: 2026-09-16
+      - title: '브런치 shortsman — 유튜브 쇼츠 수익 공개 글'
+        url: 'https://brunch.co.kr/@shortsman/21'
+        published: 2024-11-18
+  - format: long
+    topic: economy
+    low: 5600
+    high: 9400
+    basis: model
+    median: 7300
+    model_version: '2026-10-05'
+    sources:
+      - title: 'Threads @hey.chanyoung — 롱폼·Shorts 조회당 수익 공개 글'
+        url: 'https://www.threads.com/@hey.chanyoung/post/DL32K4HT3Ej'
+        published: 2025-07-08
+      - title: '디시인사이드 크리에이터 마이너 갤러리 — 게임 영상 수익 공개 글'
+        url: 'https://gall.dcinside.com/mgallery/board/view/?id=creator&no=68752'
+        published: 2024-06-12
+      - title: '클리앙 — 유튜브 RPM·CPM 공개 글 (2020, 오래된 자료)'
+        url: 'https://www.clien.net/service/board/park/15279503'
+        published: 2020-08-16
+      - title: 'OutlierKit — 유튜브 니치별 RPM 가이드 (미국 기준 벤치마크)'
+        url: 'https://outlierkit.com/resources/youtube-niches-guide/'
+        published: 2026-09-13
+      - title: 'FluxNote — 2026 니치별 유튜브 RPM'
+        url: 'https://fluxnote.io/blog/youtube-rpm-by-niche-2026'
+        published: 2026-05-02
+      - title: 'MakeAIVideo — 2026 니치별 유튜브 CPM·RPM'
+        url: 'https://makeaivideo.ai/blog/youtube-cpm-rpm-by-niche-2026'
+        published: 2026-05-31
+      - title: 'YTMoneyCalculator — 유튜브 평균 RPM'
+        url: 'https://ytmoneycalculator.com/blog/average-youtube-rpm/'
+        published: 2026-03-17
+      - title: 'TubeAnalytics — 한국 유튜브 벤치마크 (표본 없는 모델 추정)'
+        url: 'https://www.tubeanalytics.net/benchmarks/south-korea'
+        published: 2026-05-08
+  - format: shorts
+    topic: economy
+    low: 700
+    high: 1500
+    basis: model
+    median: 1000
+    model_version: '2026-10-05'
+    sources:
+      - title: 'Threads @hey.chanyoung — 롱폼·Shorts 조회당 수익 공개 글'
+        url: 'https://www.threads.com/@hey.chanyoung/post/DL32K4HT3Ej'
+        published: 2025-07-08
+      - title: '디시인사이드 크리에이터 마이너 갤러리 — 게임 영상 수익 공개 글'
+        url: 'https://gall.dcinside.com/mgallery/board/view/?id=creator&no=68752'
+        published: 2024-06-12
+      - title: '클리앙 — 유튜브 RPM·CPM 공개 글 (2020, 오래된 자료)'
+        url: 'https://www.clien.net/service/board/park/15279503'
+        published: 2020-08-16
+      - title: 'OutlierKit — 유튜브 니치별 RPM 가이드 (미국 기준 벤치마크)'
+        url: 'https://outlierkit.com/resources/youtube-niches-guide/'
+        published: 2026-09-13
+      - title: 'FluxNote — 2026 니치별 유튜브 RPM'
+        url: 'https://fluxnote.io/blog/youtube-rpm-by-niche-2026'
+        published: 2026-05-02
+      - title: 'MakeAIVideo — 2026 니치별 유튜브 CPM·RPM'
+        url: 'https://makeaivideo.ai/blog/youtube-cpm-rpm-by-niche-2026'
+        published: 2026-05-31
+      - title: 'YTMoneyCalculator — 유튜브 평균 RPM'
+        url: 'https://ytmoneycalculator.com/blog/average-youtube-rpm/'
+        published: 2026-03-17
+      - title: 'TubeAnalytics — 한국 유튜브 벤치마크 (표본 없는 모델 추정)'
+        url: 'https://www.tubeanalytics.net/benchmarks/south-korea'
+        published: 2026-05-08
+      - title: 'Digiday — Shorts 와 롱폼 수익 비교 (크리에이터 인터뷰)'
+        url: 'https://digiday.com/media/how-youtube-shorts-revenue-compares-to-long-form-video-revenue-for-creators/'
+        published: 2025-02-25
+      - title: 'AIR Media-Tech — Shorts RPM 과 롱폼 비교'
+        url: 'https://air.io/en/air-data-findings/youtube-shorts-rpm-vs-long-form-how-much-do-shorts-earn-in-2026'
+        published: 2026-09-16
+      - title: '브런치 shortsman — 유튜브 쇼츠 수익 공개 글'
+        url: 'https://brunch.co.kr/@shortsman/21'
+        published: 2024-11-18
+  - format: long
+    topic: web-drama
+    low: 1200
+    high: 1900
+    basis: model
+    median: 1600
+    model_version: '2026-10-05'
+    sources:
+      - title: 'Threads @hey.chanyoung — 롱폼·Shorts 조회당 수익 공개 글'
+        url: 'https://www.threads.com/@hey.chanyoung/post/DL32K4HT3Ej'
+        published: 2025-07-08
+      - title: '디시인사이드 크리에이터 마이너 갤러리 — 게임 영상 수익 공개 글'
+        url: 'https://gall.dcinside.com/mgallery/board/view/?id=creator&no=68752'
+        published: 2024-06-12
+      - title: '클리앙 — 유튜브 RPM·CPM 공개 글 (2020, 오래된 자료)'
+        url: 'https://www.clien.net/service/board/park/15279503'
+        published: 2020-08-16
+      - title: 'OutlierKit — 유튜브 니치별 RPM 가이드 (미국 기준 벤치마크)'
+        url: 'https://outlierkit.com/resources/youtube-niches-guide/'
+        published: 2026-09-13
+      - title: 'FluxNote — 2026 니치별 유튜브 RPM'
+        url: 'https://fluxnote.io/blog/youtube-rpm-by-niche-2026'
+        published: 2026-05-02
+      - title: 'YTMoneyCalculator — 유튜브 평균 RPM'
+        url: 'https://ytmoneycalculator.com/blog/average-youtube-rpm/'
+        published: 2026-03-17
+  - format: shorts
+    topic: web-drama
+    low: 200
+    high: 300
+    basis: model
+    median: 200
+    model_version: '2026-10-05'
+    sources:
+      - title: 'Threads @hey.chanyoung — 롱폼·Shorts 조회당 수익 공개 글'
+        url: 'https://www.threads.com/@hey.chanyoung/post/DL32K4HT3Ej'
+        published: 2025-07-08
+      - title: '디시인사이드 크리에이터 마이너 갤러리 — 게임 영상 수익 공개 글'
+        url: 'https://gall.dcinside.com/mgallery/board/view/?id=creator&no=68752'
+        published: 2024-06-12
+      - title: '클리앙 — 유튜브 RPM·CPM 공개 글 (2020, 오래된 자료)'
+        url: 'https://www.clien.net/service/board/park/15279503'
+        published: 2020-08-16
+      - title: 'OutlierKit — 유튜브 니치별 RPM 가이드 (미국 기준 벤치마크)'
+        url: 'https://outlierkit.com/resources/youtube-niches-guide/'
+        published: 2026-09-13
+      - title: 'FluxNote — 2026 니치별 유튜브 RPM'
+        url: 'https://fluxnote.io/blog/youtube-rpm-by-niche-2026'
+        published: 2026-05-02
+      - title: 'YTMoneyCalculator — 유튜브 평균 RPM'
+        url: 'https://ytmoneycalculator.com/blog/average-youtube-rpm/'
+        published: 2026-03-17
+      - title: 'Digiday — Shorts 와 롱폼 수익 비교 (크리에이터 인터뷰)'
+        url: 'https://digiday.com/media/how-youtube-shorts-revenue-compares-to-long-form-video-revenue-for-creators/'
+        published: 2025-02-25
+      - title: 'AIR Media-Tech — Shorts RPM 과 롱폼 비교'
+        url: 'https://air.io/en/air-data-findings/youtube-shorts-rpm-vs-long-form-how-much-do-shorts-earn-in-2026'
+        published: 2026-09-16
+      - title: '브런치 shortsman — 유튜브 쇼츠 수익 공개 글'
+        url: 'https://brunch.co.kr/@shortsman/21'
+        published: 2024-11-18
