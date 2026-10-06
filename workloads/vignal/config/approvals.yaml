@@ -265,4 +265,44 @@ approve:
   - channel_id: UC75fFr-vRB-iya__9SCpmIQ
     topic: news
     note: "scout:popular 구독 141000 롱폼 6/10 최근 업로드 2026-10-04"
+  # 하타 (scout 2026-10-06)
+  - channel_id: UCvGEIjIvOkrKnUAf05t6b2w
+    topic: game
+    note: "scout:mention 구독 18500 롱폼 5/5 최근 업로드 2026-10-04"
+  # 대한민국 상황실 (scout 2026-10-06)
+  - channel_id: UC-woSr99cLvFby08JozkYYA
+    topic: news
+    note: "scout:popular 구독 33600 롱폼 10/10 최근 업로드 2026-10-06"
+  # 탱커킹 (scout 2026-10-06)
+  - channel_id: UC8wcaRAR4KX6yuisEdlzx3w
+    topic: game
+    note: "scout:popular 구독 62700 롱폼 9/10 최근 업로드 2026-10-06"
+  # 낭랑시니어TV (scout 2026-10-06)
+  - channel_id: UC_uvo4AdKnrSiUD2SkidF7A
+    topic: tech
+    note: "scout:popular 구독 16200 롱폼 10/10 최근 업로드 2026-10-03"
+  # IDM CAM (scout 2026-10-06)
+  - channel_id: UCfLhUg03h0u5GYhCeUJYGPg
+    topic: web-drama
+    note: "scout:popular 구독 50100 롱폼 6/10 최근 업로드 2026-10-05"
+  # 캐인유튜브 (scout 2026-10-06)
+  - channel_id: UC-8S20Ll1gzPiu_YY8BgyaQ
+    topic: game
+    note: "scout:popular 구독 229000 롱폼 8/10 최근 업로드 2026-10-05"
+  # 악인전 - 인물소개 (scout 2026-10-06)
+  - channel_id: UC9Mtqqw9-UGWxB5mh6Ar_2A
+    topic: beauty-life
+    note: "scout:popular 구독 342000 롱폼 6/10 최근 업로드 2026-10-04"
+  # 아라하시 타비 ARAHASHI TABI (scout 2026-10-06)
+  - channel_id: UCAHVQ44O81aehLWfy9O6Elw
+    topic: game
+    note: "scout:popular 구독 265000 롱폼 8/10 최근 업로드 2026-10-05"
+  # 단포 (scout 2026-10-06)
+  - channel_id: UCARHwjeGpLV5JZsZ63eGx8w
+    topic: game
+    note: "scout:popular 구독 745000 롱폼 5/10 최근 업로드 2026-10-05"
+  # 샤코타임 Shacotime (scout 2026-10-06)
+  - channel_id: UCAkCZHtQdPWvbwaP1KJBjvA
+    topic: game
+    note: "scout:popular 구독 298000 롱폼 10/10 최근 업로드 2026-10-05"
 untrack: []
