@@ -305,4 +305,44 @@ approve:
   - channel_id: UCAkCZHtQdPWvbwaP1KJBjvA
     topic: game
     note: "scout:popular 구독 298000 롱폼 10/10 최근 업로드 2026-10-05"
+  # 대신남 말방구실험실 (scout 2026-10-07)
+  - channel_id: UCCUfsf35PukA4gEsU2hTtQg
+    topic: tech
+    note: "scout:popular 구독 253000 롱폼 7/10 최근 업로드 2026-10-05"
+  # 준밧드 (scout 2026-10-07)
+  - channel_id: UCDWlQ2AcGlcckdefjtF0goQ
+    topic: game
+    note: "scout:popular 구독 198000 롱폼 7/10 최근 업로드 2026-10-05"
+  # 도멘TV [DOTUBE] (scout 2026-10-07)
+  - channel_id: UCFHUplScMiWTjJrtv4hxWmg
+    topic: game
+    note: "scout:popular 구독 136000 롱폼 10/10 최근 업로드 2026-10-05"
+  # 테크몽 Techmong (scout 2026-10-07)
+  - channel_id: UCFX6adXoyQKxft933NB3rmA
+    topic: tech
+    note: "scout:popular 구독 940000 롱폼 5/10 최근 업로드 2026-10-04"
+  # 채널A 뉴스TOP10 (scout 2026-10-07)
+  - channel_id: UCIIpmDPVk7nzNHEUSHmvkUg
+    topic: news
+    note: "scout:popular 구독 1440000 롱폼 5/10 최근 업로드 2026-10-05"
+  # YouTube지누 (scout 2026-10-07)
+  - channel_id: UCJGww2K__Q3y-MtDi0XWH2w
+    topic: game
+    note: "scout:popular 구독 329000 롱폼 9/10 최근 업로드 2026-10-05"
+  # PAKA (scout 2026-10-07)
+  - channel_id: UCJpAwvQaZyCI5spAz7tipGA
+    topic: game
+    note: "scout:popular 구독 786000 롱폼 10/10 최근 업로드 2026-10-03"
+  # 김뿡 (scout 2026-10-07)
+  - channel_id: UCK3k-JljWSFBYCPCtvrhbvg
+    topic: game
+    note: "scout:popular 구독 143000 롱폼 10/10 최근 업로드 2026-10-05"
+  # 멜로우TV (scout 2026-10-07)
+  - channel_id: UCNOYTSGiu9bV6VjqnJa4ojw
+    topic: game
+    note: "scout:popular 구독 953000 롱폼 6/10 최근 업로드 2026-10-04"
+  # 너불 (scout 2026-10-07)
+  - channel_id: UCO9alhNmbVwxlVY05qOJP5Q
+    topic: game
+    note: "scout:popular 구독 287000 롱폼 10/10 최근 업로드 2026-10-03"
 untrack: []
