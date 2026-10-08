@@ -345,4 +345,44 @@ approve:
   - channel_id: UCO9alhNmbVwxlVY05qOJP5Q
     topic: game
     note: "scout:popular 구독 287000 롱폼 10/10 최근 업로드 2026-10-03"
+  # 펜앤마이크TV (scout 2026-10-08)
+  - channel_id: UCOqCunaF9qVN8bXwsK0HT3g
+    topic: news
+    note: "scout:popular 구독 2010000 롱폼 6/10 최근 업로드 2026-10-05"
+  # 봉준 풀영상 (scout 2026-10-08)
+  - channel_id: UCP-KRZsIkIqww2jIdrciu2g
+    topic: game
+    note: "scout:popular 구독 193000 롱폼 10/10 최근 업로드 2026-10-04"
+  # 김왼팔 (scout 2026-10-08)
+  - channel_id: UCPI40-XQA9-GBGj2k8PPqfg
+    topic: game
+    note: "scout:popular 구독 1080000 롱폼 10/10 최근 업로드 2026-10-04"
+  # 채널A 김진의 돌직구쇼 (scout 2026-10-08)
+  - channel_id: UCRofX42ugIM1JKnCjfXm9LA
+    topic: news
+    note: "scout:popular 구독 968000 롱폼 6/10 최근 업로드 2026-10-05"
+  # 집사TV (scout 2026-10-08)
+  - channel_id: UCRsLT5zPV5LBgBM8TJOOg_Q
+    topic: game
+    note: "scout:popular 구독 732000 롱폼 5/10 최근 업로드 2026-10-05"
+  # 빅보스 (scout 2026-10-08)
+  - channel_id: UCTLIq9jl-pb_ojAZZtoGaOQ
+    topic: game
+    note: "scout:popular 구독 246000 롱폼 9/10 최근 업로드 2026-10-06"
+  # 흔한남매 (scout 2026-10-08)
+  - channel_id: UCU8uafr_iROxRVI6c23Q_bA
+    topic: game
+    note: "scout:popular 구독 3070000 롱폼 10/10 최근 업로드 2026-10-04"
+  # 팡이요 (scout 2026-10-08)
+  - channel_id: UCUR5w0E-jQTOO8Q0FZ4ilYQ
+    topic: game
+    note: "scout:popular 구독 589000 롱폼 10/10 최근 업로드 2026-10-04"
+  # 테스터훈 TesterHoon (scout 2026-10-08)
+  - channel_id: UCUbOogiD-4PKDqaJfSOTC0g
+    topic: game
+    note: "scout:popular 구독 1460000 롱폼 9/10 최근 업로드 2026-10-05"
+  # 이석현 (scout 2026-10-08)
+  - channel_id: UCVZI7eLie2UlZph6aiBRNrw
+    topic: game
+    note: "scout:popular 구독 538000 롱폼 10/10 최근 업로드 2026-10-05"
 untrack: []
