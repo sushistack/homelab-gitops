@@ -385,4 +385,44 @@ approve:
   - channel_id: UCVZI7eLie2UlZph6aiBRNrw
     topic: game
     note: "scout:popular 구독 538000 롱폼 10/10 최근 업로드 2026-10-05"
+  # KBC 뉴스 (scout 2026-10-09)
+  - channel_id: UCVcLszfUBN9rTmc0A0uDRSQ
+    topic: news
+    note: "scout:popular 구독 531000 롱폼 10/10 최근 업로드 2026-10-05"
+  # 안녕하세요원이입니다잘부탁드립니다 (scout 2026-10-09)
+  - channel_id: UCWpY0eSJtyO-qNAPbKFRSSg
+    topic: beauty-life
+    note: "scout:popular 구독 2260000 롱폼 5/10 최근 업로드 2026-10-04"
+  # 이도원 (scout 2026-10-09)
+  - channel_id: UCWq9wRjQXYC8i486uVLysUA
+    topic: game
+    note: "scout:popular 구독 523000 롱폼 10/10 최근 업로드 2026-10-05"
+  # 말왕TV (scout 2026-10-09)
+  - channel_id: UCYJDUekoQz0-bo8al1diLWQ
+    topic: game
+    note: "scout:popular 구독 1900000 롱폼 5/10 최근 업로드 2026-10-04"
+  # 하우카우 (scout 2026-10-09)
+  - channel_id: UCYSFs_X0PYHlAnd-ywzMEZw
+    topic: game
+    note: "scout:popular 구독 127000 롱폼 10/10 최근 업로드 2026-10-04"
+  # 피닉스박 (scout 2026-10-09)
+  - channel_id: UCZ6IM7_T-bCmr_7DgAKjYxg
+    topic: game
+    note: "scout:popular 구독 266000 롱폼 10/10 최근 업로드 2026-10-05"
+  # 에땁AWM (scout 2026-10-09)
+  - channel_id: UC_O4_e0nbsMoU1rg7JU_nwQ
+    topic: game
+    note: "scout:popular 구독 129000 롱폼 9/10 최근 업로드 2026-10-04"
+  # 쉐어TV (scout 2026-10-09)
+  - channel_id: UCb0eyf03Jz8Q5j2q65TzCoA
+    topic: game
+    note: "scout:popular 구독 789000 롱폼 6/10 최근 업로드 2026-10-04"
+  # 글자네 (scout 2026-10-09)
+  - channel_id: UCb5NLtXAsTBrmaZVhyFa-Wg
+    topic: game
+    note: "scout:popular 구독 597000 롱폼 6/10 최근 업로드 2026-10-05"
+  # 지건킹 (scout 2026-10-09)
+  - channel_id: UCbNmTAwkTeP5HJtmnL4oC2w
+    topic: game
+    note: "scout:popular 구독 114000 롱폼 9/10 최근 업로드 2026-10-04"
 untrack: []
