@@ -425,4 +425,44 @@ approve:
   - channel_id: UCbNmTAwkTeP5HJtmnL4oC2w
     topic: game
     note: "scout:popular 구독 114000 롱폼 9/10 최근 업로드 2026-10-04"
+  # 신인균의 국방TV (scout 2026-10-10)
+  - channel_id: UCbgqDFODvh-q38ouzoKKkVA
+    topic: news
+    note: "scout:popular 구독 1540000 롱폼 10/10 최근 업로드 2026-10-06"
+  # 무지개맛 Rainbow Flavor (scout 2026-10-10)
+  - channel_id: UCcR_wZ0zimC6UT8VO0KcS8Q
+    topic: game
+    note: "scout:popular 구독 466000 롱폼 10/10 최근 업로드 2026-10-03"
+  # 게임대장봉준 (scout 2026-10-10)
+  - channel_id: UCcgkgKhXT6QwdGj9Nr8PBcg
+    topic: game
+    note: "scout:popular 구독 142000 롱폼 10/10 최근 업로드 2026-10-04"
+  # 조선일보 (scout 2026-10-10)
+  - channel_id: UCdp4_yTBhQmB8E339Lafzow
+    topic: news
+    note: "scout:popular 구독 1750000 롱폼 9/10 최근 업로드 2026-10-05"
+  # 쪼낙 JJONAK (scout 2026-10-10)
+  - channel_id: UCeq0Nrch5KY3VrZyn_BB32g
+    topic: game
+    note: "scout:popular 구독 207000 롱폼 7/10 최근 업로드 2026-10-04"
+  # 채널A News (scout 2026-10-10)
+  - channel_id: UCfq4V1DAuaojnr2ryvWNysw
+    topic: news
+    note: "scout:popular 구독 3520000 롱폼 8/10 최근 업로드 2026-10-05"
+  # 밍 (scout 2026-10-10)
+  - channel_id: UCfxtBxRR-rJ8CYSZJAFHhIw
+    topic: game
+    note: "scout:popular 구독 634000 롱폼 6/10 최근 업로드 2026-10-04"
+  # 잠뜰 TV (scout 2026-10-10)
+  - channel_id: UCg7rkxrTnIhiHEpXY1ec9NA
+    topic: game
+    note: "scout:popular 구독 2400000 롱폼 8/10 최근 업로드 2026-10-04"
+  # 잡상싱 (scout 2026-10-10)
+  - channel_id: UCgT-gb3favw2jQgwxbbwwaA
+    topic: game
+    note: "scout:popular 구독 410000 롱폼 5/10 최근 업로드 2026-10-04"
+  # 인사이트 윈도우 (scout 2026-10-10)
+  - channel_id: UCh4U3eUwSbCD4vj3uURS1tw
+    topic: news
+    note: "scout:popular 구독 144000 롱폼 6/10 최근 업로드 2026-10-05"
 untrack: []
