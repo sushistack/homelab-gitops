@@ -465,4 +465,44 @@ approve:
   - channel_id: UCh4U3eUwSbCD4vj3uURS1tw
     topic: news
     note: "scout:popular 구독 144000 롱폼 6/10 최근 업로드 2026-10-05"
+  # 이렐킹 IRELKING (scout 2026-10-11)
+  - channel_id: UCi-0jmyw3x6efk090BAVfxA
+    topic: game
+    note: "scout:popular 구독 345000 롱폼 10/10 최근 업로드 2026-10-04"
+  # MBCentertainment (scout 2026-10-11)
+  - channel_id: UCiBr0bK06imaMbLc8sAEz0A
+    topic: web-drama
+    note: "scout:popular 구독 9210000 롱폼 7/10 최근 업로드 2026-10-05"
+  # 엠뚜루마뚜루 : MBC 공식 종합 채널 (scout 2026-10-11)
+  - channel_id: UCiwQRG2sCcfjKkgxMEdJGPg
+    topic: web-drama
+    note: "scout:popular 구독 2950000 롱폼 10/10 최근 업로드 2026-10-05"
+  # 웅플 (scout 2026-10-11)
+  - channel_id: UCja26PHMHQaj6Y4likW7rwA
+    topic: game
+    note: "scout:popular 구독 143000 롱폼 7/10 최근 업로드 2026-10-04"
+  # 두치와뿌꾸 (scout 2026-10-11)
+  - channel_id: UCl402YYy7RcH7PBI3npmGPQ
+    topic: game
+    note: "scout:popular 구독 906000 롱폼 7/10 최근 업로드 2026-10-04"
+  # GROUND C 그라운드씨 (scout 2026-10-11)
+  - channel_id: UClUlAMZGEGPn8mKemiwOjzg
+    topic: news
+    note: "scout:popular 구독 1010000 롱폼 5/10 최근 업로드 2026-10-05"
+  # 팔차선 [8LJAYWALKING] (scout 2026-10-11)
+  - channel_id: UCmcBe97VA2LqVEQUeeZl6Ew
+    topic: game
+    note: "scout:popular 구독 418000 롱폼 9/10 최근 업로드 2026-10-04"
+  # 김된모 (scout 2026-10-11)
+  - channel_id: UCnMhzw7xYMl6LJpM0au6vqw
+    topic: game
+    note: "scout:popular 구독 517000 롱폼 10/10 최근 업로드 2026-10-04"
+  # 스트리머 사또 live-streamer satto (scout 2026-10-11)
+  - channel_id: UCnXe6v0-5vmMMRU2qx0XwUw
+    topic: game
+    note: "scout:popular 구독 412000 롱폼 5/10 최근 업로드 2026-10-04"
+  # 홀릿 Youtube Holit (scout 2026-10-11)
+  - channel_id: UCoH2pCzAr6zWDG-LtUiLWRw
+    topic: game
+    note: "scout:popular 구독 633000 롱폼 5/10 최근 업로드 2026-10-03"
 untrack: []
