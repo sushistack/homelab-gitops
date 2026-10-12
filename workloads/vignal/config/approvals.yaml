@@ -505,4 +505,44 @@ approve:
   - channel_id: UCoH2pCzAr6zWDG-LtUiLWRw
     topic: game
     note: "scout:popular 구독 633000 롱폼 5/10 최근 업로드 2026-10-03"
+  # OBS뉴스 (scout 2026-10-12)
+  - channel_id: UComhAmtkBwTPF_PvwN8Gc6w
+    topic: news
+    note: "scout:popular 구독 423000 롱폼 5/10 최근 업로드 2026-10-05"
+  # 핑맨 (scout 2026-10-12)
+  - channel_id: UConOmISJY0oZHRhWGyvdQ2A
+    topic: game
+    note: "scout:popular 구독 580000 롱폼 9/10 최근 업로드 2026-10-06"
+  # 채널 명예훈장 (scout 2026-10-12)
+  - channel_id: UCs0LzOveQMLImmmTrMmP2sg
+    topic: game
+    note: "scout:popular 구독 441000 롱폼 8/10 최근 업로드 2026-10-04"
+  # JTBC News (scout 2026-10-12)
+  - channel_id: UCsU-I-vHLiaMfV_ceaYz5rQ
+    topic: news
+    note: "scout:popular 구독 4900000 롱폼 5/10 최근 업로드 2026-10-05"
+  # 장르만 여의도 (scout 2026-10-12)
+  - channel_id: UCsqWTNmoaNPvsfeCgaD7BpQ
+    topic: news
+    note: "scout:popular 구독 682000 롱폼 9/10 최근 업로드 2026-10-04"
+  # 민티저 (scout 2026-10-12)
+  - channel_id: UCtXUm3ABtdm_oK2LZ-Xcnhw
+    topic: tech
+    note: "scout:popular 구독 254000 롱폼 8/10 최근 업로드 2026-10-05"
+  # SPOTV (scout 2026-10-12)
+  - channel_id: UCtm_QoN2SIxwCE-59shX7Qg
+    topic: game
+    note: "scout:popular 구독 2230000 롱폼 8/10 최근 업로드 2026-10-04"
+  # 백크 Baekk (scout 2026-10-12)
+  - channel_id: UCugNO83_V7xZLzCsjpABGeg
+    topic: game
+    note: "scout:popular 구독 744000 롱폼 10/10 최근 업로드 2026-10-04"
+  # 발로란트 챔피언스 투어 (scout 2026-10-12)
+  - channel_id: UCv1tOT645xHOJrwdGlzjMaA
+    topic: game
+    note: "scout:popular 구독 281000 롱폼 7/10 최근 업로드 2026-10-04"
+  # 수탉 (scout 2026-10-12)
+  - channel_id: UCw-JzmPsjRcbzJLncr4pIIA
+    topic: game
+    note: "scout:popular 구독 1090000 롱폼 10/10 최근 업로드 2026-10-03"
 untrack: []
