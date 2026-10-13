@@ -545,4 +545,44 @@ approve:
   - channel_id: UCw-JzmPsjRcbzJLncr4pIIA
     topic: game
     note: "scout:popular 구독 1090000 롱폼 10/10 최근 업로드 2026-10-03"
+  # 타비의 보물 창고 (scout 2026-10-13)
+  - channel_id: UCOAD3RLV7uC3uc39ok7NLyg
+    topic: game
+    note: "scout:mention 구독 37100 롱폼 10/10 최근 업로드 2026-10-12"
+  # 정치시그널 (scout 2026-10-13)
+  - channel_id: UCfD_TCloMJtVvg7w6lrELnQ
+    topic: news
+    note: "scout:mention 구독 54800 롱폼 8/10 최근 업로드 2026-10-13"
+  # 오늘의시각 (scout 2026-10-13)
+  - channel_id: UCpJAlSrzXw5RMA9SogVj8PQ
+    topic: news
+    note: "scout:mention 구독 38100 롱폼 7/10 최근 업로드 2026-10-13"
+  # 봉준 (scout 2026-10-13)
+  - channel_id: UC69uMhRJcUnvMnMxKT2SS0w
+    topic: game
+    note: "scout:mention 구독 991000 롱폼 8/10 최근 업로드 2026-10-11"
+  # 이석현 풀영상 (scout 2026-10-13)
+  - channel_id: UCxuHsnRMEqvvO_cV1DPsvXw
+    topic: game
+    note: "scout:mention 구독 3860 롱폼 10/10 최근 업로드 2026-10-11"
+  # KBS 세계는지금 (scout 2026-10-13)
+  - channel_id: UC-0C8yVGJy-cS4FGlYKelWw
+    topic: news
+    note: "scout:popular 구독 569000 롱폼 5/10 최근 업로드 2026-10-13"
+  # 왈도쿤 (scout 2026-10-13)
+  - channel_id: UC-S8JFhLkQ5enhB70c2CYIw
+    topic: game
+    note: "scout:popular 구독 453000 롱폼 10/10 최근 업로드 2026-10-12"
+  # 엠키타카 MKTK (scout 2026-10-13)
+  - channel_id: UCGbkN-3JpOct4KuEv59NF0Q
+    topic: news
+    note: "scout:popular 구독 1100000 롱폼 9/10 최근 업로드 2026-10-13"
+  # 프레이 TV (scout 2026-10-13)
+  - channel_id: UCSzHok6X5qXEO7cjvVnE62g
+    topic: game
+    note: "scout:popular 구독 696000 롱폼 7/10 최근 업로드 2026-10-13"
+  # 시사저널 TV (scout 2026-10-13)
+  - channel_id: UCYo4GYn_GeqRcdkraHe83GQ
+    topic: news
+    note: "scout:popular 구독 837000 롱폼 7/10 최근 업로드 2026-10-13"
 untrack: []
