@@ -585,4 +585,44 @@ approve:
   - channel_id: UCYo4GYn_GeqRcdkraHe83GQ
     topic: news
     note: "scout:popular 구독 837000 롱폼 7/10 최근 업로드 2026-10-13"
+  # 민병덕TV (scout 2026-10-14)
+  - channel_id: UCIOhLDkpNcQyHsHSBwd5y_Q
+    topic: economy
+    note: "scout:mention 구독 15300 롱폼 8/10 최근 업로드 2026-10-14"
+  # NH투자증권 (scout 2026-10-14)
+  - channel_id: UCZw35cgWpGfOQASqY_RiAbw
+    topic: economy
+    note: "scout:mention 구독 97500 롱폼 7/10 최근 업로드 2026-10-08"
+  # 쪼만 (scout 2026-10-14)
+  - channel_id: UCsii9gve3wx7kHDfVlM2Stw
+    topic: game
+    note: "scout:popular 구독 88500 롱폼 7/10 최근 업로드 2026-10-13"
+  # 1vsAll (scout 2026-10-14)
+  - channel_id: UC6Bv3mjwNo71wxsk1Xaa14w
+    topic: game
+    note: "scout:popular 구독 133000 롱폼 10/10 최근 업로드 2026-10-13"
+  # 빅헤드 (scout 2026-10-14)
+  - channel_id: UCAJ-meoCh1TrPZ7La3UpPrw
+    topic: game
+    note: "scout:popular 구독 634000 롱폼 10/10 최근 업로드 2026-10-12"
+  # 수찬 Suchan (scout 2026-10-14)
+  - channel_id: UCLm0fAzu27N2aSd3lHsy2zQ
+    topic: game
+    note: "scout:popular 구독 321000 롱폼 10/10 최근 업로드 2026-10-12"
+  # SBS 시사교양 라디오 - 시교라 (scout 2026-10-14)
+  - channel_id: UCLv3v82YNNsa8EsxrcPMjGQ
+    topic: news
+    note: "scout:popular 구독 795000 롱폼 6/10 최근 업로드 2026-10-14"
+  # 고발뉴스TV (scout 2026-10-14)
+  - channel_id: UCX7-K_PSdtAiUDLEMQwrRoQ
+    topic: news
+    note: "scout:popular 구독 847000 롱폼 7/10 최근 업로드 2026-10-14"
+  # 다주 (scout 2026-10-14)
+  - channel_id: UCawY6uW94r1JcBuOTqHDfow
+    topic: game
+    note: "scout:popular 구독 440000 롱폼 6/10 최근 업로드 2026-10-13"
+  # 감스트GAMST (scout 2026-10-14)
+  - channel_id: UCbFzvzDu17eDZ3RIeaLRswQ
+    topic: game
+    note: "scout:popular 구독 3050000 롱폼 10/10 최근 업로드 2026-10-14"
 untrack: []
