@@ -625,4 +625,44 @@ approve:
   - channel_id: UCbFzvzDu17eDZ3RIeaLRswQ
     topic: game
     note: "scout:popular 구독 3050000 롱폼 10/10 최근 업로드 2026-10-14"
+  # 이라333 유튜브 (scout 2026-10-15)
+  - channel_id: UC1nD9uDqbVoCiBTaCOaW0jA
+    topic: game
+    note: "scout:mention 구독 74300 롱폼 10/10 최근 업로드 2026-10-13"
+  # 다주보기 (scout 2026-10-15)
+  - channel_id: UCLsOJitXGX7jZheuGj777-A
+    topic: game
+    note: "scout:mention 구독 37900 롱폼 10/10 최근 업로드 2026-10-14"
+  # 독학왕 (scout 2026-10-15)
+  - channel_id: UCAI6Rg23IK12aqsdDif2Brg
+    topic: tech
+    note: "scout:popular 구독 79500 롱폼 9/10 최근 업로드 2026-10-14"
+  # 낚놈 (scout 2026-10-15)
+  - channel_id: UCKHezxupxlT7P4Rg6EoVBEA
+    topic: beauty-life
+    note: "scout:popular 구독 69100 롱폼 8/10 최근 업로드 2026-10-10"
+  # 시미베 (scout 2026-10-15)
+  - channel_id: UCndwhvyE_fh6N8rGdXSXn9Q
+    topic: game
+    note: "scout:mention 구독 160000 롱폼 10/10 최근 업로드 2026-10-06"
+  # Destiny (데스티니) (scout 2026-10-15)
+  - channel_id: UC6NXJtCn3p-actkvBUlHwDA
+    topic: game
+    note: "scout:popular 구독 155000 롱폼 9/10 최근 업로드 2026-10-15"
+  # 탬탬버린 (scout 2026-10-15)
+  - channel_id: UCCA8UWUW80iHqK9ymdjRwPg
+    topic: game
+    note: "scout:popular 구독 538000 롱폼 10/10 최근 업로드 2026-10-15"
+  # 전쓰트의 게임 채널 Junsst (scout 2026-10-15)
+  - channel_id: UCD8r5Jgns2V64-NcUmXclpg
+    topic: game
+    note: "scout:popular 구독 636000 롱폼 10/10 최근 업로드 2026-10-15"
+  # SUNBA선바 (scout 2026-10-15)
+  - channel_id: UCIPSyiBBm9VtWGj-Q7trkKw
+    topic: game
+    note: "scout:popular 구독 715000 롱폼 7/10 최근 업로드 2026-10-15"
+  # KBS NEWS 전남광주 (scout 2026-10-15)
+  - channel_id: UCLqL_rpuTp1bIe5YuHjbufA
+    topic: news
+    note: "scout:popular 구독 101000 롱폼 7/10 최근 업로드 2026-10-15"
 untrack: []
