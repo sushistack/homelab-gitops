@@ -665,4 +665,44 @@ approve:
   - channel_id: UCLqL_rpuTp1bIe5YuHjbufA
     topic: news
     note: "scout:popular 구독 101000 롱폼 7/10 최근 업로드 2026-10-15"
+  # 육해공마켓 (scout 2026-10-16)
+  - channel_id: UCMJVFLLlyv5Rxu_BVx_tYvg
+    topic: beauty-life
+    note: "scout:popular 구독 24400 롱폼 6/10 최근 업로드 2026-10-15"
+  # 이닛 (scout 2026-10-16)
+  - channel_id: UCV1vhPHGAShSP6mJNPzF4BA
+    topic: game
+    note: "scout:popular 구독 32900 롱폼 6/10 최근 업로드 2026-10-15"
+  # MBC 미스터리 : 심야괴담회 X 서프라이즈 (scout 2026-10-16)
+  - channel_id: UC8OUSYm-ztRAT6EE6VHPpGw
+    topic: web-drama
+    note: "scout:mention 구독 1010000 롱폼 5/10 최근 업로드 2026-10-16"
+  # 명조:워더링 웨이브 (scout 2026-10-16)
+  - channel_id: UCKuq0c-RXYaulECSuu5hFug
+    topic: game
+    note: "scout:mention 구독 138000 롱폼 5/10 최근 업로드 2026-10-13"
+  # KBS광주 (scout 2026-10-16)
+  - channel_id: UCbA2VakFfa-eMFa9YuN6sgg
+    topic: news
+    note: "scout:mention 구독 457000 롱폼 8/10 최근 업로드 2026-10-16"
+  # 901K (scout 2026-10-16)
+  - channel_id: UCtxgoIuaAaOowq0w-2MCaJg
+    topic: news
+    note: "scout:mention 구독 331000 롱폼 5/10 최근 업로드 2026-10-16"
+  # 무릎의 철권TV TekkenKnee (scout 2026-10-16)
+  - channel_id: UC0Zl_lyMoTbroBSNv7SpGuQ
+    topic: game
+    note: "scout:popular 구독 368000 롱폼 7/10 최근 업로드 2026-10-15"
+  # 이종범의 스토리캠프 (scout 2026-10-16)
+  - channel_id: UC9i_uQ7zOeO4X9BP-FnC-SA
+    topic: game
+    note: "scout:popular 구독 329000 롱폼 10/10 최근 업로드 2026-10-15"
+  # [팟빵] 최욱의 매불쇼 (scout 2026-10-16)
+  - channel_id: UCMYhq9OyGI5UEz_NTAoHY7A
+    topic: news
+    note: "scout:popular 구독 2810000 롱폼 7/10 최근 업로드 2026-10-16"
+  # 지존조세 (scout 2026-10-16)
+  - channel_id: UCQOL6_MBCFXr3M9OTmwl9pg
+    topic: game
+    note: "scout:popular 구독 318000 롱폼 10/10 최근 업로드 2026-10-15"
 untrack: []
