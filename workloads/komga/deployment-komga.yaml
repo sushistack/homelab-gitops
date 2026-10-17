@@ -36,12 +36,16 @@ spec:
               value: Asia/Seoul
             - name: SERVER_PORT
               value: "25600"      # Spring Boot honors SERVER_PORT; matches the LXC :25600 and the Service
+            # JVM default heap = 25% of the limit (256M at 1Gi) -> taskProcessor threads died with
+            # OutOfMemoryError on thumbnail gen, silently stalling every library scan. 60% of 2Gi ≈ 1.2G heap.
+            - name: JAVA_TOOL_OPTIONS
+              value: "-XX:MaxRAMPercentage=60"
           resources:
             requests:
               cpu: 100m
-              memory: 256Mi
+              memory: 512Mi
             limits:
-              memory: 1Gi         # memory-only limit (no CPU limit -> no throttle); JVM + thumbnail render
+              memory: 2Gi         # memory-only limit (no CPU limit -> no throttle); JVM + thumbnail render
           # komga serves its SPA (login) at / -> 200/302. startupProbe holds liveness back through the
           # JVM boot + SQLite WAL replay (up to 40*5s); without it the default liveness window crash-loops.
           startupProbe:
