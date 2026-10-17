@@ -39,7 +39,7 @@ spec:
             # JVM default heap = 25% of the limit (256M at 1Gi) -> taskProcessor threads died with
             # OutOfMemoryError on thumbnail gen, silently stalling every library scan. 60% of 2Gi ≈ 1.2G heap.
             - name: JAVA_TOOL_OPTIONS
-              value: "-XX:MaxRAMPercentage=60"
+              value: "-XX:MaxRAMPercentage=60 -XX:+ExitOnOutOfMemoryError"  # OOM -> pod restart (visible), not a silently dead taskProcessor
           resources:
             requests:
               cpu: 100m
