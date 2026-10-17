@@ -705,4 +705,44 @@ approve:
   - channel_id: UCQOL6_MBCFXr3M9OTmwl9pg
     topic: game
     note: "scout:popular 구독 318000 롱폼 10/10 최근 업로드 2026-10-15"
+  # 난동군 (scout 2026-10-17)
+  - channel_id: UCS0BFjcZZwZHhgLleDDY0ww
+    topic: game
+    note: "scout:popular 구독 71600 롱폼 5/10 최근 업로드 2026-10-16"
+  # 머독 (scout 2026-10-17)
+  - channel_id: UC-Zedn7a_RJyb5hUQ-aGZog
+    topic: game
+    note: "scout:popular 구독 864000 롱폼 9/10 최근 업로드 2026-10-17"
+  # 이다의게임방송 (scout 2026-10-17)
+  - channel_id: UC46X_E7jxvJ1O_3gnaeCxeg
+    topic: game
+    note: "scout:popular 구독 144000 롱폼 9/10 최근 업로드 2026-10-17"
+  # 백곰파 (scout 2026-10-17)
+  - channel_id: UCAeajgpYsfOPO38JR8EIuiQ
+    topic: game
+    note: "scout:popular 구독 115000 롱폼 7/10 최근 업로드 2026-10-17"
+  # 주연 ZUYONI (scout 2026-10-17)
+  - channel_id: UCB11SAf7WSN4GrCquKoOHrw
+    topic: tech
+    note: "scout:popular 구독 837000 롱폼 9/10 최근 업로드 2026-10-16"
+  # 눈쟁이 (scout 2026-10-17)
+  - channel_id: UCJiv3w22pf4Cgpwxo70MbhQ
+    topic: tech
+    note: "scout:popular 구독 827000 롱폼 9/10 최근 업로드 2026-10-16"
+  # 디글 클래식 :Diggle Classic (scout 2026-10-17)
+  - channel_id: UCRMA_Nb5VF-YoWApSVeXPVA
+    topic: movie-review
+    note: "scout:popular 구독 3420000 롱폼 5/10 최근 업로드 2026-10-15"
+  # 코딩애플 (scout 2026-10-17)
+  - channel_id: UCSLrpBAzr-ROVGHQ5EmxnUg
+    topic: tech
+    note: "scout:popular 구독 462000 롱폼 5/10 최근 업로드 2026-10-16"
+  # 슈뻘맨 [슈퍼 뻘짓 도전기] (scout 2026-10-17)
+  - channel_id: UCXZx953K0FgkT3H2FaFAcew
+    topic: game
+    note: "scout:popular 구독 1060000 롱폼 10/10 최근 업로드 2026-10-15"
+  # 김성회의 G식백과 (scout 2026-10-17)
+  - channel_id: UCZ0bi2aVJngKLwFTU5g_fLQ
+    topic: game
+    note: "scout:popular 구독 942000 롱폼 10/10 최근 업로드 2026-10-16"
 untrack: []
