@@ -171,6 +171,23 @@ publish:
   per_channel_cap:
     latest: 60 # [ASSUMPTION] AD-31
     top_views: 20 # [ASSUMPTION] AD-31
+  # Story 23.2 (FR-69, FR-72): 배치마다 목록 색인 list/{7d,30d}.json 과 상세 조각 v/{k}.json 을
+  # 더 낸다(videos-30d.json 과 같은 상한·정렬 집합, meta.list_index). Story 23.3 (FR-70): 같은
+  # 집합의 영상 제목 검색 조각 search/{s}.json 을 search_shards 개 낸다. enabled: false 면 새 파일·
+  # meta.list_index 없음. chunk_size·search_shards 0 이하는 설정 오류. 근거·측정은
+  # docs/ops/list-index.md.
+  list_index:
+    enabled: true
+    chunk_size: 100 # [ASSUMPTION] Story 23.2 측정으로 고름(docs/ops/list-index.md)
+    search_shards: 128 # [ASSUMPTION] Story 23.3 합성 측정으로 고름(1,250 채널 가장 큰 조각 gzip < 100KB, docs/ops/list-index.md)
+  # videos-7d/30d.json 을 계속 낸다. false 는 Story 23.8(옛 전체 파일 은퇴) 전까지 설정 오류.
+  legacy_full_files: true
+
+# Story 23.2: 발행 예산. 실행 요약의 월 Class A 추정(이번 실행 Class A × 월 실행 수)이
+# alert_ratio × r2_class_a_month 를 넘으면 ntfy(publish_budget_over, 기존 중복 억제).
+publish_budget:
+  r2_class_a_month: 1000000 # [ASSUMPTION] R2 무료 Class A 월 한도(docs/ops/list-index.md)
+  alert_ratio: 0.7 # [ASSUMPTION]
 
 # AD-6(5)/NFR-6.6.5 (Story 2.8): age 로 암호화한 vignal.db 백업을 최신 keep 개만 남긴다.
 # 수신자 공개키는 env AGE_RECIPIENT 에만 있다(r2 에서는 필수). 개인키는 어디에도 두지 않는다.
