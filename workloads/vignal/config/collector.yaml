@@ -110,6 +110,15 @@ observed_window: 60
 format_rules:
   version: 1
   shorts_max_s: 180 # [ASSUMPTION] Shorts 3분 상한, Phase 0 재확인(G-3)
+  # AD-11 v2 (Shorts 판정, PRD Q-20, docs/analysis/shorts-signal-2026-10-17.md "2026-10-18 재판정"):
+  # 길이 ≤ shorts_max_s 이고 player 비율이 세로·정사각형(embedHeight ≥ embedWidth)이며
+  # (60초 이하 또는 2024-10-15 이후 공개)면 shorts. 비율을 모르면 unknown 그대로.
+  # 켜면 videos.list 에 part=player 와 maxHeight 를 같은 호출로 붙인다(추가 쿼터 없음).
+  # 꺼져 있으면(기본) player 를 요청하지 않고 v1 과 똑같다. 꺼진 shorts_v2 는 해시에서 빠지므로
+  # 이 줄만 있어서는 version 을 올릴 필요가 없다. 켤 때는 enabled: true 와 함께 version 을 올린다
+  # (해시가 바뀌므로 안 올리면 publish 가 실패한다). 절차: docs/ops/shorts-v2.md
+  shorts_v2:
+    enabled: false # [ASSUMPTION] YouTube 가 player part 사용 범위를 확인해 줄 때까지 끔
 
 # AD-10 meta.size_buckets 로 그대로 발행되는 채널 규모 경계값(구독자 수 기준, FR-2 규모 4구간).
 # 경계값 자체(1만/10만/100만)는 Q-3 미정 [ASSUMPTION: Phase 0(G-3 실측) 후 조정].
