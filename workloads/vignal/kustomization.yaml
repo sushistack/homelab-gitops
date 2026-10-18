@@ -21,6 +21,7 @@ configMapGenerator:
       - config/approvals.yaml   # Story 9.6 (FR-30a): git approvals file, source of truth lives only here
       - config/rpm.yaml   # Story 14.6 (FR-49): RPM ranges, copy of vignal config/rpm.yaml
       - config/revenue-exclusions.yaml   # Story 14.6: channels excluded from revenue estimates
+      - config/open-score.yaml   # Story 21.3 (FR-63): open_score components/weights, copy of vignal config/open-score.yaml
 generatorOptions:
   disableNameSuffixHash: true
 

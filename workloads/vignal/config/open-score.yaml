@@ -1,0 +1,22 @@
+# config/open-score.yaml — 오픈 스코어 구성 요소와 가중치 (FR-63, AD-29). 단일 출처.
+#
+# 각 rationale_ref 는 docs/analysis/open-score-weights.md 의 `## {ref}` 절을 가리킨다.
+# 그 절에 `이유`·`가중치`·`출처` 줄이 하나라도 비면 CI(go test ./internal/metrics)가 실패한다.
+# 가중치는 0 보다 커야 하고 합이 1(±0.001)이어야 한다.
+# 구성 요소나 가중치를 바꾸면 근거 문서를 먼저 고치고 version 을 올린다
+# (같은 version 에서 내용이 바뀌면 publish preflight 가 실패한다).
+
+version: 1
+components:
+  - key: subs_view_ratio
+    feature: subs_view_ratio
+    weight: 0.333333
+    rationale_ref: subs_view_ratio
+  - key: likes_ratio
+    feature: aux_ratios
+    weight: 0.333333
+    rationale_ref: likes_ratio
+  - key: upload_count
+    feature: upload_cadence
+    weight: 0.333333
+    rationale_ref: upload_count
