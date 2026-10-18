@@ -108,7 +108,7 @@ observed_window: 60
 # AD-11: 영상 형식 판정 규칙. 버전이 오르면 다음 실행에서 전부 다시 판정한다.
 # 해시가 바뀌었는데 버전이 같으면 publish 가 실패한다(AD-11, AD-13).
 format_rules:
-  version: 2 # 2026-10-18: shorts_v2 켜면서 1 → 2 (vignal docs/ops/shorts-v2.md)
+  version: 3 # 2026-10-18: shorts_v2 켜면서 1 → 2, D-35 비숏폼 normal 로 2 → 3 (vignal docs/ops/shorts-v2.md)
   shorts_max_s: 180 # [ASSUMPTION] Shorts 3분 상한, Phase 0 재확인(G-3)
   # AD-11 v2 (Shorts 판정, PRD Q-20, docs/analysis/shorts-signal-2026-10-17.md "2026-10-18 재판정"):
   # 길이 ≤ shorts_max_s 이고 player 비율이 세로·정사각형(embedHeight ≥ embedWidth)이며
@@ -118,7 +118,12 @@ format_rules:
   # 이 줄만 있어서는 version 을 올릴 필요가 없다. 켤 때는 enabled: true 와 함께 version 을 올린다
   # (해시가 바뀌므로 안 올리면 publish 가 실패한다). 절차: docs/ops/shorts-v2.md
   shorts_v2:
-    enabled: true # 2026-10-18 운영자 결정으로 켬(YouTube 확인 메일 회신 전). 끌 때는 false + version 3
+    enabled: true # 2026-10-18 운영자 결정으로 켬(YouTube 확인 메일 회신 전). 끌 때는 false + version 올림
+    # D-35: 켜져 있을 때 observe 끝에 관측 창(observed_window) 밖에 남은 unknown 영상(길이 ≤ shorts_max_s,
+    # 비율 미관측, 보유 기간 안, 삭제 아님)을 최신 공개순으로 이 개수까지 골라 videos.list part=player
+    # 만으로 비율을 채우고 같은 규칙으로 다시 판정한다(50개당 1 unit, 같은 쿼터 원장·일일 상한).
+    # 판정을 바꾸지 않으므로 해시에서 빠진다(version 을 올리지 않아도 된다). 0 이면 끈다. 생략 시 2000.
+    backfill_per_run: 2000 # [ASSUMPTION] 2000개 = 40 unit/실행
 
 # AD-10 meta.size_buckets 로 그대로 발행되는 채널 규모 경계값(구독자 수 기준, FR-2 규모 4구간).
 # 경계값 자체(1만/10만/100만)는 Q-3 미정 [ASSUMPTION: Phase 0(G-3 실측) 후 조정].
@@ -160,6 +165,12 @@ publish:
   public_base_url: https://${SECRET:DOMAIN_VIGNAL_DATA}
   # Story 2.8: backups/ 가 들어가는 비공개 버킷(r2 대상). local 은 env VIGNAL_BACKUP_DIR.
   private_bucket: vignal-private
+  # AD-31 (Story 23.1, FR-68): 채널마다 공개 영상 행 상한. 최근 latest 개(공개 시각 내림차순)
+  # + 나머지 중 조회수 상위 top_views 개. 개수(uploads_30d·meta.*_count·totals)는 상한 전 값.
+  # 값은 여기에만 있다. 0 이하·누락이면 설정 오류로 실행 실패.
+  per_channel_cap:
+    latest: 60 # [ASSUMPTION] AD-31
+    top_views: 20 # [ASSUMPTION] AD-31
 
 # AD-6(5)/NFR-6.6.5 (Story 2.8): age 로 암호화한 vignal.db 백업을 최신 keep 개만 남긴다.
 # 수신자 공개키는 env AGE_RECIPIENT 에만 있다(r2 에서는 필수). 개인키는 어디에도 두지 않는다.
