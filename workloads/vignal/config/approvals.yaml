@@ -748,4 +748,44 @@ approve:
   - channel_id: UCl22RiXFscUiaZ02UWAYjyQ
     topic: music
     note: "라이크둠칫 · 구독자 22,800 · AI 자작곡 플레이리스트(카테고리 Music, 3~12시간) · 최근 업로드 2026-07-27 · 새 주제 music 첫 채널 (2026-10-18 API 확인, 운영자 결정)"
+  # 눈파티 (scout 2026-10-18)
+  - channel_id: UCd6CX2LiQE2dEAPXwk2N0jg
+    topic: game
+    note: "scout:popular 구독 108000 롱폼 9/10 최근 업로드 2026-10-13"
+  # 뉴스타파 Newstapa (scout 2026-10-18)
+  - channel_id: UCeFUGS2VCOb6DO3BiUgvwNA
+    topic: news
+    note: "scout:popular 구독 1760000 롱폼 6/10 최근 업로드 2026-10-14"
+  # 안될공학 - IT 테크 신기술 (scout 2026-10-18)
+  - channel_id: UCeN2YeJcBCRJoXgzF_OU3qw
+    topic: tech
+    note: "scout:popular 구독 446000 롱폼 8/10 최근 업로드 2026-10-15"
+  # 김성룡 바둑랩 (scout 2026-10-18)
+  - channel_id: UCfA0tTDLNooBB0ymdoI5M7w
+    topic: game
+    note: "scout:popular 구독 254000 롱폼 10/10 최근 업로드 2026-10-14"
+  # 이상호 (scout 2026-10-18)
+  - channel_id: UCfIUuMA7U_jImP7oWfTe4Pw
+    topic: game
+    note: "scout:popular 구독 1000000 롱폼 9/10 최근 업로드 2026-10-12"
+  # 교양이를 부탁해 (scout 2026-10-18)
+  - channel_id: UChY8VUjXv0aA7RF9hDQ0ISg
+    topic: news
+    note: "scout:popular 구독 496000 롱폼 6/10 최근 업로드 2026-10-13"
+  # 로빈 (scout 2026-10-18)
+  - channel_id: UCo33r3SAf5z9MS-lrXV2aOQ
+    topic: game
+    note: "scout:popular 구독 583000 롱폼 7/10 최근 업로드 2026-10-12"
+  # 예상치 못한 필름 (scout 2026-10-18)
+  - channel_id: UCpCDVbUD-3-A_SIfHuGNdFA
+    topic: movie-review
+    note: "scout:popular 구독 989000 롱폼 5/10 최근 업로드 2026-10-12"
+  # 카사딘하는사람 (scout 2026-10-18)
+  - channel_id: UCpSCdYMV3240T-h3RugN1qA
+    topic: game
+    note: "scout:popular 구독 137000 롱폼 10/10 최근 업로드 2026-10-17"
+  # 프뚜 (scout 2026-10-18)
+  - channel_id: UCpnnUKmAQKgVinEV-lV-N2g
+    topic: game
+    note: "scout:popular 구독 296000 롱폼 9/10 최근 업로드 2026-10-11"
 untrack: []
