@@ -120,7 +120,10 @@ data:
     if [ "$EXISTING_COUNT" -gt 0 ]; then
       printf '%s\n' "$EXISTING" | while read -r id; do
         [ -z "$id" ] && continue
-        bw --session "$SESSION_BW" delete item "$id" --permanent
+        # ponytail: one failed delete (Cloud rate limit / blip) used to kill the job mid-wipe and
+        # leave Cloud half-empty; skip it instead — worst case a duplicate until next week's wipe.
+        bw --session "$SESSION_BW" delete item "$id" --permanent \
+          || log "WARN: failed to delete $id, continuing"
       done
     fi
 
