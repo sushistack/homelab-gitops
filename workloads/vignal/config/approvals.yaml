@@ -745,4 +745,7 @@ approve:
   - channel_id: UCZ0bi2aVJngKLwFTU5g_fLQ
     topic: game
     note: "scout:popular 구독 942000 롱폼 10/10 최근 업로드 2026-10-16"
+  - channel_id: UCl22RiXFscUiaZ02UWAYjyQ
+    topic: music
+    note: "라이크둠칫 · 구독자 22,800 · AI 자작곡 플레이리스트(카테고리 Music, 3~12시간) · 최근 업로드 2026-07-27 · 새 주제 music 첫 채널 (2026-10-18 API 확인, 운영자 결정)"
 untrack: []
