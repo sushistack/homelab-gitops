@@ -2,35 +2,70 @@
   {
     "feature": "observed_velocity",
     "decision": "disabled",
-    "authority_ref": "G-1 2026-09-29 (docs/analysis/g1-policy-review.md #3): derived metric, needs derived-metrics-policy acceptance",
+    "authority_ref": "G-1 2026-09-29 (docs/analysis/g1-policy-review.md #3): derived metric, needs derived-metrics-policy acceptance | 2026-10-13: YouTube API Services compliance review completed (ToS Violations Report V.1: III.D.1c, III.A.2e resolved); approval scope for this feature not confirmed, asked by email 2026-10-14 (D-31) -- stays disabled until a written reply",
     "reviewed_at": "2026-09-29T00:00:00Z",
     "expires_at": "2026-12-27T00:00:00Z"
   },
   {
     "feature": "r24",
     "decision": "disabled",
-    "authority_ref": "G-1 2026-09-29 (docs/analysis/g1-policy-review.md #3): channel-baseline multiple, needs derived-metrics-policy acceptance",
+    "authority_ref": "G-1 2026-09-29 (docs/analysis/g1-policy-review.md #3): channel-baseline multiple, needs derived-metrics-policy acceptance | 2026-10-13: YouTube API Services compliance review completed (ToS Violations Report V.1: III.D.1c, III.A.2e resolved); approval scope for this feature not confirmed, asked by email 2026-10-14 (D-31) -- stays disabled until a written reply",
     "reviewed_at": "2026-09-29T00:00:00Z",
     "expires_at": "2026-12-27T00:00:00Z"
   },
   {
     "feature": "aux_ratios",
     "decision": "disabled",
-    "authority_ref": "G-1 2026-09-29, corrected 2026-09-30 (docs/analysis/g1-policy-review.md #3): ratios are derived metrics under III.E.4.h, need derived-metrics-policy approval",
+    "authority_ref": "G-1 2026-09-29, corrected 2026-09-30 (docs/analysis/g1-policy-review.md #3): ratios are derived metrics under III.E.4.h, need derived-metrics-policy approval | 2026-10-13: YouTube API Services compliance review completed (ToS Violations Report V.1: III.D.1c, III.A.2e resolved); approval scope for this feature not confirmed, asked by email 2026-10-14 (D-31) -- stays disabled until a written reply",
     "reviewed_at": "2026-09-29T00:00:00Z",
     "expires_at": "2026-12-27T00:00:00Z"
   },
   {
     "feature": "revenue_estimate",
     "decision": "disabled",
-    "authority_ref": "PRD FR-49 (영상·채널 예상 광고 수익), developer policy §III.E.4.h (derived metrics need approval), Q-15 (ask for approval and name revenue estimates in the permitted use); shipped disabled by Story 14.6 (D-27)",
+    "authority_ref": "PRD FR-49 (영상·채널 예상 광고 수익), developer policy §III.E.4.h (derived metrics need approval), Q-15 (ask for approval and name revenue estimates in the permitted use); shipped disabled by Story 14.6 (D-27) | 2026-10-13: YouTube API Services compliance review completed (ToS Violations Report V.1: III.D.1c, III.A.2e resolved); approval scope for this feature not confirmed, asked by email 2026-10-14 (D-31) -- stays disabled until a written reply",
     "reviewed_at": "2026-10-05T00:00:00Z",
     "expires_at": "2027-01-03T00:00:00Z"
   },
   {
+    "feature": "subs_view_ratio",
+    "decision": "disabled",
+    "authority_ref": "PRD FR-61~63, developer policy §III.E.4.h (derived metrics need approval), epics D-32 (built disabled by operator choice 2026-10-17)",
+    "reviewed_at": "2026-10-17T00:00:00Z",
+    "expires_at": "2027-01-15T00:00:00Z"
+  },
+  {
+    "feature": "channel_percentile",
+    "decision": "disabled",
+    "authority_ref": "PRD FR-61~63, developer policy §III.E.4.h (derived metrics need approval), epics D-32 (built disabled by operator choice 2026-10-17)",
+    "reviewed_at": "2026-10-17T00:00:00Z",
+    "expires_at": "2027-01-15T00:00:00Z"
+  },
+  {
+    "feature": "upload_cadence",
+    "decision": "disabled",
+    "authority_ref": "PRD FR-61~63, developer policy §III.E.4.h (derived metrics need approval), epics D-32 (built disabled by operator choice 2026-10-17)",
+    "reviewed_at": "2026-10-17T00:00:00Z",
+    "expires_at": "2027-01-15T00:00:00Z"
+  },
+  {
+    "feature": "open_score",
+    "decision": "disabled",
+    "authority_ref": "PRD FR-61~63, developer policy §III.E.4.h (derived metrics need approval), epics D-32 (built disabled by operator choice 2026-10-17)",
+    "reviewed_at": "2026-10-17T00:00:00Z",
+    "expires_at": "2027-01-15T00:00:00Z"
+  },
+  {
+    "feature": "channel_rpm",
+    "decision": "disabled",
+    "authority_ref": "g1-policy-review 2026-10-18 (docs/analysis/g1-policy-review.md 내 채널 수익·RPM): own-channel RPM (estimatedRevenue / views x 1000) is a derived ratio under developer policy §III.E.4.h (Authorized Data not excepted, §IV); Story 20.5 (FR-60, AD-27) built disabled",
+    "reviewed_at": "2026-10-18T00:00:00Z",
+    "expires_at": "2027-01-16T00:00:00Z"
+  },
+  {
     "feature": "observation_history",
     "decision": "disabled",
-    "authority_ref": "G-1 2026-09-29 (docs/analysis/g1-policy-review.md #2): >30-day history needs derived-metrics-policy acceptance",
+    "authority_ref": "G-1 2026-09-29 (docs/analysis/g1-policy-review.md #2): >30-day history needs derived-metrics-policy acceptance | 2026-10-13: YouTube API Services compliance review completed (ToS Violations Report V.1: III.D.1c, III.A.2e resolved); approval scope for this feature not confirmed, asked by email 2026-10-14 (D-31) -- stays disabled until a written reply",
     "reviewed_at": "2026-09-29T00:00:00Z",
     "expires_at": "2026-12-27T00:00:00Z"
   },
