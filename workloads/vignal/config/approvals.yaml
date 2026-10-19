@@ -788,4 +788,44 @@ approve:
   - channel_id: UCpnnUKmAQKgVinEV-lV-N2g
     topic: game
     note: "scout:popular 구독 296000 롱폼 9/10 최근 업로드 2026-10-11"
+  # AION2 (scout 2026-10-19)
+  - channel_id: UCqh_gleuOIleCy5Qmbo2j1Q
+    topic: game
+    note: "scout:popular 구독 286000 롱폼 5/10 최근 업로드 2026-10-13"
+  # 슈카월드 (scout 2026-10-19)
+  - channel_id: UCsJ6RuBiTVWRX156FVbeaGg
+    topic: news
+    note: "scout:popular 구독 3730000 롱폼 10/10 최근 업로드 2026-10-13"
+  # Official dopa (scout 2026-10-19)
+  - channel_id: UCt15X5eHLwyP8PpNtQTkuDQ
+    topic: game
+    note: "scout:popular 구독 780000 롱폼 10/10 최근 업로드 2026-10-13"
+  # 다누리 (scout 2026-10-19)
+  - channel_id: UCtcw3t27H9qFwcdAujrDEyQ
+    topic: game
+    note: "scout:popular 구독 221000 롱폼 10/10 최근 업로드 2026-10-15"
+  # 류제홍 RYUJEHONG (scout 2026-10-19)
+  - channel_id: UCtt0Hg9MhraTkzWwNQpplHg
+    topic: game
+    note: "scout:popular 구독 291000 롱폼 5/10 최근 업로드 2026-10-14"
+  # 스맵 (scout 2026-10-19)
+  - channel_id: UCunQJrd9yphZEH0Etwjnabw
+    topic: game
+    note: "scout:popular 구독 262000 롱폼 10/10 최근 업로드 2026-10-14"
+  # 정준홍 (scout 2026-10-19)
+  - channel_id: UCvPGGL-OTEAQlwAUxbcJO8g
+    topic: game
+    note: "scout:popular 구독 209000 롱폼 7/10 최근 업로드 2026-10-13"
+  # 삐라 (scout 2026-10-19)
+  - channel_id: UCw2zOqd6hXsny79qDki_Z4w
+    topic: game
+    note: "scout:popular 구독 210000 롱폼 8/10 최근 업로드 2026-10-16"
+  # 레고77 (scout 2026-10-19)
+  - channel_id: UCw9fP0nSoUygLDmvV1GdAZw
+    topic: game
+    note: "scout:popular 구독 288000 롱폼 9/10 최근 업로드 2026-10-12"
+  # 유봉훈 (scout 2026-10-19)
+  - channel_id: UCxRlvng0zVoyEBhutAuXfzQ
+    topic: game
+    note: "scout:popular 구독 373000 롱폼 5/10 최근 업로드 2026-10-15"
 untrack: []
