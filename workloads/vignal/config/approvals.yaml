@@ -828,4 +828,12 @@ approve:
   - channel_id: UCxRlvng0zVoyEBhutAuXfzQ
     topic: game
     note: "scout:popular 구독 373000 롱폼 5/10 최근 업로드 2026-10-15"
+  # 똘끼100% (scout 2026-10-20)
+  - channel_id: UCybKp0O2N9sUZOgIm1j2r_w
+    topic: game
+    note: "scout:popular 구독 326000 롱폼 7/10 최근 업로드 2026-10-13"
+  # 클리드 (scout 2026-10-20)
+  - channel_id: UCyoSQyaCrZHro6F_nBiXIYg
+    topic: game
+    note: "scout:popular 구독 355000 롱폼 10/10 최근 업로드 2026-10-14"
 untrack: []
