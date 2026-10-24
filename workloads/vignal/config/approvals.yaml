@@ -836,4 +836,44 @@ approve:
   - channel_id: UCyoSQyaCrZHro6F_nBiXIYg
     topic: game
     note: "scout:popular 구독 355000 롱폼 10/10 최근 업로드 2026-10-14"
+  # 간병의사 김남균 (scout 2026-10-24)
+  - channel_id: UC8NAE1sHzjRuH8aDKSCbg-g
+    topic: economy
+    note: "scout:mention 구독 13100 롱폼 8/10 최근 업로드 2026-10-21"
+  # 강퀴TV (scout 2026-10-24)
+  - channel_id: UCZ49HaU_D0Tlf1aDA2jU_Vg
+    topic: game
+    note: "scout:popular 구독 91700 롱폼 9/10 최근 업로드 2026-10-24"
+  # 이슈날먹 (scout 2026-10-24)
+  - channel_id: UC5uIaECBQx0Qfe9OTvvCHOg
+    topic: news
+    note: "scout:mention 구독 758 롱폼 8/10 최근 업로드 2026-10-24"
+  # 신작가 (scout 2026-10-24)
+  - channel_id: UC9P-IHNS6MwO0x2gERxhLtA
+    topic: economy
+    note: "scout:mention 구독 317000 롱폼 6/10 최근 업로드 2026-10-23"
+  # 슈퍼개미 이세무사TV (scout 2026-10-24)
+  - channel_id: UCowHl0BGalL433P6bCBgeKA
+    topic: economy
+    note: "scout:mention 구독 274000 롱폼 8/10 최근 업로드 2026-10-24"
+  # TV-People (scout 2026-10-24)
+  - channel_id: UC1cWTErb7vw_UmmuB0dYgsQ
+    topic: web-drama
+    note: "scout:popular 구독 4260000 롱폼 5/10 최근 업로드 2026-10-24"
+  # 행돌 (scout 2026-10-24)
+  - channel_id: UC8rbhIem-3aAsNXhTDI-nSA
+    topic: game
+    note: "scout:popular 구독 317000 롱폼 9/10 최근 업로드 2026-10-23"
+  # EA SPORTS FC 온라인 (scout 2026-10-24)
+  - channel_id: UC9otskL_kd-0CDib_5Lj-mQ
+    topic: game
+    note: "scout:popular 구독 353000 롱폼 10/10 최근 업로드 2026-10-23"
+  # 치랜 (scout 2026-10-24)
+  - channel_id: UCCOr1fiThqOy92kftp6xJ_Q
+    topic: game
+    note: "scout:popular 구독 252000 롱폼 10/10 최근 업로드 2026-10-22"
+  # BanaMongki (scout 2026-10-24)
+  - channel_id: UCHFIDZWYe9L0xJlez3vkrkQ
+    topic: game
+    note: "scout:popular 구독 130000 롱폼 6/10 최근 업로드 2026-10-23"
 untrack: []
