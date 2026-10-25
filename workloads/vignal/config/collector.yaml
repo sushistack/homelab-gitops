@@ -31,6 +31,15 @@ caps:
   channels_per_run: 900 # AD-8 산술 U(C) ≈ 8.82·C, 예산 8,000 ⇒ C ≲ 900
   alerts_per_run: 20 # [ASSUMPTION] 스파인 미기재, report 실행당 알림 발송 상한
   alert_dedupe_hours: 24
+  max_tracked_channels: 900 # Story 27.6 추적 채널(active+warm+dormant) 상한. channels_per_run 과 같은 U(C) 산술. 넘으면 owner_link 편입은 queued
+
+# Story 27.6 (주제 순위 계획 5): 채널 연결(owner_link) 추적 요청의 자동 편입. scout 최소 조건
+# (scout.criteria, longform_sample)으로 한 번 검사하고(약 4 유닛, 일반 예산) 통과하면 승인 파일과 같은
+# 경로로 active, 상한(caps.max_tracked_channels)이 차면 queued 로 둔다. 꺼져 있으면 owner_link 요청은
+# 일반 추적 요청처럼 후보만 만든다. Worker AUTO_TRACK_ENABLED 와 함께 켠다.
+auto_track:
+  enabled: false
+  max_per_run: 20 # [ASSUMPTION] 실행당 승격 + 새 편입(대기 포함) 최대 수
 
 # discover 단계 스위치. rss_precheck 를 켜면 채널마다 공개 RSS 피드
 # (youtube.com/feeds/videos.xml, API 키·쿼터 없음)를 먼저 읽고, 새 영상이 없으면 그 채널의
