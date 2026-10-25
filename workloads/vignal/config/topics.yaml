@@ -33,3 +33,31 @@ topics:
   # 2026-10-18: 음악(플레이리스트·자작곡) 채널용으로 추가(운영자 결정). 첫 채널은 라이크둠칫.
   - slug: music
     label: '음악'
+
+# 2026-10-25 주제 순위 계획 1: 2·3단계 노드(spec §3.1). 부모는 위에 먼저 둔다.
+# 3단계는 실제 추적 영상이 있는 것만 둔다. status: candidate 는 LLM 후보에서 빠지고
+# 운영자 검수로만 붙는다. 운영자가 tags pending 의 새 후보를 보고 늘린다.
+subtopics:
+  - slug: arpg
+    parent: game
+    label: 'ARPG·핵앤슬래시'
+    aliases: [핵앤슬래시, 핵슬, 디아블로라이크]
+  - slug: rpg
+    parent: game
+    label: 'RPG'
+    aliases: [MMORPG, 롤플레잉]
+  - slug: fps
+    parent: game
+    label: 'FPS·슈팅'
+    aliases: [총게임, 배틀로얄]
+  - slug: strategy
+    parent: game
+    label: '전략·시뮬레이션'
+  - slug: poe2
+    parent: game/arpg
+    label: '패스 오브 엑자일 2'
+    aliases: [POE2, 패오엑2, poe2]
+  - slug: diablo4
+    parent: game/arpg
+    label: '디아블로 4'
+    aliases: [디아4, Diablo IV]
