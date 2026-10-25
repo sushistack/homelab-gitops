@@ -32,6 +32,14 @@ caps:
   alerts_per_run: 20 # [ASSUMPTION] 스파인 미기재, report 실행당 알림 발송 상한
   alert_dedupe_hours: 24
 
+# discover 단계 스위치. rss_precheck 를 켜면 채널마다 공개 RSS 피드
+# (youtube.com/feeds/videos.xml, API 키·쿼터 없음)를 먼저 읽고, 새 영상이 없으면 그 채널의
+# playlistItems 페이징을 건너뛴다. 피드 실패 시 기존 API 경로로 그대로 간다.
+# PRD FR-21 / Q-20("공식 API 만, 비공식 엔드포인트 금지")과 감사받은 API 사용 범위에 어긋나므로
+# PRD·감사 결정 전에는 false 로 둔다(docs/ops/rss-precheck.md).
+discover:
+  rss_precheck: true # 2026-10-25 운영자 결정으로 켬(D-38). 끌 때는 false
+
 # AD-8: 작업 종류 우선순위는 코드 순서(intake > discover > 영상 통계 > 채널 통계)이며
 # 나이별 주기만 여기서 값을 받는다. "≤3일 매 실행" 은 주기 게이트가 없다는 뜻이라
 # cadence_hours 를 0 으로 둔다(6시간마다 도는 CronJob, AD-7, 이 곧 "매 실행").
@@ -252,7 +260,7 @@ scout:
   # 후보로 삼는다(docs/ops/scout.md).
   featured:
     enabled: true # 2026-10-25 운영자 결정으로 켬(D-31 범위 회신 전). 끌 때는 false
-    lookups: 300 # [ASSUMPTION] 한 번 실행에서 조회할 추적 채널 수 상한(무작위 순서, 채널당 1 유닛)
+    lookups: 50 # 2026-10-25: 첫 실행 249 유닛에 새 후보 0개라 줄여 관찰. [ASSUMPTION] 한 번 실행에서 조회할 추적 채널 수 상한(무작위 순서, 채널당 1 유닛)
   # [ASSUMPTION] 주제 슬러그(topics.yaml) -> 검색 키워드. 질의 문자열은 여기 값만 쓴다(인박스·요청 등 런타임 입력은 쓰지 않음).
   topic_keywords:
     game: ["게임 리뷰", "게임 실황"]
