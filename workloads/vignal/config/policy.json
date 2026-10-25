@@ -82,5 +82,19 @@
     "authority_ref": "G-1 2026-09-29 (docs/analysis/g1-policy-review.md #1, #4): Non-Authorized Data, 30-day storage",
     "reviewed_at": "2026-09-29T00:00:00Z",
     "expires_at": "2027-09-28T00:00:00Z"
+  },
+  {
+    "feature": "topic_rank",
+    "decision": "disabled",
+    "authority_ref": "PRD FR-79, AD-38, developer policy §III.E.4.h (ranks are derived metrics), epics D-39 (built disabled until G-5)",
+    "reviewed_at": "2026-10-25T00:00:00Z",
+    "expires_at": "2027-01-25T00:00:00Z"
+  },
+  {
+    "feature": "momentum_score",
+    "decision": "disabled",
+    "authority_ref": "PRD FR-80, docs/analysis/momentum-score-weights.md, epics D-39 (built disabled until G-5)",
+    "reviewed_at": "2026-10-25T00:00:00Z",
+    "expires_at": "2027-01-25T00:00:00Z"
   }
 ]
