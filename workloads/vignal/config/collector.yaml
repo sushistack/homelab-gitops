@@ -38,7 +38,7 @@ caps:
 # PRD FR-21 / Q-20("공식 API 만, 비공식 엔드포인트 금지")과 감사받은 API 사용 범위에 어긋나므로
 # PRD·감사 결정 전에는 false 로 둔다(docs/ops/rss-precheck.md).
 discover:
-  rss_precheck: true # 2026-10-25 운영자 결정으로 켬(D-38). 끌 때는 false
+  rss_precheck: false # 2026-10-25 끔: 피드가 200/404/500 을 번갈아 내 첫 실행에서 5회 연속 실패, 절감 0. 피드가 안정되면 true
 
 # AD-8: 작업 종류 우선순위는 코드 순서(intake > discover > 영상 통계 > 채널 통계)이며
 # 나이별 주기만 여기서 값을 받는다. "≤3일 매 실행" 은 주기 게이트가 없다는 뜻이라
