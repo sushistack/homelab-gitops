@@ -272,3 +272,14 @@ scout:
     news: ["시사 해설", "뉴스 분석"]
     economy: ["경제 해설", "재테크"]
     web-drama: ["코미디", "예능"]
+
+# 주제 순위 계획 1 (docs/superpowers/specs/2026-10-25-topic-ranking-design.md §3.3).
+# enabled 는 운영자가 G-5 추가 질의 회신을 보고 켠다. 켜면 env ANTHROPIC_API_KEY 가 필요하다
+# (없으면 tag 단계는 경고만 남기고 건너뛴다).
+tagging:
+  enabled: false
+  model: claude-haiku-5-5
+  auto_accept: 0.8 # 이 신뢰도 이상이고 후보 안의 노드면 자동 확정, 아니면 검수 대기열
+  max_per_run: 100 # [ASSUMPTION] 하루 새 영상 ~200개, run 4회
+  description_chars: 500 # 설명란 앞부분(메모리에서만 사용)
+  channel_l2_share: 0.6 # tags pending 이 채널 2단계를 제안하는 비중
