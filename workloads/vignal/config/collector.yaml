@@ -252,6 +252,7 @@ scout:
     "25": news
     "26": beauty-life
     "28": tech
+  mention_per_channel: 10 # [ASSUMPTION] 그 기간 안에서도 채널당 최신 이 개수만 읽는다(뉴스 채널은 주 1천 개 이상 올려 설명란 조회가 scout 유닛 대부분을 썼다)
   mention_window_days: 7 # [ASSUMPTION] 추적 채널의 최근 영상 중 이 기간 안에 올라온 것의 설명란만 읽는다(메모리에서만 처리, 저장하지 않음)
   mention_lookups: 30 # [ASSUMPTION] 한 번 실행에서 @핸들 -> 채널 ID 해석(channels.list forHandle)에 쓸 최대 호출 수
   longform_sample: 10 # [ASSUMPTION] 롱폼 판단에 쓸 최신 영상 수
@@ -260,6 +261,7 @@ scout:
     language: ko # language_hint 가 이 값이어야 한다
     max_upload_age_days: 30 # 마지막 업로드가 이보다 오래되면 stale_uploads
     min_longform: 5 # 표본 중 롱폼이 이 개수 미만이면 few_longform
+    min_subs: 1000 # [ASSUMPTION] 자동 탐색만: 공개 구독자가 이 수 미만이면 영상 조회 없이 few_subs(0 = 끔). 추적 요청·키워드 scout 에는 적용하지 않고, 구독자 비공개는 통과
   # FR-40 (Story 9.8): search.list 기반 키워드 검색 경로. API 사용 범위 심사 밖이라 기본 꺼짐(enabled: false).
   # 심사 회신과 범위 변경 승인 뒤 GitOps 커밋으로 true 로 바꾼다(docs/ops/scout.md). 켜기 전에는 요청도 원장 기록도 없다.
   search:
