@@ -36,9 +36,11 @@ approve:
     note: "호기심대장 김몽몽  𝐦𝐨𝐧𝐠𝐦𝐨𝐧𝐠 · 구독자 46,400 · 최근 10개 중 롱폼 7 · 최근 업로드 2026-10-03 (2026-10-04 API 확인)"
   - channel_id: UCcdlIcleb4oIK6of1ugSJ7w
     topic: game
+    topic_l2: game/fps
     note: "옥냥이 RoofTopCAT · 구독자 684,000 · 최근 10개 중 롱폼 10 · 최근 업로드 2026-10-02 (2026-10-04 API 확인)"
   - channel_id: UC2U8C7lmbQpfBeAW8fTP_jg
     topic: game
+    topic_l2: game/variety
     note: "말 많은 게이머 듀리 · 구독자 71,600 · 최근 10개 중 롱폼 10 · 최근 업로드 2026-10-03 (2026-10-04 API 확인)"
   - channel_id: UCNR3K4HA6LyO9tz0oZoSJIA
     topic: anime  # 2026-10-26 재분류 movie-review→anime
@@ -120,6 +122,7 @@ approve:
     note: "증시각도기TV · 구독자 477,000 · 최근 10개 중 롱폼 6 · 최근 업로드 2026-10-04 (2026-10-04 API 확인)"
   - channel_id: UCBW_PhuXoHk40xF6nO0Q64w
     topic: game
+    topic_l2: game/variety
     note: "깐 · 구독자 25,100 · 최근 10개 중 롱폼 8 · 최근 업로드 2026-10-02 (2026-10-04 API 확인)"
   - channel_id: UCVE-zq_yK_InhsVaJPQEttw
     topic: movie-review
@@ -156,6 +159,7 @@ approve:
   # 김데데 (scout 2026-10-04)
   - channel_id: UC-9v2ASxz8f313YpiMF55eg
     topic: game
+    topic_l2: game/rpg
     note: "scout:popular 구독 257000 롱폼 10/10 최근 업로드 2026-10-03"
   # 채현찌 (scout 2026-10-04)
   - channel_id: UC5wINXUndIRbjygmnFWvf0g
@@ -164,6 +168,7 @@ approve:
   # 혜안 (scout 2026-10-04)
   - channel_id: UC8CIM3d3zDYMk-3T5aAz0yw
     topic: game
+    topic_l2: game/variety
     note: "scout:popular 구독 3100000 롱폼 10/10 최근 업로드 2026-10-04"
   # 뉴스데일리베스트 (scout 2026-10-04)
   - channel_id: UC8p2BFLsMGSfBdpwNs4Zq1A
@@ -176,14 +181,17 @@ approve:
   # 튜브김민교 (scout 2026-10-04)
   - channel_id: UCBA9XaL5wCdHnC5EmEzwrqw
     topic: game
+    topic_l2: game/moba
     note: "scout:popular 구독 809000 롱폼 10/10 최근 업로드 2026-10-04"
   # 불도그 (scout 2026-10-04)
   - channel_id: UCBjPppB6FOLloYBUvgbqE_A
     topic: game
+    topic_l2: game/rpg
     note: "scout:popular 구독 269000 롱폼 10/10 최근 업로드 2026-10-04"
   # 싸모스 (scout 2026-10-04)
   - channel_id: UCCshApLKfQqY1wKB07jGiuA
     topic: game
+    topic_l2: game/sandbox
     note: "scout:popular 구독 701000 롱폼 5/10 최근 업로드 2026-10-04"
   # 남봉 (scout 2026-10-04)
   - channel_id: UCjLam2TWjQ2BG0y0H4Q9RbQ
@@ -192,22 +200,27 @@ approve:
   # 후닝 (scout 2026-10-04)
   - channel_id: UCq6bX1rAJqwt3LmYuHrDPqg
     topic: game
+    topic_l2: game/rpg
     note: "scout:popular 구독 56200 롱폼 7/10 최근 업로드 2026-10-04"
   # 전설 (scout 2026-10-04)
   - channel_id: UCrRp1aQsImkBqbO5FwZTA_w
     topic: game
+    topic_l2: game/sandbox
     note: "scout:popular 구독 23000 롱폼 7/10 최근 업로드 2026-10-04"
   # 찬해 (scout 2026-10-04)
   - channel_id: UCzQ8Rk-dGDYK4c-4indH0_g
     topic: game
+    topic_l2: game/rpg
     note: "scout:popular 구독 39700 롱폼 10/10 최근 업로드 2026-10-04"
   # 괴물쥐 유튜브 (scout 2026-10-04)
   - channel_id: UCDBAVzfX3yZ1hah0FHnOoaA
     topic: game
+    topic_l2: game/rpg
     note: "scout:popular 구독 1210000 롱폼 10/10 최근 업로드 2026-10-04"
   # 근가놈 (scout 2026-10-04)
   - channel_id: UCEWqfxUKLIpqyMzebADGUlg
     topic: game
+    topic_l2: game/rpg
     note: "scout:popular 구독 302000 롱폼 9/10 최근 업로드 2026-10-03"
   # 매일신문 (scout 2026-10-04)
   - channel_id: UCGrraKQiTF-ml0KqPQ8mrUA
@@ -216,6 +229,7 @@ approve:
   # 뜨뜨뜨뜨 (scout 2026-10-04)
   - channel_id: UCHxKSivB6JLZ1SEMdxd1fAg
     topic: game
+    topic_l2: game/moba
     note: "scout:popular 구독 1490000 롱폼 10/10 최근 업로드 2026-10-03"
   # 강 지 (scout 2026-10-04)
   - channel_id: UCIVFv8AiQLqM9oLHTixrNYw
@@ -224,6 +238,7 @@ approve:
   # 전략적죽음 (scout 2026-10-04)
   - channel_id: UCJmsB6NAU0sp2htDL4KmX0A
     topic: game
+    topic_l2: game/moba
     note: "scout:popular 구독 184000 롱폼 10/10 최근 업로드 2026-10-03"
   # 살림남매 (scout 2026-10-05)
   - channel_id: UCI3bXUVuHXHMAiurKj3Wm9A
@@ -236,6 +251,7 @@ approve:
   # 청묘 (scout 2026-10-05)
   - channel_id: UCCL77mfaS0LwgJqry7ph_zA
     topic: game
+    topic_l2: game/rpg
     note: "scout:mention 구독 107000 롱폼 10/10 최근 업로드 2026-10-03"
   # 긴데데 (scout 2026-10-05)
   - channel_id: UCVNdAacha6pZqmCksiRbWNQ
@@ -244,14 +260,17 @@ approve:
   # 인피쉰 (scout 2026-10-05)
   - channel_id: UC-okJdotaXPlzivRzHFqzuA
     topic: game
+    topic_l2: game/strategy
     note: "scout:popular 구독 644000 롱폼 8/10 최근 업로드 2026-10-05"
   # 저라뎃 JUSTLIKETHAT (scout 2026-10-05)
   - channel_id: UC1dG3vI9FfHnH3YgyeKUz_A
     topic: game
+    topic_l2: game/variety
     note: "scout:popular 구독 728000 롱폼 9/10 최근 업로드 2026-10-04"
   # 마플 마인크래프트 채널 (scout 2026-10-05)
   - channel_id: UC1q4Ihlv_YhLELw-ijE0Diw
     topic: game
+    topic_l2: game/sandbox
     note: "scout:popular 구독 870000 롱폼 10/10 최근 업로드 2026-10-04"
   # 플래그 (scout 2026-10-05)
   - channel_id: UC2eGI7us9gmMahbByyPnTwg
@@ -276,6 +295,7 @@ approve:
   # 탱커킹 (scout 2026-10-06)
   - channel_id: UC8wcaRAR4KX6yuisEdlzx3w
     topic: game
+    topic_l2: game/rpg
     note: "scout:popular 구독 62700 롱폼 9/10 최근 업로드 2026-10-06"
   # 낭랑시니어TV (scout 2026-10-06)
   - channel_id: UC_uvo4AdKnrSiUD2SkidF7A
@@ -288,6 +308,7 @@ approve:
   # 캐인유튜브 (scout 2026-10-06)
   - channel_id: UC-8S20Ll1gzPiu_YY8BgyaQ
     topic: game
+    topic_l2: game/moba
     note: "scout:popular 구독 229000 롱폼 8/10 최근 업로드 2026-10-05"
   # 악인전 - 인물소개 (scout 2026-10-06)
   - channel_id: UC9Mtqqw9-UGWxB5mh6Ar_2A
@@ -296,14 +317,17 @@ approve:
   # 아라하시 타비 ARAHASHI TABI (scout 2026-10-06)
   - channel_id: UCAHVQ44O81aehLWfy9O6Elw
     topic: game
+    topic_l2: game/sandbox
     note: "scout:popular 구독 265000 롱폼 8/10 최근 업로드 2026-10-05"
   # 단포 (scout 2026-10-06)
   - channel_id: UCARHwjeGpLV5JZsZ63eGx8w
     topic: game
+    topic_l2: game/sandbox
     note: "scout:popular 구독 745000 롱폼 5/10 최근 업로드 2026-10-05"
   # 샤코타임 Shacotime (scout 2026-10-06)
   - channel_id: UCAkCZHtQdPWvbwaP1KJBjvA
     topic: game
+    topic_l2: game/moba
     note: "scout:popular 구독 298000 롱폼 10/10 최근 업로드 2026-10-05"
   # 대신남 말방구실험실 (scout 2026-10-07)
   - channel_id: UCCUfsf35PukA4gEsU2hTtQg
@@ -332,6 +356,7 @@ approve:
   # PAKA (scout 2026-10-07)
   - channel_id: UCJpAwvQaZyCI5spAz7tipGA
     topic: game
+    topic_l2: game/moba
     note: "scout:popular 구독 786000 롱폼 10/10 최근 업로드 2026-10-03"
   # 김뿡 (scout 2026-10-07)
   - channel_id: UCK3k-JljWSFBYCPCtvrhbvg
@@ -340,6 +365,7 @@ approve:
   # 멜로우TV (scout 2026-10-07)
   - channel_id: UCNOYTSGiu9bV6VjqnJa4ojw
     topic: game
+    topic_l2: game/sandbox
     note: "scout:popular 구독 953000 롱폼 6/10 최근 업로드 2026-10-04"
   # 너불 (scout 2026-10-07)
   - channel_id: UCO9alhNmbVwxlVY05qOJP5Q
@@ -352,10 +378,12 @@ approve:
   # 봉준 풀영상 (scout 2026-10-08)
   - channel_id: UCP-KRZsIkIqww2jIdrciu2g
     topic: game
+    topic_l2: game/sports-game
     note: "scout:popular 구독 193000 롱폼 10/10 최근 업로드 2026-10-04"
   # 김왼팔 (scout 2026-10-08)
   - channel_id: UCPI40-XQA9-GBGj2k8PPqfg
     topic: game
+    topic_l2: game/sandbox
     note: "scout:popular 구독 1080000 롱폼 10/10 최근 업로드 2026-10-04"
   # 채널A 김진의 돌직구쇼 (scout 2026-10-08)
   - channel_id: UCRofX42ugIM1JKnCjfXm9LA
@@ -364,10 +392,12 @@ approve:
   # 집사TV (scout 2026-10-08)
   - channel_id: UCRsLT5zPV5LBgBM8TJOOg_Q
     topic: game
+    topic_l2: game/sandbox
     note: "scout:popular 구독 732000 롱폼 5/10 최근 업로드 2026-10-05"
   # 빅보스 (scout 2026-10-08)
   - channel_id: UCTLIq9jl-pb_ojAZZtoGaOQ
     topic: game
+    topic_l2: game/rpg
     note: "scout:popular 구독 246000 롱폼 9/10 최근 업로드 2026-10-06"
   # 흔한남매 (scout 2026-10-08)
   - channel_id: UCU8uafr_iROxRVI6c23Q_bA
@@ -376,14 +406,17 @@ approve:
   # 팡이요 (scout 2026-10-08)
   - channel_id: UCUR5w0E-jQTOO8Q0FZ4ilYQ
     topic: game
+    topic_l2: game/rpg
     note: "scout:popular 구독 589000 롱폼 10/10 최근 업로드 2026-10-04"
   # 테스터훈 TesterHoon (scout 2026-10-08)
   - channel_id: UCUbOogiD-4PKDqaJfSOTC0g
     topic: game
+    topic_l2: game/rpg
     note: "scout:popular 구독 1460000 롱폼 9/10 최근 업로드 2026-10-05"
   # 이석현 (scout 2026-10-08)
   - channel_id: UCVZI7eLie2UlZph6aiBRNrw
     topic: game
+    topic_l2: game/moba
     note: "scout:popular 구독 538000 롱폼 10/10 최근 업로드 2026-10-05"
   # KBC 뉴스 (scout 2026-10-09)
   - channel_id: UCVcLszfUBN9rTmc0A0uDRSQ
@@ -400,6 +433,7 @@ approve:
   # 말왕TV (scout 2026-10-09)
   - channel_id: UCYJDUekoQz0-bo8al1diLWQ
     topic: game
+    topic_l2: game/variety
     note: "scout:popular 구독 1900000 롱폼 5/10 최근 업로드 2026-10-04"
   # 하우카우 (scout 2026-10-09)
   - channel_id: UCYSFs_X0PYHlAnd-ywzMEZw
@@ -412,18 +446,22 @@ approve:
   # 에땁AWM (scout 2026-10-09)
   - channel_id: UC_O4_e0nbsMoU1rg7JU_nwQ
     topic: game
+    topic_l2: game/fps
     note: "scout:popular 구독 129000 롱폼 9/10 최근 업로드 2026-10-04"
   # 쉐어TV (scout 2026-10-09)
   - channel_id: UCb0eyf03Jz8Q5j2q65TzCoA
     topic: game
+    topic_l2: game/sandbox
     note: "scout:popular 구독 789000 롱폼 6/10 최근 업로드 2026-10-04"
   # 글자네 (scout 2026-10-09)
   - channel_id: UCb5NLtXAsTBrmaZVhyFa-Wg
     topic: game
+    topic_l2: game/rpg
     note: "scout:popular 구독 597000 롱폼 6/10 최근 업로드 2026-10-05"
   # 지건킹 (scout 2026-10-09)
   - channel_id: UCbNmTAwkTeP5HJtmnL4oC2w
     topic: game
+    topic_l2: game/moba
     note: "scout:popular 구독 114000 롱폼 9/10 최근 업로드 2026-10-04"
   # 신인균의 국방TV (scout 2026-10-10)
   - channel_id: UCbgqDFODvh-q38ouzoKKkVA
@@ -432,10 +470,12 @@ approve:
   # 무지개맛 Rainbow Flavor (scout 2026-10-10)
   - channel_id: UCcR_wZ0zimC6UT8VO0KcS8Q
     topic: game
+    topic_l2: game/moba
     note: "scout:popular 구독 466000 롱폼 10/10 최근 업로드 2026-10-03"
   # 게임대장봉준 (scout 2026-10-10)
   - channel_id: UCcgkgKhXT6QwdGj9Nr8PBcg
     topic: game
+    topic_l2: game/sports-game
     note: "scout:popular 구독 142000 롱폼 10/10 최근 업로드 2026-10-04"
   # 조선일보 (scout 2026-10-10)
   - channel_id: UCdp4_yTBhQmB8E339Lafzow
@@ -444,6 +484,7 @@ approve:
   # 쪼낙 JJONAK (scout 2026-10-10)
   - channel_id: UCeq0Nrch5KY3VrZyn_BB32g
     topic: game
+    topic_l2: game/fps
     note: "scout:popular 구독 207000 롱폼 7/10 최근 업로드 2026-10-04"
   # 채널A News (scout 2026-10-10)
   - channel_id: UCfq4V1DAuaojnr2ryvWNysw
@@ -452,14 +493,17 @@ approve:
   # 밍 (scout 2026-10-10)
   - channel_id: UCfxtBxRR-rJ8CYSZJAFHhIw
     topic: game
+    topic_l2: game/sandbox
     note: "scout:popular 구독 634000 롱폼 6/10 최근 업로드 2026-10-04"
   # 잠뜰 TV (scout 2026-10-10)
   - channel_id: UCg7rkxrTnIhiHEpXY1ec9NA
     topic: game
+    topic_l2: game/sandbox
     note: "scout:popular 구독 2400000 롱폼 8/10 최근 업로드 2026-10-04"
   # 잡상싱 (scout 2026-10-10)
   - channel_id: UCgT-gb3favw2jQgwxbbwwaA
     topic: game
+    topic_l2: game/moba
     note: "scout:popular 구독 410000 롱폼 5/10 최근 업로드 2026-10-04"
   # 인사이트 윈도우 (scout 2026-10-10)
   - channel_id: UCh4U3eUwSbCD4vj3uURS1tw
@@ -468,6 +512,7 @@ approve:
   # 이렐킹 IRELKING (scout 2026-10-11)
   - channel_id: UCi-0jmyw3x6efk090BAVfxA
     topic: game
+    topic_l2: game/moba
     note: "scout:popular 구독 345000 롱폼 10/10 최근 업로드 2026-10-04"
   # MBCentertainment (scout 2026-10-11)
   - channel_id: UCiBr0bK06imaMbLc8sAEz0A
@@ -480,10 +525,12 @@ approve:
   # 웅플 (scout 2026-10-11)
   - channel_id: UCja26PHMHQaj6Y4likW7rwA
     topic: game
+    topic_l2: game/moba
     note: "scout:popular 구독 143000 롱폼 7/10 최근 업로드 2026-10-04"
   # 두치와뿌꾸 (scout 2026-10-11)
   - channel_id: UCl402YYy7RcH7PBI3npmGPQ
     topic: game
+    topic_l2: game/sports-game
     note: "scout:popular 구독 906000 롱폼 7/10 최근 업로드 2026-10-04"
   # GROUND C 그라운드씨 (scout 2026-10-11)
   - channel_id: UClUlAMZGEGPn8mKemiwOjzg
@@ -496,14 +543,17 @@ approve:
   # 김된모 (scout 2026-10-11)
   - channel_id: UCnMhzw7xYMl6LJpM0au6vqw
     topic: game
+    topic_l2: game/fps
     note: "scout:popular 구독 517000 롱폼 10/10 최근 업로드 2026-10-04"
   # 스트리머 사또 live-streamer satto (scout 2026-10-11)
   - channel_id: UCnXe6v0-5vmMMRU2qx0XwUw
     topic: game
+    topic_l2: game/rpg
     note: "scout:popular 구독 412000 롱폼 5/10 최근 업로드 2026-10-04"
   # 홀릿 Youtube Holit (scout 2026-10-11)
   - channel_id: UCoH2pCzAr6zWDG-LtUiLWRw
     topic: game
+    topic_l2: game/fps
     note: "scout:popular 구독 633000 롱폼 5/10 최근 업로드 2026-10-03"
   # OBS뉴스 (scout 2026-10-12)
   - channel_id: UComhAmtkBwTPF_PvwN8Gc6w
@@ -516,6 +566,7 @@ approve:
   # 채널 명예훈장 (scout 2026-10-12)
   - channel_id: UCs0LzOveQMLImmmTrMmP2sg
     topic: game
+    topic_l2: game/rpg
     note: "scout:popular 구독 441000 롱폼 8/10 최근 업로드 2026-10-04"
   # JTBC News (scout 2026-10-12)
   - channel_id: UCsU-I-vHLiaMfV_ceaYz5rQ
@@ -536,10 +587,12 @@ approve:
   # 백크 Baekk (scout 2026-10-12)
   - channel_id: UCugNO83_V7xZLzCsjpABGeg
     topic: game
+    topic_l2: game/moba
     note: "scout:popular 구독 744000 롱폼 10/10 최근 업로드 2026-10-04"
   # 발로란트 챔피언스 투어 (scout 2026-10-12)
   - channel_id: UCv1tOT645xHOJrwdGlzjMaA
     topic: game
+    topic_l2: game/fps
     note: "scout:popular 구독 281000 롱폼 7/10 최근 업로드 2026-10-04"
   # 수탉 (scout 2026-10-12)
   - channel_id: UCw-JzmPsjRcbzJLncr4pIIA
@@ -548,6 +601,7 @@ approve:
   # 타비의 보물 창고 (scout 2026-10-13)
   - channel_id: UCOAD3RLV7uC3uc39ok7NLyg
     topic: game
+    topic_l2: game/sandbox
     note: "scout:mention 구독 37100 롱폼 10/10 최근 업로드 2026-10-12"
   # 정치시그널 (scout 2026-10-13)
   - channel_id: UCfD_TCloMJtVvg7w6lrELnQ
@@ -564,6 +618,7 @@ approve:
   # 이석현 풀영상 (scout 2026-10-13)
   - channel_id: UCxuHsnRMEqvvO_cV1DPsvXw
     topic: game
+    topic_l2: game/moba
     note: "scout:mention 구독 3860 롱폼 10/10 최근 업로드 2026-10-11"
   # KBS 세계는지금 (scout 2026-10-13)
   - channel_id: UC-0C8yVGJy-cS4FGlYKelWw
@@ -572,6 +627,7 @@ approve:
   # 왈도쿤 (scout 2026-10-13)
   - channel_id: UC-S8JFhLkQ5enhB70c2CYIw
     topic: game
+    topic_l2: game/variety
     note: "scout:popular 구독 453000 롱폼 10/10 최근 업로드 2026-10-12"
   # 엠키타카 MKTK (scout 2026-10-13)
   - channel_id: UCGbkN-3JpOct4KuEv59NF0Q
@@ -580,6 +636,7 @@ approve:
   # 프레이 TV (scout 2026-10-13)
   - channel_id: UCSzHok6X5qXEO7cjvVnE62g
     topic: game
+    topic_l2: game/moba
     note: "scout:popular 구독 696000 롱폼 7/10 최근 업로드 2026-10-13"
   # 시사저널 TV (scout 2026-10-13)
   - channel_id: UCYo4GYn_GeqRcdkraHe83GQ
@@ -600,14 +657,17 @@ approve:
   # 1vsAll (scout 2026-10-14)
   - channel_id: UC6Bv3mjwNo71wxsk1Xaa14w
     topic: game
+    topic_l2: game/moba
     note: "scout:popular 구독 133000 롱폼 10/10 최근 업로드 2026-10-13"
   # 빅헤드 (scout 2026-10-14)
   - channel_id: UCAJ-meoCh1TrPZ7La3UpPrw
     topic: game
+    topic_l2: game/fps
     note: "scout:popular 구독 634000 롱폼 10/10 최근 업로드 2026-10-12"
   # 수찬 Suchan (scout 2026-10-14)
   - channel_id: UCLm0fAzu27N2aSd3lHsy2zQ
     topic: game
+    topic_l2: game/rpg
     note: "scout:popular 구독 321000 롱폼 10/10 최근 업로드 2026-10-12"
   # SBS 시사교양 라디오 - 시교라 (scout 2026-10-14)
   - channel_id: UCLv3v82YNNsa8EsxrcPMjGQ
@@ -620,18 +680,22 @@ approve:
   # 다주 (scout 2026-10-14)
   - channel_id: UCawY6uW94r1JcBuOTqHDfow
     topic: game
+    topic_l2: game/sandbox
     note: "scout:popular 구독 440000 롱폼 6/10 최근 업로드 2026-10-13"
   # 감스트GAMST (scout 2026-10-14)
   - channel_id: UCbFzvzDu17eDZ3RIeaLRswQ
     topic: game
+    topic_l2: game/variety
     note: "scout:popular 구독 3050000 롱폼 10/10 최근 업로드 2026-10-14"
   # 이라333 유튜브 (scout 2026-10-15)
   - channel_id: UC1nD9uDqbVoCiBTaCOaW0jA
     topic: game
+    topic_l2: game/rpg
     note: "scout:mention 구독 74300 롱폼 10/10 최근 업로드 2026-10-13"
   # 다주보기 (scout 2026-10-15)
   - channel_id: UCLsOJitXGX7jZheuGj777-A
     topic: game
+    topic_l2: game/sandbox
     note: "scout:mention 구독 37900 롱폼 10/10 최근 업로드 2026-10-14"
   # 독학왕 (scout 2026-10-15)
   - channel_id: UCAI6Rg23IK12aqsdDif2Brg
@@ -648,10 +712,12 @@ approve:
   # Destiny (데스티니) (scout 2026-10-15)
   - channel_id: UC6NXJtCn3p-actkvBUlHwDA
     topic: game
+    topic_l2: game/moba
     note: "scout:popular 구독 155000 롱폼 9/10 최근 업로드 2026-10-15"
   # 탬탬버린 (scout 2026-10-15)
   - channel_id: UCCA8UWUW80iHqK9ymdjRwPg
     topic: game
+    topic_l2: game/sandbox
     note: "scout:popular 구독 538000 롱폼 10/10 최근 업로드 2026-10-15"
   # 전쓰트의 게임 채널 Junsst (scout 2026-10-15)
   - channel_id: UCD8r5Jgns2V64-NcUmXclpg
@@ -660,6 +726,7 @@ approve:
   # SUNBA선바 (scout 2026-10-15)
   - channel_id: UCIPSyiBBm9VtWGj-Q7trkKw
     topic: game
+    topic_l2: game/variety
     note: "scout:popular 구독 715000 롱폼 7/10 최근 업로드 2026-10-15"
   # KBS NEWS 전남광주 (scout 2026-10-15)
   - channel_id: UCLqL_rpuTp1bIe5YuHjbufA
@@ -672,6 +739,7 @@ approve:
   # 이닛 (scout 2026-10-16)
   - channel_id: UCV1vhPHGAShSP6mJNPzF4BA
     topic: game
+    topic_l2: game/fps
     note: "scout:popular 구독 32900 롱폼 6/10 최근 업로드 2026-10-15"
   # MBC 미스터리 : 심야괴담회 X 서프라이즈 (scout 2026-10-16)
   - channel_id: UC8OUSYm-ztRAT6EE6VHPpGw
@@ -680,6 +748,7 @@ approve:
   # 명조:워더링 웨이브 (scout 2026-10-16)
   - channel_id: UCKuq0c-RXYaulECSuu5hFug
     topic: game
+    topic_l2: game/rpg
     note: "scout:mention 구독 138000 롱폼 5/10 최근 업로드 2026-10-13"
   # KBS광주 (scout 2026-10-16)
   - channel_id: UCbA2VakFfa-eMFa9YuN6sgg
@@ -704,6 +773,7 @@ approve:
   # 지존조세 (scout 2026-10-16)
   - channel_id: UCQOL6_MBCFXr3M9OTmwl9pg
     topic: game
+    topic_l2: game/variety
     note: "scout:popular 구독 318000 롱폼 10/10 최근 업로드 2026-10-15"
   # 난동군 (scout 2026-10-17)
   - channel_id: UCS0BFjcZZwZHhgLleDDY0ww
@@ -716,10 +786,12 @@ approve:
   # 이다의게임방송 (scout 2026-10-17)
   - channel_id: UC46X_E7jxvJ1O_3gnaeCxeg
     topic: game
+    topic_l2: game/rpg
     note: "scout:popular 구독 144000 롱폼 9/10 최근 업로드 2026-10-17"
   # 백곰파 (scout 2026-10-17)
   - channel_id: UCAeajgpYsfOPO38JR8EIuiQ
     topic: game
+    topic_l2: game/sandbox
     note: "scout:popular 구독 115000 롱폼 7/10 최근 업로드 2026-10-17"
   # 주연 ZUYONI (scout 2026-10-17)
   - channel_id: UCB11SAf7WSN4GrCquKoOHrw
@@ -744,6 +816,7 @@ approve:
   # 김성회의 G식백과 (scout 2026-10-17)
   - channel_id: UCZ0bi2aVJngKLwFTU5g_fLQ
     topic: game
+    topic_l2: game/variety
     note: "scout:popular 구독 942000 롱폼 10/10 최근 업로드 2026-10-16"
   - channel_id: UCl22RiXFscUiaZ02UWAYjyQ
     topic: music
@@ -751,6 +824,7 @@ approve:
   # 눈파티 (scout 2026-10-18)
   - channel_id: UCd6CX2LiQE2dEAPXwk2N0jg
     topic: game
+    topic_l2: game/rpg
     note: "scout:popular 구독 108000 롱폼 9/10 최근 업로드 2026-10-13"
   # 뉴스타파 Newstapa (scout 2026-10-18)
   - channel_id: UCeFUGS2VCOb6DO3BiUgvwNA
@@ -767,6 +841,7 @@ approve:
   # 이상호 (scout 2026-10-18)
   - channel_id: UCfIUuMA7U_jImP7oWfTe4Pw
     topic: game
+    topic_l2: game/sports-game
     note: "scout:popular 구독 1000000 롱폼 9/10 최근 업로드 2026-10-12"
   # 교양이를 부탁해 (scout 2026-10-18)
   - channel_id: UChY8VUjXv0aA7RF9hDQ0ISg
@@ -775,6 +850,7 @@ approve:
   # 로빈 (scout 2026-10-18)
   - channel_id: UCo33r3SAf5z9MS-lrXV2aOQ
     topic: game
+    topic_l2: game/sandbox
     note: "scout:popular 구독 583000 롱폼 7/10 최근 업로드 2026-10-12"
   # 예상치 못한 필름 (scout 2026-10-18)
   - channel_id: UCpCDVbUD-3-A_SIfHuGNdFA
@@ -783,14 +859,17 @@ approve:
   # 카사딘하는사람 (scout 2026-10-18)
   - channel_id: UCpSCdYMV3240T-h3RugN1qA
     topic: game
+    topic_l2: game/moba
     note: "scout:popular 구독 137000 롱폼 10/10 최근 업로드 2026-10-17"
   # 프뚜 (scout 2026-10-18)
   - channel_id: UCpnnUKmAQKgVinEV-lV-N2g
     topic: game
+    topic_l2: game/sandbox
     note: "scout:popular 구독 296000 롱폼 9/10 최근 업로드 2026-10-11"
   # AION2 (scout 2026-10-19)
   - channel_id: UCqh_gleuOIleCy5Qmbo2j1Q
     topic: game
+    topic_l2: game/rpg
     note: "scout:popular 구독 286000 롱폼 5/10 최근 업로드 2026-10-13"
   # 슈카월드 (scout 2026-10-19)
   - channel_id: UCsJ6RuBiTVWRX156FVbeaGg
@@ -803,38 +882,47 @@ approve:
   # 다누리 (scout 2026-10-19)
   - channel_id: UCtcw3t27H9qFwcdAujrDEyQ
     topic: game
+    topic_l2: game/moba
     note: "scout:popular 구독 221000 롱폼 10/10 최근 업로드 2026-10-15"
   # 류제홍 RYUJEHONG (scout 2026-10-19)
   - channel_id: UCtt0Hg9MhraTkzWwNQpplHg
     topic: game
+    topic_l2: game/fps
     note: "scout:popular 구독 291000 롱폼 5/10 최근 업로드 2026-10-14"
   # 스맵 (scout 2026-10-19)
   - channel_id: UCunQJrd9yphZEH0Etwjnabw
     topic: game
+    topic_l2: game/moba
     note: "scout:popular 구독 262000 롱폼 10/10 최근 업로드 2026-10-14"
   # 정준홍 (scout 2026-10-19)
   - channel_id: UCvPGGL-OTEAQlwAUxbcJO8g
     topic: game
+    topic_l2: game/sports-game
     note: "scout:popular 구독 209000 롱폼 7/10 최근 업로드 2026-10-13"
   # 삐라 (scout 2026-10-19)
   - channel_id: UCw2zOqd6hXsny79qDki_Z4w
     topic: game
+    topic_l2: game/fps
     note: "scout:popular 구독 210000 롱폼 8/10 최근 업로드 2026-10-16"
   # 레고77 (scout 2026-10-19)
   - channel_id: UCw9fP0nSoUygLDmvV1GdAZw
     topic: game
+    topic_l2: game/rpg
     note: "scout:popular 구독 288000 롱폼 9/10 최근 업로드 2026-10-12"
   # 유봉훈 (scout 2026-10-19)
   - channel_id: UCxRlvng0zVoyEBhutAuXfzQ
     topic: game
+    topic_l2: game/sports-game
     note: "scout:popular 구독 373000 롱폼 5/10 최근 업로드 2026-10-15"
   # 똘끼100% (scout 2026-10-20)
   - channel_id: UCybKp0O2N9sUZOgIm1j2r_w
     topic: game
+    topic_l2: game/rpg
     note: "scout:popular 구독 326000 롱폼 7/10 최근 업로드 2026-10-13"
   # 클리드 (scout 2026-10-20)
   - channel_id: UCyoSQyaCrZHro6F_nBiXIYg
     topic: game
+    topic_l2: game/moba
     note: "scout:popular 구독 355000 롱폼 10/10 최근 업로드 2026-10-14"
   # 간병의사 김남균 (scout 2026-10-24)
   - channel_id: UC8NAE1sHzjRuH8aDKSCbg-g
@@ -843,6 +931,7 @@ approve:
   # 강퀴TV (scout 2026-10-24)
   - channel_id: UCZ49HaU_D0Tlf1aDA2jU_Vg
     topic: game
+    topic_l2: game/moba
     note: "scout:popular 구독 91700 롱폼 9/10 최근 업로드 2026-10-24"
   # 이슈날먹 (scout 2026-10-24)
   - channel_id: UC5uIaECBQx0Qfe9OTvvCHOg
@@ -863,18 +952,22 @@ approve:
   # 행돌 (scout 2026-10-24)
   - channel_id: UC8rbhIem-3aAsNXhTDI-nSA
     topic: game
+    topic_l2: game/fps
     note: "scout:popular 구독 317000 롱폼 9/10 최근 업로드 2026-10-23"
   # EA SPORTS FC 온라인 (scout 2026-10-24)
   - channel_id: UC9otskL_kd-0CDib_5Lj-mQ
     topic: game
+    topic_l2: game/sports-game
     note: "scout:popular 구독 353000 롱폼 10/10 최근 업로드 2026-10-23"
   # 치랜 (scout 2026-10-24)
   - channel_id: UCCOr1fiThqOy92kftp6xJ_Q
     topic: game
+    topic_l2: game/sandbox
     note: "scout:popular 구독 252000 롱폼 10/10 최근 업로드 2026-10-22"
   # BanaMongki (scout 2026-10-24)
   - channel_id: UCHFIDZWYe9L0xJlez3vkrkQ
     topic: game
+    topic_l2: game/fps
     note: "scout:popular 구독 130000 롱폼 6/10 최근 업로드 2026-10-23"
   # 2026-10-26 재분류: 승인 파일 밖에서 들어온 채널 (scout·auto_track)
   - channel_id: UCFA-pXsXiIfrS1J9mFDkwKg
@@ -895,4 +988,57 @@ approve:
   - channel_id: UCnekLiljel-Px4ClMC7b3mg
     topic: vlog
     note: "2026-10-26 재분류 beauty-life→vlog"
+  # 2026-10-26 게임 장르(topic_l2): 승인 파일 밖에서 들어온 게임 채널
+  - channel_id: UCta_NRwnsUaew0t3VNxBNyg
+    topic: game
+    topic_l2: game/variety
+    note: "2026-10-26 게임 장르 지정"
+  - channel_id: UCOTJtP0Z9DjpPU43B5m1V6A
+    topic: game
+    topic_l2: game/strategy
+    note: "2026-10-26 게임 장르 지정"
+  - channel_id: UCCW6uYIUP4YKKe50k-ktVAw
+    topic: game
+    topic_l2: game/sandbox
+    note: "2026-10-26 게임 장르 지정"
+  - channel_id: UC4P7F8qenDo1O_5NvgBb_cg
+    topic: game
+    topic_l2: game/strategy
+    note: "2026-10-26 게임 장르 지정"
+  - channel_id: UCIigIgtZ65TiGQSmnVJaUCQ
+    topic: game
+    topic_l2: game/sandbox
+    note: "2026-10-26 게임 장르 지정"
+  - channel_id: UCsRiYH-VrZ2mYsohk7GhLdQ
+    topic: game
+    topic_l2: game/moba
+    note: "2026-10-26 게임 장르 지정"
+  - channel_id: UCaMV-CjrWYh2Aefg_8iLwJQ
+    topic: game
+    topic_l2: game/moba
+    note: "2026-10-26 게임 장르 지정"
+  - channel_id: UCOYl4i2HmddYjV2eoxVjlUw
+    topic: game
+    topic_l2: game/moba
+    note: "2026-10-26 게임 장르 지정"
+  - channel_id: UCqRz_-l3GCmWb92u8P33RYQ
+    topic: game
+    topic_l2: game/arpg
+    note: "2026-10-26 게임 장르 지정"
+  - channel_id: UCig46B9QqbQPlt9nwyk4YtA
+    topic: game
+    topic_l2: game/sports-game
+    note: "2026-10-26 게임 장르 지정"
+  - channel_id: UCqavSqZRmJX9w1Ozck3fu4A
+    topic: game
+    topic_l2: game/arpg
+    note: "2026-10-26 게임 장르 지정"
+  - channel_id: UCuZNGzyFgRNQbjde7e3I3wg
+    topic: game
+    topic_l2: game/rpg
+    note: "2026-10-26 게임 장르 지정"
+  - channel_id: UCUFgG-7nNz20vtyW-uMSNjg
+    topic: game
+    topic_l2: game/arpg
+    note: "2026-10-26 게임 장르 지정"
 untrack: []

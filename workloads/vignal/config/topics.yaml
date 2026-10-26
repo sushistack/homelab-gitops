@@ -130,7 +130,7 @@ subtopics:
     aliases: [핵앤슬래시, 핵슬, 디아블로라이크]
   - slug: rpg
     parent: game
-    label: 'RPG'
+    label: 'RPG·MMORPG'
     aliases: [MMORPG, 롤플레잉]
   - slug: fps
     parent: game
@@ -139,6 +139,24 @@ subtopics:
   - slug: strategy
     parent: game
     label: '전략·시뮬레이션'
+  # 2026-10-26: 게임 채널 133개의 최근 영상 제목으로 장르를 정하며 추가(운영자 결정).
+  # 순위 보드는 채널 10개부터 생긴다(rank.MinPopulation). sports-game 은 9개로 시작.
+  - slug: moba
+    parent: game
+    label: 'MOBA·롤'
+    aliases: [LoL, 롤, 리그오브레전드]
+  - slug: sandbox
+    parent: game
+    label: '마인크래프트·로블록스'
+    aliases: [마크, 마인크래프트, 로블록스, 샌드박스]
+  - slug: variety
+    parent: game
+    label: '종합 게임'
+    aliases: [종합게임, 버라이어티]
+  - slug: sports-game
+    parent: game
+    label: 'FC·스포츠 게임'
+    aliases: [FC온라인, 피파, FIFA]
   - slug: poe2
     parent: game/arpg
     label: '패스 오브 엑자일 2'
