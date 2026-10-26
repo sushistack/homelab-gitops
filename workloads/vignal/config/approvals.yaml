@@ -1041,4 +1041,24 @@ approve:
     topic: game
     topic_l2: game/arpg
     note: "2026-10-26 게임 장르 지정"
+  # 독버섯통신 (scout 2026-10-26)
+  - channel_id: UClmXXi4EAXMpw3nQpLDD8XA
+    topic: game
+    note: "scout:popular 구독 11300 롱폼 10/10 최근 업로드 2026-10-26"
+  # 안녕수야 다시보기 (scout 2026-10-26)
+  - channel_id: UCmRUQCl9ozJOrr9IbpEqeLA
+    topic: game
+    note: "scout:featured 구독 9470 롱폼 10/10 최근 업로드 2026-10-24"
+  # 마플의 잡다한채널 (scout 2026-10-26)
+  - channel_id: UCvUKUkIM67eWFbQemjj2-eA
+    topic: game
+    note: "scout:featured 구독 212000 롱폼 10/10 최근 업로드 2026-10-25"
+  # Dmonk (scout 2026-10-26)
+  - channel_id: UCvlZOzv_B0GD9VLqdsGWfcQ
+    topic: tech
+    note: "scout:featured 구독 129000 롱폼 10/10 최근 업로드 2026-10-22"
+  # 밤공원 (scout 2026-10-26)
+  - channel_id: UCznL5L7iTgTaqSBS5yF6g7w
+    topic: celeb
+    note: "scout:featured 구독 242000 롱폼 10/10 최근 업로드 2026-10-23"
 untrack: []
