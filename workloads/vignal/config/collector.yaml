@@ -169,9 +169,9 @@ pricing:
     base_usd_per_month: 5 # [ASSUMPTION] Workers Paid
     included_requests_per_month: 10000000 # [ASSUMPTION] 유료 플랜 월 포함 요청 수
     usd_per_million_requests_over_included: 0.30 # [ASSUMPTION]
-  llm: # Gemini 2.5 Flash-Lite Batch(표준가의 절반), 100만 토큰당 USD (D-42, 공식 가격표 2026-10-26). 출력에는 thinking 토큰이 들어간다
-    input_usd_per_million: 0.05
-    output_usd_per_million: 0.20
+  llm: # Gemini 3.1 Flash-Lite Batch(표준가의 절반), 100만 토큰당 USD (D-42, 공식 가격표 2026-10-26). 출력에는 thinking 토큰이 들어간다
+    input_usd_per_million: 0.125
+    output_usd_per_million: 0.75
 
 # AD-7 실행 잠금(Story 1.2). heartbeat_at 이 이보다 오래된 running 행은 죽은 실행으로
 # 보고 잠금을 넘겨받아 재개한다(자동 대기 없이 즉시 실패하는 것은 신선한 잠금에서만).
@@ -291,9 +291,9 @@ scout:
 # env GEMINI_API_KEY(유료 티어)가 필요하다. 없으면 두 단계는 경고만 남기고 건너뛴다.
 # 한 run 은 결과 회수 → 새 작업 1건 제출 순서로 돌고 결과를 기다리지 않는다.
 llm:
-  model: gemini-2.5-flash-lite # D-42: 분류 작업이라 경량 모델. 100장×3회 품질 확인에서 92% 미달 항목이 3.1 Flash-Lite 로 통과하면 gemini-3.1-flash-lite 로 올린다
-  thinking_level: "" # 비우면 thinkingConfig 를 보내지 않는다(2.5 Flash-Lite 기본 꺼짐). Gemini 3 계열은 끌 수 없어 지원 최저값을 적는다
-  monthly_budget_usd: 3 # [ASSUMPTION] 이달 사용액 + 진행 중 추정 + 이번 추정이 넘으면 새 제출을 멈춘다 (예상 월 ~$0.4)
+  model: gemini-3.1-flash-lite # D-42: 분류 작업이라 경량 모델. 2026-10-26 100장×3회에서 2.5 Flash-Lite 는 응답 ~43% 파싱 실패, 3.1 Flash-Lite 는 100% 파싱
+  thinking_level: minimal # 비우면 thinkingConfig 를 보내지 않는다. Gemini 3 계열은 끌 수 없어 지원 최저값을 적는다
+  monthly_budget_usd: 3 # [ASSUMPTION] 이달 사용액 + 진행 중 추정 + 이번 추정이 넘으면 새 제출을 멈춘다 (3.1 Flash-Lite Batch 단가·minimal thinking 포함 추정 월 ~$1~1.5, 실측 전 대략치)
   batch:
     max_items: 100 # 작업 1건당 요청 수 (본문은 20MB 미만으로도 제한)
     max_attempts: 3 # 항목당 실패 허용 횟수. 넘으면 미분류로 두고 report 가 센다
