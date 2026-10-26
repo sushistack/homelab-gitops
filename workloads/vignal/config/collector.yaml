@@ -169,6 +169,9 @@ pricing:
     base_usd_per_month: 5 # [ASSUMPTION] Workers Paid
     included_requests_per_month: 10000000 # [ASSUMPTION] 유료 플랜 월 포함 요청 수
     usd_per_million_requests_over_included: 0.30 # [ASSUMPTION]
+  llm: # Gemini 2.5 Flash-Lite Batch(표준가의 절반), 100만 토큰당 USD (D-42, 공식 가격표 2026-10-26). 출력에는 thinking 토큰이 들어간다
+    input_usd_per_million: 0.05
+    output_usd_per_million: 0.20
 
 # AD-7 실행 잠금(Story 1.2). heartbeat_at 이 이보다 오래된 running 행은 죽은 실행으로
 # 보고 잠금을 넘겨받아 재개한다(자동 대기 없이 즉시 실패하는 것은 신선한 잠금에서만).
@@ -284,13 +287,34 @@ scout:
     economy: ["경제 해설", "재테크"]
     web-drama: ["코미디", "예능"]
 
+# LLM 공급자 (Story 28.5, AD-41, D-42): tag 와 observe_tags 가 공유하는 Gemini Batch 설정.
+# env GEMINI_API_KEY(유료 티어)가 필요하다. 없으면 두 단계는 경고만 남기고 건너뛴다.
+# 한 run 은 결과 회수 → 새 작업 1건 제출 순서로 돌고 결과를 기다리지 않는다.
+llm:
+  model: gemini-2.5-flash-lite # D-42: 분류 작업이라 경량 모델. 100장×3회 품질 확인에서 92% 미달 항목이 3.1 Flash-Lite 로 통과하면 gemini-3.1-flash-lite 로 올린다
+  thinking_level: "" # 비우면 thinkingConfig 를 보내지 않는다(2.5 Flash-Lite 기본 꺼짐). Gemini 3 계열은 끌 수 없어 지원 최저값을 적는다
+  monthly_budget_usd: 3 # [ASSUMPTION] 이달 사용액 + 진행 중 추정 + 이번 추정이 넘으면 새 제출을 멈춘다 (예상 월 ~$0.4)
+  batch:
+    max_items: 100 # 작업 1건당 요청 수 (본문은 20MB 미만으로도 제한)
+    max_attempts: 3 # 항목당 실패 허용 횟수. 넘으면 미분류로 두고 report 가 센다
+
 # 주제 순위 계획 1 (docs/superpowers/specs/2026-10-25-topic-ranking-design.md §3.3).
-# enabled 는 운영자가 G-5 추가 질의 회신을 보고 켠다. 켜면 env ANTHROPIC_API_KEY 가 필요하다
-# (없으면 tag 단계는 경고만 남기고 건너뛴다).
+# enabled 는 운영자가 G-5 추가 질의 회신을 보고 켠다. 켜면 env GEMINI_API_KEY 와 llm: 블록이 필요하다.
 tagging:
   enabled: false
-  model: claude-haiku-5-5
   auto_accept: 0.8 # 이 신뢰도 이상이고 후보 안의 노드면 자동 확정, 아니면 검수 대기열
   max_per_run: 100 # [ASSUMPTION] 하루 새 영상 ~200개, run 4회
-  description_chars: 500 # 설명란 앞부분(메모리에서만 사용)
+  description_chars: 200 # 설명란 앞부분(메모리에서만 사용)
   channel_l2_share: 0.6 # tags pending 이 채널 2단계를 제안하는 비중
+
+# 관찰 태그 (Story 28.3, FR-86, AD-40). 썸네일·제목의 enum 태그는 config/observe-tags.yaml 에 정의한다.
+# llm: 블록과 GEMINI_API_KEY 를 공유한다. 운영자가 G-5 회신과
+# 품질 확인 100장×3회(docs/ops/observe-tags.md)를 본 뒤에만 켠다.
+observe_tags:
+  enabled: false
+  max_per_run: 50 # [ASSUMPTION] 호출량 월 ~2,000건 (분석 문서 §3.3)
+
+# 평소보다 잘된 영상의 기준 (FR-85/86). 28.2 가 실측 분포로 이 값을 문서화한다.
+highlights:
+  min_multiple: 2.0 # [ASSUMPTION] 채널 배수가 이 값 이상이면 돌파 영상. 정하는 법: docs/ops/highlights.md
+  min_trait_diff: 0.3 # [ASSUMPTION] 잘된 영상 비율 − 평소 영상 비율이 이 값 이상인 특징만 보인다 (FR-86, 28.4)

@@ -1,0 +1,22 @@
+# 관찰 태그 정의 (Story 28.3, FR-86, AD-40). 모델은 여기 적힌 enum·정수 값만 돌려줄 수 있다.
+# 출처: docs/analysis/ranking-ai-eval-vignal-score-review-2026-10-26.md §3.2 enum 초안.
+# labels·ranges 는 28.4 비교 화면에 쓰는 표시 전용 한국어 이름이며 프롬프트에 들어가지 않는다.
+# 이 파일에서 시스템 프롬프트를 만들므로 값을 바꾸면 프롬프트 접두부(컨텍스트 캐시)와
+# 품질 확인 100장×3회(docs/ops/observe-tags.md)를 다시 거쳐야 한다.
+min_confidence: 0.6 # [ASSUMPTION] 필드별 신뢰도가 이 값 미만이면 그 필드는 비운다
+
+thumb:
+  - {name: face, values: [none, small, closeup], labels: {none: 얼굴 없음, small: 작은 얼굴, closeup: 얼굴 클로즈업}}
+  - {name: face_count, min: 0, max: 5, ranges: [{max: 0, label: 얼굴 0명}, {max: 1, label: 얼굴 1명}, {max: 5, label: 얼굴 2~5명}]}
+  - {name: expression, values: [none, neutral, happy, surprised, serious, angry], labels: {none: 표정 없음, neutral: 무표정, happy: 웃는 표정, surprised: 놀란 표정, serious: 진지한 표정, angry: 화난 표정}}
+  - {name: text_words, min: 0, max: 20, ranges: [{max: 3, label: 썸네일 글자 3단어 이하}, {max: 20, label: 썸네일 글자 4단어 이상}]}
+  - {name: text_emphasis, values: [none, number, keyword, question, price], labels: {none: 강조 글자 없음, number: 숫자 강조 글자, keyword: 키워드 강조 글자, question: 질문형 글자, price: 가격 글자}}
+  - {name: dominant_color, values: [red, yellow, blue, green, black, white, mixed], labels: {red: 빨간색 위주, yellow: 노란색 위주, blue: 파란색 위주, green: 초록색 위주, black: 검은색 위주, white: 흰색 위주, mixed: 여러 색 혼합}}
+  - {name: contrast, values: [low, mid, high], labels: {low: 대비 낮음, mid: 대비 보통, high: 대비 높음}}
+  - {name: subject, values: [person, product, food, place, screen, text_only, mixed], labels: {person: 사람 중심, product: 제품 중심, food: 음식 중심, place: 장소 중심, screen: 화면 캡처 중심, text_only: 글자만, mixed: 여러 소재}}
+  - {name: thumb_title_overlap, values: [none, partial, same], labels: {none: 썸네일 글자와 제목이 다름, partial: 썸네일 글자와 제목이 일부 겹침, same: 썸네일 글자와 제목이 같음}}
+
+title:
+  - {name: form, values: [statement, question, list, how_to, review, vs], labels: {statement: 서술형 제목, question: 질문형 제목, list: 목록형 제목, how_to: 방법형 제목, review: 후기형 제목, vs: 비교형 제목}}
+  - {name: has_number, values: ["yes", "no"], labels: {"yes": 제목에 숫자, "no": 제목에 숫자 없음}}
+  - {name: brackets, values: ["yes", "no"], labels: {"yes": 제목에 괄호, "no": 제목에 괄호 없음}}

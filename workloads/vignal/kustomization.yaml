@@ -22,6 +22,7 @@ configMapGenerator:
       - config/rpm.yaml   # Story 14.6 (FR-49): RPM ranges, copy of vignal config/rpm.yaml
       - config/revenue-exclusions.yaml   # Story 14.6: channels excluded from revenue estimates
       - config/open-score.yaml   # Story 21.3 (FR-63): open_score components/weights, copy of vignal config/open-score.yaml
+      - config/observe-tags.yaml   # Story 28.3 (FR-86): observe tag enums, copy of vignal config/observe-tags.yaml
 generatorOptions:
   disableNameSuffixHash: true
 
