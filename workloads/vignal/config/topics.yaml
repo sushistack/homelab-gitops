@@ -5,38 +5,124 @@
 # topic 은 null(주제 미확인)로 기록된다(AD-9). web 은 이 목록 순서를 그대로 주제 필터 옵션으로
 # 쓰며 하드코딩하지 않는다(AD-10, meta.topics).
 #
-# 아래 topics 배열은 표시 순서다. Q-14 의 분류 방식은 여전히 미정(차단 아님)이고, 이 목록은
-# 2026-09-30 페르소나 평가 지적(주제 라벨 0개)에 대한 임시 사전이다. 추적 채널 25개의 최근
-# 영상 제목을 보고 채널 단위로 정했다.
+# 아래 topics 배열은 표시 순서다. 처음 목록은 2026-09-30 페르소나 평가 지적(주제 라벨 0개)에
+# 대한 임시 사전이었고, 추적 채널 25개의 최근 영상 제목을 보고 채널 단위로 정했다.
+#
+# 2026-10-26: 분류가 잘 안 맞아(형식과 주제가 한 줄에 섞여 있었다) 주제를 늘리고 위에 그룹 한 단계를
+# 두었다(운영자 결정). 뼈대는 YouTube Data API topicId 부모 7개, 이름은 국내 장르 관례를 따랐다.
+# 근거: docs/analysis/topic-taxonomy-2026-10-26.md
+# - group 은 표시용 묶음이다. 노드 경로(game/arpg/poe2)와 저장된 topic 값에는 들어가지 않는다.
+# - 기존 슬러그는 채널·공유 링크 때문에 유지하고 라벨만 바꾼다(web-drama 와 같은 방식).
+#   beauty-life → '뷰티', movie-review → '영화·드라마'. 일상 채널은 vlog, 애니는 anime 로 운영자가 다시 배정한다.
+# - 형식(리뷰·브이로그·ASMR·리액션 등) 축은 따로 두지 않았다. 분류가 계속 어긋나면 그때 둔다.
+# - 새 주제에 config/rpm-model.yaml 배수가 없으면 RPM 은 전체 주제 행을 쓴다(AD-22).
+
+groups:
+  - slug: game
+    label: '게임'
+  - slug: entertainment
+    label: '엔터테인먼트'
+  - slug: music
+    label: '음악'
+  - slug: lifestyle
+    label: '라이프스타일'
+  - slug: knowledge
+    label: '지식·교양'
+  - slug: society
+    label: '사회·경제'
+  - slug: sports
+    label: '스포츠'
 
 topics:
   - slug: game
     label: '게임'
-  - slug: movie-review
-    label: '영화·애니 리뷰'
-  - slug: mukbang
-    label: '먹방'
-  - slug: mystery
-    label: '공포·미스터리'
-  - slug: beauty-life
-    label: '뷰티·라이프'
-  - slug: tech
-    label: '테크'
-  - slug: news
-    label: '뉴스·시사'
-  - slug: economy
-    label: '경제·재테크'
+    group: game
   # 2026-10-04: 롱폼 웹드라마가 드물어(대부분 Shorts 로 이동) 범위를 롱폼 코미디·예능으로 넓혔다.
   # 슬러그는 이미 부여된 채널·공유 링크 때문에 유지하고 라벨만 바꾼다(운영자 결정, Story 9.5).
   - slug: web-drama
     label: '코미디·예능'
+    group: entertainment
+  - slug: movie-review
+    label: '영화·드라마'
+    group: entertainment
+  - slug: anime
+    label: '애니·만화'
+    group: entertainment
+  - slug: mystery
+    label: '공포·미스터리'
+    group: entertainment
+  - slug: issue
+    label: '이슈·사건'
+    group: entertainment
+  - slug: celeb
+    label: '연예·아이돌'
+    group: entertainment
   # 2026-10-18: 음악(플레이리스트·자작곡) 채널용으로 추가(운영자 결정). 첫 채널은 라이크둠칫.
   - slug: music
     label: '음악'
+    group: music
+  - slug: vlog
+    label: '일상·브이로그'
+    group: lifestyle
+  - slug: beauty-life
+    label: '뷰티'
+    group: lifestyle
+  - slug: fashion
+    label: '패션'
+    group: lifestyle
+  - slug: mukbang
+    label: '먹방·맛집'
+    group: lifestyle
+  - slug: cooking
+    label: '요리'
+    group: lifestyle
+  - slug: travel
+    label: '여행'
+    group: lifestyle
+  - slug: fitness
+    label: '운동·건강'
+    group: lifestyle
+  - slug: pets
+    label: '반려동물'
+    group: lifestyle
+  - slug: cars
+    label: '자동차'
+    group: lifestyle
+  - slug: tech
+    label: '테크'
+    group: knowledge
+  - slug: science
+    label: '과학'
+    group: knowledge
+  - slug: history
+    label: '역사'
+    group: knowledge
+  - slug: education
+    label: '교육·언어'
+    group: knowledge
+  - slug: self-dev
+    label: '자기계발'
+    group: knowledge
+  - slug: news
+    label: '뉴스·시사'
+    group: society
+  - slug: politics
+    label: '정치'
+    group: society
+  - slug: economy
+    label: '경제·재테크'
+    group: society
+  - slug: real-estate
+    label: '부동산'
+    group: society
+  - slug: sports
+    label: '스포츠'
+    group: sports
 
 # 2026-10-25 주제 순위 계획 1: 2·3단계 노드(spec §3.1). 부모는 위에 먼저 둔다.
 # 3단계는 실제 추적 영상이 있는 것만 둔다. status: candidate 는 LLM 후보에서 빠지고
 # 운영자 검수로만 붙는다. 운영자가 tags pending 의 새 후보를 보고 늘린다.
+# redirect_from: [game/hns] — 노드 경로를 바꿀 때 옛 경로(노드 경로 형식, 다른 노드의 현재 경로와 겹치면 안 됨).
 subtopics:
   - slug: arpg
     parent: game

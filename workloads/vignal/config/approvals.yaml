@@ -26,7 +26,7 @@ approve:
     topic: beauty-life
     note: "해니 haeni beauty · 구독자 479,000 · 최근 10개 중 롱폼 5 · 최근 업로드 2026-10-01 (2026-10-04 API 확인)"
   - channel_id: UClsaLJyAdDlXjyAizmKt-1Q
-    topic: beauty-life
+    topic: fashion  # 2026-10-26 재분류 beauty-life→fashion
     note: "민제 meenje · 구독자 177,000 · 최근 10개 중 롱폼 7 · 최근 업로드 2026-09-30 (2026-10-04 API 확인)"
   - channel_id: UCOno0QRUz5huGHiCAT7Dysg
     topic: beauty-life
@@ -41,7 +41,7 @@ approve:
     topic: game
     note: "말 많은 게이머 듀리 · 구독자 71,600 · 최근 10개 중 롱폼 10 · 최근 업로드 2026-10-03 (2026-10-04 API 확인)"
   - channel_id: UCNR3K4HA6LyO9tz0oZoSJIA
-    topic: movie-review
+    topic: anime  # 2026-10-26 재분류 movie-review→anime
     note: "백수골방 · 구독자 416,000 · 최근 10개 중 롱폼 5 · 최근 업로드 2026-09-28 (2026-10-04 API 확인)"
   - channel_id: UCLwCHoQ9h7DPXvLwx5XwTQg
     topic: mukbang
@@ -167,11 +167,11 @@ approve:
     note: "scout:popular 구독 3100000 롱폼 10/10 최근 업로드 2026-10-04"
   # 뉴스데일리베스트 (scout 2026-10-04)
   - channel_id: UC8p2BFLsMGSfBdpwNs4Zq1A
-    topic: news
+    topic: politics  # 2026-10-26 재분류 news→politics
     note: "scout:popular 구독 1030000 롱폼 9/10 최근 업로드 2026-10-04"
   # 김어준의 겸손은힘들다 뉴스공장 (scout 2026-10-04)
   - channel_id: UCAAvO0ehWox1bbym3rXKBZw
-    topic: news
+    topic: politics  # 2026-10-26 재분류 news→politics
     note: "scout:popular 구독 2300000 롱폼 10/10 최근 업로드 2026-10-04"
   # 튜브김민교 (scout 2026-10-04)
   - channel_id: UCBA9XaL5wCdHnC5EmEzwrqw
@@ -219,7 +219,7 @@ approve:
     note: "scout:popular 구독 1490000 롱폼 10/10 최근 업로드 2026-10-03"
   # 강 지 (scout 2026-10-04)
   - channel_id: UCIVFv8AiQLqM9oLHTixrNYw
-    topic: game
+    topic: web-drama  # 2026-10-26 재분류 game→web-drama
     note: "scout:popular 구독 765000 롱폼 8/10 최근 업로드 2026-10-04"
   # 전략적죽음 (scout 2026-10-04)
   - channel_id: UCJmsB6NAU0sp2htDL4KmX0A
@@ -227,7 +227,7 @@ approve:
     note: "scout:popular 구독 184000 롱폼 10/10 최근 업로드 2026-10-03"
   # 살림남매 (scout 2026-10-05)
   - channel_id: UCI3bXUVuHXHMAiurKj3Wm9A
-    topic: tech
+    topic: vlog  # 2026-10-26 재분류 tech→vlog
     note: "scout:popular 구독 26700 롱폼 5/10 최근 업로드 2026-10-04"
   # MBC강원영동NEWS (scout 2026-10-05)
   - channel_id: UCvB3ZkjUpbYsHXYr6z0WSQA
@@ -259,11 +259,11 @@ approve:
     note: "scout:popular 구독 135000 롱폼 10/10 최근 업로드 2026-10-04"
   # 박성태의 뉴스쇼 (scout 2026-10-05)
   - channel_id: UC4Aa3OPkMenwTANpf0oWVRQ
-    topic: news
+    topic: politics  # 2026-10-26 재분류 news→politics
     note: "scout:popular 구독 1640000 롱폼 8/10 최근 업로드 2026-10-05"
   # 한길록 Hangilog (scout 2026-10-05)
   - channel_id: UC75fFr-vRB-iya__9SCpmIQ
-    topic: news
+    topic: politics  # 2026-10-26 재분류 news→politics
     note: "scout:popular 구독 141000 롱폼 6/10 최근 업로드 2026-10-04"
   # 하타 (scout 2026-10-06)
   - channel_id: UCvGEIjIvOkrKnUAf05t6b2w
@@ -271,7 +271,7 @@ approve:
     note: "scout:mention 구독 18500 롱폼 5/5 최근 업로드 2026-10-04"
   # 대한민국 상황실 (scout 2026-10-06)
   - channel_id: UC-woSr99cLvFby08JozkYYA
-    topic: news
+    topic: politics  # 2026-10-26 재분류 news→politics
     note: "scout:popular 구독 33600 롱폼 10/10 최근 업로드 2026-10-06"
   # 탱커킹 (scout 2026-10-06)
   - channel_id: UC8wcaRAR4KX6yuisEdlzx3w
@@ -291,7 +291,7 @@ approve:
     note: "scout:popular 구독 229000 롱폼 8/10 최근 업로드 2026-10-05"
   # 악인전 - 인물소개 (scout 2026-10-06)
   - channel_id: UC9Mtqqw9-UGWxB5mh6Ar_2A
-    topic: beauty-life
+    topic: issue  # 2026-10-26 재분류 beauty-life→issue
     note: "scout:popular 구독 342000 롱폼 6/10 최근 업로드 2026-10-04"
   # 아라하시 타비 ARAHASHI TABI (scout 2026-10-06)
   - channel_id: UCAHVQ44O81aehLWfy9O6Elw
@@ -347,7 +347,7 @@ approve:
     note: "scout:popular 구독 287000 롱폼 10/10 최근 업로드 2026-10-03"
   # 펜앤마이크TV (scout 2026-10-08)
   - channel_id: UCOqCunaF9qVN8bXwsK0HT3g
-    topic: news
+    topic: politics  # 2026-10-26 재분류 news→politics
     note: "scout:popular 구독 2010000 롱폼 6/10 최근 업로드 2026-10-05"
   # 봉준 풀영상 (scout 2026-10-08)
   - channel_id: UCP-KRZsIkIqww2jIdrciu2g
@@ -371,7 +371,7 @@ approve:
     note: "scout:popular 구독 246000 롱폼 9/10 최근 업로드 2026-10-06"
   # 흔한남매 (scout 2026-10-08)
   - channel_id: UCU8uafr_iROxRVI6c23Q_bA
-    topic: game
+    topic: web-drama  # 2026-10-26 재분류 game→web-drama
     note: "scout:popular 구독 3070000 롱폼 10/10 최근 업로드 2026-10-04"
   # 팡이요 (scout 2026-10-08)
   - channel_id: UCUR5w0E-jQTOO8Q0FZ4ilYQ
@@ -427,7 +427,7 @@ approve:
     note: "scout:popular 구독 114000 롱폼 9/10 최근 업로드 2026-10-04"
   # 신인균의 국방TV (scout 2026-10-10)
   - channel_id: UCbgqDFODvh-q38ouzoKKkVA
-    topic: news
+    topic: politics  # 2026-10-26 재분류 news→politics
     note: "scout:popular 구독 1540000 롱폼 10/10 최근 업로드 2026-10-06"
   # 무지개맛 Rainbow Flavor (scout 2026-10-10)
   - channel_id: UCcR_wZ0zimC6UT8VO0KcS8Q
@@ -487,7 +487,7 @@ approve:
     note: "scout:popular 구독 906000 롱폼 7/10 최근 업로드 2026-10-04"
   # GROUND C 그라운드씨 (scout 2026-10-11)
   - channel_id: UClUlAMZGEGPn8mKemiwOjzg
-    topic: news
+    topic: politics  # 2026-10-26 재분류 news→politics
     note: "scout:popular 구독 1010000 롱폼 5/10 최근 업로드 2026-10-05"
   # 팔차선 [8LJAYWALKING] (scout 2026-10-11)
   - channel_id: UCmcBe97VA2LqVEQUeeZl6Ew
@@ -511,7 +511,7 @@ approve:
     note: "scout:popular 구독 423000 롱폼 5/10 최근 업로드 2026-10-05"
   # 핑맨 (scout 2026-10-12)
   - channel_id: UConOmISJY0oZHRhWGyvdQ2A
-    topic: game
+    topic: issue  # 2026-10-26 재분류 game→issue
     note: "scout:popular 구독 580000 롱폼 9/10 최근 업로드 2026-10-06"
   # 채널 명예훈장 (scout 2026-10-12)
   - channel_id: UCs0LzOveQMLImmmTrMmP2sg
@@ -531,7 +531,7 @@ approve:
     note: "scout:popular 구독 254000 롱폼 8/10 최근 업로드 2026-10-05"
   # SPOTV (scout 2026-10-12)
   - channel_id: UCtm_QoN2SIxwCE-59shX7Qg
-    topic: game
+    topic: sports  # 2026-10-26 재분류 game→sports
     note: "scout:popular 구독 2230000 롱폼 8/10 최근 업로드 2026-10-04"
   # 백크 Baekk (scout 2026-10-12)
   - channel_id: UCugNO83_V7xZLzCsjpABGeg
@@ -551,7 +551,7 @@ approve:
     note: "scout:mention 구독 37100 롱폼 10/10 최근 업로드 2026-10-12"
   # 정치시그널 (scout 2026-10-13)
   - channel_id: UCfD_TCloMJtVvg7w6lrELnQ
-    topic: news
+    topic: politics  # 2026-10-26 재분류 news→politics
     note: "scout:mention 구독 54800 롱폼 8/10 최근 업로드 2026-10-13"
   # 오늘의시각 (scout 2026-10-13)
   - channel_id: UCpJAlSrzXw5RMA9SogVj8PQ
@@ -575,7 +575,7 @@ approve:
     note: "scout:popular 구독 453000 롱폼 10/10 최근 업로드 2026-10-12"
   # 엠키타카 MKTK (scout 2026-10-13)
   - channel_id: UCGbkN-3JpOct4KuEv59NF0Q
-    topic: news
+    topic: politics  # 2026-10-26 재분류 news→politics
     note: "scout:popular 구독 1100000 롱폼 9/10 최근 업로드 2026-10-13"
   # 프레이 TV (scout 2026-10-13)
   - channel_id: UCSzHok6X5qXEO7cjvVnE62g
@@ -587,7 +587,7 @@ approve:
     note: "scout:popular 구독 837000 롱폼 7/10 최근 업로드 2026-10-13"
   # 민병덕TV (scout 2026-10-14)
   - channel_id: UCIOhLDkpNcQyHsHSBwd5y_Q
-    topic: economy
+    topic: politics  # 2026-10-26 재분류 economy→politics
     note: "scout:mention 구독 15300 롱폼 8/10 최근 업로드 2026-10-14"
   # NH투자증권 (scout 2026-10-14)
   - channel_id: UCZw35cgWpGfOQASqY_RiAbw
@@ -615,7 +615,7 @@ approve:
     note: "scout:popular 구독 795000 롱폼 6/10 최근 업로드 2026-10-14"
   # 고발뉴스TV (scout 2026-10-14)
   - channel_id: UCX7-K_PSdtAiUDLEMQwrRoQ
-    topic: news
+    topic: politics  # 2026-10-26 재분류 news→politics
     note: "scout:popular 구독 847000 롱폼 7/10 최근 업로드 2026-10-14"
   # 다주 (scout 2026-10-14)
   - channel_id: UCawY6uW94r1JcBuOTqHDfow
@@ -635,7 +635,7 @@ approve:
     note: "scout:mention 구독 37900 롱폼 10/10 최근 업로드 2026-10-14"
   # 독학왕 (scout 2026-10-15)
   - channel_id: UCAI6Rg23IK12aqsdDif2Brg
-    topic: tech
+    topic: celeb  # 2026-10-26 재분류 tech→celeb
     note: "scout:popular 구독 79500 롱폼 9/10 최근 업로드 2026-10-14"
   # 낚놈 (scout 2026-10-15)
   - channel_id: UCKHezxupxlT7P4Rg6EoVBEA
@@ -667,7 +667,7 @@ approve:
     note: "scout:popular 구독 101000 롱폼 7/10 최근 업로드 2026-10-15"
   # 육해공마켓 (scout 2026-10-16)
   - channel_id: UCMJVFLLlyv5Rxu_BVx_tYvg
-    topic: beauty-life
+    topic: cooking  # 2026-10-26 재분류 beauty-life→cooking
     note: "scout:popular 구독 24400 롱폼 6/10 최근 업로드 2026-10-15"
   # 이닛 (scout 2026-10-16)
   - channel_id: UCV1vhPHGAShSP6mJNPzF4BA
@@ -675,7 +675,7 @@ approve:
     note: "scout:popular 구독 32900 롱폼 6/10 최근 업로드 2026-10-15"
   # MBC 미스터리 : 심야괴담회 X 서프라이즈 (scout 2026-10-16)
   - channel_id: UC8OUSYm-ztRAT6EE6VHPpGw
-    topic: web-drama
+    topic: mystery  # 2026-10-26 재분류 web-drama→mystery
     note: "scout:mention 구독 1010000 롱폼 5/10 최근 업로드 2026-10-16"
   # 명조:워더링 웨이브 (scout 2026-10-16)
   - channel_id: UCKuq0c-RXYaulECSuu5hFug
@@ -687,7 +687,7 @@ approve:
     note: "scout:mention 구독 457000 롱폼 8/10 최근 업로드 2026-10-16"
   # 901K (scout 2026-10-16)
   - channel_id: UCtxgoIuaAaOowq0w-2MCaJg
-    topic: news
+    topic: music  # 2026-10-26 재분류 news→music
     note: "scout:mention 구독 331000 롱폼 5/10 최근 업로드 2026-10-16"
   # 무릎의 철권TV TekkenKnee (scout 2026-10-16)
   - channel_id: UC0Zl_lyMoTbroBSNv7SpGuQ
@@ -699,7 +699,7 @@ approve:
     note: "scout:popular 구독 329000 롱폼 10/10 최근 업로드 2026-10-15"
   # [팟빵] 최욱의 매불쇼 (scout 2026-10-16)
   - channel_id: UCMYhq9OyGI5UEz_NTAoHY7A
-    topic: news
+    topic: politics  # 2026-10-26 재분류 news→politics
     note: "scout:popular 구독 2810000 롱폼 7/10 최근 업로드 2026-10-16"
   # 지존조세 (scout 2026-10-16)
   - channel_id: UCQOL6_MBCFXr3M9OTmwl9pg
@@ -731,11 +731,11 @@ approve:
     note: "scout:popular 구독 827000 롱폼 9/10 최근 업로드 2026-10-16"
   # 디글 클래식 :Diggle Classic (scout 2026-10-17)
   - channel_id: UCRMA_Nb5VF-YoWApSVeXPVA
-    topic: movie-review
+    topic: web-drama  # 2026-10-26 재분류 movie-review→web-drama
     note: "scout:popular 구독 3420000 롱폼 5/10 최근 업로드 2026-10-15"
   # 코딩애플 (scout 2026-10-17)
   - channel_id: UCSLrpBAzr-ROVGHQ5EmxnUg
-    topic: tech
+    topic: education  # 2026-10-26 재분류 tech→education
     note: "scout:popular 구독 462000 롱폼 5/10 최근 업로드 2026-10-16"
   # 슈뻘맨 [슈퍼 뻘짓 도전기] (scout 2026-10-17)
   - channel_id: UCXZx953K0FgkT3H2FaFAcew
@@ -762,7 +762,7 @@ approve:
     note: "scout:popular 구독 446000 롱폼 8/10 최근 업로드 2026-10-15"
   # 김성룡 바둑랩 (scout 2026-10-18)
   - channel_id: UCfA0tTDLNooBB0ymdoI5M7w
-    topic: game
+    topic: sports  # 2026-10-26 재분류 game→sports
     note: "scout:popular 구독 254000 롱폼 10/10 최근 업로드 2026-10-14"
   # 이상호 (scout 2026-10-18)
   - channel_id: UCfIUuMA7U_jImP7oWfTe4Pw
@@ -794,7 +794,7 @@ approve:
     note: "scout:popular 구독 286000 롱폼 5/10 최근 업로드 2026-10-13"
   # 슈카월드 (scout 2026-10-19)
   - channel_id: UCsJ6RuBiTVWRX156FVbeaGg
-    topic: news
+    topic: economy  # 2026-10-26 재분류 news→economy
     note: "scout:popular 구독 3730000 롱폼 10/10 최근 업로드 2026-10-13"
   # Official dopa (scout 2026-10-19)
   - channel_id: UCt15X5eHLwyP8PpNtQTkuDQ
@@ -876,4 +876,23 @@ approve:
   - channel_id: UCHFIDZWYe9L0xJlez3vkrkQ
     topic: game
     note: "scout:popular 구독 130000 롱폼 6/10 최근 업로드 2026-10-23"
+  # 2026-10-26 재분류: 승인 파일 밖에서 들어온 채널 (scout·auto_track)
+  - channel_id: UCFA-pXsXiIfrS1J9mFDkwKg
+    topic: anime
+    note: "2026-10-26 재분류 movie-review→anime"
+  - channel_id: UCKuUYspmBI6-dNB1YebhD3w
+    topic: anime
+    note: "2026-10-26 재분류 movie-review→anime"
+  - channel_id: UCcMnjSwliaw9z3aX7tznaJA
+    topic: politics
+    note: "2026-10-26 재분류 news→politics"
+  - channel_id: UCHp5IVYvwksAswI6gWcFX2w
+    topic: tech
+    note: "2026-10-26 재분류 economy→tech"
+  - channel_id: UClWg5n2YST6_697s-zQSMnA
+    topic: travel
+    note: "2026-10-26 재분류 beauty-life→travel"
+  - channel_id: UCnekLiljel-Px4ClMC7b3mg
+    topic: vlog
+    note: "2026-10-26 재분류 beauty-life→vlog"
 untrack: []
