@@ -13,6 +13,7 @@ quota:
   unit_costs:
     channels.list: 1
     channelSections.list: 1 # scout featured 경로
+    commentThreads.list: 1 # comment_summary 단계(기본 꺼짐). 29.1 이후 이미지는 이 키가 없으면 시작 실패 — 이전 이미지는 무시
     playlistItems.list: 1
     videos.list: 1
     search.list: 0 # [ASSUMPTION] MVP 예산 0, 실제 단가는 100(참고용, 미사용)
@@ -293,7 +294,7 @@ scout:
 llm:
   model: gemini-3.1-flash-lite # D-42: 분류 작업이라 경량 모델. 2026-10-26 100장×3회에서 2.5 Flash-Lite 는 응답 ~43% 파싱 실패, 3.1 Flash-Lite 는 100% 파싱
   thinking_level: minimal # 비우면 thinkingConfig 를 보내지 않는다. Gemini 3 계열은 끌 수 없어 지원 최저값을 적는다
-  monthly_budget_usd: 3 # [ASSUMPTION] 이달 사용액 + 진행 중 추정 + 이번 추정이 넘으면 새 제출을 멈춘다 (3.1 Flash-Lite Batch 단가·minimal thinking 포함 추정 월 ~$1~1.5, 실측 전 대략치)
+  monthly_budget_usd: 10 # 2026-10-28 3→10(댓글 요약 몫 포함, vignal D-43). [ASSUMPTION] 이달 사용액 + 진행 중 추정 + 이번 추정이 넘으면 새 제출을 멈춘다 (3.1 Flash-Lite Batch 단가·minimal thinking 포함 추정 월 ~$1~1.5, 실측 전 대략치)
   batch:
     max_items: 100 # 작업 1건당 요청 수 (본문은 20MB 미만으로도 제한)
     max_attempts: 3 # 항목당 실패 허용 횟수. 넘으면 미분류로 두고 report 가 센다
@@ -301,7 +302,7 @@ llm:
 # 주제 순위 계획 1 (docs/superpowers/specs/2026-10-25-topic-ranking-design.md §3.3).
 # enabled 는 운영자가 G-5 추가 질의 회신을 보고 켠다. 켜면 env GEMINI_API_KEY 와 llm: 블록이 필요하다.
 tagging:
-  enabled: false
+  enabled: true # 2026-10-28 운영자: G-5 회신 전 켬(파생 지표 아님, vignal 자체 분류). vignal docs/ops/topic-tagging.md
   auto_accept: 0.8 # 이 신뢰도 이상이고 후보 안의 노드면 자동 확정, 아니면 검수 대기열
   max_per_run: 100 # [ASSUMPTION] 하루 새 영상 ~200개, run 4회
   description_chars: 200 # 설명란 앞부분(메모리에서만 사용)
