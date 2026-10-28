@@ -39,7 +39,7 @@ caps:
 # 경로로 active, 상한(caps.max_tracked_channels)이 차면 queued 로 둔다. 꺼져 있으면 owner_link 요청은
 # 일반 추적 요청처럼 후보만 만든다. Worker AUTO_TRACK_ENABLED 와 함께 켠다.
 auto_track:
-  enabled: false
+  enabled: true # 2026-10-28 운영자: 소유자 자동 편입 켬(감사팀 고지 없이, 다음 G-5 메일에 포함). Worker AUTO_TRACK_ENABLED 와 짝
   max_per_run: 20 # [ASSUMPTION] 실행당 승격 + 새 편입(대기 포함) 최대 수
 
 # discover 단계 스위치. rss_precheck 를 켜면 채널마다 공개 RSS 피드
