@@ -1,0 +1,70 @@
+# One-off (2026-10-29, vignal Story 30.2 / D-44): `vignal estimate` against the prod DB and config.
+# Read-only: estimate opens the DB (no schema change since sha-bb00f34) and prints tables to stdout.
+# Read the output in Argo CD (Job pod logs, containers est-10000 / est-3000), then DELETE this file
+# and its kustomization line in a follow-up commit (Argo prunes the Job).
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: vignal-estimate-20261029
+spec:
+  backoffLimit: 0
+  activeDeadlineSeconds: 600
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: vignal
+        app.kubernetes.io/component: estimate
+    spec:
+      restartPolicy: Never
+      automountServiceAccountToken: false
+      imagePullSecrets:
+        - name: ghcr-sushistack
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 65532
+        runAsGroup: 65532
+        fsGroup: 65532
+        seccompProfile:
+          type: RuntimeDefault
+      containers:
+        - name: est-10000
+          image: ghcr.io/sushistack/vignal:sha-6f05d83
+          args: ["estimate", "--channels", "10000"]
+          env: &env
+            - name: TZ
+              value: Asia/Seoul
+            - name: VIGNAL_DB
+              value: /data/vignal.db
+            - name: VIGNAL_CONFIG_DIR
+              value: /config
+          resources: &res
+            requests:
+              cpu: 20m
+              memory: 64Mi
+            limits:
+              memory: 256Mi
+          securityContext: &sc
+            allowPrivilegeEscalation: false
+            readOnlyRootFilesystem: true
+            capabilities:
+              drop: ["ALL"]
+          volumeMounts: &vm
+            - name: data
+              mountPath: /data
+            - name: config
+              mountPath: /config
+              readOnly: true
+        - name: est-3000
+          image: ghcr.io/sushistack/vignal:sha-6f05d83
+          args: ["estimate", "--channels", "3000"]
+          env: *env
+          resources: *res
+          securityContext: *sc
+          volumeMounts: *vm
+      volumes:
+        - name: data
+          persistentVolumeClaim:
+            claimName: vignal-data
+        - name: config
+          configMap:
+            name: vignal-config
