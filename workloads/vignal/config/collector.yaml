@@ -35,7 +35,7 @@ caps:
   max_tracked_channels: 900 # Story 27.6 추적 채널(active+warm+dormant) 상한. channels_per_run 과 같은 U(C) 산술. 넘으면 owner_link 편입은 queued
   # discover videoCount 게이트(vignal cbff39c). channels.list(50개당 1 유닛)로 videoCount 를 먼저 보고 지난 페이징 때와
   # 같고 마지막 페이징이 이 시간 안이면 playlistItems.list 를 건너뛴다. 0 = 끔. 2026-10-28 운영자: 켬
-  discover_full_every_hours: 24
+  discover_full_every_hours: 72 # 2026-10-29 운영자: 24→72 (쿼터 최적화 1단계)
 
 # Story 27.6 (주제 순위 계획 5): 채널 연결(owner_link) 추적 요청의 자동 편입. scout 최소 조건
 # (scout.criteria, longform_sample)으로 한 번 검사하고(약 4 유닛, 일반 예산) 통과하면 승인 파일과 같은
@@ -59,8 +59,8 @@ discover:
 cadence:
   video_stats:
     age_le_3d_hours: 0 # 매 실행(주기 게이트 없음)
-    age_le_14d_hours: 24
-    age_le_30d_hours: 72
+    age_le_14d_hours: 48 # 2026-10-29 운영자: 24→48 (스냅샷 창은 게이트를 건너뛰어 지표 영향 없음)
+    age_le_30d_hours: 168 # 2026-10-29 운영자: 72→168
   channel_stats_hours: 24
 
 # AD-16 (Story 6.3): 발행 24시간/7일 지점 관측 스냅샷의 허용 오차(±시간).
