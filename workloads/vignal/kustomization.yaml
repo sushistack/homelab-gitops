@@ -5,7 +5,6 @@ resources:
   - namespace.yaml
   - pvc.yaml
   - cronjob.yaml
-  - estimate-job.yaml       # one-off 2026-10-29 (vignal Story 30.2) — remove after reading the logs
   - sealedsecret.yaml        # vignal-secrets: collector API/R2/CF/ntfy/ping/age-recipient (sealed to name+ns)
   - sealedsecret-ghcr.yaml   # ghcr-sushistack: pull cred for the PRIVATE collector image (re-sealed for ns vignal)
 # NOT included on purpose: seal.sh / secrets.env.example (operator tooling; secrets.env is git-ignored).
