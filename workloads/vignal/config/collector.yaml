@@ -207,6 +207,10 @@ publish_budget:
   r2_class_a_month: 1000000 # [ASSUMPTION] R2 무료 Class A 월 한도(docs/ops/list-index.md)
   alert_ratio: 0.7 # [ASSUMPTION]
 
+# D1 동기화 감시 (vignal Story 31.2, FR-91, AD-44): report 단계가 이 URL 을 한 번 읽어 최근 발행 두 배치와 비교한다.
+sync_watch:
+  status_url: https://vignal.kr/api/status # 2026-10-30 운영자(vignal D-45)
+
 # AD-6(5)/NFR-6.6.5 (Story 2.8): age 로 암호화한 vignal.db 백업을 최신 keep 개만 남긴다.
 # 수신자 공개키는 env AGE_RECIPIENT 에만 있다(r2 에서는 필수). 개인키는 어디에도 두지 않는다.
 backup:
@@ -303,6 +307,8 @@ tagging:
   auto_accept: 0.8 # 이 신뢰도 이상이고 후보 안의 노드면 자동 확정, 아니면 검수 대기열
   max_per_run: 2500 # 2026-10-29 운영자(vignal Story 30.5, D-44): 100→2500. 하루 새 영상 1만 개 ÷ run 4회. 월 예산이 상한
   description_chars: 200 # 설명란 앞부분(메모리에서만 사용)
+  skip_short_s: 180 # 2026-10-30 운영자(vignal D-45, FR-92): 이 초 이하 영상은 태깅 안 함. 0 = 끔
+  per_channel_per_day: 2 # 2026-10-30 운영자(vignal D-45, FR-92): 채널·UTC 게시일당 K 개만 태깅. 0 = 끔
   channel_l2_share: 0.6 # tags pending 이 채널 2단계를 제안하는 비중
 
 # 관찰 태그 (Story 28.3, FR-86, AD-40). 썸네일·제목의 enum 태그는 config/observe-tags.yaml 에 정의한다.
