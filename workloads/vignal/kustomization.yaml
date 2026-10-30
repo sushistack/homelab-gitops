@@ -7,7 +7,7 @@ resources:
   - cronjob.yaml
   - sealedsecret.yaml        # vignal-secrets: collector API/R2/CF/ntfy/ping/age-recipient (sealed to name+ns)
   - sealedsecret-ghcr.yaml   # ghcr-sushistack: pull cred for the PRIVATE collector image (re-sealed for ns vignal)
-  - estimate-job.yaml       # one-off 2026-10-30 (vignal Story 31.6) — remove after reading the logs
+  - estimate-job.yaml       # one-off 2026-10-30 (vignal Story 31.6, b = /tmp fix) — remove after reading the logs
 # NOT included on purpose: seal.sh / secrets.env.example (operator tooling; secrets.env is git-ignored).
 # No Service / Ingress: the collector has no public inbound (vignal AD-1).
 
