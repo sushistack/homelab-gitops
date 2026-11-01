@@ -201,7 +201,7 @@ publish:
     top_views: 20 # [ASSUMPTION] AD-31
   # FR-100·D-48 (vignal Story 32.11): true 면 공개 순위 보드를 비로그인 구간 행만 남긴다(n 은 전체).
   # 전체 보드는 항상 비공개 버킷 rank-full/ 에 쓴다. Worker RANK_GATE_ENABLED 를 먼저 켠 뒤에만 켤 것.
-  rank_public_trim: false
+  rank_public_trim: true
   # (옛 list_index·legacy_full_files 키는 지웠다. 2026-10-30 vignal Story 30.15: 목록·검색은 D1, release major 2.)
 
 # Story 23.2: 발행 예산. 실행 요약의 월 Class A 추정(이번 실행 Class A × 월 실행 수)이
