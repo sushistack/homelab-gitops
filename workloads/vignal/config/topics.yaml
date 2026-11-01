@@ -149,10 +149,13 @@ subtopics:
     parent: game
     label: '마인크래프트·로블록스'
     aliases: [마크, 마인크래프트, 로블록스, 샌드박스]
+  # default: 운영자가 2단계를 정하지 않았고 최근 태그의 channel_l2_share(60%) 이상을 차지하는
+  # 2단계도 없는 채널이 들어가는 곳(부모마다 하나). 게임 채널은 장르 없이 남지 않는다(2026-11-01).
   - slug: variety
     parent: game
     label: '종합 게임'
     aliases: [종합게임, 버라이어티]
+    default: true
   - slug: sports-game
     parent: game
     label: 'FC·스포츠 게임'
