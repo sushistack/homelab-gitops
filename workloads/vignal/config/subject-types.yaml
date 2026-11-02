@@ -1,0 +1,11 @@
+# 소재 유형 (Story 33.1, FR-101, AD-49). 닫힌 목록이다. 유형 추가는 이 파일 변경이다.
+# hint 는 LLM 프롬프트의 유형 정의로 쓴다(33.2). label 은 한국어 표시명.
+# parents(선택)는 이 유형의 소재가 part_of 로 가리킬 수 있는 상위 유형 목록이다.
+types:
+  - {id: game, label: 게임, hint: 게임 타이틀, parents: [game]}
+  - {id: work, label: 작품, hint: 영화·드라마·애니·웹툰·책, parents: [work]}
+  - {id: product, label: 제품, hint: 제품·서비스, parents: [org]}
+  - {id: trend, label: 유행, hint: 음식·밈·챌린지}
+  - {id: event, label: 사건, hint: 사건·대회·시즌·패치, parents: [event]}
+  - {id: person, label: 인물, hint: 인물, parents: [org]}
+  - {id: org, label: 단체, hint: 팀·기업·그룹}

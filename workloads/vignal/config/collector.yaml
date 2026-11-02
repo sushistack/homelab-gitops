@@ -313,6 +313,8 @@ tagging:
   skip_short_s: 180 # 2026-10-30 운영자(vignal D-45, FR-92): 이 초 이하 영상은 태깅 안 함. 0 = 끔
   per_channel_per_day: 2 # 2026-10-30 운영자(vignal D-45, FR-92): 채널·UTC 게시일당 K 개만 태깅. 0 = 끔
   channel_l2_share: 0.6 # tags pending 이 채널 2단계를 제안하는 비중
+  subjects:
+    hint_count: 10 # 2026-11-02 운영자(vignal Story 33.2): 프롬프트 힌트로 주는 채널 최근 30일 active 소재 수. 소재 추출을 끄려면 config/subject-types.yaml 을 ConfigMap 에서 뺀다
 
 # 관찰 태그 (Story 28.3, FR-86, AD-40). 썸네일·제목의 enum 태그는 config/observe-tags.yaml 에 정의한다.
 # llm: 블록과 GEMINI_API_KEY 를 공유한다. 운영자가 G-5 회신과
