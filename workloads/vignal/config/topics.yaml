@@ -11,7 +11,7 @@
 # 2026-10-26: 분류가 잘 안 맞아(형식과 주제가 한 줄에 섞여 있었다) 주제를 늘리고 위에 그룹 한 단계를
 # 두었다(운영자 결정). 뼈대는 YouTube Data API topicId 부모 7개, 이름은 국내 장르 관례를 따랐다.
 # 근거: docs/analysis/topic-taxonomy-2026-10-26.md
-# - group 은 표시용 묶음이다. 노드 경로(game/arpg/poe2)와 저장된 topic 값에는 들어가지 않는다.
+# - group 은 표시용 묶음이다. 노드 경로(game/arpg)와 저장된 topic 값에는 들어가지 않는다.
 # - 기존 슬러그는 채널·공유 링크 때문에 유지하고 라벨만 바꾼다(web-drama 와 같은 방식).
 #   beauty-life → '뷰티', movie-review → '영화·드라마'. 일상 채널은 vlog, 애니는 anime 로 운영자가 다시 배정한다.
 # - 형식(리뷰·브이로그·ASMR·리액션 등) 축은 따로 두지 않았다. 분류가 계속 어긋나면 그때 둔다.
@@ -119,8 +119,8 @@ topics:
     label: '스포츠'
     group: sports
 
-# 2026-10-25 주제 순위 계획 1: 2·3단계 노드(spec §3.1). 부모는 위에 먼저 둔다.
-# 3단계는 실제 추적 영상이 있는 것만 둔다. status: candidate 는 LLM 후보에서 빠지고
+# 2026-10-25 주제 순위 계획 1: 2단계 노드(spec §3.1, 3단계는 없다). 부모는 위에 먼저 둔다.
+# status: candidate 는 LLM 후보에서 빠지고
 # 운영자 검수로만 붙는다. 운영자가 tags pending 의 새 후보를 보고 늘린다.
 # redirect_from: [game/hns] — 노드 경로를 바꿀 때 옛 경로(노드 경로 형식, 다른 노드의 현재 경로와 겹치면 안 됨).
 subtopics:
@@ -128,6 +128,8 @@ subtopics:
     parent: game
     label: 'ARPG·핵앤슬래시'
     aliases: [핵앤슬래시, 핵슬, 디아블로라이크]
+    # 2026-11-02: 3단계 poe2·diablo4 는 소재(game subject)로 옮겼다(Story 33.4, D-50). 옛 경로는 이 노드로 보낸다.
+    redirect_from: [game/arpg/poe2, game/arpg/diablo4]
   - slug: rpg
     parent: game
     label: 'RPG·MMORPG'
@@ -160,11 +162,3 @@ subtopics:
     parent: game
     label: 'FC·스포츠 게임'
     aliases: [FC온라인, 피파, FIFA]
-  - slug: poe2
-    parent: game/arpg
-    label: '패스 오브 엑자일 2'
-    aliases: [POE2, 패오엑2, poe2]
-  - slug: diablo4
-    parent: game/arpg
-    label: '디아블로 4'
-    aliases: [디아4, Diablo IV]

@@ -327,3 +327,16 @@ observe_tags:
 highlights:
   min_multiple: 2.0 # [ASSUMPTION] 채널 배수가 이 값 이상이면 돌파 영상. 정하는 법: docs/ops/highlights.md
   min_trait_diff: 0.3 # [ASSUMPTION] 잘된 영상 비율 − 평소 영상 비율이 이 값 이상인 특징만 보인다 (FR-86, 28.4)
+
+# 소재 흐름 기준값 (Story 33.5, FR-102~105, AD-50). tagging.subjects(태깅 힌트)와는 다른 블록이다.
+# publish 가 policy subject_flow allowed 일 때 subjects/{id}.json·trending.json·채널 조각 subjects 를 만들 때만 쓴다.
+# 실측 기반 임시값이며 운영자 확정 전이다. 블록·키는 선택: 없거나 0 이면 기본값(아래 값), 음수나 관계 위반(similar_subs_ratio min<=1<=max, trending_new_days<=trending_max_age_days)이면 publish.New 실패. docs/ops/subject-flow.md
+subjects:
+  flow_min_channels: 6 # [ASSUMPTION] 흐름 = 30일 안에 서로 다른 채널 N개 이상이 다룬 소재
+  early_rank: 3 # [ASSUMPTION] 채널의 첫 영상이 소재 흐름에서 이 순위 이내면 "먼저 다룸" (사실 표시)
+  similar_min_overlap: 2 # [ASSUMPTION] 비슷한 규모 채널: 겹친 소재 수 하한
+  similar_subs_ratio: [0.5, 2.0] # [ASSUMPTION] 비슷한 규모 채널: 공개 구독자 비율(상대/나) 하한·상한. 구독자 비공개 채널은 제외
+  similar_limit: 10 # [ASSUMPTION] 채널마다 비슷한 규모 채널 최대 수
+  trending_new_days: 7 # [ASSUMPTION] 트렌드: 이 일수 안에 처음 다룬 채널 수로 정렬
+  trending_max_age_days: 14 # [ASSUMPTION] 트렌드: 첫 등장이 이 일수 이내인 소재만
+  max_subject_files: 300 # [ASSUMPTION] subjects/{id}.json 상한 (AD-32 조각 예산). 넘으면 channels_30d 내림차순으로 자르고 실행 요약 publish_subjects_truncated 에 남긴다
