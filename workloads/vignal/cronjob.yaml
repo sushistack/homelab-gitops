@@ -66,7 +66,7 @@ spec:
                   cpu: 50m
                   memory: 128Mi
                 limits:
-                  memory: 512Mi
+                  memory: 1Gi # 2026-11-03: 512Mi 에서 publish OOMKilled (소재 추출 뒤 데이터 증가, job 29893860)
               securityContext:
                 allowPrivilegeEscalation: false
                 readOnlyRootFilesystem: true
