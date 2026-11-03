@@ -1061,4 +1061,52 @@ approve:
   - channel_id: UCznL5L7iTgTaqSBS5yF6g7w
     topic: celeb
     note: "scout:featured 구독 242000 롱폼 10/10 최근 업로드 2026-10-23"
+# 2026-11-03 소재 합치기(vignal Story 33.10): vignal subjects pending 의 영문명 제안 44묶음 중 40묶음을 운영자 검수.
+# 제외: 인물 동명이인 1, 영문명 오류 1, 다른 대상일 수 있는 일반명 2. 적용된 뒤(다음 run) 이 항목들은 지운다. 되돌리기는 action: unmerge.
+subjects:
+  - {action: merge, subject: s_whlecx4v, into: s_z4ypoekn, note: "같은 영문명 SK Hynix"}
+  - {action: merge, subject: s_s63fncce, into: s_ukbnvgzf, note: "같은 영문명 Donald Trump"}
+  - {action: merge, subject: s_g556lgsp, into: s_lt53wyhg, note: "같은 영문명 EA Sports FC Online"}
+  - {action: merge, subject: s_t4bd3yey, into: s_lt53wyhg, note: "같은 영문명 EA Sports FC Online"}
+  - {action: merge, subject: s_qsknxnjb, into: s_lrdus5i5, note: "같은 영문명 Anthropic"}
+  - {action: merge, subject: s_4xhuec2p, into: s_gpwji4wk, note: "같은 영문명 Kim Bong-jun"}
+  - {action: merge, subject: s_b44dke47, into: s_gcymzara, note: "같은 영문명 League of Legends World Championship"}
+  - {action: merge, subject: s_e4ts27g2, into: s_gcymzara, note: "같은 영문명 League of Legends World Championship"}
+  - {action: merge, subject: s_o7pweela, into: s_gcymzara, note: "같은 영문명 League of Legends World Championship"}
+  - {action: merge, subject: s_2uqom2iu, into: s_f54xcxsl, note: "같은 영문명 Teamfight Tactics"}
+  - {action: merge, subject: s_camvmgts, into: s_pww3m3ba, note: "같은 영문명 MiNa"}
+  - {action: merge, subject: s_ofuxav5g, into: s_u54kkvld, note: "같은 영문명 Claude"}
+  - {action: merge, subject: s_a65wefdp, into: s_7udls367, note: "같은 영문명 Mercedes-Benz E-Class"}
+  - {action: merge, subject: s_hwcj4n6f, into: s_f77otfxu, note: "같은 영문명 Steal the Egg"}
+  - {action: merge, subject: s_tvbpnga2, into: s_tdlq2ekn, note: "같은 영문명 I Am Solo"}
+  - {action: merge, subject: s_wxndsdli, into: s_tzflcfwi, note: "같은 영문명 ChatGPT"}
+  - {action: merge, subject: s_ocjnijds, into: s_6enzblun, note: "같은 영문명 Dplus KIA"}
+  - {action: merge, subject: s_zejd7cyz, into: s_6enzblun, note: "같은 영문명 Dplus KIA"}
+  - {action: merge, subject: s_cd4ydjpi, into: s_72gc3cw7, note: "같은 영문명 2026 World Championship"}
+  - {action: merge, subject: s_ie6jgalq, into: s_addopm5k, note: "같은 영문명 Tottenham Hotspur F.C."}
+  - {action: merge, subject: s_xsyg5loz, into: s_onzwbcf6, note: "같은 영문명 RISE ETF"}
+  - {action: merge, subject: s_hcbnm245, into: s_q3pmcll3, note: "같은 영문명 ASUS"}
+  - {action: merge, subject: s_5tghwmga, into: s_z76zbycn, note: "같은 영문명 Luiz Inacio Lula da Silva"}
+  - {action: merge, subject: s_sqrb7vkm, into: s_z76zbycn, note: "같은 영문명 Luiz Inacio Lula da Silva"}
+  - {action: merge, subject: s_ahgcizpg, into: s_4uoimksv, note: "같은 영문명 Mirae Marriage Information"}
+  - {action: merge, subject: s_cn55fxxa, into: s_jcszaakh, note: "같은 영문명 Benjamin Netanyahu"}
+  - {action: merge, subject: s_77wayu4m, into: s_oeadvld5, note: "같은 영문명 OpenAI"}
+  - {action: merge, subject: s_pczwflee, into: s_oes7k66a, note: "같은 영문명 Major League Baseball"}
+  - {action: merge, subject: s_agbihvm6, into: s_sqouue3h, note: "같은 영문명 G2 Esports"}
+  - {action: merge, subject: s_yy33z5ao, into: s_tm75joni, note: "같은 영문명 Anyang Jung Kwan Jang Red Boosters"}
+  - {action: merge, subject: s_sclp3zb4, into: s_uweygykv, note: "같은 영문명 Kia Carnival"}
+  - {action: merge, subject: s_lrjjrhzi, into: s_66qgej56, note: "같은 영문명 KF-21 Boramae"}
+  - {action: merge, subject: s_kifcgqld, into: s_74pgeapz, note: "같은 영문명 NCSoft"}
+  - {action: merge, subject: s_krly24wm, into: s_ap2prbtz, note: "같은 영문명 LOUD"}
+  - {action: merge, subject: s_sffp6ban, into: s_apkjmo4o, note: "같은 영문명 VT COSMETICS"}
+  - {action: merge, subject: s_lyhpy424, into: s_astjzzkk, note: "같은 영문명 Lyon Gaming"}
+  - {action: merge, subject: s_ht4i4liw, into: s_avxbtkkd, note: "같은 영문명 NMIXX"}
+  - {action: merge, subject: s_exu3lika, into: s_baehrrwp, note: "같은 영문명 BTS"}
+  - {action: merge, subject: s_fuocaiwq, into: s_eh6l4fg7, note: "같은 영문명 Call of Duty 4: Modern Warfare"}
+  - {action: merge, subject: s_wp7mnmgj, into: s_iug7bw4f, note: "같은 영문명 Party Animals"}
+  - {action: merge, subject: s_rrudfprb, into: s_jbmmpkyd, note: "같은 영문명 Korea Land and Housing Corporation"}
+  - {action: merge, subject: s_ltkykkge, into: s_la2j675t, note: "같은 영문명 Top Esports"}
+  - {action: merge, subject: s_udylzfcp, into: s_lguibexb, note: "같은 영문명 IVE"}
+  - {action: merge, subject: s_prp5rtje, into: s_ln3pkxuh, note: "같은 영문명 Legislation and Judiciary Committee"}
+  - {action: merge, subject: s_twh35s7p, into: s_nv4sxwpq, note: "같은 영문명 Chelsea FC"}
 untrack: []
