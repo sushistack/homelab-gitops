@@ -1,0 +1,75 @@
+# One-off, read-only (vignal Story 33.10): 100 random LLM main subject links for the accuracy check.
+# Sample + merge suggestions after the new prompt (c). Run after the collector's 12:00 run (shared SQLite on vignal-data). Remove after reading the logs.
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: vignal-subject-check-20261103c
+spec:
+  backoffLimit: 0
+  activeDeadlineSeconds: 600
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: vignal
+        app.kubernetes.io/component: subject-sample
+    spec:
+      restartPolicy: Never
+      automountServiceAccountToken: false
+      imagePullSecrets:
+        - name: ghcr-sushistack
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 65532
+        runAsGroup: 65532
+        fsGroup: 65532
+        seccompProfile:
+          type: RuntimeDefault
+      containers:
+        - name: sample
+          image: ghcr.io/sushistack/vignal:sha-daa0858
+          args: ["subjects", "sample", "100"]
+          env:
+            - name: TZ
+              value: Asia/Seoul
+            - name: VIGNAL_DB
+              value: /data/vignal.db
+          resources:
+            requests:
+              cpu: 20m
+              memory: 64Mi
+            limits:
+              memory: 256Mi
+          securityContext:
+            allowPrivilegeEscalation: false
+            readOnlyRootFilesystem: true
+            capabilities:
+              drop: ["ALL"]
+          volumeMounts:
+            - name: data
+              mountPath: /data
+        - name: pending
+          image: ghcr.io/sushistack/vignal:sha-daa0858
+          args: ["subjects", "pending"]
+          env:
+            - name: TZ
+              value: Asia/Seoul
+            - name: VIGNAL_DB
+              value: /data/vignal.db
+          resources:
+            requests:
+              cpu: 20m
+              memory: 64Mi
+            limits:
+              memory: 256Mi
+          securityContext:
+            allowPrivilegeEscalation: false
+            readOnlyRootFilesystem: true
+            capabilities:
+              drop: ["ALL"]
+          volumeMounts:
+            - name: data
+              mountPath: /data
+      volumes:
+        - name: data
+          persistentVolumeClaim:
+            claimName: vignal-data
