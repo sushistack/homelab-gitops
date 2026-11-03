@@ -99,9 +99,9 @@
   },
   {
     "feature": "subject_flow",
-    "decision": "disabled",
-    "authority_ref": "PRD FR-102~105, AD-50, epics D-50 (소재 흐름은 소재 정확도 main 90% 표본 100개 확인과 페르소나 평가 뒤에만 켠다, Story 33.10; 흐름은 YouTube 공개 데이터를 vignal 분류로 다시 묶은 파생 값이라 §III.E.4.h 승인 범위 확인 필요)",
-    "reviewed_at": "2026-11-02T00:00:00Z",
+    "decision": "allowed",
+    "authority_ref": "PRD FR-102~105, AD-50, epics D-50 (소재 흐름은 소재 정확도 main 90% 표본 100개 확인과 페르소나 평가 뒤에만 켠다, Story 33.10; 흐름은 YouTube 공개 데이터를 vignal 분류로 다시 묶은 파생 값이라 §III.E.4.h 승인 범위 확인 필요) / 2026-11-03 운영자 결정으로 켬: 대상 정확도 91%(엄격 86%, docs/ops/subjects.md). 소재 흐름은 vignal 분류로 만든 자체 데이터로 보고 30일 삭제 대상이 아니라고 판단, 페르소나 평가·G-5 범위 확인 전에 운영자가 위험을 감수",
+    "reviewed_at": "2026-11-03T13:00:00Z",
     "expires_at": "2027-01-31T00:00:00Z"
   }
 ]
