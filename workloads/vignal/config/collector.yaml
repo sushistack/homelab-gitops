@@ -309,7 +309,7 @@ tagging:
   enabled: true # 2026-10-28 운영자: G-5 회신 전 켬(파생 지표 아님, vignal 자체 분류). vignal docs/ops/topic-tagging.md
   auto_accept: 0.8 # 이 신뢰도 이상이고 후보 안의 노드면 자동 확정, 아니면 검수 대기열
   max_per_run: 2500 # 2026-10-29 운영자(vignal Story 30.5, D-44): 100→2500. 하루 새 영상 1만 개 ÷ run 4회. 월 예산이 상한
-  description_chars: 200 # 설명란 앞부분(메모리에서만 사용)
+  description_chars: 400 # 설명란 앞부분(메모리에서만 사용). 2026-11-03 200→400(33.10 소재 정확도)
   skip_short_s: 180 # 2026-10-30 운영자(vignal D-45, FR-92): 이 초 이하 영상은 태깅 안 함. 0 = 끔
   per_channel_per_day: 2 # 2026-10-30 운영자(vignal D-45, FR-92): 채널·UTC 게시일당 K 개만 태깅. 0 = 끔
   channel_l2_share: 0.6 # tags pending 이 채널 2단계를 제안하는 비중
