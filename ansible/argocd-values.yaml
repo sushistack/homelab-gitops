@@ -68,6 +68,28 @@ repoServer:
 configs:
   params:
     server.insecure: true
+  # Local API-key accounts (no login). Were patched live first; pinned here so a manual sync of the
+  # `argocd` self-app does not wipe them. Tokens are NOT in git — they live in argocd-secret and are
+  # minted with `argocd account generate-token --account <name>`; revoke with `delete-token`.
+  #   homepage — dashboard widget, read-only.
+  #   claude   — claude-box dev agent (LXC 203): read + sync/actions, NO create/update/delete,
+  #              and explicitly denied on the argocd self-app (self-destroy guard, see apps/argocd.yaml).
+  cm:
+    accounts.homepage: apiKey
+    accounts.claude: apiKey
+  rbac:
+    policy.csv: |-
+      g, homepage, role:readonly
+      p, role:claude, applications, get, */*, allow
+      p, role:claude, applications, sync, */*, allow
+      p, role:claude, applications, action/*, */*, allow
+      p, role:claude, logs, get, */*, allow
+      p, role:claude, projects, get, *, allow
+      p, role:claude, clusters, get, *, allow
+      p, role:claude, repositories, get, *, allow
+      p, role:claude, applications, sync, homelab/argocd, deny
+      p, role:claude, applications, action/*, homelab/argocd, deny
+      g, claude, role:claude
 
 # The plugin config + the render filter, shipped as one ConfigMap mounted into the sidecar.
 extraObjects:
