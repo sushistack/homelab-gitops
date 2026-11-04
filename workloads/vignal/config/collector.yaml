@@ -32,7 +32,7 @@ caps:
   channels_per_run: 900 # AD-8 산술 U(C) ≈ 8.82·C, 예산 8,000 ⇒ C ≲ 900
   alerts_per_run: 20 # [ASSUMPTION] 스파인 미기재, report 실행당 알림 발송 상한
   alert_dedupe_hours: 24
-  max_tracked_channels: 1673 # 2026-10-29 운영자: 900→1673 (vignal estimate 실측 권장값, 게이트 전 창이라 보수적. docs/ops/scale.md)
+  max_tracked_channels: 3000 # 2026-11-04 운영자: 1673→3000 (최적화 뒤 실측 약 1.25 유닛/채널, 쿼터 증설 근거 확보. vignal docs/ops/scale.md 6절)
   # discover videoCount 게이트(vignal cbff39c). channels.list(50개당 1 유닛)로 videoCount 를 먼저 보고 지난 페이징 때와
   # 같고 마지막 페이징이 이 시간 안이면 playlistItems.list 를 건너뛴다. 0 = 끔. 2026-10-28 운영자: 켬
   discover_full_every_hours: 72 # 2026-10-29 운영자: 24→72 (쿼터 최적화 1단계)
