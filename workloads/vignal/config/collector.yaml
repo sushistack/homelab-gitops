@@ -338,5 +338,5 @@ subjects:
   similar_subs_ratio: [0.5, 2.0] # [ASSUMPTION] 비슷한 규모 채널: 공개 구독자 비율(상대/나) 하한·상한. 구독자 비공개 채널은 제외
   similar_limit: 10 # [ASSUMPTION] 채널마다 비슷한 규모 채널 최대 수
   trending_new_days: 7 # [ASSUMPTION] 트렌드: 이 일수 안에 처음 다룬 채널 수로 정렬
-  trending_max_age_days: 14 # [ASSUMPTION] 트렌드: 첫 등장이 이 일수 이내인 소재만
+  trending_max_age_days: 30 # 트렌드: 첫 등장이 이 일수 이내인 소재만. 2026-11-04 운영자 14→30(수집 범위 30일과 같게)
   max_subject_files: 300 # [ASSUMPTION] subjects/{id}.json 상한 (AD-32 조각 예산). 넘으면 channels_30d 내림차순으로 자르고 실행 요약 publish_subjects_truncated 에 남긴다
