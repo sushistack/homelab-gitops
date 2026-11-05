@@ -2,6 +2,8 @@
 
 Synced as source 2 of `argocd/apps/arc-runners-vignal.yaml`: only `sealedsecret.yaml` (Secret `arc-github`).
 
+Credential: a GitHub App (preferred: no expiry) or a fine-grained PAT -- see the header of `seal.sh`.
+
 Rotate / first time:
 1. GitHub -> Settings -> Developer settings -> Fine-grained tokens: repository `sushistack/vignal` only,
    permissions **Administration: Read and write** (runner registration) and Metadata: Read.
