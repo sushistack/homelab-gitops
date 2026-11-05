@@ -5,6 +5,7 @@ resources:
   - namespace.yaml
   - pvc.yaml
   - cronjob.yaml
+  - cronjob-dev-publish.yaml   # dev data (2026-11-06): daily `vignal publish-dev` -> public bucket dev/
   - sealedsecret.yaml        # vignal-secrets: collector API/R2/CF/ntfy/ping/age-recipient (sealed to name+ns)
   - sealedsecret-ghcr.yaml   # ghcr-sushistack: pull cred for the PRIVATE collector image (re-sealed for ns vignal)
 # NOT included on purpose: seal.sh / secrets.env.example (operator tooling; secrets.env is git-ignored).
