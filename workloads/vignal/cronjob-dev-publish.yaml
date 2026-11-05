@@ -1,0 +1,101 @@
+# vignal dev data (2026-11-06) — once a day, `vignal publish-dev`: a release for dev.vignal.kr built from a
+# SNAPSHOT of the collector DB (VACUUM INTO under /tmp; the source is opened read-only, never written), published
+# under the `dev/` prefix of the same public bucket (the public data domain + /dev). It calls no
+# YouTube/LLM API and never touches the prod release (`releases/`, `manifest.json`) — prod's publish and retention
+# read only those keys. It reuses the prod config (vignal-config); VIGNAL_DEV_ALLOW turns on, for the dev release
+# only, the policy features prod has off (subject_flow while the quota review is open).
+#
+# Image: built by the app repo's CI `image` job on a push to its `dev` branch (sha tag of that commit). Independent
+# of the prod CronJob's pinned tag.
+# KILL SWITCH = commit `spec.suspend: true` (PR -> merge); ArgoCD selfHeal reverts kubectl patches.
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: vignal-dev-publish
+spec:
+  # 03:30 KST: between prod runs (00:00/06:00, ~45 min each). A snapshot is consistent even if they overlap.
+  schedule: "30 3 * * *"
+  timeZone: Asia/Seoul
+  concurrencyPolicy: Forbid
+  suspend: false
+  startingDeadlineSeconds: 600
+  successfulJobsHistoryLimit: 2
+  failedJobsHistoryLimit: 2
+  jobTemplate:
+    spec:
+      backoffLimit: 0
+      activeDeadlineSeconds: 3600
+      template:
+        metadata:
+          labels:
+            app.kubernetes.io/name: vignal
+            app.kubernetes.io/component: dev-publish
+        spec:
+          restartPolicy: Never
+          automountServiceAccountToken: false
+          imagePullSecrets:
+            - name: ghcr-sushistack
+          securityContext:
+            runAsNonRoot: true
+            runAsUser: 65532
+            runAsGroup: 65532
+            fsGroup: 65532
+            seccompProfile:
+              type: RuntimeDefault
+          containers:
+            - name: vignal
+              image: ghcr.io/sushistack/vignal:sha-52229e1
+              args: ["publish-dev"]
+              env:
+                - name: TZ
+                  value: Asia/Seoul
+                - name: VIGNAL_PUBLISH_TARGET
+                  value: r2
+                - name: VIGNAL_DB
+                  value: /data/vignal.db
+                - name: VIGNAL_CONFIG_DIR
+                  value: /config
+                - name: VIGNAL_SCHEMA_SUPPORT_URL
+                  value: https://${SECRET:DOMAIN_VIGNAL_SITE}/schema-support.json
+                - name: VIGNAL_DEV_PREFIX
+                  value: dev/
+                - name: VIGNAL_DEV_ALLOW
+                  value: subject_flow
+                - name: VIGNAL_DEV_KEEP
+                  value: "2"
+                - name: TMPDIR
+                  value: /tmp
+              envFrom:
+                - secretRef:
+                    name: vignal-secrets   # R2_* (public bucket write), same as the prod job
+              resources:
+                requests:
+                  cpu: 50m
+                  memory: 128Mi
+                limits:
+                  memory: 1Gi              # same as prod's publish (OOM at 512Mi, 2026-11-03)
+              securityContext:
+                allowPrivilegeEscalation: false
+                readOnlyRootFilesystem: true
+                capabilities:
+                  drop: ["ALL"]
+              volumeMounts:
+                # Mounted read-write only because SQLite's read-only WAL reader still needs the -shm file;
+                # the program opens the DB with mode=ro and copies it with VACUUM INTO.
+                - name: data
+                  mountPath: /data
+                - name: config
+                  mountPath: /config
+                  readOnly: true
+                - name: tmp
+                  mountPath: /tmp
+          volumes:
+            - name: data
+              persistentVolumeClaim:
+                claimName: vignal-data   # RWO local-path on one node: this pod lands on the same node as prod's
+            - name: config
+              configMap:
+                name: vignal-config
+            - name: tmp
+              emptyDir:
+                sizeLimit: 2Gi           # the DB snapshot (PVC is 2Gi)
