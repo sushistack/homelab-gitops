@@ -5,7 +5,8 @@
 # read only those keys. It reuses the prod config (vignal-config); VIGNAL_DEV_ALLOW turns on, for the dev release
 # only, the policy features prod has off (subject_flow while the quota review is open).
 #
-# Image: built by the app repo's CI `image` job on a push to its `dev` branch (sha tag of that commit). Independent
+# Image: the app repo dev branch build (CI `image` job on dev pushes, or `crane append` on the prod image while CI is
+# out of minutes), pinned by digest. Independent
 # of the prod CronJob's pinned tag.
 # KILL SWITCH = commit `spec.suspend: true` (PR -> merge); ArgoCD selfHeal reverts kubectl patches.
 apiVersion: batch/v1
@@ -14,7 +15,7 @@ metadata:
   name: vignal-dev-publish
 spec:
   # 03:30 KST: between prod runs (00:00/06:00, ~45 min each). A snapshot is consistent even if they overlap.
-  schedule: "30 3 * * *"
+  schedule: "45 1 * * *"   # TEMP: first run 2026-11-06 01:45 KST; back to "30 3 * * *" once it succeeds
   timeZone: Asia/Seoul
   concurrencyPolicy: Forbid
   suspend: false
@@ -44,7 +45,7 @@ spec:
               type: RuntimeDefault
           containers:
             - name: vignal
-              image: ghcr.io/sushistack/vignal:sha-52229e1
+              image: ghcr.io/sushistack/vignal@sha256:fa825665f57e5695dc0fbc68591034e607e529436c6824a86f98642ab92ea0a7   # dev-52229e1 (vignal dev 52229e1)
               args: ["publish-dev"]
               env:
                 - name: TZ
