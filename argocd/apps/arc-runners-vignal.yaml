@@ -1,0 +1,62 @@
+# vignal's runner scale set `vignal-k3s` — GitHub Actions jobs of github.com/sushistack/vignal (PRIVATE repo only:
+# never point a self-hosted runner at a public repo, an outside PR would run code in the homelab) run here as
+# ephemeral pods: one pod per job, removed when the job ends, 0 pods when idle.
+#
+# Multi-source Application (like langfuse.yaml):
+#   Source 1: the gha-runner-scale-set chart (version pinned in versions.yaml).
+#   Source 2: infra/arc-runners/ — the SealedSecret `arc-github` (key github_token: a fine-grained PAT on
+#             sushistack/vignal with Administration read/write, which repo-level runner registration needs).
+#
+# No Docker in the runner (no privileged pod): the vignal CI builds its collector image with `crane` (a static Go
+# binary appended onto distroless), and e2e installs Chromium with `sudo` (allowed by the runner image, not privileged).
+# Switch the vignal CI between this and GitHub-hosted with the repo variable VIGNAL_RUNNER (unset = ubuntu-24.04).
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: arc-runners-vignal
+  namespace: argocd
+  annotations:
+    argocd.argoproj.io/sync-wave: "3"   # after the controller's CRDs (wave 0)
+spec:
+  project: homelab
+  sources:
+    - repoURL: ghcr.io/actions/actions-runner-controller-charts   # OCI; declared in arc-oci-repo.yaml
+      chart: gha-runner-scale-set
+      targetRevision: 0.15.1   # == versions.yaml arc-runners-vignal.chartVersion
+      helm:
+        releaseName: vignal-k3s
+        values: |
+          githubConfigUrl: https://github.com/sushistack/vignal
+          githubConfigSecret: arc-github
+          runnerScaleSetName: vignal-k3s
+          minRunners: 0
+          # 3 nodes x 4 CPU / 12 GiB, shared with the collector and the rest of the homelab.
+          maxRunners: 2
+          controllerServiceAccount:
+            namespace: arc-systems
+            name: arc-gha-rs-controller
+          template:
+            spec:
+              containers:
+                - name: runner
+                  image: ghcr.io/actions/actions-runner:2.338.2   # == versions.yaml arc-runners-vignal.image
+                  command: ["/home/runner/run.sh"]
+                  resources:
+                    requests:
+                      cpu: "1"
+                      memory: 2Gi
+                    limits:
+                      memory: 6Gi   # vitest + Playwright e2e peak
+    - repoURL: https://github.com/sushistack/homelab-gitops.git
+      targetRevision: HEAD
+      path: infra/arc-runners
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: arc-runners
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
+      - ServerSideApply=true

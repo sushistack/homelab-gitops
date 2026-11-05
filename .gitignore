@@ -21,3 +21,5 @@ rendered/
 
 # bmad
 _bmad
+# 2026-11-06: ARC runner credential (GitHub App private key) -- only the sealed output is committed.
+*.pem
