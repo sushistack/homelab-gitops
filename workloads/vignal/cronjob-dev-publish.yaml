@@ -15,7 +15,7 @@ metadata:
   name: vignal-dev-publish
 spec:
   # 03:30 KST: between prod runs (00:00/06:00, ~45 min each). A snapshot is consistent even if they overlap.
-  schedule: "45 1 * * *"   # TEMP: first run 2026-11-06 01:45 KST; back to "30 3 * * *" once it succeeds
+  schedule: "30 3 * * *"   # first run 2026-11-06 01:45 KST: 39 min, release 20261105T1645Z-480f46
   timeZone: Asia/Seoul
   concurrencyPolicy: Forbid
   suspend: false
