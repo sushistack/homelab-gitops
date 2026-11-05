@@ -1,0 +1,5 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+# Source 2 of argocd/apps/arc-runners-vignal.yaml. seal.sh / README.md / *.env are operator tooling, not synced.
+resources:
+  - sealedsecret.yaml   # Secret arc-github (github_token) in arc-runners

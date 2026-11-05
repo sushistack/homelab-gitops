@@ -130,6 +130,15 @@ workloads:
     # Own app (github.com/sushistack/ticker.deck), built by its container.yml -> GHCR multi-arch.
     # Immutable sha-<short> tag from that workflow; bump on each app release.
     image: ghcr.io/sushistack/ticker.deck:sha-e310b16
+  arc-controller:
+    manifest: argocd/apps/arc-controller.yaml
+    # GitHub Actions Runner Controller (gha-runner-scale-set-controller), OCI Helm on ghcr.io.
+    chartVersion: 0.15.1
+  arc-runners-vignal:
+    manifest: argocd/apps/arc-runners-vignal.yaml
+    # vignal runner scale set (gha-runner-scale-set chart) + the runner image it starts per job.
+    chartVersion: 0.15.1
+    image: ghcr.io/actions/actions-runner:2.338.2
   vignal:
     manifest: workloads/vignal/cronjob.yaml
     # Own app (github.com/sushistack/vignal, private), built by its CI `image` job -> GHCR (amd64).

@@ -1,0 +1,40 @@
+# GitHub Actions Runner Controller (ARC, the official gha-runner-scale-set line) — runs GitHub Actions jobs as
+# ephemeral k3s pods, so private-repo CI (vignal) does not spend GitHub-hosted minutes (2026-11-06: the monthly
+# included $12 ran out and every vignal job stopped starting).
+#
+# This is the CONTROLLER only (one small Deployment + CRDs in arc-systems). Runner scale sets are separate
+# Applications (argocd/apps/arc-runners-vignal.yaml). Vendor chart -> Helm `source`, no mirroring; version pinned
+# in versions.yaml. Release name `arc` => controller ServiceAccount `arc-gha-rs-controller` (the scale sets name it).
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: arc
+  namespace: argocd
+  annotations:
+    argocd.argoproj.io/sync-wave: "0"   # platform addon: CRDs before any runner scale set (wave 3)
+spec:
+  project: homelab
+  source:
+    repoURL: ghcr.io/actions/actions-runner-controller-charts   # OCI; declared in arc-oci-repo.yaml
+    chart: gha-runner-scale-set-controller
+    targetRevision: 0.15.1   # == versions.yaml arc-controller.chartVersion
+    helm:
+      releaseName: arc
+      values: |
+        replicaCount: 1
+        resources:
+          requests:
+            cpu: 20m
+            memory: 64Mi
+          limits:
+            memory: 256Mi
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: arc-systems
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
+      - ServerSideApply=true   # the ARC CRDs exceed the client-side apply annotation limit
