@@ -269,6 +269,12 @@ scout:
     max_upload_age_days: 30 # 마지막 업로드가 이보다 오래되면 stale_uploads
     min_longform: 1 # 표본 중 롱폼이 이 개수 미만이면 few_longform. 2026-10-28 운영자: 5→1, 쇼츠 전용 채널만 거른다
     min_subs: 1000 # [ASSUMPTION] 자동 탐색만: 공개 구독자가 이 수 미만이면 영상 조회 없이 few_subs(0 = 끔). 추적 요청·키워드 scout 에는 적용하지 않고, 구독자 비공개는 통과
+  # Story 34.13 (FR-22/FR-40): 소규모 채널 먼저. 5만 미만 pass 후보를 1~5만 → 1만 미만 순으로 앞에 두고, auto 승인은 주제별 상한.
+  # 블록을 지우거나 max_subs: 0 이면 예전과 같은 순서. vignal docs/ops/scale.md 7절. 이 키를 모르는 옛 이미지는 무시한다(yaml.Unmarshal).
+  small_first:
+    max_subs: 50000
+    prefer_min_subs: 10000
+    per_topic_max: 5
   # FR-40 (Story 9.8): search.list 기반 키워드 검색 경로. API 사용 범위 심사 밖이라 기본 꺼짐(enabled: false).
   # 심사 회신과 범위 변경 승인 뒤 GitOps 커밋으로 true 로 바꾼다(docs/ops/scout.md). 켜기 전에는 요청도 원장 기록도 없다.
   search:
@@ -321,7 +327,7 @@ tagging:
 # 품질 확인 100장×3회(docs/ops/observe-tags.md)를 본 뒤에만 켠다.
 observe_tags:
   enabled: false
-  max_per_run: 50 # [ASSUMPTION] 호출량 월 ~2,000건 (분석 문서 §3.3)
+  max_per_run: 150 # 2026-11-05 운영자 승인(vignal 34.6 재산정, docs/ops/observe-tags.md): 정상 ~6,500/월 다 담고 켜는 날 재고 ~4,500건을 ~8일에 소화, 최악 ~$2.7/월. enabled: false 동안은 효과 없음
 
 # 평소보다 잘된 영상의 기준 (FR-85/86). 28.2 가 실측 분포로 이 값을 문서화한다.
 highlights:
