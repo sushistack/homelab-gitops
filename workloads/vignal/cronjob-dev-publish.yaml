@@ -1,4 +1,4 @@
-# vignal dev data (2026-11-06) — once a day, `vignal publish-dev`: a release for dev.vignal.kr built from a
+# vignal dev data (2026-11-06) — every 6 hours (after each prod run), `vignal publish-dev`: a release for dev.vignal.kr built from a
 # SNAPSHOT of the collector DB (VACUUM INTO under /tmp; the source is opened read-only, never written), published
 # under the `dev/` prefix of the same public bucket (the public data domain + /dev). It calls no
 # YouTube/LLM API and never touches the prod release (`releases/`, `manifest.json`) — prod's publish and retention
@@ -15,7 +15,10 @@ metadata:
   name: vignal-dev-publish
 spec:
   # 03:30 KST: between prod runs (00:00/06:00, ~45 min each). A snapshot is consistent even if they overlap.
-  schedule: "30 3 * * *"   # first run 2026-11-06 01:45 KST: 39 min, release 20261105T1645Z-480f46
+  # Every 6 h, right after each prod run (00/06/12/18 KST, ~45-52 min): the release meta says refresh_interval_hours 6,
+  # so a daily dev release showed the "갱신 지연" banner after 12 h (2026-11-06). A snapshot taken during a prod run is
+  # still consistent (WAL read transaction).
+  schedule: "55 */6 * * *"
   timeZone: Asia/Seoul
   concurrencyPolicy: Forbid
   suspend: false
