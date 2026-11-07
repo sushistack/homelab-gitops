@@ -1,9 +1,12 @@
 # vignal dev data (2026-11-06) — every 6 hours (after each prod run), `vignal publish-dev`: a release for dev.vignal.kr built from a
 # SNAPSHOT of the collector DB (VACUUM INTO under /tmp; the source is opened read-only, never written), published
 # under the `dev/` prefix of the same public bucket (the public data domain + /dev). It calls no
-# YouTube/LLM API and never touches the prod release (`releases/`, `manifest.json`) — prod's publish and retention
+# YouTube API and never touches the prod release (`releases/`, `manifest.json`) — prod's publish and retention
 # read only those keys. It reuses the prod config (vignal-config); VIGNAL_DEV_ALLOW turns on, for the dev release
-# only, the policy features prod has off (subject_flow while the quota review is open).
+# only, the policy features prod has off (subject_flow while the quota review is open; r24 + observe_tags for the
+# ③ comparison, 2026-11-08). With observe_tags it recomputes r24 on the snapshot and runs the observe-tag stage
+# itself (Gemini, GEMINI_API_KEY from vignal-secrets, llm.monthly_budget_usd shared with prod's spend); the tags and
+# open Gemini jobs persist in VIGNAL_DEV_STATE, a separate file on the data PV. Prod's collector switch stays off.
 #
 # Image: the app repo dev branch build (CI `image` job on dev pushes, or `crane append` on the prod image while CI is
 # out of minutes), pinned by digest. Independent
@@ -48,7 +51,7 @@ spec:
               type: RuntimeDefault
           containers:
             - name: vignal
-              image: ghcr.io/sushistack/vignal@sha256:56977eb421d97685e48fcbb698fcc353095b5ac03db4099225b77e3136afaadd   # sha-31220f3 (vignal dev 31220f3: subject rows carry each channel's top video)
+              image: ghcr.io/sushistack/vignal@sha256:98c5200eea9c713a6e2a8f92e5b17d699958563861fe285372d9db58a3fcaff1   # sha-f30fd68 (vignal dev f30fd68: dev r24 + observe tags)
               args: ["publish-dev"]
               env:
                 - name: TZ
@@ -64,14 +67,16 @@ spec:
                 - name: VIGNAL_DEV_PREFIX
                   value: dev/
                 - name: VIGNAL_DEV_ALLOW
-                  value: subject_flow
+                  value: subject_flow,r24,observe_tags
+                - name: VIGNAL_DEV_STATE
+                  value: /data/vignal-dev-state.db   # dev-only tag rows; never read by the prod collector
                 - name: VIGNAL_DEV_KEEP
                   value: "2"
                 - name: TMPDIR
                   value: /tmp
               envFrom:
                 - secretRef:
-                    name: vignal-secrets   # R2_* (public bucket write), same as the prod job
+                    name: vignal-secrets   # R2_* (public bucket write), GEMINI_API_KEY; same as the prod job
               resources:
                 requests:
                   cpu: 50m
@@ -84,8 +89,8 @@ spec:
                 capabilities:
                   drop: ["ALL"]
               volumeMounts:
-                # Mounted read-write only because SQLite's read-only WAL reader still needs the -shm file;
-                # the program opens the DB with mode=ro and copies it with VACUUM INTO.
+                # Read-write because SQLite's read-only WAL reader still needs the -shm file (the program opens
+                # vignal.db with mode=ro and copies it with VACUUM INTO) and for vignal-dev-state.db.
                 - name: data
                   mountPath: /data
                 - name: config
