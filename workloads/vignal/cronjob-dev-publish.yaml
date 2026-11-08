@@ -51,7 +51,7 @@ spec:
               type: RuntimeDefault
           containers:
             - name: vignal
-              image: ghcr.io/sushistack/vignal@sha256:8b464df997406122f0e075c7d6d80514c1f25658ecf5cb3a2936d961186fbd38   # sha-ec1a6ff (vignal dev ec1a6ff: scored/unscored counts)
+              image: ghcr.io/sushistack/vignal@sha256:1d67d01e4c8cf14f5ee3bd7deabff1fdd16e57808a4f333c89a96e5ba9a66a13   # sha-fff8149 (vignal dev fff8149: subjects/good.json)
               args: ["publish-dev"]
               env:
                 - name: TZ
