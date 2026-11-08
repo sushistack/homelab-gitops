@@ -1062,3 +1062,17 @@ approve:
     topic: celeb
     note: "scout:featured 구독 242000 롱폼 10/10 최근 업로드 2026-10-23"
 untrack: []
+# 2026-11-09 소재 합치기(페르소나 평가 소재 쪼개짐): 이름 포함 관계 후보 85쌍 중 같은 대상이 확실한 12건. 제외: 다른 작품·후속작(오버워치 2 등), 상하위(아이폰 듀오 등), 다른 대상일 수 있는 일반명(민주당). 적용된 뒤(다음 run) 이 항목들은 지운다. 되돌리기는 action: unmerge.
+subjects:
+  - {action: merge, subject: s_n2m77tra, into: s_m4snnwxu, note: "같은 대상: 갤럭시 폴드8 → 갤럭시 Z 폴드8 (2026-11-09 페르소나 평가 소재 쪼개짐)"}
+  - {action: merge, subject: s_3qhnatgz, into: s_zmaha4lj, note: "같은 대상: 젤렌스키 → 볼로디미르 젤렌스키 (2026-11-09 페르소나 평가 소재 쪼개짐)"}
+  - {action: merge, subject: s_ytgmjklu, into: s_2w6fhejc, note: "같은 대상: 호날두 → 크리스티아누 호날두 (2026-11-09 페르소나 평가 소재 쪼개짐)"}
+  - {action: merge, subject: s_kk3vr3hd, into: s_yck44lhq, note: "같은 대상: 맨체스터 유나이티드 → 맨체스터 유나이티드 FC (2026-11-09 페르소나 평가 소재 쪼개짐)"}
+  - {action: merge, subject: s_6se55sru, into: s_rshbkbij, note: "같은 대상: 리버풀 → 리버풀 FC (2026-11-09 페르소나 평가 소재 쪼개짐)"}
+  - {action: merge, subject: s_uaynzccb, into: s_ppoh23m2, note: "같은 대상: 국민연금공단 → 국민연금 (2026-11-09 페르소나 평가 소재 쪼개짐)"}
+  - {action: merge, subject: s_lhjcrnok, into: s_e7i3b5bp, note: "같은 대상: 한국가스공사 페가수스 → 대구 한국가스공사 페가수스 (2026-11-09 페르소나 평가 소재 쪼개짐)"}
+  - {action: merge, subject: s_5tdhdhah, into: s_5xdpjgxr, note: "같은 대상: 포켓몬 → 포켓몬스터 (2026-11-09 페르소나 평가 소재 쪼개짐)"}
+  - {action: merge, subject: s_ws7lltjk, into: s_xnzbxbu7, note: "같은 대상: 현대자동차 → 현대차 (2026-11-09 페르소나 평가 소재 쪼개짐)"}
+  - {action: merge, subject: s_6jmn3cn3, into: s_w6q2ccxp, note: "같은 대상: 현대차그룹 → 현대자동차그룹 (2026-11-09 페르소나 평가 소재 쪼개짐)"}
+  - {action: merge, subject: s_77itn4yg, into: s_lkhzb5wu, note: "같은 대상: 대한민국 국방부 → 국방부 (2026-11-09 페르소나 평가 소재 쪼개짐)"}
+  - {action: merge, subject: s_b4muo6mq, into: s_7vtbkolg, note: "같은 대상: 여수세계섬박람회 → 2026 여수세계섬박람회 (2026-11-09 페르소나 평가 소재 쪼개짐)"}
