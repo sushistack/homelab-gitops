@@ -305,7 +305,7 @@ scout:
 llm:
   model: gemini-3.1-flash-lite # D-42: 분류 작업이라 경량 모델. 2026-10-26 100장×3회에서 2.5 Flash-Lite 는 응답 ~43% 파싱 실패, 3.1 Flash-Lite 는 100% 파싱
   thinking_level: minimal # 비우면 thinkingConfig 를 보내지 않는다. Gemini 3 계열은 끌 수 없어 지원 최저값을 적는다
-  monthly_budget_usd: 50 # 2026-10-29 운영자: 10→50 (H-5 월 10만원, vignal D-44). [ASSUMPTION] 이달 사용액 + 진행 중 추정 + 이번 job 추정이 넘으면 그 job 부터 새 제출을 멈춘다
+  monthly_budget_usd: 30 # 2026-11-09 운영자: 50→30 (실측 월 ~$2.6, 3,500채널 ~$6~7 + 신규 채널 일회성). 이전: 2026-10-29 운영자: 10→50 (H-5 월 10만원, vignal D-44). [ASSUMPTION] 이달 사용액 + 진행 중 추정 + 이번 job 추정이 넘으면 그 job 부터 새 제출을 멈춘다
   batch:
     max_items: 100 # 작업 1건당 요청 수 (본문은 20MB 미만으로도 제한)
     jobs_per_run: 25 # 2026-10-29 운영자(vignal Story 30.5): run 당 Batch 작업 상한. 2500 ÷ max_items 100
