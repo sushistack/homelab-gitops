@@ -66,7 +66,7 @@ spec:
                   cpu: 50m
                   memory: 128Mi
                 limits:
-                  memory: 1Gi # 2026-11-03: 512Mi 에서 publish OOMKilled (소재 추출 뒤 데이터 증가, job 29893860)
+                  memory: 2Gi # 2026-11-10: seed 로 추적 1,913→3,500 대비 미리 올림(dev 발행이 1Gi 에서 OOM). 2026-11-03: 512Mi 에서 publish OOMKilled (job 29893860)
               securityContext:
                 allowPrivilegeEscalation: false
                 readOnlyRootFilesystem: true
