@@ -51,7 +51,7 @@ spec:
               type: RuntimeDefault
           containers:
             - name: vignal
-              image: ghcr.io/sushistack/vignal@sha256:05ea7256ef0ed768cfc9693b08ba8fa716c459216f07dfe65fcbe7db06d769e0   # sha-10e68c3 (vignal dev 10e68c3: vtopic step, wider subject types)
+              image: ghcr.io/sushistack/vignal@sha256:cbf70e3c455de3fb4b19982e5b0ace40dc1132f6cf34f928b86a0350edffe664   # sha-471a147 (vignal dev 471a147: multiple basis and sample size)
               args: ["publish-dev"]
               env:
                 - name: TZ
