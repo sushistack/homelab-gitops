@@ -51,7 +51,7 @@ spec:
               type: RuntimeDefault
           containers:
             - name: vignal
-              image: ghcr.io/sushistack/vignal@sha256:e5344ccf5da6642f65cb4dcee2e328d2fce5768368375f3f8df43d8b2c614d32   # sha-183f395 (vignal dev 183f395: low usual vs channel typical flagged low_base)
+              image: ghcr.io/sushistack/vignal@sha256:3dbc797ff39b85c6d0a89b704743d36193e5e7fdb91894eaf44ac09b02a45b6c   # sha-32c56e4 (vignal dev 32c56e4: low_base for hits much longer than their sample)
               args: ["publish-dev"]
               env:
                 - name: TZ
