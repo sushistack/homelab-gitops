@@ -82,7 +82,7 @@ spec:
                   cpu: 50m
                   memory: 128Mi
                 limits:
-                  memory: 1Gi              # same as prod's publish (OOM at 512Mi, 2026-11-03)
+                  memory: 2Gi              # OOM at 1Gi 2026-11-10 (vtopic + observe_tags + publish in one job); OOM at 512Mi 2026-11-03
               securityContext:
                 allowPrivilegeEscalation: false
                 readOnlyRootFilesystem: true
