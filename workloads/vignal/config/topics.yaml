@@ -170,3 +170,97 @@ subtopics:
     parent: game
     label: 'FC·스포츠 게임'
     aliases: [FC온라인, 피파, FIFA]
+  # 2026-11-10 (PERSONA11, operator approved): peers need level 2 beyond games -- a cat channel's peers were dog
+  # and SBS channels, a dance channel's karaoke and guitar ones. Each parent keeps a catch-all default.
+  - slug: dog
+    parent: pets
+    label: '강아지'
+    aliases: [반려견, 댕댕이, 강아지]
+  - slug: cat
+    parent: pets
+    label: '고양이'
+    aliases: [반려묘, 냥이, 고양이]
+  - slug: pets-etc
+    parent: pets
+    label: '기타 반려동물'
+    default: true
+  - slug: dance
+    parent: music
+    label: '댄스·안무'
+    aliases: [커버댄스, 안무, 댄스챌린지]
+  - slug: singing
+    parent: music
+    label: '노래·커버'
+    aliases: [노래커버, 보컬, 노래방]
+  - slug: instrument
+    parent: music
+    label: '악기·레슨'
+    aliases: [기타레슨, 피아노, 악기]
+  - slug: music-etc
+    parent: music
+    label: '공연·음악 소식'
+    default: true
+  - slug: exam
+    parent: education
+    label: '입시·수능'
+    aliases: [수능, 입시, 수시, 정시]
+  - slug: language
+    parent: education
+    label: '어학'
+    aliases: [영어회화, 일본어, 중국어]
+  - slug: lecture
+    parent: education
+    label: '강의·교양'
+    aliases: [인문학, 교양강의]
+  - slug: license
+    parent: education
+    label: '자격증·공무원'
+    aliases: [자격증, 공무원시험]
+  - slug: education-etc
+    parent: education
+    label: '기타 교육'
+    default: true
+  - slug: mr-review
+    parent: movie-review
+    label: '리뷰·해설'
+    aliases: [영화리뷰, 결말포함, 줄거리요약]
+  - slug: mr-clip
+    parent: movie-review
+    label: '방송사·공식 클립'
+    aliases: [하이라이트, 공식클립]
+  - slug: mr-etc
+    parent: movie-review
+    label: '영화·드라마 소식'
+    default: true
+  - slug: tech-review
+    parent: tech
+    label: '리뷰·언박싱'
+    aliases: [언박싱, 사용기, 제품리뷰]
+  - slug: tech-news
+    parent: tech
+    label: 'IT 뉴스·이슈'
+    aliases: [IT뉴스, 테크뉴스]
+  - slug: tech-dev
+    parent: tech
+    label: '개발·코딩'
+    aliases: [코딩, 프로그래밍]
+  - slug: tech-etc
+    parent: tech
+    label: '기타 테크'
+    default: true
+  - slug: makeup
+    parent: beauty-life
+    label: '메이크업'
+    aliases: [화장, 메이크업]
+  - slug: skincare
+    parent: beauty-life
+    label: '스킨케어'
+    aliases: [피부관리, 스킨케어]
+  - slug: hair-nail
+    parent: beauty-life
+    label: '헤어·네일'
+    aliases: [헤어, 네일]
+  - slug: beauty-etc
+    parent: beauty-life
+    label: '기타 뷰티'
+    default: true
