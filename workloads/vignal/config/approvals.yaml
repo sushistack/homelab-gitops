@@ -242,7 +242,7 @@ approve:
     note: "scout:popular 구독 184000 롱폼 10/10 최근 업로드 2026-10-03"
   # 살림남매 (scout 2026-10-05)
   - channel_id: UCI3bXUVuHXHMAiurKj3Wm9A
-    topic: vlog  # 2026-10-26 재분류 tech→vlog
+    topic: living  # 2026-11-10 재분류 vlog→living (새 주제 살림·리빙). 이전: 2026-10-26 tech→vlog
     note: "scout:popular 구독 26700 롱폼 5/10 최근 업로드 2026-10-04"
   # MBC강원영동NEWS (scout 2026-10-05)
   - channel_id: UCvB3ZkjUpbYsHXYr6z0WSQA
@@ -1061,4 +1061,101 @@ approve:
   - channel_id: UCznL5L7iTgTaqSBS5yF6g7w
     topic: celeb
     note: "scout:featured 구독 242000 롱폼 10/10 최근 업로드 2026-10-23"
+  # 2026-11-10 새 주제(PERSONA9, 운영자 승인): 낚시·캠핑·차박 채널 여행→outdoor, 정리·청소·살림·인테리어 채널 →living
+  # 캠핑제국 Camping Empire (travel→outdoor)
+  - channel_id: UCPll9ZfV8mThBCT1qKTeQZQ
+    topic: outdoor
+    note: "2026-11-10 새 주제 재분류 · 구독 697000"
+  # 반반한캠핑 Bancamp (travel→outdoor)
+  - channel_id: UCT107q7vwRGAaActQ1oe7hA
+    topic: outdoor
+    note: "2026-11-10 새 주제 재분류 · 구독 684000"
+  # 영우캠핑카 (travel→outdoor)
+  - channel_id: UCWY_-67ftlegJA05EC5T6Yg
+    topic: outdoor
+    note: "2026-11-10 새 주제 재분류 · 구독 611000"
+  # 동네오빠 짬낚시 (travel→outdoor)
+  - channel_id: UCE1I2zznKQ47cWqJEhEs9Rg
+    topic: outdoor
+    note: "2026-11-10 새 주제 재분류 · 구독 574000"
+  # 캠핑쥐campingG (travel→outdoor)
+  - channel_id: UCbaU6-0RF7FCbNfJtkkbagw
+    topic: outdoor
+    note: "2026-11-10 새 주제 재분류 · 구독 448000"
+  # 토리 캠핑 TORI CAMP (travel→outdoor)
+  - channel_id: UCcGJn-y2HfUmt6fZFyC-oWw
+    topic: outdoor
+    note: "2026-11-10 새 주제 재분류 · 구독 372000"
+  # 팔도강산낚시 (travel→outdoor)
+  - channel_id: UCfBr7qdzETzhGDJRjf7APjQ
+    topic: outdoor
+    note: "2026-11-10 새 주제 재분류 · 구독 99000"
+  # 캠핑수아 (travel→outdoor)
+  - channel_id: UCU32542eoibdWPPKVQqB7mQ
+    topic: outdoor
+    note: "2026-11-10 새 주제 재분류 · 구독 98200"
+  # 나무튜브 좌충우돌!신나는낚시&캠핑 (travel→outdoor)
+  - channel_id: UCTDBShF-ELqp9I6Y9ZD2NCg
+    topic: outdoor
+    note: "2026-11-10 새 주제 재분류 · 구독 96000"
+  # 실전생활낚시 (travel→outdoor)
+  - channel_id: UCVarCK7ihjLVjqE-J0o00OQ
+    topic: outdoor
+    note: "2026-11-10 새 주제 재분류 · 구독 94900"
+  # 캠핑플러스 Camping Plus (travel→outdoor)
+  - channel_id: UClREIxacblqyUJTuNwGVzMg
+    topic: outdoor
+    note: "2026-11-10 새 주제 재분류 · 구독 92700"
+  # 낚시쪼아TV (travel→outdoor)
+  - channel_id: UCG_FS8Br0BXXfaP81bQODJg
+    topic: outdoor
+    note: "2026-11-10 새 주제 재분류 · 구독 77700"
+  # 낚시TV핼다람 (travel→outdoor)
+  - channel_id: UCVYIHeYo7FJO46ls6bHvKJQ
+    topic: outdoor
+    note: "2026-11-10 새 주제 재분류 · 구독 71000"
+  # 캠핑탐구생활 (travel→outdoor)
+  - channel_id: UCn8N5mevbqfXpuVAfoLNs6A
+    topic: outdoor
+    note: "2026-11-10 새 주제 재분류 · 구독 29000"
+  # 차박팩토리경기지사 (travel→outdoor)
+  - channel_id: UCXuiJgFGFlMZN4kj2LnWf6A
+    topic: outdoor
+    note: "2026-11-10 새 주제 재분류 · 구독 8860"
+  # 차박팩토리  광주·전라지사 (travel→outdoor)
+  - channel_id: UC-7kIKXkqJELY1eq_Fu2hPg
+    topic: outdoor
+    note: "2026-11-10 새 주제 재분류 · 구독 1850"
+  # 정리왕 (vlog→living)
+  - channel_id: UCmErD4mBSQUUIxHFB8RTJLA
+    topic: living
+    note: "2026-11-10 새 주제 재분류 · 구독 421000"
+  # 그림처럼_살림,일상vlog (vlog→living)
+  - channel_id: UCL-AUQNGVO7eOyqaVN_tiMQ
+    topic: living
+    note: "2026-11-10 새 주제 재분류 · 구독 400000"
+  # 인테리어 뭐냐하면 - 한주안 (real-estate→living)
+  - channel_id: UC3ZqlnLSnGwaTyemEiRGZ5g
+    topic: living
+    note: "2026-11-10 새 주제 재분류 · 구독 97000"
+  # 오후살림 (vlog→living)
+  - channel_id: UC999VUMvFZAe_Yt2WoUxJZA
+    topic: living
+    note: "2026-11-10 새 주제 재분류 · 구독 83900"
+  # 청소의정석 (vlog→living)
+  - channel_id: UCC3fh7oDt5stuIcXWuDX5pg
+    topic: living
+    note: "2026-11-10 새 주제 재분류 · 구독 71000"
+  # 정은주 리빙TV (vlog→living)
+  - channel_id: UC1qjTeS9ibPyCff9XEKeuPg
+    topic: living
+    note: "2026-11-10 새 주제 재분류 · 구독 69900"
+  # 이안 집꾸미기 레시피 (vlog→living)
+  - channel_id: UC2N3CXTXmq8g_oFhTjSbp2w
+    topic: living
+    note: "2026-11-10 새 주제 재분류 · 구독 67700"
+  # 살림역 (vlog→living)
+  - channel_id: UCjXPWDQKPdMLd6r9ouFobCA
+    topic: living
+    note: "2026-11-10 새 주제 재분류 · 구독 66700"
 untrack: []

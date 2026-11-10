@@ -79,6 +79,14 @@ topics:
   - slug: travel
     label: '여행'
     group: lifestyle
+  # 2026-11-10 (PERSONA9, operator): fishing/camping channels sat in 여행 and home-keeping/interior ones in 브이로그, so
+  # their peers and weekly summaries were other genres. Channels moved by approvals topic changes.
+  - slug: outdoor
+    label: '낚시·아웃도어'
+    group: lifestyle
+  - slug: living
+    label: '살림·리빙'
+    group: lifestyle
   - slug: fitness
     label: '운동·건강'
     group: lifestyle
