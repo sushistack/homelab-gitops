@@ -5,7 +5,16 @@ types:
   - {id: game, label: 게임, hint: 게임 타이틀, parents: [game]}
   - {id: work, label: 작품, hint: 영화·드라마·애니·웹툰·책, parents: [work]}
   - {id: product, label: 제품, hint: 제품·서비스, parents: [org]}
-  - {id: trend, label: 유행, hint: 음식·밈·챌린지}
+  - {id: trend, label: 유행, hint: 밈·챌린지}
   - {id: event, label: 사건, hint: 사건·대회·시즌·패치, parents: [event]}
   - {id: person, label: 인물, hint: 인물, parents: [org]}
-  - {id: org, label: 단체, hint: 팀·기업·그룹}
+  - {id: org, label: 기업·단체, hint: 팀·기업·그룹}
+  - {id: market, label: 시장 지표, hint: 주가지수·코인·환율}
+# 2026-11-09 (DESIGN-BA A): concrete things viewers search for that are not brand names -- PERSONA4~6: camping gear and
+# places, housing policy, health conditions, menus and songs never became subjects, so those genres had none.
+  - {id: place, label: 장소, hint: 지역·여행지·캠핑장·가게}
+  - {id: gear, label: 장비·상품군, hint: 브랜드 없는 제품군·장비(화목난로·텐트·전기차)}
+  - {id: policy, label: 정책·이슈, hint: 이름 붙은 정책·제도·사회 이슈(공급대책·모아타운)}
+  - {id: health, label: 건강, hint: 질환·증상·성분(통풍·골다공증·마그네슘)}
+  - {id: food, label: 음식, hint: 메뉴·요리·식재료(김장·수육)}
+  - {id: song, label: 곡, hint: 노래·연주곡 제목}
