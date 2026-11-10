@@ -51,7 +51,7 @@ spec:
               type: RuntimeDefault
           containers:
             - name: vignal
-              image: ghcr.io/sushistack/vignal@sha256:cbf70e3c455de3fb4b19982e5b0ace40dc1132f6cf34f928b86a0350edffe664   # sha-471a147 (vignal dev 471a147: multiple basis and sample size)
+              image: ghcr.io/sushistack/vignal@sha256:b7228b7c0190b43685ea1d65be7ff0c99aa2559ab006b91021a7e38498c23061   # sha-ceffeb1 (vignal dev ceffeb1: snapshot upload for local testing)
               args: ["publish-dev"]
               env:
                 - name: TZ
@@ -72,6 +72,8 @@ spec:
                   value: /data/vignal-dev-state.db   # dev-only tag rows; never read by the prod collector
                 - name: VIGNAL_DEV_KEEP
                   value: "2"
+                - name: VIGNAL_DEV_SNAPSHOT_KEY   # 2026-11-10: gzipped snapshot to the private bucket for local publisher tests
+                  value: dev/snapshot/vignal-dev.db.gz
                 - name: TMPDIR
                   value: /tmp
               envFrom:
