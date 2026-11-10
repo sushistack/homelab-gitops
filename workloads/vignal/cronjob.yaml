@@ -21,7 +21,7 @@ spec:
   jobTemplate:
     spec:
       backoffLimit: 0            # a failed run is a failed run (vignal AD-7); next schedule resumes
-      activeDeadlineSeconds: 5400
+      activeDeadlineSeconds: 10800 # 2026-11-11: seeds grew the run 55→85분→초과(publish 순차 업로드); 사용자 승인 3시간. 이전 5400
       template:
         metadata:
           labels:
