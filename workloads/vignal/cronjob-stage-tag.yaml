@@ -40,7 +40,7 @@ spec:
             - name: vignal
               # Immutable sha tag from the app repo's CI (NOT :latest — version-lint rejects
               # floating refs). Upgrade = bump here + versions.yaml in one PR.
-              image: ghcr.io/sushistack/vignal@sha256:5e0a135b97e9a89f7f33cb87beb5ea291c5ad77ed75e0af463745d647f6497e6   # sha-6d4b759 (vignal main 6d4b759: vtopic + subject types A)
+              image: ghcr.io/sushistack/vignal@sha256:a268de4c54b77393851658ea69ebc09fa56f735bcfe4e1dea0df07827268acf3   # sha-9a9f410 (vignal main 9a9f410: one-off subject backfill switch, place/gear hints)
               args: ["run", "--stage", "tag"]
               env:
                 - name: TZ
@@ -55,6 +55,10 @@ spec:
                   value: https://${SECRET:DOMAIN_VIGNAL_SITE}/schema-support.json
                 - name: TMPDIR
                   value: /tmp
+                # 2026-11-10 one-off subject backfill (DESIGN-BA A, user-approved): re-tag the last 30 days' LLM-tagged
+                # videos tagged before this time. Remove after the backfill drains (tag: retag marked videos=0).
+                - name: VIGNAL_RETAG_BEFORE
+                  value: "2026-11-10T04:00:00Z"
               envFrom:
                 - secretRef:
                     name: vignal-secrets
