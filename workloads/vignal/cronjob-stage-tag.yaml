@@ -55,12 +55,6 @@ spec:
                   value: https://${SECRET:DOMAIN_VIGNAL_SITE}/schema-support.json
                 - name: TMPDIR
                   value: /tmp
-                # 2026-11-11 one-off level-2 backfill (user-approved): re-tag the topics given level-2 nodes (3rd: mukbang, 2026-11-11 PERSONA16).
-                # Remove after the run that logs "retag marked videos=0".
-                - name: VIGNAL_RETAG_BEFORE
-                  value: "2026-11-11T10:34:32Z"
-                - name: VIGNAL_RETAG_TOPICS
-                  value: "mukbang"
               envFrom:
                 - secretRef:
                     name: vignal-secrets
