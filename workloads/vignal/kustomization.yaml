@@ -9,7 +9,8 @@ resources:
   - cronjob-dev-publish.yaml   # dev data (2026-11-06): daily `vignal publish-dev` -> public bucket dev/
   - sealedsecret.yaml        # vignal-secrets: collector API/R2/CF/ntfy/ping/age-recipient (sealed to name+ns)
   - sealedsecret-ghcr.yaml   # ghcr-sushistack: pull cred for the PRIVATE collector image (re-sealed for ns vignal)
-  - seeds/cronjob-seed-2026-11-11-w3a.yaml   # 2026-11-11 one-off seed tonight 22:40 KST (user-approved); remove after it ran
+  - seeds/cronjob-seed-2026-11-11-w3a.yaml
+  - seeds/cronjob-seed-2026-11-11-w34.yaml   # 2026-11-11 one-off: w3+w4 tonight 23:00 KST (user-approved); remove after it ran   # 2026-11-11 one-off seed tonight 22:40 KST (user-approved); remove after it ran
 # NOT included on purpose: seal.sh / secrets.env.example (operator tooling; secrets.env is git-ignored).
 # No Service / Ingress: the collector has no public inbound (vignal AD-1).
 
@@ -39,6 +40,9 @@ configMapGenerator:
   - name: vignal-seed-2026-11-11-w3a
     files:
       - seed.yaml=seeds/seed-2026-11-11-w3a.yaml
+  - name: vignal-seed-2026-11-11-w34
+    files:
+      - seed.yaml=seeds/seed-2026-11-11-w34.yaml
 generatorOptions:
   disableNameSuffixHash: true
 

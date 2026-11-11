@@ -1,0 +1,2035 @@
+# 2026-11-11 밤 시드 w34 (사용자 승인): w3(315)+w4(192) 를 앞당겨 23:00 KST 에. 원래 w3·w4 CronJob 은 같은 채널이라 내일 돌아도 바뀌는 것이 없다(상한 가드에서 멈춤).
+# 2026-11-09 시드(추적 3,500까지) wave 3/4 (400개). 예약: docs/ops/seeds/seed-2026-11-09.cronjob.yaml
+# 후보: 2026-10-31 YouTube 채널 검색 결과(yt-dlp) 10,019개 → 한글·미등록(운영 DB 전 상태 + 이전 시드 대조, 2026-11-09)·구독자 1만+
+#   → 3,413개 Claude 분류(제목·설명, 불명·키즈·비한국어·공식 skip) → 사용 가능 2,483개 중 구독자순 상위 1,418개를 섞어 400개씩.
+# RSS 영상 데이터는 쓰지 않는다(FR-21). note 는 저장되지 않는다.
+# 규모: {'1M+': 20, '100k+': 284, '10k+': 96}. 주제: education 47, vlog 38, game 33, fitness 29, economy 28, beauty-life 25, cooking 22, music 18, mukbang 15, pets 14, web-drama 14, real-estate 13, sports 13, movie-review 12, travel 12, anime 11, self-dev 10, tech 10, cars 9, fashion 8, politics 7, celeb 4, science 4, mystery 3, issue 1
+# 2026-11-11 교체: 상한 넘은 vlog·web-drama·education 일부 85개를 빼고 표본이 모자란 주제의 1만~5만 채널로 바꿈(같은 개수). 2026-11-11 밤: 교체분은 w3a 로 앞당겨 오늘 넣음, 이 wave 에서는 뺌.
+
+- channel_id: UCSQkftbg2z4kz4NNBVs6CIQ
+  topic: anime
+  note: "퍼런안경_BLAS · 구독자 1,920,000 · 2026-11-09 시드"
+
+- channel_id: UCUK4YjvUvHrFQwTFXwkUIng
+  topic: anime
+  note: "뚜식이 · 구독자 1,060,000 · 2026-11-09 시드"
+
+- channel_id: UCdU5-Xpiyx2DruGPBu63FPA
+  topic: anime
+  note: "프리키먼데이 · 구독자 283,000 · 2026-11-09 시드"
+
+- channel_id: UCpzU0y9vjjHN4CzSS0jGumw
+  topic: anime
+  note: "리뷰를 웹툰하다_김리웹 · 구독자 255,000 · 2026-11-09 시드"
+
+- channel_id: UC6Bcid5ikrIh9wba6uY5Bew
+  topic: anime
+  note: "레플의마크일상 · 구독자 212,000 · 2026-11-09 시드"
+
+- channel_id: UC_5H4MxUOOtppCGjpVl3XPg
+  topic: anime
+  note: "조탁구TV · 구독자 188,000 · 2026-11-09 시드"
+
+- channel_id: UCbxmfTxW0tcoq4c91C3fQQw
+  topic: anime
+  note: "양기철의 그림자 · 구독자 145,000 · 2026-11-09 시드"
+
+- channel_id: UCvq7QSU2IOt7_bs2_IheWXA
+  topic: anime
+  note: "투니툰 · 구독자 134,000 · 2026-11-09 시드"
+
+- channel_id: UCNth1SaCfdjPg9WFQYtqAfw
+  topic: anime
+  note: "버더동 [버츄얼 더빙 동아리] · 구독자 119,000 · 2026-11-09 시드"
+
+- channel_id: UCNOIaNFcdSjl5xc-x2cWXfw
+  topic: anime
+  note: "이맛툰 · 구독자 113,000 · 2026-11-09 시드"
+
+- channel_id: UC-IgWhCfUwiiXDpN2KFs8rw
+  topic: anime
+  note: "애니안휘휘 · 구독자 56,900 · 2026-11-09 시드"
+
+- channel_id: UCMWjW6pofWn1f988jGd4-xw
+  topic: beauty-life
+  note: "딩고 뷰티 / dingo beauty · 구독자 345,000 · 2026-11-09 시드"
+
+- channel_id: UCktGIKibxR7agzlF62Mbx2A
+  topic: beauty-life
+  note: "채정안TV · 구독자 340,000 · 2026-11-09 시드"
+
+- channel_id: UC7buwq_navFjilxdYaGO0xw
+  topic: beauty-life
+  note: "0zoo 영주 · 구독자 310,000 · 2026-11-09 시드"
+
+- channel_id: UC1a0JQT7R4uHIQYKNaJOVcw
+  topic: beauty-life
+  note: "정희숙의 똑똑한 정리 · 구독자 303,000 · 2026-11-09 시드"
+
+- channel_id: UCtKUlW4W7uT1nqtnUY-DxTQ
+  topic: beauty-life
+  note: "외발자전거채널 · 구독자 294,000 · 2026-11-09 시드"
+
+- channel_id: UCLigSO1MhXVFCjHbKof729Q
+  topic: beauty-life
+  note: "스마트한농부 · 구독자 258,000 · 2026-11-09 시드"
+
+- channel_id: UClJuc1Qe7fqBBgyJqUqASzw
+  topic: beauty-life
+  note: "남자헤어고민 해결사 송샘 · 구독자 242,000 · 2026-11-09 시드"
+
+- channel_id: UC3BAK7QIJ1BE9TlxTW1i0yg
+  topic: beauty-life
+  note: "KKONGJI 꽁지 · 구독자 202,000 · 2026-11-09 시드"
+
+- channel_id: UCSaEL-LEI41oepK5V5EXb2Q
+  topic: beauty-life
+  note: "Kook연주 · 구독자 201,000 · 2026-11-09 시드"
+
+- channel_id: UCOByc6akvw27KbJ1p9jn3BQ
+  topic: beauty-life
+  note: "누가영Nugayoung · 구독자 200,000 · 2026-11-09 시드"
+
+- channel_id: UCDCvlVx1noYrb0rNN9N6Yqg
+  topic: beauty-life
+  note: "뭉컁 MungKyang · 구독자 189,000 · 2026-11-09 시드"
+
+- channel_id: UCDaYQyEp5BEbSo_gGUlFRaw
+  topic: beauty-life
+  note: "마롱 marong · 구독자 157,000 · 2026-11-09 시드"
+
+- channel_id: UC4jjGir6yTydQP4cZ0DCO3g
+  topic: beauty-life
+  note: "피부과전문의닥터지니 블레싱피부과 · 구독자 133,000 · 2026-11-09 시드"
+
+- channel_id: UCB44fSGXvnBP6CVp10CenPg
+  topic: beauty-life
+  note: "효블리 Hyovely · 구독자 128,000 · 2026-11-09 시드"
+
+- channel_id: UCzDz8MtdDeRjxeT3kzD5o_A
+  topic: beauty-life
+  note: "매일코바늘 - 실로이룸 뜨개 패키지  · 구독자 127,000 · 2026-11-09 시드"
+
+- channel_id: UCFPn7twIbSJ7Bt8QS_qkOTw
+  topic: beauty-life
+  note: "예쁜곰팅 gom crochet · 구독자 115,000 · 2026-11-09 시드"
+
+- channel_id: UCV5Q_31yEqkV15Q-AHZWE5A
+  topic: beauty-life
+  note: "제나 dailyjenna · 구독자 109,000 · 2026-11-09 시드"
+
+- channel_id: UCJ6ffXRHtnXLhM2MFYsOrhQ
+  topic: beauty-life
+  note: "펜크래프트 · 구독자 106,000 · 2026-11-09 시드"
+
+- channel_id: UCT2aO5ha79Yu-HN6U_PNlCg
+  topic: beauty-life
+  note: "엘리 메이크업 · 구독자 63,200 · 2026-11-09 시드"
+
+- channel_id: UC8ztEunx83lflUWENoMdAuA
+  topic: beauty-life
+  note: "신지훈의 뷰티비 - make up · 구독자 62,600 · 2026-11-09 시드"
+
+- channel_id: UCEjWYm4-AVBeouZmwlRZxsg
+  topic: beauty-life
+  note: "네일그랜마nailgrandma · 구독자 62,100 · 2026-11-09 시드"
+
+- channel_id: UCdOD5shqaV7bZoGjnQMEDJQ
+  topic: beauty-life
+  note: "홈채비 · 구독자 54,700 · 2026-11-09 시드"
+
+- channel_id: UCWOEKc5N7nYmeyqV8DfuDdw
+  topic: beauty-life
+  note: "왕실 연구소 · 구독자 52,800 · 2026-11-09 시드"
+
+- channel_id: UC6koSVrNyGYXoDFnufG8yyw
+  topic: beauty-life
+  note: "포르쉐 타는 네일녀 · 구독자 51,800 · 2026-11-09 시드"
+
+- channel_id: UC3C0G-RKPOoX9KZPv8DTYEA
+  topic: beauty-life
+  note: "국뽕뷰티 · 구독자 50,700 · 2026-11-09 시드"
+
+- channel_id: UCDpnvN85bJjW-9HIHRRV5JQ
+  topic: cars
+  note: "메르카바 : 자동차 이야기 · 구독자 248,000 · 2026-11-09 시드"
+
+- channel_id: UCv-Aa6CTYGxSaHfl6YjED_Q
+  topic: cars
+  note: "중고차의모든것 · 구독자 220,000 · 2026-11-09 시드"
+
+- channel_id: UCv7348Gw6Cqa81KhEGYTThg
+  topic: cars
+  note: "진영민중고차 · 구독자 214,000 · 2026-11-09 시드"
+
+- channel_id: UCPv8dcL52lwQD2tbpgC9Kmw
+  topic: cars
+  note: "자동차 미생 Auto Engineer American Life · 구독자 206,000 · 2026-11-09 시드"
+
+- channel_id: UC4_AL-HBcYBjCTyNnMw0DOw
+  topic: cars
+  note: "자동차읽어주는남자(carreadingman) · 구독자 148,000 · 2026-11-09 시드"
+
+- channel_id: UCnSPve7hJu6kuXKujw5Ee9w
+  topic: cars
+  note: "션 킴 자동차연구소  · 구독자 101,000 · 2026-11-09 시드"
+
+- channel_id: UCld3S5j2mBptPZw7pUjziwA
+  topic: cars
+  note: "중고차뽀식 · 구독자 57,900 · 2026-11-09 시드"
+
+- channel_id: UC1YD3JHf8nKs-VhDCrh5lgg
+  topic: cars
+  note: "Quick Market TV_All About Leisure · 구독자 57,600 · 2026-11-09 시드"
+
+- channel_id: UC59TKsJC21iBnAjIUwgmyRw
+  topic: cars
+  note: "어서와자동차 vip경매 · 구독자 51,900 · 2026-11-09 시드"
+
+- channel_id: UCFrAB5I66LgzOi15TF4PO6A
+  topic: celeb
+  note: "문별이다 moonbyul2da · 구독자 295,000 · 2026-11-09 시드"
+
+- channel_id: UCcOPi_JjdrLR_KLmu_Z53EQ
+  topic: celeb
+  note: "김은하와 허휘수 · 구독자 276,000 · 2026-11-09 시드"
+
+- channel_id: UCH6j6f4vxSlpeJGZCbPoePQ
+  topic: celeb
+  note: "송지효 JIHYO SSONG · 구독자 183,000 · 2026-11-09 시드"
+
+- channel_id: UCNYOIZPRr3nxWfSKEKlkXRw
+  topic: celeb
+  note: "연예돋보기 · 구독자 60,500 · 2026-11-09 시드"
+
+- channel_id: UC85mXeWRaycnlFmrhBdaAlg
+  topic: cooking
+  note: "남자커피 Namja Coffee · 구독자 314,000 · 2026-11-09 시드"
+
+- channel_id: UCAsHJbPbGENF_KJYhcdV0dw
+  topic: cooking
+  note: "나나Nanasserie · 구독자 307,000 · 2026-11-09 시드"
+
+- channel_id: UCVDjIdGqYxRUk-upINopUNQ
+  topic: cooking
+  note: "쿠킹 프린세스 cooking  · 구독자 279,000 · 2026-11-09 시드"
+
+- channel_id: UCEWZJyigWxHd-c4NrGxh6mA
+  topic: cooking
+  note: "요리하는 과장 요과장 · 구독자 266,000 · 2026-11-09 시드"
+
+- channel_id: UCA2Aoj5nHJcBukGWLMccK7Q
+  topic: cooking
+  note: "우리집오늘의요리 · 구독자 252,000 · 2026-11-09 시드"
+
+- channel_id: UCeOwi85w01FOOi9VGOdlRaA
+  topic: cooking
+  note: "오늘도 베이킹 Baking again today · 구독자 225,000 · 2026-11-09 시드"
+
+- channel_id: UCoyNkUIKlr6czajneP_jnQg
+  topic: cooking
+  note: "청이레시피 chung e recipes · 구독자 212,000 · 2026-11-09 시드"
+
+- channel_id: UCmxEBPh0oT2kWhEj-dc4jXw
+  topic: cooking
+  note: "부산아지매레시피 · 구독자 208,000 · 2026-11-09 시드"
+
+- channel_id: UCmfVvmxwqjHNjqvNv06YMXg
+  topic: cooking
+  note: "쿠킹미제 COOKINGMEEZE · 구독자 203,000 · 2026-11-09 시드"
+
+- channel_id: UC9HrKqZnuxAg5WDpeosQxHw
+  topic: cooking
+  note: "냠냠다이어트 · 구독자 166,000 · 2026-11-09 시드"
+
+- channel_id: UCWfLVmVJJxDF5uEGAGFOOFA
+  topic: cooking
+  note: "주부팔름 JUBU8LEUM · 구독자 159,000 · 2026-11-09 시드"
+
+- channel_id: UCwIZdGF_aQdZwKsaSpwySTw
+  topic: cooking
+  note: "STUDIO JJ [스튜디오 제이제이] · 구독자 147,000 · 2026-11-09 시드"
+
+- channel_id: UCDOgMBIqlZRyyImVB5U3ZMQ
+  topic: cooking
+  note: "지방쿸 · 구독자 145,000 · 2026-11-09 시드"
+
+- channel_id: UCDYUWTUF1mcn44nWlWSWIhQ
+  topic: cooking
+  note: "일식조리기술원 · 구독자 143,000 · 2026-11-09 시드"
+
+- channel_id: UC8ZirMMChf8BaKKbae3Sl4A
+  topic: cooking
+  note: "이정현의 집밥레스토랑 Home Cooking with JH · 구독자 130,000 · 2026-11-09 시드"
+
+- channel_id: UCDGLSi-amZJzBLFoaC0IznA
+  topic: cooking
+  note: "자요뱅_ 쉽고 편한 요리 · 구독자 126,000 · 2026-11-09 시드"
+
+- channel_id: UCXcHbfoL1W5vnkHth9lTImg
+  topic: cooking
+  note: "김뷔뷔베이킹 · 구독자 109,000 · 2026-11-09 시드"
+
+- channel_id: UCtEmTcW_pg2PFyCXqn-RtNw
+  topic: cooking
+  note: "건강한 일상 · 구독자 102,000 · 2026-11-09 시드"
+
+- channel_id: UC2eI3TK1Gb-4NoxrePQOF8g
+  topic: cooking
+  note: "더웍 The Wok · 구독자 62,300 · 2026-11-09 시드"
+
+- channel_id: UCY6bM5wCwlTQK6sL5jEAW0A
+  topic: cooking
+  note: "윤맘레시피(yunmom85) · 구독자 61,100 · 2026-11-09 시드"
+
+- channel_id: UCZJeuSFG74ljmgIV-0XjQPA
+  topic: cooking
+  note: "효리요리 HyoriYori · 구독자 61,000 · 2026-11-09 시드"
+
+- channel_id: UCYtpeIphUz0rc1WxXtBfM2w
+  topic: cooking
+  note: "맛있는 메리이야기 – 홈베이킹,디저트 만들기 · 구독자 50,800 · 2026-11-09 시드"
+
+- channel_id: UCM_HKYb6M9ZIAjosJfWS3Lw
+  topic: economy
+  note: "미국주식으로 부자되기-미주부 · 구독자 332,000 · 2026-11-09 시드"
+
+- channel_id: UCHKRLOqgrKhIgoCKJ3UkNhg
+  topic: economy
+  note: "대왕개미 홍인기 · 구독자 332,000 · 2026-11-09 시드"
+
+- channel_id: UCxfkkxJ_TQlTzbWrby5O5WQ
+  topic: economy
+  note: "세금 아는형 · 구독자 329,000 · 2026-11-09 시드"
+
+- channel_id: UCaGp0UNP_dK4YnTc2XFzW2A
+  topic: economy
+  note: "구채희 · 구독자 303,000 · 2026-11-09 시드"
+
+- channel_id: UCpqD9_OJNtF6suPpi6mOQCQ
+  topic: economy
+  note: "월가아재의 과학적 투자 · 구독자 284,000 · 2026-11-09 시드"
+
+- channel_id: UCqaXPyhWGtS_Vt20GQQDSbg
+  topic: economy
+  note: "박작가의 크립토연구소 · 구독자 260,000 · 2026-11-09 시드"
+
+- channel_id: UCThwDMeuhkjOONCAIUiu4xg
+  topic: economy
+  note: "안유화의 경제투자론 - 안경투 · 구독자 250,000 · 2026-11-09 시드"
+
+- channel_id: UC81Dyqhr3G8wQVH2QmW25Mw
+  topic: economy
+  note: "데이트레이더 - AI를 활용한 가상화폐 자동매매 · 구독자 236,000 · 2026-11-09 시드"
+
+- channel_id: UCVAbB2v_MCpAWNVTGxVLRxw
+  topic: economy
+  note: "안정모의 주식투자 · 구독자 226,000 · 2026-11-09 시드"
+
+- channel_id: UCryegvgu7yAYQLDNwQwlzDA
+  topic: economy
+  note: "리치 코인 · 구독자 220,000 · 2026-11-09 시드"
+
+- channel_id: UC2ByczqyZtt0Lj2DCkQuXJA
+  topic: economy
+  note: "절세미녀 김희연 회계사 · 구독자 197,000 · 2026-11-09 시드"
+
+- channel_id: UCibo107UgpabxGBxEa6ixqA
+  topic: economy
+  note: "미국주식에 미치다 TV · 구독자 195,000 · 2026-11-09 시드"
+
+- channel_id: UCBnpKhUSu2Jw6zsQ5aqZ8_w
+  topic: economy
+  note: "TV주식의 강해 · 구독자 178,000 · 2026-11-09 시드"
+
+- channel_id: UCLrRutm_EiL2294pFrTEN4w
+  topic: economy
+  note: "머니코치 최준호 [네이버 마케팅 1타] · 구독자 175,000 · 2026-11-09 시드"
+
+- channel_id: UCm1FZg0RNkB0BP0Gwasl3Eg
+  topic: economy
+  note: "부업의정석 · 구독자 172,000 · 2026-11-09 시드"
+
+- channel_id: UCvrOll07bwpNzGhBHRB5_yw
+  topic: economy
+  note: "웅덩이매매법 디벨롭몽 - 미국주식 · 구독자 169,000 · 2026-11-09 시드"
+
+- channel_id: UC512T90idot46AH6UXx1SUQ
+  topic: economy
+  note: "주식또바기 · 구독자 168,000 · 2026-11-09 시드"
+
+- channel_id: UCf6jaRSw3P2SXyI4njr_Wdg
+  topic: economy
+  note: "비트코인 돈복남TV · 구독자 168,000 · 2026-11-09 시드"
+
+- channel_id: UCG-0kPPgZ8OTTAJT4qx4VeA
+  topic: economy
+  note: "급등테마연구소 - 미라클 주식 급등주 · 구독자 157,000 · 2026-11-09 시드"
+
+- channel_id: UCR07FTPeOg0fhf4LMlzNmgg
+  topic: economy
+  note: "주식투자타이밍TV · 구독자 120,000 · 2026-11-09 시드"
+
+- channel_id: UCzT7GZcJQCWz0e9gWVFl2Lg
+  topic: economy
+  note: "주식일타강사 · 구독자 120,000 · 2026-11-09 시드"
+
+- channel_id: UCcs97Lj5ybmsR2z7qIEC-JQ
+  topic: economy
+  note: "김지훈의 훈훈한주식 · 구독자 112,000 · 2026-11-09 시드"
+
+- channel_id: UCO_Qx4bogFcXNC0N6Wn7iaw
+  topic: economy
+  note: "오뽀가디언- 비트코인TV · 구독자 108,000 · 2026-11-09 시드"
+
+- channel_id: UCXnYXrilMneT3KmYPiEvXRg
+  topic: economy
+  note: "변대표의 주식 시크릿 레시피 · 구독자 106,000 · 2026-11-09 시드"
+
+- channel_id: UCVsmuy9k72_evioY2UoQkbQ
+  topic: economy
+  note: "마경환의 투자학교 · 구독자 61,900 · 2026-11-09 시드"
+
+- channel_id: UCOLyrwNlzax5rxoEFUDqDzw
+  topic: economy
+  note: "송재우증권TV · 구독자 56,500 · 2026-11-09 시드"
+
+- channel_id: UCmYLe33gys9lwQAndeQ8djQ
+  topic: economy
+  note: "실버동행라디오 · 구독자 52,800 · 2026-11-09 시드"
+
+- channel_id: UCtsZxzIB7A7eIoikC6BPf1Q
+  topic: economy
+  note: "택스SHOW · 구독자 51,200 · 2026-11-09 시드"
+
+- channel_id: UCam5BTX9qo6Lf9itKcfhXEQ
+  topic: education
+  note: "Sophie Ban의 '쓸만한 영어' · 구독자 297,000 · 2026-11-09 시드"
+
+- channel_id: UCZ8Men2K0rxzc_pPoGXd79w
+  topic: education
+  note: "영어맛 by 뒹굴신 · 구독자 284,000 · 2026-11-09 시드"
+
+- channel_id: UCOifEWSYG9etRSXBZIGn5Qw
+  topic: education
+  note: "이영시 Summer Park · 구독자 276,000 · 2026-11-09 시드"
+
+- channel_id: UCFgsa4kjz6P0MLQHEvQpsRQ
+  topic: education
+  note: "책읽는다락방 J · 구독자 252,000 · 2026-11-09 시드"
+
+- channel_id: UC1XlulUc0fuZOKYwKFnEO4g
+  topic: education
+  note: "하루영어회화 · 구독자 229,000 · 2026-11-09 시드"
+
+- channel_id: UCZH5gqdGQs3IKoEOGAYuvdw
+  topic: education
+  note: "아하영어 AhaEn · 구독자 224,000 · 2026-11-09 시드"
+
+- channel_id: UCMXFwld5hCpMc2-49cndljA
+  topic: education
+  note: "Sarah Kim (영어강사 사라킴) · 구독자 224,000 · 2026-11-09 시드"
+
+- channel_id: UCjE4tFQkzWFlY4BTF49qjvw
+  topic: education
+  note: "ATTIC 영어상영관 · 구독자 212,000 · 2026-11-09 시드"
+
+- channel_id: UCDwocU-T3PPaB075K_PbUHA
+  topic: education
+  note: "영어말하기-Speak English · 구독자 212,000 · 2026-11-09 시드"
+
+- channel_id: UCnVJGlCcNZtmgTW9Ilg5LYQ
+  topic: education
+  note: "듣고배우는영어 · 구독자 199,000 · 2026-11-09 시드"
+
+- channel_id: UC9oxRR3Oyua_mHOKEtd4Lnw
+  topic: education
+  note: "합격다드림_균쌤 · 구독자 197,000 · 2026-11-09 시드"
+
+- channel_id: UC8RyIm2h9RifFF_6aKtvJqQ
+  topic: education
+  note: "짤막한 강좌 · 구독자 180,000 · 2026-11-09 시드"
+
+- channel_id: UC2owPym75IZth4z4U5Xro2Q
+  topic: education
+  note: "신분상승 영어 · 구독자 173,000 · 2026-11-09 시드"
+
+- channel_id: UCdtTiYkGqkwWreXH4GCfzKQ
+  topic: education
+  note: "제이슨킹수학 · 구독자 159,000 · 2026-11-09 시드"
+
+- channel_id: UCQx1LfZHIjPfxJerUsZVbYw
+  topic: fashion
+  note: "코디센스 · 구독자 283,000 · 2026-11-09 시드"
+
+- channel_id: UClcbTwyRmlOINYXTcNfhdEA
+  topic: fashion
+  note: "패션 팬아시아 Fashion Pan Asia · 구독자 176,000 · 2026-11-09 시드"
+
+- channel_id: UC_J0aurzzUe7YmsEhan0KVA
+  topic: fashion
+  note: "GONZO [남자패션의 정석] · 구독자 134,000 · 2026-11-09 시드"
+
+- channel_id: UC_tUEs8BU5ucJlbQ6J0XBow
+  topic: fashion
+  note: "패션뻐꾹이 · 구독자 131,000 · 2026-11-09 시드"
+
+- channel_id: UCc0byt-rLHB2i15jw-QjXWg
+  topic: fashion
+  note: "성주언니패션뷰 · 구독자 102,000 · 2026-11-09 시드"
+
+- channel_id: UCfm-Nd1OVtIz0Mn-CeUqlBA
+  topic: fashion
+  note: "패션PT,스타일톡톡 · 구독자 54,000 · 2026-11-09 시드"
+
+- channel_id: UC4CeUcCyr3Gly5XpIeuQg6A
+  topic: fashion
+  note: "패션가이드 워노티디 · 구독자 53,600 · 2026-11-09 시드"
+
+- channel_id: UCw3FB74PEXJxeiulAMr7buA
+  topic: fashion
+  note: "패션이슈 · 구독자 51,700 · 2026-11-09 시드"
+
+- channel_id: UCj8zZ1a8Lqtj4wY2bHbcIaQ
+  topic: fitness
+  note: "정세연의 라이프연구소 · 구독자 1,120,000 · 2026-11-09 시드"
+
+- channel_id: UCLIr3svyErq5a4RHDYFjoWg
+  topic: fitness
+  note: "백준사- 백세시대를 준비하는 사람들 · 구독자 290,000 · 2026-11-09 시드"
+
+- channel_id: UCmOaOFwxOXfZLgZPFhjT_1Q
+  topic: fitness
+  note: "서리요가seoriyoga · 구독자 284,000 · 2026-11-09 시드"
+
+- channel_id: UCcMSJmR90Y_McofszAVxjAQ
+  topic: fitness
+  note: "김성환헬스유튜브 (Kim Seong Hwan) · 구독자 275,000 · 2026-11-09 시드"
+
+- channel_id: UCedl3ClIwMtTdmHeiiS1czg
+  topic: fitness
+  note: "제철건강 · 구독자 260,000 · 2026-11-09 시드"
+
+- channel_id: UCj9v_ThF9C97nrraZKlxKfg
+  topic: fitness
+  note: "ND러너 · 구독자 258,000 · 2026-11-09 시드"
+
+- channel_id: UC8EMF6H5YOCk-BdNEuYnkbA
+  topic: fitness
+  note: "의사친[의사사람친구] · 구독자 253,000 · 2026-11-09 시드"
+
+- channel_id: UCPr_tkDD0-3I8JZAP4nxQJQ
+  topic: fitness
+  note: "심플약사 · 구독자 238,000 · 2026-11-09 시드"
+
+- channel_id: UCQN8kxyq6a_z0-49pG8g09w
+  topic: fitness
+  note: "장수의 비밀 · 구독자 215,000 · 2026-11-09 시드"
+
+- channel_id: UCkGtJLZHSCBP6DeWCp9SuJQ
+  topic: fitness
+  note: "뱃살요정 · 구독자 199,000 · 2026-11-09 시드"
+
+- channel_id: UCS0EHYZUTD7LnRczJbCh3iA
+  topic: fitness
+  note: "건강전도사 정주호 · 구독자 169,000 · 2026-11-09 시드"
+
+- channel_id: UCpNGDhuzGy6Jp-MyhYnN-RA
+  topic: fitness
+  note: "김혜윤의 누워서 살빼기 · 구독자 154,000 · 2026-11-09 시드"
+
+- channel_id: UCCCKyCfqmRyPVT-1tRSHw2A
+  topic: fitness
+  note: "건강10초 · 구독자 147,000 · 2026-11-09 시드"
+
+- channel_id: UCq4et6CG5dmP8f0xKJDYQ3g
+  topic: fitness
+  note: "다이어트하는 사람들 · 구독자 144,000 · 2026-11-09 시드"
+
+- channel_id: UCzqCV-5wGCu9jyJj1qJ_CHw
+  topic: fitness
+  note: "건기남TV · 구독자 135,000 · 2026-11-09 시드"
+
+- channel_id: UCOsQE_5FNrGoTBialPjKuSQ
+  topic: fitness
+  note: "암에 미친 메디람 · 구독자 131,000 · 2026-11-09 시드"
+
+- channel_id: UCJya9M0xpIUqHV76TPQe4Qg
+  topic: fitness
+  note: "건강의 열쇠 · 구독자 128,000 · 2026-11-09 시드"
+
+- channel_id: UCMYFfUu0IHJTF7J4hE-1lGg
+  topic: fitness
+  note: "이건민의 풍성한 이야기 · 구독자 122,000 · 2026-11-09 시드"
+
+- channel_id: UC70hC0mVGURG6rCBibw9Wug
+  topic: fitness
+  note: "SLEEP Dr. 신원철 꿀잠튜브 · 구독자 121,000 · 2026-11-09 시드"
+
+- channel_id: UCVC21HvJs4W6FclmYr7pFGw
+  topic: fitness
+  note: "톡투건강TV · 구독자 121,000 · 2026-11-09 시드"
+
+- channel_id: UCmRS_soz03y_qE0oYAuIdbw
+  topic: fitness
+  note: "융감하게 bravelyyoon · 구독자 107,000 · 2026-11-09 시드"
+
+- channel_id: UC-zTA0oxbMp6tLKAooTpcZw
+  topic: fitness
+  note: "Susie Line Dance(수지라인댄스 )  · 구독자 103,000 · 2026-11-09 시드"
+
+- channel_id: UC08pbeuzAK3uRsdrma3Gx0Q
+  topic: fitness
+  note: "후후비당고한의원 - 대사질환 性지식채널 · 구독자 101,000 · 2026-11-09 시드"
+
+- channel_id: UCM3dS8yD1hGCNY1nwEXC4-g
+  topic: fitness
+  note: "백세시대 건강습관 · 구독자 62,600 · 2026-11-09 시드"
+
+- channel_id: UCxqoHA_ZT-RtSt4v7v4lndA
+  topic: fitness
+  note: "의사 박용우 · 구독자 57,600 · 2026-11-09 시드"
+
+- channel_id: UCMdJjVSwf0j6FrciqqvWVbg
+  topic: fitness
+  note: "메디쌤의 필라테스 · 구독자 55,300 · 2026-11-09 시드"
+
+- channel_id: UC21mgaKHI1G5lVsjjuJI_kA
+  topic: fitness
+  note: "형제약사의 약이야기 · 구독자 54,500 · 2026-11-09 시드"
+
+- channel_id: UCPsApmFia_Ej6lcxNkNMp4A
+  topic: fitness
+  note: "리틀약사 Shorts · 구독자 52,500 · 2026-11-09 시드"
+
+- channel_id: UC7bk_HwZ8nei6BXolBc633w
+  topic: fitness
+  note: "태국시골약사 이와라 · 구독자 51,400 · 2026-11-09 시드"
+
+- channel_id: UCiNfJIcWMfz07GVr6DKmuug
+  topic: game
+  note: "미드차이 로블록스 · 구독자 325,000 · 2026-11-09 시드"
+
+- channel_id: UCk5mlvpbj8CZxD229CpiouA
+  topic: game
+  note: "TFO · 구독자 280,000 · 2026-11-09 시드"
+
+- channel_id: UC141BuVRzSSXJX33Am9yxEA
+  topic: game
+  note: "소니쇼게임방송 · 구독자 256,000 · 2026-11-09 시드"
+
+- channel_id: UCjOtzpfj5lF9erwTEQYkxtQ
+  topic: game
+  note: "t3xture 텍스쳐  · 구독자 243,000 · 2026-11-09 시드"
+
+- channel_id: UCFt6SlUqvKDCwva8nzTBXUQ
+  topic: game
+  note: "MariAndGames · 구독자 241,000 · 2026-11-09 시드"
+
+- channel_id: UC_KoCWyMvZLdPBuUzTMSnTw
+  topic: game
+  note: "빵신 TV · 구독자 236,000 · 2026-11-09 시드"
+
+- channel_id: UCv7S6FG3Ne2drrlUHUgqo0w
+  topic: game
+  note: "만기퇴소 · 구독자 233,000 · 2026-11-09 시드"
+
+- channel_id: UCGWzywEyTtkY5HYjQ_etK_g
+  topic: game
+  note: "권루트 로블록스 · 구독자 226,000 · 2026-11-09 시드"
+
+- channel_id: UCAlSU6hZSCvad9uY_jgqtBQ
+  topic: game
+  note: "파워나갔다 · 구독자 211,000 · 2026-11-09 시드"
+
+- channel_id: UCLbehOwlIi6QrfZNhC39t4Q
+  topic: game
+  note: "김민재 · 구독자 208,000 · 2026-11-09 시드"
+
+- channel_id: UCtJRsanmIwU8SdsTqAiCYaw
+  topic: game
+  note: "뿌앵쨩 · 구독자 175,000 · 2026-11-09 시드"
+
+- channel_id: UCMOJFzyD8UyHnGMG_6eqv5w
+  topic: game
+  note: "크포 · 구독자 173,000 · 2026-11-09 시드"
+
+- channel_id: UCcXUxxDN7yjNsaDqC2J6jQA
+  topic: game
+  note: "개신사 로블록스 · 구독자 165,000 · 2026-11-09 시드"
+
+- channel_id: UCrfaDYarnkEixoyjshPgGDw
+  topic: game
+  note: "뚜뚜형 · 구독자 156,000 · 2026-11-09 시드"
+
+- channel_id: UCbe0aBfFwl4T35LQBSNLL3Q
+  topic: game
+  note: "람사 로블록스 · 구독자 140,000 · 2026-11-09 시드"
+
+- channel_id: UCcCzOjiVOtjKqa83iLuOMdg
+  topic: game
+  note: "롤 탐구생활(전지적 게임 시점) · 구독자 137,000 · 2026-11-09 시드"
+
+- channel_id: UCz4b1O9sT73P8DWwx6OvQwg
+  topic: game
+  note: "김규태 · 구독자 130,000 · 2026-11-09 시드"
+
+- channel_id: UC1aBdmKvC6yAiq4xgPLOzKA
+  topic: game
+  note: "롤체고찌 [롤체하는 다마고찌] · 구독자 129,000 · 2026-11-09 시드"
+
+- channel_id: UC62qMewbOLcvg3cKC-wp-8A
+  topic: game
+  note: "뽀식이의 궁튜브 · 구독자 125,000 · 2026-11-09 시드"
+
+- channel_id: UCQfISxq5legTqOt1h1us6lg
+  topic: game
+  note: "노력왕먼치 · 구독자 123,000 · 2026-11-09 시드"
+
+- channel_id: UCDrdTV9TcDx9-znGQAy6lzQ
+  topic: game
+  note: "신용인의 게임채널 · 구독자 119,000 · 2026-11-09 시드"
+
+- channel_id: UCSU03OEQjBxQSXwJkMMo0Gw
+  topic: game
+  note: "방배우 · 구독자 118,000 · 2026-11-09 시드"
+
+- channel_id: UChTEEOe7vrwNNH9-ElUeOEQ
+  topic: game
+  note: "쎈축용쓰TV · 구독자 117,000 · 2026-11-09 시드"
+
+- channel_id: UCFRDmLQJItqvkfFFfuTGGVg
+  topic: game
+  note: "연두의 일상채널 · 구독자 112,000 · 2026-11-09 시드"
+
+- channel_id: UCM9XzN_3lmh2RWzZasqdrxA
+  topic: game
+  note: "겜talks · 구독자 104,000 · 2026-11-09 시드"
+
+- channel_id: UCKG5nUSWCfrO88mt-sMEj_Q
+  topic: game
+  note: "혜요 로블록스 · 구독자 101,000 · 2026-11-09 시드"
+
+- channel_id: UCg251uVNwVn3e1zMA7kEA_w
+  topic: game
+  note: "멜로우다이어리 Mellow Diary · 구독자 100,000 · 2026-11-09 시드"
+
+- channel_id: UCEuP8zMn3ln3ZqJa85dp9JQ
+  topic: game
+  note: "빛나람 · 구독자 62,100 · 2026-11-09 시드"
+
+- channel_id: UC18CgYTdjrx3Bw2LEs9VDHg
+  topic: game
+  note: "조마루JOMARU · 구독자 59,300 · 2026-11-09 시드"
+
+- channel_id: UCHuXm47nmHrQq8b4x9BUvDA
+  topic: game
+  note: "눈이내리는동네 · 구독자 54,100 · 2026-11-09 시드"
+
+- channel_id: UCVZO4vONrnxXETiNY34m3fA
+  topic: game
+  note: "정개철TV · 구독자 53,400 · 2026-11-09 시드"
+
+- channel_id: UCiSn0UcvfeU7yfiDVbmfjeA
+  topic: game
+  note: "국호형 GookHoHyeong · 구독자 51,200 · 2026-11-09 시드"
+
+- channel_id: UCpX86JOUhnrzG7MK8e8Gjbw
+  topic: game
+  note: "피파소녀 · 구독자 51,100 · 2026-11-09 시드"
+
+- channel_id: UC0uQd19C8N9L7pSpu41YTNA
+  topic: issue
+  note: "샨나엘의 사건파일리뷰 · 구독자 147,000 · 2026-11-09 시드"
+
+- channel_id: UCb_GEWOGkCTXawWZKDtALwg
+  topic: movie-review
+  note: "구불 · 구독자 1,010,000 · 2026-11-09 시드"
+
+- channel_id: UC6tL3wtidNi009-EDVFJBFQ
+  topic: movie-review
+  note: "1분 드라마 숏츠 · 구독자 260,000 · 2026-11-09 시드"
+
+- channel_id: UCY9ZR79bykgTxWHHfcNjwBA
+  topic: movie-review
+  note: "씬창고 · 구독자 242,000 · 2026-11-09 시드"
+
+- channel_id: UCSwU42yCCYiZgc_hs129Qfw
+  topic: movie-review
+  note: "다크무비 · 구독자 200,000 · 2026-11-09 시드"
+
+- channel_id: UCcREZQ2i91x9KFf0R_sq8dg
+  topic: movie-review
+  note: "리뷰하는 해진 · 구독자 166,000 · 2026-11-09 시드"
+
+- channel_id: UCCVcybKmEUPv5hhOic3dQDg
+  topic: movie-review
+  note: "영화천국 · 구독자 166,000 · 2026-11-09 시드"
+
+- channel_id: UCJ9xMKpba6B7K_xrQMqsqHg
+  topic: movie-review
+  note: "잼잼리뷰,드라마&웹툰 리뷰 · 구독자 153,000 · 2026-11-09 시드"
+
+- channel_id: UCJHwGPjbqsv_Hx0CyULKLqg
+  topic: movie-review
+  note: "요주의 영화 · 구독자 126,000 · 2026-11-09 시드"
+
+- channel_id: UCvZDXwo4mkdHopviB75r_RQ
+  topic: movie-review
+  note: "신씨네ㅣ영화공방 · 구독자 62,100 · 2026-11-09 시드"
+
+- channel_id: UCEoZkznrrLqkc1ZEXAaKCyA
+  topic: movie-review
+  note: "우스개TV(영화,드라마,예능,공연 리뷰) · 구독자 61,200 · 2026-11-09 시드"
+
+- channel_id: UCBwEeDK2QRE34d54Do9jIaw
+  topic: movie-review
+  note: "무드뷰 · 구독자 57,200 · 2026-11-09 시드"
+
+- channel_id: UCQ1Vu3YA-h8kRmQQWvTr4Zw
+  topic: movie-review
+  note: "윤성은의 모든 날, 모든 영화 · 구독자 53,700 · 2026-11-09 시드"
+
+- channel_id: UCSjWZu0f8bcgIIx0kRcGPwQ
+  topic: mukbang
+  note: "TOP ASMR Rachel · 구독자 542,000 · 2026-11-09 시드"
+
+- channel_id: UC5GHkCa1PhGycqnEbp50KrQ
+  topic: mukbang
+  note: "버들Buddle · 구독자 407,000 · 2026-11-09 시드"
+
+- channel_id: UCkQRkuNtkfOu66sywD2OKtA
+  topic: mukbang
+  note: "유맛 · 구독자 320,000 · 2026-11-09 시드"
+
+- channel_id: UCt4U71Vz9pXZ6PU2-RcqsVA
+  topic: mukbang
+  note: "돌출이 ASMR · 구독자 194,000 · 2026-11-09 시드"
+
+- channel_id: UCYqZzHMC-0t_EmmPrj3RyCA
+  topic: mukbang
+  note: "에비치킨 Ebi Chicken · 구독자 194,000 · 2026-11-09 시드"
+
+- channel_id: UCvlfhE17gFW5NgmAqLtiKAw
+  topic: mukbang
+  note: "지지야 먹자 Let’s eat GG · 구독자 175,000 · 2026-11-09 시드"
+
+- channel_id: UCpX8i6oWeajas-64cNeMjMw
+  topic: mukbang
+  note: "대구형제_대구맛집 · 구독자 149,000 · 2026-11-09 시드"
+
+- channel_id: UC8g_X738lt2xwwSkyOM0kfg
+  topic: mukbang
+  note: "먹지룽 · 구독자 143,000 · 2026-11-09 시드"
+
+- channel_id: UCfZnnNSZ0TGnUlVdp_t7iYg
+  topic: mukbang
+  note: "Ohharu오하루 · 구독자 137,000 · 2026-11-09 시드"
+
+- channel_id: UC2PkqKo7GNK0jKt1YfYIH6w
+  topic: mukbang
+  note: "CME 먹방 ASMR · 구독자 136,000 · 2026-11-09 시드"
+
+- channel_id: UCLCZi8ZIv1H54RH9xGKAaww
+  topic: mukbang
+  note: "일식(食)예보 · 구독자 135,000 · 2026-11-09 시드"
+
+- channel_id: UC117YBQAv8PiIjKTO9QX2Tg
+  topic: mukbang
+  note: "멸치 myeolchi · 구독자 121,000 · 2026-11-09 시드"
+
+- channel_id: UC6vEjMFDrlDSvT-W8rki3yQ
+  topic: mukbang
+  note: "생존리뷰 Koreanfood · 구독자 112,000 · 2026-11-09 시드"
+
+- channel_id: UCgIAvMW1Ia03g_3iiFFln9Q
+  topic: mukbang
+  note: "전국맛집 이장 · 구독자 108,000 · 2026-11-09 시드"
+
+- channel_id: UCuQN7SqB04BKJc67qoFhQpA
+  topic: mukbang
+  note: "야식동욱 · 구독자 60,800 · 2026-11-09 시드"
+
+- channel_id: UCacrG7qkY0tNtR5s4Fe_FXg
+  topic: music
+  note: "Chuther츄더[문에스더] · 구독자 1,440,000 · 2026-11-09 시드"
+
+- channel_id: UC1HevvP1DDxfKnQCfG_Fn2Q
+  topic: music
+  note: "크림서현의랜덤댄스 · 구독자 1,130,000 · 2026-11-09 시드"
+
+- channel_id: UClrKpnEehrQydacUHBptWcw
+  topic: music
+  note: "잠박사 JAMBAKSA · 구독자 245,000 · 2026-11-09 시드"
+
+- channel_id: UCk3bmbMO_M8qrpCFHTU__AA
+  topic: music
+  note: "Producer dk · 구독자 211,000 · 2026-11-09 시드"
+
+- channel_id: UCPBoIGLbCk93Nltf6LBlhIQ
+  topic: music
+  note: "행복한피자빵 HappyPizzaBread · 구독자 203,000 · 2026-11-09 시드"
+
+- channel_id: UC2BQFKumhNvH31LLMnr7KoQ
+  topic: music
+  note: "김윤 Yoon2K · 구독자 170,000 · 2026-11-09 시드"
+
+- channel_id: UCSjWqHuWDGZaCNOhOOQNPSw
+  topic: music
+  note: "AFSTARZ 랜덤댄스 · 구독자 159,000 · 2026-11-09 시드"
+
+- channel_id: UC9AZOV7EiHCWMlZajXiuU4Q
+  topic: music
+  note: "꿀잼기타 · 구독자 154,000 · 2026-11-09 시드"
+
+- channel_id: UC5AaaLI1d7-qTwYN1QGlQ1g
+  topic: music
+  note: "이동우 프로댄스 · 구독자 143,000 · 2026-11-09 시드"
+
+- channel_id: UC895zKF9_6DCgURRb8oWaog
+  topic: music
+  note: "JANE MUSIC _ 어느날 문득 작곡  · 구독자 124,000 · 2026-11-09 시드"
+
+- channel_id: UC_x9JViW1fKbZbBgroBVf6Q
+  topic: music
+  note: "오케이콘서트 · 구독자 109,000 · 2026-11-09 시드"
+
+- channel_id: UCrLjGitzcUXJxFwyQNrg1gA
+  topic: music
+  note: "행운명상음악 - Holistic Healing Music · 구독자 109,000 · 2026-11-09 시드"
+
+- channel_id: UCOxjmoLZG6nV4R-LGHhk4ug
+  topic: music
+  note: "이성식 기타교실 · 구독자 109,000 · 2026-11-09 시드"
+
+- channel_id: UCtoEV0W8DH4ygn0iUJwzDCA
+  topic: music
+  note: "드럼치러가니 GANI DRUM · 구독자 101,000 · 2026-11-09 시드"
+
+- channel_id: UCiwcWOwDkkMJp5tygeKIeng
+  topic: music
+  note: "클래식여행 · 구독자 56,700 · 2026-11-09 시드"
+
+- channel_id: UC9cuP0nh4ciSZ9S39ZxsODg
+  topic: music
+  note: "장락 노래터 · 구독자 52,200 · 2026-11-09 시드"
+
+- channel_id: UCAcB-aa4RZ0P2cqZKGP_2OQ
+  topic: music
+  note: "드럼공방 · 구독자 51,800 · 2026-11-09 시드"
+
+- channel_id: UCn4YsP7BKuJKNWRL-N6L5lA
+  topic: music
+  note: "북선생 열드럼 - Yeol's Drum · 구독자 51,200 · 2026-11-09 시드"
+
+- channel_id: UCzfheU-SqElfaQXwOzv8yGA
+  topic: mystery
+  note: "신지우 shinjiwoo · 구독자 143,000 · 2026-11-09 시드"
+
+- channel_id: UCjzMZAdua0Z1hwten4Vf8nA
+  topic: mystery
+  note: "슈말코 Sumalco · 구독자 142,000 · 2026-11-09 시드"
+
+- channel_id: UC-TpIlGwLbmJuxWacteqZHQ
+  topic: mystery
+  note: "코비엣TV[공포썰 공포라디오] · 구독자 138,000 · 2026-11-09 시드"
+
+- channel_id: UCOv1v2iptqYMVEwLAIUOhPw
+  topic: pets
+  note: "정브르 · 구독자 1,450,000 · 2026-11-09 시드"
+
+- channel_id: UCrailkufB1aKrKc6l1osRgw
+  topic: pets
+  note: "냥숲nyangsoop · 구독자 1,200,000 · 2026-11-09 시드"
+
+- channel_id: UC98TOxKQk4aLcx0EjIK0LkQ
+  topic: pets
+  note: "해수인tv yellow aquarium · 구독자 1,200,000 · 2026-11-09 시드"
+
+- channel_id: UCwl9OALh8IMwSv_kFdHlMDA
+  topic: pets
+  note: "다흑 · 구독자 1,080,000 · 2026-11-09 시드"
+
+- channel_id: UCX3QAQPW30ZPpj39LJjJ_3g
+  topic: pets
+  note: "설채현의 놀로와  · 구독자 324,000 · 2026-11-09 시드"
+
+- channel_id: UCHLDBhufz9pNEkZogrXpn0w
+  topic: pets
+  note: "호두랑 마루랑 Duruduru · 구독자 285,000 · 2026-11-09 시드"
+
+- channel_id: UC74GbNMPMoLBo2SUdSRob1Q
+  topic: pets
+  note: "꼬부기아빠 My Pet Diary · 구독자 269,000 · 2026-11-09 시드"
+
+- channel_id: UCEdfFMK7ffGm4ocBxA0hLjg
+  topic: pets
+  note: "동물 노트 · 구독자 253,000 · 2026-11-09 시드"
+
+- channel_id: UClt6iQH20RYzFIKv57dT_NQ
+  topic: pets
+  note: "짜장이네 · 구독자 184,000 · 2026-11-09 시드"
+
+- channel_id: UCTzdjZVUfsaKQkrBh2nDFVQ
+  topic: pets
+  note: "더빙농장 · 구독자 179,000 · 2026-11-09 시드"
+
+- channel_id: UCwcGTR9M2Ab3ixwbSrpaWAA
+  topic: pets
+  note: "햄인 로만 Haem in Roman · 구독자 123,000 · 2026-11-09 시드"
+
+- channel_id: UCX4P0iYaQx8YueLcn6o63Ew
+  topic: pets
+  note: "패션애완쏭 · 구독자 110,000 · 2026-11-09 시드"
+
+- channel_id: UCh3Ru0NRYVaUfsSG7LPJ11g
+  topic: pets
+  note: "윤샘의 강아지상담소 · 구독자 100,000 · 2026-11-09 시드"
+
+- channel_id: UCv2hG0tEbHtSh_LZCmtlvWQ
+  topic: pets
+  note: "펫을부탁해:PETBOO · 구독자 55,800 · 2026-11-09 시드"
+
+- channel_id: UChOcGdm1b3yiSbbtW6WZ9-w
+  topic: politics
+  note: "정치는 예능이다 · 구독자 159,000 · 2026-11-09 시드"
+
+- channel_id: UCxt9rXl_qXPaxbAVc-0qVLw
+  topic: politics
+  note: "시사잼 · 구독자 133,000 · 2026-11-09 시드"
+
+- channel_id: UC9Jw0zmPSVf_PpTuUWSb88g
+  topic: politics
+  note: "시사공장 · 구독자 113,000 · 2026-11-09 시드"
+
+- channel_id: UCnWZzQfFF_oSXQ17POIGA_g
+  topic: politics
+  note: "시사브리핑 · 구독자 112,000 · 2026-11-09 시드"
+
+- channel_id: UCPeWVzw9oQ-rZg49WY890Uw
+  topic: politics
+  note: "김PD의 사회와 경제 이야기 · 구독자 59,900 · 2026-11-09 시드"
+
+- channel_id: UCXU5nigr5NxZx9sqx326jyg
+  topic: politics
+  note: "시사브로 · 구독자 59,200 · 2026-11-09 시드"
+
+- channel_id: UCAAXKMWmdDr6oAvJxP7TSRw
+  topic: politics
+  note: "이슈한방 · 구독자 54,800 · 2026-11-09 시드"
+
+- channel_id: UCnCwk2ZA7WCS3BiB0WjsHwA
+  topic: real-estate
+  note: "발품탑 부동산 - 전원주택의 모든 것 · 구독자 257,000 · 2026-11-09 시드"
+
+- channel_id: UCuxjbj_ky77BrPaAs4f7Abg
+  topic: real-estate
+  note: "부동산쇼 · 구독자 216,000 · 2026-11-09 시드"
+
+- channel_id: UCcO3WDALk4_1jJfDRv5Ykyw
+  topic: real-estate
+  note: "정창래의 부동산 성공투자 · 구독자 182,000 · 2026-11-09 시드"
+
+- channel_id: UC3azbZFCFrt53KoQEjhEXiQ
+  topic: real-estate
+  note: "부동산은 땅땅무슨땅 · 구독자 176,000 · 2026-11-09 시드"
+
+- channel_id: UCbdgW0Ap64NBBCUksodCG4w
+  topic: real-estate
+  note: "햇살가득 · 구독자 152,000 · 2026-11-09 시드"
+
+- channel_id: UC-G_X3l2uGrzyifBzfgjdzg
+  topic: real-estate
+  note: "부동산 NPL전문채널 론마켓TV · 구독자 146,000 · 2026-11-09 시드"
+
+- channel_id: UCqqVkJjVCjQBqWTkeVL534A
+  topic: real-estate
+  note: "고단백부동산 · 구독자 134,000 · 2026-11-09 시드"
+
+- channel_id: UCT21uSyqYbsZyA-JN5phUMw
+  topic: real-estate
+  note: "아정당 부동산 · 구독자 131,000 · 2026-11-09 시드"
+
+- channel_id: UCv76qi2dQ32dtNRQJ5iWbHQ
+  topic: real-estate
+  note: "아파트 인테리어는 아파트컬처 · 구독자 99,600 · 2026-11-09 시드"
+
+- channel_id: UCCmYpvtDls2-3ghQx6DTx0A
+  topic: real-estate
+  note: "제주부동산 25시  · 구독자 58,100 · 2026-11-09 시드"
+
+- channel_id: UCCJ6UY9FeRp8f_ir4QxLulw
+  topic: real-estate
+  note: "강산애TV [시골부동산] · 구독자 57,800 · 2026-11-09 시드"
+
+- channel_id: UCLDPz3aE_BDNXDe8fLav5ug
+  topic: real-estate
+  note: "정프로부동산TV-부동산 고수의 집/땅이야기 · 구독자 57,600 · 2026-11-09 시드"
+
+- channel_id: UCs00InR5U4zqv2nNThqqyig
+  topic: real-estate
+  note: "홈투유-홈투어 전문서비스 · 구독자 52,700 · 2026-11-09 시드"
+
+- channel_id: UCMc4EmuDxnHPc6pgGW-QWvQ
+  topic: science
+  note: "안될과학 Unrealscience · 구독자 1,410,000 · 2026-11-09 시드"
+
+- channel_id: UCXb5Jph9hkZ2Q48QyBealyA
+  topic: science
+  note: "과학을보다 · 구독자 241,000 · 2026-11-09 시드"
+
+- channel_id: UCWe8t83GL8J-N3a4ZF6BG-Q
+  topic: science
+  note: "세모과학 · 구독자 198,000 · 2026-11-09 시드"
+
+- channel_id: UCrHOL_f5HigqY0ZgPNK31kg
+  topic: science
+  note: "BOS의 스터디룸 · 구독자 53,000 · 2026-11-09 시드"
+
+- channel_id: UCSPcmgcYhH-77r22DWxrmcQ
+  topic: self-dev
+  note: "글천개 | 매출 만드는 브랜딩 · 구독자 153,000 · 2026-11-09 시드"
+
+- channel_id: UChaP7v8BK-w1hAR6gM8vm0w
+  topic: self-dev
+  note: "연애언어TV · 구독자 151,000 · 2026-11-09 시드"
+
+- channel_id: UChWT5ENufJo5rje7w22A5SA
+  topic: self-dev
+  note: "심리대화 · 구독자 146,000 · 2026-11-09 시드"
+
+- channel_id: UCpOGzlXF4xCQX31fA2UekEw
+  topic: self-dev
+  note: "책 읽는 별밤 라디오 · 구독자 127,000 · 2026-11-09 시드"
+
+- channel_id: UCCdKf9gaG4y4xxNAei6MQ6A
+  topic: self-dev
+  note: "강민혁 · 구독자 124,000 · 2026-11-09 시드"
+
+- channel_id: UCZXDoRFMnmXKedjYHF7t-Tg
+  topic: self-dev
+  note: "행복명상 (성은쌤의 소행성) · 구독자 107,000 · 2026-11-09 시드"
+
+- channel_id: UCCA4-eZAYGrgru7WHz7yhew
+  topic: self-dev
+  note: "주라벨TV · 구독자 56,300 · 2026-11-09 시드"
+
+- channel_id: UCUqxt0_qOWTPoG63OLPnUWA
+  topic: self-dev
+  note: "마케팅뷰 서별님 · 구독자 55,700 · 2026-11-09 시드"
+
+- channel_id: UC2q0my2h25E8PMV4dWLsPwA
+  topic: self-dev
+  note: "복주환의 생각정리 · 구독자 55,400 · 2026-11-09 시드"
+
+- channel_id: UCjBrvCiFeGj9lo2YdQA-GZQ
+  topic: self-dev
+  note: "오늘을인터뷰 The Interview · 구독자 51,400 · 2026-11-09 시드"
+
+- channel_id: UCVhUw50KohEPkjL3Ox2saag
+  topic: sports
+  note: "식빵언니 김연경 Bread Unnie · 구독자 1,330,000 · 2026-11-09 시드"
+
+- channel_id: UCTaa3IrgDnQaFw_TD-JJRJw
+  topic: sports
+  note: "SportsTalk킹 · 구독자 330,000 · 2026-11-09 시드"
+
+- channel_id: UChrcr99LjxyW8pnQXqagWqA
+  topic: sports
+  note: "세계유명 골프정보 · 구독자 264,000 · 2026-11-09 시드"
+
+- channel_id: UCJronx9CcSDgRAnHrVW2BNA
+  topic: sports
+  note: "비욘드 스포츠 · 구독자 203,000 · 2026-11-09 시드"
+
+- channel_id: UCqzNZeBt0546jG-vDlAQlZg
+  topic: sports
+  note: "STORY K - 축구in 인문학 by kei · 구독자 181,000 · 2026-11-09 시드"
+
+- channel_id: UCUoJeqYrPMR30496KwNB_6w
+  topic: sports
+  note: "유상무 골프TV · 구독자 172,000 · 2026-11-09 시드"
+
+- channel_id: UC7hNOw55ElIDg9f72tJuw2Q
+  topic: sports
+  note: "불방맹이TV · 구독자 147,000 · 2026-11-09 시드"
+
+- channel_id: UCZjOkifuo7L6BO3ZHAxqmnw
+  topic: sports
+  note: "내놔이선생 · 구독자 116,000 · 2026-11-09 시드"
+
+- channel_id: UCx2K1jzcWJs66G1WZheLjmg
+  topic: sports
+  note: "알쓸야구 · 구독자 62,700 · 2026-11-09 시드"
+
+- channel_id: UCVA8PkoZOxH__DE_rvkKsNw
+  topic: sports
+  note: "축구배울래? · 구독자 61,900 · 2026-11-09 시드"
+
+- channel_id: UCV0Lw78hk4go-S4xtne8KNw
+  topic: sports
+  note: "축구 한접시 · 구독자 59,100 · 2026-11-09 시드"
+
+- channel_id: UCNiGLVvvWa2P6N-9v8msw-Q
+  topic: sports
+  note: "낚시필드채널 fishing channel  · 구독자 58,600 · 2026-11-09 시드"
+
+- channel_id: UCsmhSxH4CsA-Sw0z28Sb3YQ
+  topic: sports
+  note: "프로골퍼 박송이 [Simple golf Lesson] · 구독자 56,500 · 2026-11-09 시드"
+
+- channel_id: UC17_4RLogNieDO33smNlcWw
+  topic: tech
+  note: "퀘이사존 QUASARZONE · 구독자 229,000 · 2026-11-09 시드"
+
+- channel_id: UC1JOwxLBBuSutG7TWy9nvwQ
+  topic: tech
+  note: "소리샵 Sorishop_TUBE · 구독자 228,000 · 2026-11-09 시드"
+
+- channel_id: UCvBClW1ddPN6Vg1klen20Nw
+  topic: tech
+  note: "맥가이버 · 구독자 181,000 · 2026-11-09 시드"
+
+- channel_id: UC_4u-bXaba7yrRz_6x6kb_w
+  topic: tech
+  note: "드림코딩 · 구독자 161,000 · 2026-11-09 시드"
+
+- channel_id: UCS7e9ieT1-t7ALELe2ubRtg
+  topic: tech
+  note: "양컴 · 구독자 158,000 · 2026-11-09 시드"
+
+- channel_id: UCwbV1lfgV-7ZamC-dyi6grA
+  topic: tech
+  note: "LaLaRC [라라RC] · 구독자 149,000 · 2026-11-09 시드"
+
+- channel_id: UCFfbeVgS66iCuzeArxTYhzw
+  topic: tech
+  note: "피엘테크 · 구독자 113,000 · 2026-11-09 시드"
+
+- channel_id: UCRIomWe2by56WTTeoRFdEJA
+  topic: tech
+  note: "저세상개발자 · 구독자 101,000 · 2026-11-09 시드"
+
+- channel_id: UC6whUImI-uyzy8Qz6-Nwxxg
+  topic: tech
+  note: "폰아저씨 · 구독자 55,600 · 2026-11-09 시드"
+
+- channel_id: UC0h8NzL2vllvp3PjdoYSK4g
+  topic: tech
+  note: "김왼손의 왼손코딩 · 구독자 52,800 · 2026-11-09 시드"
+
+- channel_id: UC4bbeipO3PFwAH4Osu2Rfuw
+  topic: travel
+  note: "모든리뷰샵 · 구독자 323,000 · 2026-11-09 시드"
+
+- channel_id: UCBpkIi5L8zEDXxK8hSnrcWg
+  topic: travel
+  note: "테리당 terrydang · 구독자 322,000 · 2026-11-09 시드"
+
+- channel_id: UCzODaTbNjiMKNy8AuAPY99g
+  topic: travel
+  note: "연탱이의 자유일기 YEON-TAENG's free diary · 구독자 318,000 · 2026-11-09 시드"
+
+- channel_id: UCeIY89g3KZ6e0HinaOiMHcg
+  topic: travel
+  note: "걷는 여행 Walk Travel · 구독자 240,000 · 2026-11-09 시드"
+
+- channel_id: UCslnQiccDVmBbDrdGd0ng5g
+  topic: travel
+  note: "세나, 집순이의 세계여행 SENA · 구독자 180,000 · 2026-11-09 시드"
+
+- channel_id: UC1OA0PWgSL3boEj-bkbnj1A
+  topic: travel
+  note: "손놈 : 셀카없는 항공 호텔리뷰 · 구독자 159,000 · 2026-11-09 시드"
+
+- channel_id: UCuKu1IcunQYJ8_sFGJbbmmA
+  topic: travel
+  note: "임한량 YHR TV · 구독자 154,000 · 2026-11-09 시드"
+
+- channel_id: UCmp61ap5-dkuBBaIjfrYdVQ
+  topic: travel
+  note: "제주에디 Jeju Eddy · 구독자 152,000 · 2026-11-09 시드"
+
+- channel_id: UCgY9DbLlJM0xxDjBoT1yBew
+  topic: travel
+  note: "밤톨이네 여행&먹방(화,금오후 5시) · 구독자 144,000 · 2026-11-09 시드"
+
+- channel_id: UC-IoNQHHy-Gcdalcl-sBvxw
+  topic: travel
+  note: "똘똘한여행 똘란TV · 구독자 136,000 · 2026-11-09 시드"
+
+- channel_id: UCbmQ-NnkrswNMlu3MTVKGKw
+  topic: travel
+  note: "정대철 · 구독자 124,000 · 2026-11-09 시드"
+
+- channel_id: UCZsg1rkojx4OXb30xjtTRww
+  topic: travel
+  note: "Jay쌤여행TV · 구독자 58,600 · 2026-11-09 시드"
+
+- channel_id: UCxPCeh4GFCREEZkIH9aBuLA
+  topic: anime
+  note: "이리와뷰 · 구독자 243,000 · 2026-11-09 시드"
+
+- channel_id: UCs0mJe6GF453vBfQhMghJzQ
+  topic: anime
+  note: "리뷰카페 · 구독자 210,000 · 2026-11-09 시드"
+
+- channel_id: UC1gieEC6V60g65VGZyqG-SQ
+  topic: anime
+  note: "켄리 영상툰-KenLee Toon · 구독자 180,000 · 2026-11-09 시드"
+
+- channel_id: UCHtqZO9YM7EtpuKhNKVWHDQ
+  topic: anime
+  note: "애니집합소 · 구독자 165,000 · 2026-11-09 시드"
+
+- channel_id: UCH2FfTgEnOGu2dTDuIyUjjA
+  topic: anime
+  note: "MBTI 일상툰 · 구독자 163,000 · 2026-11-09 시드"
+
+- channel_id: UCQKePJbGq_BFyOF4MqagqfQ
+  topic: anime
+  note: "Gunpla Lab[건프라 연구소] · 구독자 110,000 · 2026-11-09 시드"
+
+- channel_id: UCTmlRohJGqTpNGBgZ1mRtAA
+  topic: anime
+  note: "[ & ] 미애니마니아 서브채널 · 구독자 109,000 · 2026-11-09 시드"
+
+- channel_id: UC3SBrTBe4GKJOnelEuZ2r0Q
+  topic: anime
+  note: "한국대학교 익명게시판 · 구독자 55,000 · 2026-11-09 시드"
+
+- channel_id: UCxA9k7UJz50ZJPa5aUGf7fw
+  topic: beauty-life
+  note: "피부텐텐 · 피부가 예뻐지는 10분  · 구독자 324,000 · 2026-11-09 시드"
+
+- channel_id: UCAvMbWfQGpK05wUDP0dukRw
+  topic: beauty-life
+  note: "인테리언니 백예진 · 구독자 300,000 · 2026-11-09 시드"
+
+- channel_id: UC7ThrNGPoJLuaicyKJ4350w
+  topic: beauty-life
+  note: "별별뷰티-Byul Byul Beauty / 얼라이브 뷰티 · 구독자 279,000 · 2026-11-09 시드"
+
+- channel_id: UCxAdlKnB5u0a7A-iqRa5jYw
+  topic: beauty-life
+  note: "단이 DANI · 구독자 239,000 · 2026-11-09 시드"
+
+- channel_id: UC9SxIMTbO5pf97hCV0Ta1PQ
+  topic: beauty-life
+  note: "헤메코-뷰티 전문가들의 이야기 · 구독자 220,000 · 2026-11-09 시드"
+
+- channel_id: UCBlIcpkzSdcmp5G0XS7UsZA
+  topic: beauty-life
+  note: "담쓰 Dams Beauty · 구독자 220,000 · 2026-11-09 시드"
+
+- channel_id: UCi88xf8_ZNb8Ir9CriltGwg
+  topic: beauty-life
+  note: "무찌 · 구독자 181,000 · 2026-11-09 시드"
+
+- channel_id: UCsQr5WlKYz-0M0jzRYDoBQA
+  topic: beauty-life
+  note: "집순이픽 · 구독자 163,000 · 2026-11-09 시드"
+
+- channel_id: UCR8th9vv4cSnfoY-Gx5hnbA
+  topic: beauty-life
+  note: "스칼렛 언니 · 구독자 131,000 · 2026-11-09 시드"
+
+- channel_id: UC2RStupJ7uEiDLBzYtW_yzQ
+  topic: beauty-life
+  note: "블랑주니 BlancJoony · 구독자 117,000 · 2026-11-09 시드"
+
+- channel_id: UC1LWbxc3tNlZvtN7Rz5ag0Q
+  topic: beauty-life
+  note: "랄라의살림기록 · 구독자 113,000 · 2026-11-09 시드"
+
+- channel_id: UCScuJTtpwT962RGmkSxG2Uw
+  topic: beauty-life
+  note: "Dr. Oh 피부과전문의오수진 · 구독자 56,900 · 2026-11-09 시드"
+
+- channel_id: UCw8N8jPzB5_uZpqKqQDSthA
+  topic: beauty-life
+  note: "제이헤어U진쌤 · 구독자 51,100 · 2026-11-09 시드"
+
+- channel_id: UCFUpTxU3nlGed-suY-FjjxA
+  topic: cars
+  note: "우파푸른하늘Woopa TV · 구독자 1,210,000 · 2026-11-09 시드"
+
+- channel_id: UCivgSHUbuklrpeTNSx_-xzQ
+  topic: cars
+  note: "박준형의 CARTUREMAN칼쳐맨 · 구독자 227,000 · 2026-11-09 시드"
+
+- channel_id: UCSgJdLHMqNDCyiXZj2CsMIQ
+  topic: cars
+  note: "안녕마이카 · 구독자 134,000 · 2026-11-09 시드"
+
+- channel_id: UCA4CuIFYyu62D3eTa_tPq5w
+  topic: cars
+  note: "섬즈자동차공방 SomesAUTO · 구독자 106,000 · 2026-11-09 시드"
+
+- channel_id: UCfn4ZZuQHGkNg8PZtNNRIIg
+  topic: celeb
+  note: "예능내컷 · 구독자 351,000 · 2026-11-09 시드"
+
+- channel_id: UCZ-l3cfBR3azwsmAzlcTf7Q
+  topic: celeb
+  note: "mang2goon · 구독자 232,000 · 2026-11-09 시드"
+
+- channel_id: UCdE-H24lt2LnwiGu-SH-iAQ
+  topic: celeb
+  note: "이창섭&저창섭 · 구독자 216,000 · 2026-11-09 시드"
+
+- channel_id: UC-A42LutO5qF-fuKopOGx7g
+  topic: celeb
+  note: "예세이 Yessay | SuperJunior Yesung · 구독자 161,000 · 2026-11-09 시드"
+
+- channel_id: UCT3usBwYM36YFlJmsLY7bIA
+  topic: celeb
+  note: "옛능: OBS 예능 · 구독자 156,000 · 2026-11-09 시드"
+
+- channel_id: UCmgS7e5hTBgekhwXsYAiETA
+  topic: celeb
+  note: "롤링썬더 · 구독자 151,000 · 2026-11-09 시드"
+
+- channel_id: UC4ZsaUtdPtivLNNI5kozlDQ
+  topic: celeb
+  note: "힙합가이 · 구독자 126,000 · 2026-11-09 시드"
+
+- channel_id: UCGAaUaRRUAnbz3W8XM2QaDw
+  topic: celeb
+  note: "기자형의인터뷰tv · 구독자 102,000 · 2026-11-09 시드"
+
+- channel_id: UC37fRkl_iIjDAr9pf0FFzGA
+  topic: cooking
+  note: "딸을 위한 레시피 Recipes for daughters · 구독자 1,170,000 · 2026-11-09 시드"
+
+- channel_id: UCL01un1rw1MU3wj7-oEELQQ
+  topic: cooking
+  note: "[윤이련]50년 요리비결 · 구독자 1,090,000 · 2026-11-09 시드"
+
+- channel_id: UCY60BF0M8RkXvmMQeKp2PSg
+  topic: cooking
+  note: "전국집밥자랑 · 구독자 347,000 · 2026-11-09 시드"
+
+- channel_id: UCUgp8Lli-2w9AQ0cXEqgxpg
+  topic: cooking
+  note: "요리에 진심인 편 · 구독자 295,000 · 2026-11-09 시드"
+
+- channel_id: UCQdYrg1AtZ1ghjueq96-vIw
+  topic: cooking
+  note: "일하는 용형 · 구독자 267,000 · 2026-11-09 시드"
+
+- channel_id: UClcWy5WlCjz5NQztZvB6BeQ
+  topic: cooking
+  note: "산타할매의 요리꿀팁 선물 · 구독자 234,000 · 2026-11-09 시드"
+
+- channel_id: UCnXoaFKN8e-XyuA9uaipqRw
+  topic: cooking
+  note: "저탄수 요리 · 구독자 184,000 · 2026-11-09 시드"
+
+- channel_id: UCfP2ZYPle7Hj3dZMzqi6lhg
+  topic: cooking
+  note: "쏘얌쿠킹 So Yum Cooking · 구독자 182,000 · 2026-11-09 시드"
+
+- channel_id: UCp78dvKT1tXRr17IGzWTvnw
+  topic: cooking
+  note: "정지선의 칼있스마 · 구독자 163,000 · 2026-11-09 시드"
+
+- channel_id: UCG6I6NdRq2xqK7xrgMolnkQ
+  topic: cooking
+  note: "엄마표요리Mom'S Cooking · 구독자 144,000 · 2026-11-09 시드"
+
+- channel_id: UCWCqsr96OXSiEU5stSfAleQ
+  topic: cooking
+  note: "한입요리 one bite dish · 구독자 113,000 · 2026-11-09 시드"
+
+- channel_id: UC7qzaxgXSbOBtjv4ppGDsxg
+  topic: cooking
+  note: "화니의 주방 · 구독자 109,000 · 2026-11-09 시드"
+
+- channel_id: UC6ZFnmz7BkT8CsJZIuPwbZA
+  topic: cooking
+  note: "황금밥그릇 - 간단하고 건강한 요리 · 구독자 108,000 · 2026-11-09 시드"
+
+- channel_id: UCepLjVoNirPHYWI5andIRPg
+  topic: cooking
+  note: "이계피 요리채널 · 구독자 53,600 · 2026-11-09 시드"
+
+- channel_id: UCwiSPfQKmSaOJDZrXN_AyAA
+  topic: cooking
+  note: "요리하는 민사장 · 구독자 52,200 · 2026-11-09 시드"
+
+- channel_id: UCCG6BEYjfQMGzypJw2EJCDQ
+  topic: economy
+  note: "815머니톡 · 구독자 1,290,000 · 2026-11-09 시드"
+
+- channel_id: UCcIA_HSPyJ1Xu7BJHN53J3Q
+  topic: economy
+  note: "투자의 대가 · 구독자 1,010,000 · 2026-11-09 시드"
+
+- channel_id: UCYCJtL5PP64m4xSL27N-cJw
+  topic: economy
+  note: "주식장인 · 구독자 338,000 · 2026-11-09 시드"
+
+- channel_id: UC_yS9qx6-ZxS67HKPyWeXDg
+  topic: economy
+  note: "세금내는아이들 · 구독자 187,000 · 2026-11-09 시드"
+
+- channel_id: UCSQE4ohLmj1sCvvEPMlYFow
+  topic: economy
+  note: "창업다마고치 · 구독자 179,000 · 2026-11-09 시드"
+
+- channel_id: UCQhMpLoyfxHHwHbH3qZCOww
+  topic: economy
+  note: "주식점프 · 구독자 140,000 · 2026-11-09 시드"
+
+- channel_id: UCnu_4S0wXKkNLEkR7ZEZ75Q
+  topic: economy
+  note: "주식홈런왕 · 구독자 127,000 · 2026-11-09 시드"
+
+- channel_id: UCYzvYC9DViwC_8DqFgTRJEQ
+  topic: economy
+  note: "자영업 다이어리 · 구독자 126,000 · 2026-11-09 시드"
+
+- channel_id: UC0rqacf_ldudPcenjaY0rYA
+  topic: economy
+  note: "종목상담 MTNW투자자문 · 구독자 122,000 · 2026-11-09 시드"
+
+- channel_id: UCJWHtCJEPeeBpa8X4qu30SA
+  topic: economy
+  note: "퍼펙트주식TV · 구독자 120,000 · 2026-11-09 시드"
+
+- channel_id: UCZHwOaplUzeuG8ozJ39hhCw
+  topic: economy
+  note: "코인 클래스 · 구독자 101,000 · 2026-11-09 시드"
+
+- channel_id: UCioqBNry60RpQs38YcNDGpQ
+  topic: economy
+  note: "절약의 달인 곽지현 (舊 자취린이) · 구독자 62,700 · 2026-11-09 시드"
+
+- channel_id: UCo3hYKWIB0PqezNK0w2rJzQ
+  topic: economy
+  note: "김진의 투자캠프 · 구독자 55,400 · 2026-11-09 시드"
+
+- channel_id: UCfd15Eo0QnQsDqSg_AEBjGg
+  topic: economy
+  note: "택스 튜브[Tax Tube] · 구독자 54,800 · 2026-11-09 시드"
+
+- channel_id: UCQs5EP_QjBXjOzOkV-ETpog
+  topic: economy
+  note: " 코인경제 · 구독자 52,000 · 2026-11-09 시드"
+
+- channel_id: UC5m1d4sPHnpcLCJEu3j2FpQ
+  topic: education
+  note: "최민준의 아들TV · 구독자 1,010,000 · 2026-11-09 시드"
+
+- channel_id: UCQrGtqkjOwziNriUB8X6a6Q
+  topic: education
+  note: "본즈 기초 영어 · 구독자 284,000 · 2026-11-09 시드"
+
+- channel_id: UCMEwjiagAaxOBJyyGNUGERw
+  topic: education
+  note: "본즈 영어 · 구독자 259,000 · 2026-11-09 시드"
+
+- channel_id: UCv3aqvZYZM6FUMLqhMO9l6Q
+  topic: education
+  note: "영어 키위새 · 구독자 254,000 · 2026-11-09 시드"
+
+- channel_id: UC5aEedPor2ARJeqhfynSx8g
+  topic: education
+  note: "수악중독 · 구독자 206,000 · 2026-11-09 시드"
+
+- channel_id: UCHIIAFjJSmQgFpigy7M-wKw
+  topic: education
+  note: "기미로origami_kimiro · 구독자 163,000 · 2026-11-09 시드"
+
+- channel_id: UCVI65BUSkVVebNrPov0WeIw
+  topic: education
+  note: "회사영어 제인 · 구독자 160,000 · 2026-11-09 시드"
+
+- channel_id: UCmwspFbQlWYlUrHHMyWXAhw
+  topic: education
+  note: "폼나는 영어 · 구독자 140,000 · 2026-11-09 시드"
+
+- channel_id: UCtMsowYsUTrqQqXvcNkSstw
+  topic: education
+  note: "생활영어 - 일상&여행&초간단영어 · 구독자 139,000 · 2026-11-09 시드"
+
+- channel_id: UCIhvLGYcmCB11PPcEsdStAg
+  topic: education
+  note: "ChaYeon Painter · 구독자 135,000 · 2026-11-09 시드"
+
+- channel_id: UCUv_svpnABtC3WXYYKHwawA
+  topic: education
+  note: "예능토익연구소 · 구독자 134,000 · 2026-11-09 시드"
+
+- channel_id: UCgqj2htG_G4VmPATB3Y9tqg
+  topic: education
+  note: "정재현영어꿀단지 · 구독자 129,000 · 2026-11-09 시드"
+
+- channel_id: UCup30KlN785_-slPMQFK4Mg
+  topic: education
+  note: "더그림 Thegreem · 구독자 119,000 · 2026-11-09 시드"
+
+- channel_id: UCT76W18BvOH2KRwD4ccC6LA
+  topic: education
+  note: "고딸영어 · 구독자 111,000 · 2026-11-09 시드"
+
+- channel_id: UC4o5nOjyZwtKSGS9kCFwRHg
+  topic: education
+  note: "영어가 막막할 땐 - 길잡이영어 · 구독자 111,000 · 2026-11-09 시드"
+
+- channel_id: UC6Ovd-F3lEFrQvbQI9po-xQ
+  topic: education
+  note: "이옥란교육 · 구독자 109,000 · 2026-11-09 시드"
+
+- channel_id: UCdpCE3luE1GLSVhFIFhO2sA
+  topic: education
+  note: "프렌들리 영어 · 구독자 102,000 · 2026-11-09 시드"
+
+- channel_id: UCv5Xxv9fPZ1-yDAY_bTd3ew
+  topic: education
+  note: "중학영어TV · 구독자 62,800 · 2026-11-09 시드"
+
+- channel_id: UCOiY9xcXZ9Cz0hBf3PKp4wQ
+  topic: education
+  note: "제니구 잉글리시 · 구독자 60,500 · 2026-11-09 시드"
+
+- channel_id: UCumUP1MXkHUmCXNq1HQkHpA
+  topic: education
+  note: "다락원 일본어 회화, JLPT 인강 · 구독자 59,000 · 2026-11-09 시드"
+
+- channel_id: UC7hrCSHxv9OsT-resFeVr-A
+  topic: education
+  note: "혜영쌤영어 · 구독자 56,500 · 2026-11-09 시드"
+
+- channel_id: UCyXejStyw7VrXNdYVfGvTLw
+  topic: education
+  note: "에녹이가취미로발음하는채널 · 구독자 55,900 · 2026-11-09 시드"
+
+- channel_id: UCJ7X2GydKMjm6-Z7iH7TosQ
+  topic: education
+  note: "시니어정보 지선쌤 · 구독자 51,900 · 2026-11-09 시드"
+
+- channel_id: UCFouZRXm6O1XsamzcZ68EWw
+  topic: fashion
+  note: "테이쌤 · 구독자 150,000 · 2026-11-09 시드"
+
+- channel_id: UCdYr-oAFinkSJtDeZ_38Gzw
+  topic: fashion
+  note: "셀럽패션 · 구독자 56,200 · 2026-11-09 시드"
+
+- channel_id: UCF97u_Y5C3FxAcD0nn1DCKQ
+  topic: fitness
+  note: "보통사람을 위한 운동채널 · 구독자 1,080,000 · 2026-11-09 시드"
+
+- channel_id: UCFkAwpvztBaAEzwyDimpDiA
+  topic: fitness
+  note: "아가리어터 · 구독자 501,000 · 2026-11-09 시드"
+
+- channel_id: UC3454ef0lSLjBSjmKH0bs9A
+  topic: fitness
+  note: "Dr. Dylan의 건강 비결 · 구독자 223,000 · 2026-11-09 시드"
+
+- channel_id: UCZ7FFJO0-MWdnWAXjfIMp3Q
+  topic: fitness
+  note: "건강이전부다! · 구독자 221,000 · 2026-11-09 시드"
+
+- channel_id: UCWstEH0k34aMAMPb5cJ9okw
+  topic: fitness
+  note: "유튜브가 낳은 의대교수였던 - 유나으리 · 구독자 203,000 · 2026-11-09 시드"
+
+- channel_id: UC3vVTZ9yoBhfBhnCfW5TbxA
+  topic: fitness
+  note: "유주얌 𝙔𝙐𝙅𝙐𝙔𝘼𝙈 · 구독자 181,000 · 2026-11-09 시드"
+
+- channel_id: UCzDs6GlAZsYlGbd_OUBdjmA
+  topic: fitness
+  note: "건강지식TV · 구독자 173,000 · 2026-11-09 시드"
+
+- channel_id: UCySY2OPx0a6dwa-VgF26Hog
+  topic: fitness
+  note: "건강채널 민트TV · 구독자 142,000 · 2026-11-09 시드"
+
+- channel_id: UCFfHIE0ynmBh1FYLx50cKLA
+  topic: fitness
+  note: "건강지도사 · 구독자 134,000 · 2026-11-09 시드"
+
+- channel_id: UCiFmxss-0hJO0JBXXftTc9A
+  topic: fitness
+  note: "TEAssam Medicine of Exercise · 구독자 131,000 · 2026-11-09 시드"
+
+- channel_id: UCzfoIbslSwEjlFdFRvh3RLg
+  topic: fitness
+  note: "요가은YoGaEun · 구독자 126,000 · 2026-11-09 시드"
+
+- channel_id: UCKn4BDg7hnEDhnr_ukz9-aw
+  topic: fitness
+  note: "건강씨그날 · 구독자 123,000 · 2026-11-09 시드"
+
+- channel_id: UCZMl1lsaz3HqqLWye8_VLdw
+  topic: fitness
+  note: "양닥터 · 구독자 116,000 · 2026-11-09 시드"
+
+- channel_id: UC86AuKBawrgBuEZIgiOo7hA
+  topic: fitness
+  note: "셀럽의 건강비결 · 구독자 115,000 · 2026-11-09 시드"
+
+- channel_id: UC75EntGNeMyOZ19paum0LiQ
+  topic: fitness
+  note: "비만은 역시 김용수TV - 초고도비만 다이어트 · 구독자 112,000 · 2026-11-09 시드"
+
+- channel_id: UCWabQWP9SxoMXRakEIQxWCQ
+  topic: fitness
+  note: "비타민 박사 염창환 TV · 구독자 61,200 · 2026-11-09 시드"
+
+- channel_id: UCd-IK0i2NpWWn8y9Y7yJJIA
+  topic: game
+  note: "로블록스 선생님 · 구독자 321,000 · 2026-11-09 시드"
+
+- channel_id: UCcum1rCJ5GJeQ_xv0xrohqg
+  topic: game
+  note: "원신 · 구독자 318,000 · 2026-11-09 시드"
+
+- channel_id: UCBZzqB9GVZ838v-Psi6kT9w
+  topic: game
+  note: "틱톡★꽐루 · 구독자 273,000 · 2026-11-09 시드"
+
+- channel_id: UCYDfGg08d-_Mhc2GZB5XHrQ
+  topic: game
+  note: "이핑구 · 구독자 233,000 · 2026-11-09 시드"
+
+- channel_id: UCM81CAJ2_Y42-bvK1OQnAAA
+  topic: game
+  note: "정글선생 진 영준 · 구독자 222,000 · 2026-11-09 시드"
+
+- channel_id: UCMUy31CAuDHYzhqx5v8Pa8A
+  topic: game
+  note: "루제이 · 구독자 219,000 · 2026-11-09 시드"
+
+- channel_id: UC0-sEWFXIymAxx0InClynUA
+  topic: game
+  note: "로블록스 고백 · 구독자 187,000 · 2026-11-09 시드"
+
+- channel_id: UCRbDzNUNfnBAc196GFV1fBw
+  topic: game
+  note: "백구 로블록스 · 구독자 166,000 · 2026-11-09 시드"
+
+- channel_id: UC9iXc6HmaGygDiTj5OaNqNg
+  topic: game
+  note: "게임은지원 · 구독자 145,000 · 2026-11-09 시드"
+
+- channel_id: UCWdCShYK9WRBC_CUyeJm82A
+  topic: game
+  note: "슥슥이 · 구독자 134,000 · 2026-11-09 시드"
+
+- channel_id: UCDbOXmGL7EkmOcnUb5Kki4A
+  topic: game
+  note: "아론 페이지 · 구독자 133,000 · 2026-11-09 시드"
+
+- channel_id: UC4sUtz8GU8YzNKVm-DalKtg
+  topic: game
+  note: "김도령 · 구독자 132,000 · 2026-11-09 시드"
+
+- channel_id: UCA57VZoIKNqjaBjokHPZbtg
+  topic: game
+  note: "게임토리 · 구독자 130,000 · 2026-11-09 시드"
+
+- channel_id: UCFSBw8ECxWrzQmzNIO_Qzzw
+  topic: game
+  note: "란이 · 구독자 127,000 · 2026-11-09 시드"
+
+- channel_id: UCLq5ztFVqiXP0CTmHVL3rmA
+  topic: game
+  note: "고장난강민TV · 구독자 127,000 · 2026-11-09 시드"
+
+- channel_id: UC3hCAmwyYNgRuOOSFV7evVA
+  topic: game
+  note: "물곰 WaterBear · 구독자 126,000 · 2026-11-09 시드"
+
+- channel_id: UCJmnOEp1-OITEU0mk4icM5A
+  topic: game
+  note: "일루전 ILLUSION · 구독자 126,000 · 2026-11-09 시드"
+
+- channel_id: UCrR_fhiJjoW8OJFzUcmlMMA
+  topic: game
+  note: "SODA님 · 구독자 125,000 · 2026-11-09 시드"
+
+- channel_id: UCMPedRfD9EnS1EzAQl0nf4Q
+  topic: game
+  note: "앙리형 · 구독자 103,000 · 2026-11-09 시드"
+
+- channel_id: UCNu00qhYj4nPeMNdxuwV6sg
+  topic: game
+  note: "밀핀 모바일 게임채널 · 구독자 63,100 · 2026-11-09 시드"
+
+- channel_id: UCYkegfSP85E1stw5v_pKq5g
+  topic: game
+  note: "코몽의 마인크래프트 · 구독자 62,900 · 2026-11-09 시드"
+
+- channel_id: UCP6nknPRJcKi06plf7iORIg
+  topic: game
+  note: "키실 · 구독자 60,200 · 2026-11-09 시드"
+
+- channel_id: UCiv9DaxcZf6_rYDh7Nd8HkQ
+  topic: game
+  note: "애정딘 · 구독자 58,100 · 2026-11-09 시드"
+
+- channel_id: UC9qwDE50UcXvdplRNZKEoPA
+  topic: game
+  note: "K tube · 구독자 56,900 · 2026-11-09 시드"
+
+- channel_id: UCgO8sNnksVuKcuTVTQKSK3A
+  topic: game
+  note: "영듀 유튜브 · 구독자 51,100 · 2026-11-09 시드"
+
+- channel_id: UCR3FKCiu70gPEIGH_eOu_hw
+  topic: game
+  note: "로붕이 · 구독자 50,600 · 2026-11-09 시드"
+
+- channel_id: UCqZHdzzJ4kSNw8M2Iu36oiQ
+  topic: issue
+  note: "다큐스토리 844 · 구독자 204,000 · 2026-11-09 시드"
+
+- channel_id: UC3RmDQ9A6cEh2CHI7u2GU2Q
+  topic: issue
+  note: "크라임토크 · 구독자 51,800 · 2026-11-09 시드"
+
+- channel_id: UC51D0k6MZ7Ou9cbC5iAq5aw
+  topic: movie-review
+  note: "영화에취한다 · 구독자 199,000 · 2026-11-09 시드"
+
+- channel_id: UCL62zwpumn_GNPwrq6WbvBw
+  topic: movie-review
+  note: "리뷰극장 · 구독자 143,000 · 2026-11-09 시드"
+
+- channel_id: UCOUB_qwibu9MTYQWSuRzPlA
+  topic: movie-review
+  note: "와무비:WA! movie (영화리뷰) · 구독자 109,000 · 2026-11-09 시드"
+
+- channel_id: UCOD1KW54GwpUaqHbQTmv88w
+  topic: movie-review
+  note: "리뷰 한사발 · 구독자 108,000 · 2026-11-09 시드"
+
+- channel_id: UCwjhf-SBy3ZXyLmc5qHSlvA
+  topic: movie-review
+  note: "드라마킹 · 구독자 58,500 · 2026-11-09 시드"
+
+- channel_id: UCuyoVMcU4KmhyRuWQOX52mg
+  topic: movie-review
+  note: "영화가 필요해 · 구독자 53,500 · 2026-11-09 시드"
+
+- channel_id: UCE08n-U77ct__v9qSpcBqPQ
+  topic: mukbang
+  note: "문 Moon ASMR  · 구독자 1,030,000 · 2026-11-09 시드"
+
+- channel_id: UC0JZV95wftQ-NSCG48xe-CQ
+  topic: mukbang
+  note: "찐빵만두JJBB.MANDOO · 구독자 299,000 · 2026-11-09 시드"
+
+- channel_id: UC5wSrJoc5y-1Mq97czY3QgA
+  topic: mukbang
+  note: "박홍 Bakkong · 구독자 286,000 · 2026-11-09 시드"
+
+- channel_id: UCxvX64o-lJ9m4Co9zm6druQ
+  topic: mukbang
+  note: "예소리SSOL · 구독자 248,000 · 2026-11-09 시드"
+
+- channel_id: UCDQ3jwpwKl2SrgDY6Q9ycPg
+  topic: mukbang
+  note: "SUR MIAN먹방 · 구독자 224,000 · 2026-11-09 시드"
+
+- channel_id: UCOVgnOcjlut-LusGwqXD2HA
+  topic: mukbang
+  note: "흥삶이네 Heungsam's Life · 구독자 219,000 · 2026-11-09 시드"
+
+- channel_id: UC2fj9IT7xB7LPYHwXn3iDOg
+  topic: mukbang
+  note: "COMY VLOG [코미 브이로그] · 구독자 209,000 · 2026-11-09 시드"
+
+- channel_id: UCIYzQfZWi059RjaYgQUVLnw
+  topic: mukbang
+  note: "용용먹방 YongYong · 구독자 150,000 · 2026-11-09 시드"
+
+- channel_id: UCxWjAGpAIc8tLIj8NIFNKkg
+  topic: mukbang
+  note: "인천맛집 서울맛집 경기맛집 · 구독자 147,000 · 2026-11-09 시드"
+
+- channel_id: UC8_NstYTHzZtOgpJHe0jlgQ
+  topic: mukbang
+  note: "CnaFood Asmr 먹방 · 구독자 146,000 · 2026-11-09 시드"
+
+- channel_id: UCwyaafBJhy77UoFc8PrMLiA
+  topic: mukbang
+  note: "맛집오타쿠 | 일본교포 3세의 한국노포 탐방 · 구독자 59,600 · 2026-11-09 시드"
+
+- channel_id: UCIdKpkqAi-oVR1oBRffYH6Q
+  topic: music
+  note: "Boogie Drum · 구독자 333,000 · 2026-11-09 시드"
+
+- channel_id: UCCVKS8q4PMusGGrhBmKrSIw
+  topic: music
+  note: "조선힙합 · 구독자 298,000 · 2026-11-09 시드"
+
+- channel_id: UCphwTnkv7dfCpw-EoErHhEg
+  topic: music
+  note: "Sofa4844 · 구독자 265,000 · 2026-11-09 시드"
+
+- channel_id: UC7ITxSrzq-nhyyYzozpPmLA
+  topic: music
+  note: "트로트 맛집 - 국민의뽕짝 · 구독자 257,000 · 2026-11-09 시드"
+
+- channel_id: UC5AO4ZZ1LVgAWSAj22raYzQ
+  topic: music
+  note: "작곡하는 경영학도 Hakdo · 구독자 235,000 · 2026-11-09 시드"
+
+- channel_id: UCd9WZEwKl456E_BYLvhDjzw
+  topic: music
+  note: "팩트노래방 · 구독자 141,000 · 2026-11-09 시드"
+
+- channel_id: UCmDDbQsHMgi4dZcSH7B9olg
+  topic: music
+  note: "클래식좀들어라 · 구독자 140,000 · 2026-11-09 시드"
+
+- channel_id: UCkSwDXvnDdWhI_4oIcSRfAA
+  topic: music
+  note: "황호찬 올겐 전화노래방 · 구독자 120,000 · 2026-11-09 시드"
+
+- channel_id: UCQ7X91NIBS174KJT4Id0lnQ
+  topic: music
+  note: "킬링벌's KillingBees · 구독자 109,000 · 2026-11-09 시드"
+
+- channel_id: UChpIB6wgMiFzmELDqjPmLwg
+  topic: music
+  note: "드럼신 DrumShin · 구독자 57,300 · 2026-11-09 시드"
+
+- channel_id: UCADTU4uYdeSWKizj8OBKQRA
+  topic: pets
+  note: "냥신TV · 구독자 221,000 · 2026-11-09 시드"
+
+- channel_id: UCsM83Um82DvG4oRpK3gX2eg
+  topic: pets
+  note: "지구수호대 · 구독자 211,000 · 2026-11-09 시드"
+
+- channel_id: UC_-jP0vJCb_8dQoVgMYNfxw
+  topic: pets
+  note: "고양이탐정TV · 구독자 145,000 · 2026-11-09 시드"
+
+- channel_id: UCdyP2StID09cDrn51kcI5zg
+  topic: pets
+  note: "반려동무 · 구독자 57,600 · 2026-11-09 시드"
+
+- channel_id: UCrkXWjVtxmaXasrVdNTgc7g
+  topic: pets
+  note: "희귀동물 연구소 먹방 · 구독자 51,100 · 2026-11-09 시드"
+
+- channel_id: UC0Xj4-lQz5j247mAdX2mgoA
+  topic: politics
+  note: "1일0식  · 구독자 157,000 · 2026-11-09 시드"
+
+- channel_id: UCm6pbg_dXWOrTggt9zCECAQ
+  topic: real-estate
+  note: "부동산 경제학TV [랜드스타에셋] · 구독자 187,000 · 2026-11-09 시드"
+
+- channel_id: UCQpMAZGfjCGAKdBEboo_-Pg
+  topic: real-estate
+  note: "로그디자인 · 구독자 166,000 · 2026-11-09 시드"
+
+- channel_id: UCFYcjU4AeoiCNwx9Jfe2oww
+  topic: real-estate
+  note: "싹풀TV 이승희세무사 · 구독자 156,000 · 2026-11-09 시드"
+
+- channel_id: UCPzUihJpaxqgux4ihCx983A
+  topic: self-dev
+  note: "퇴사한 이형 · 구독자 275,000 · 2026-11-09 시드"
+
+- channel_id: UCIzEn-P5rwD8Nrvy5JMR5kg
+  topic: self-dev
+  note: "상담심리사웃따 · 구독자 214,000 · 2026-11-09 시드"
+
+- channel_id: UCTnuch6enP15kkCKHlDomXQ
+  topic: self-dev
+  note: "연애유치원 로미언니 · 구독자 52,800 · 2026-11-09 시드"
+
+- channel_id: UCc7o0OkR2BDFN4TCgPChjEw
+  topic: sports
+  note: "정찬성 Korean Zombie · 구독자 1,090,000 · 2026-11-09 시드"
+
+- channel_id: UC9RecSEW5AdRcDXZhskte_Q
+  topic: sports
+  note: "스포츠한입 · 구독자 183,000 · 2026-11-09 시드"
+
+- channel_id: UCSin3OGjCdsCcop7AsB6NXA
+  topic: sports
+  note: "축구어때 · 구독자 123,000 · 2026-11-09 시드"
+
+- channel_id: UCHxVPYcPOHOD6AAx7lPk9jg
+  topic: sports
+  note: "Off the TV · 구독자 109,000 · 2026-11-09 시드"
+
+- channel_id: UCsYfUQV8Qa64gP432y1ElsA
+  topic: sports
+  note: "김남수의 탁구토크 · 구독자 61,400 · 2026-11-09 시드"
+
+- channel_id: UCBjdjdvVULgdv8JDP_3akCg
+  topic: tech
+  note: "복구천재 꼬마신발 · 구독자 250,000 · 2026-11-09 시드"
+
+- channel_id: UCGXLcF0C6xe6GPIrA1WoQMg
+  topic: tech
+  note: "케통령 · 구독자 208,000 · 2026-11-09 시드"
+
+- channel_id: UC0pjHypbNbQwYLrqAYSJZNA
+  topic: tech
+  note: "인공지능 관측소 · 구독자 199,000 · 2026-11-09 시드"
+
+- channel_id: UCeSnJtdf_dgvFqtK1PpxygA
+  topic: tech
+  note: "Trialversion's Computer Channel · 구독자 199,000 · 2026-11-09 시드"
+
+- channel_id: UC5Krj_2tLJgAyT7SwTsAIzQ
+  topic: tech
+  note: "Dragon Lake · 구독자 166,000 · 2026-11-09 시드"
+
+- channel_id: UC4Hd8qw2t0IUKdeqE-OLRVg
+  topic: tech
+  note: "똑순이 은쌤 · 구독자 139,000 · 2026-11-09 시드"
+
+- channel_id: UCzU46fRaq2D9BK5Hd2YycuA
+  topic: tech
+  note: "정말쉬운디지털 · 구독자 51,300 · 2026-11-09 시드"
+
+- channel_id: UC1soQJP1MwlM6sUgoNqepOQ
+  topic: travel
+  note: "마프의 등산이야기 · 구독자 243,000 · 2026-11-09 시드"
+
+- channel_id: UC5JtIP2gExbPDMbNMFr3aHA
+  topic: travel
+  note: "창박골 Changbakgol · 구독자 187,000 · 2026-11-09 시드"
+
+- channel_id: UC4YKq-9KMKhhX0yRSrvAUVA
+  topic: travel
+  note: "태미월드 Tami World · 구독자 155,000 · 2026-11-09 시드"
+
+- channel_id: UCshuYBK5zR49mJ6RZBrEE_A
+  topic: travel
+  note: "광저우여행 중국여행가이드 · 구독자 117,000 · 2026-11-09 시드"
+
+- channel_id: UCV--qAE-eQTnkF3zNeMTpMw
+  topic: travel
+  note: "여행크리에이터 모험가 mwomga · 구독자 107,000 · 2026-11-09 시드"
+
+- channel_id: UClia6Dowx4JK-9dQRhfRtEw
+  topic: travel
+  note: "용짱이[YONGJJANG] · 구독자 62,500 · 2026-11-09 시드"
+
+- channel_id: UCgjqBCK9-Vqvujr96f4oZVQ
+  topic: travel
+  note: "여행생각 · 구독자 60,700 · 2026-11-09 시드"
+
+- channel_id: UCC-CdQ-LuAiwMwj2RPgbwXg
+  topic: travel
+  note: "가희드 gahiiide · 구독자 58,300 · 2026-11-09 시드"
+
+- channel_id: UCZnC5XlhVApnUjZk6h0zmLA
+  topic: travel
+  note: "투밥스 · 구독자 53,000 · 2026-11-09 시드"
