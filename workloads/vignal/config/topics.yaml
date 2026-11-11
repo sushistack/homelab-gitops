@@ -306,3 +306,24 @@ subtopics:
     parent: movie-review
     label: '드라마 리뷰·해설'
     aliases: [드라마리뷰, 드라마요약]
+  # 2026-11-11 (PERSONA15·16 다은): 먹방 moves by format, not subject -- its peers and weekly summary need these.
+  - slug: mb-asmr
+    parent: mukbang
+    label: 'ASMR·리얼사운드'
+    aliases: [ASMR, 리얼사운드, 이팅사운드]
+  - slug: mb-challenge
+    parent: mukbang
+    label: '대식·챌린지'
+    aliases: [대식, 먹방챌린지, 매운맛챌린지, 푸드파이터]
+  - slug: mb-tour
+    parent: mukbang
+    label: '맛집 탐방'
+    aliases: [맛집, 맛집투어, 노포, 시장먹방]
+  - slug: mb-review
+    parent: mukbang
+    label: '신상·편의점 리뷰'
+    aliases: [편의점, 신상, 신메뉴, 배달리뷰]
+  - slug: mb-etc
+    parent: mukbang
+    label: '기타 먹방'
+    default: true
