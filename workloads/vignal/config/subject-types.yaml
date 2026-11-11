@@ -18,3 +18,5 @@ types:
   - {id: health, label: 건강, hint: 질환·증상·성분(통풍·골다공증·마그네슘)}
   - {id: food, label: 음식, hint: 메뉴·요리·식재료(김장·수육)}
   - {id: song, label: 곡, hint: 노래·연주곡 제목}
+# 2026-11-11 (PERSONA16 다은): 먹방·요리·뷰티 move by recurring formats, which never became subjects.
+  - {id: format, label: 콘텐츠 형식, hint: 여러 채널이 따라 하는 영상 형식·포맷(편의점 신상 리뷰·시장 먹방·매운맛 챌린지·랜선 집들이). 먹방·브이로그 같은 장르 이름 자체는 아님}
