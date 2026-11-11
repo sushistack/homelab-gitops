@@ -1587,4 +1587,44 @@ approve:
   - channel_id: UCfc_WGYnpub6LuEHiwcWdNg
     topic: game
     note: "2026-11-11 재분류 web-drama→game (영상 단위 주제 다수결)"
+  # 최하니 (scout 2026-11-11)
+  - channel_id: UCI7iKiJR0vK7OVzQipiwcpw
+    topic: game
+    note: "scout:mention 구독 10300 롱폼 20/50 최근 업로드 2026-11-11"
+  # 동방박사1등주TV (scout 2026-11-11)
+  - channel_id: UCjb8Yj08AMl3aRakTCwpzYw
+    topic: economy
+    note: "scout:mention 구독 11500 롱폼 29/50 최근 업로드 2026-11-11"
+  # 테크노사우루스 Technosaurus (scout 2026-11-11)
+  - channel_id: UCXqraYfnaiyg7fbATQFHlkw
+    topic: tech
+    note: "scout:popular 구독 97100 롱폼 10/50 최근 업로드 2026-11-11"
+  # 제이제이Lite (scout 2026-11-11)
+  - channel_id: UCr0HTuqFmLId-sGxImxEBkg
+    topic: tech
+    note: "scout:popular 구독 65000 롱폼 46/50 최근 업로드 2026-11-11"
+  # 글로벌한국 (scout 2026-11-11)
+  - channel_id: UCvZhBe0Of9gbevwYhqkfeKw
+    topic: tech
+    note: "scout:popular 구독 20400 롱폼 50/50 최근 업로드 2026-11-11"
+  # 케드 (scout 2026-11-11)
+  - channel_id: UCwdfm8NKZihY3Ito5ruKWeQ
+    topic: game
+    note: "scout:popular 구독 47200 롱폼 2/50 최근 업로드 2026-11-11"
+  # 애매티지 (scout 2026-11-11)
+  - channel_id: UC7OkOrkK9qcxg_g4M_4Iq1g
+    topic: sports
+    note: "scout:featured 구독 28400 롱폼 9/50 최근 업로드 2026-11-11"
+  # 송소희티비 (송소희티비) (scout 2026-11-11)
+  - channel_id: UC8E9ek7Ad-VFYhfgoBm91TA
+    topic: game
+    note: "scout:featured 구독 23100 롱폼 50/50 최근 업로드 2026-11-11"
+  # 타코아끼 (scout 2026-11-11)
+  - channel_id: UCBDaSuPXegQ5QqxsSeGjalw
+    topic: game
+    note: "scout:featured 구독 99300 롱폼 21/40 최근 업로드 2026-10-30"
+  # 명강의 모음 (scout 2026-11-11)
+  - channel_id: UCM-eG7xyhO5CPnVyr7qQHuA
+    topic: self-dev
+    note: "scout:featured 구독 46300 롱폼 44/50 최근 업로드 2026-11-11"
 untrack: []
