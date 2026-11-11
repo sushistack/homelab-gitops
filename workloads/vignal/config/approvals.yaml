@@ -479,7 +479,7 @@ approve:
     note: "scout:popular 구독 142000 롱폼 10/10 최근 업로드 2026-10-04"
   # 조선일보 (scout 2026-10-10)
   - channel_id: UCdp4_yTBhQmB8E339Lafzow
-    topic: news
+    topic: politics  # 2026-11-11 재분류 news→politics (영상 단위 주제 다수결). 이전 주석: 
     note: "scout:popular 구독 1750000 롱폼 9/10 최근 업로드 2026-10-05"
   # 쪼낙 JJONAK (scout 2026-10-10)
   - channel_id: UCeq0Nrch5KY3VrZyn_BB32g
@@ -845,7 +845,7 @@ approve:
     note: "scout:popular 구독 1000000 롱폼 9/10 최근 업로드 2026-10-12"
   # 교양이를 부탁해 (scout 2026-10-18)
   - channel_id: UChY8VUjXv0aA7RF9hDQ0ISg
-    topic: news
+    topic: economy  # 2026-11-11 재분류 news→economy (영상 단위 주제 다수결). 이전 주석: 
     note: "scout:popular 구독 496000 롱폼 6/10 최근 업로드 2026-10-13"
   # 로빈 (scout 2026-10-18)
   - channel_id: UCo33r3SAf5z9MS-lrXV2aOQ
@@ -1059,12 +1059,12 @@ approve:
     note: "scout:featured 구독 129000 롱폼 10/10 최근 업로드 2026-10-22"
   # 밤공원 (scout 2026-10-26)
   - channel_id: UCznL5L7iTgTaqSBS5yF6g7w
-    topic: celeb
+    topic: music  # 2026-11-11 재분류 celeb→music (영상 단위 주제 다수결). 이전 주석: 
     note: "scout:featured 구독 242000 롱폼 10/10 최근 업로드 2026-10-23"
   # 2026-11-10 새 주제(PERSONA9, 운영자 승인): 낚시·캠핑·차박 채널 여행→outdoor, 정리·청소·살림·인테리어 채널 →living
   # 캠핑제국 Camping Empire (travel→outdoor)
   - channel_id: UCPll9ZfV8mThBCT1qKTeQZQ
-    topic: outdoor
+    topic: travel  # 2026-11-11 재분류 outdoor→travel (영상 단위 주제 다수결). 이전 주석: 
     note: "2026-11-10 새 주제 재분류 · 구독 697000"
   # 반반한캠핑 Bancamp (travel→outdoor)
   - channel_id: UCT107q7vwRGAaActQ1oe7hA
@@ -1072,11 +1072,11 @@ approve:
     note: "2026-11-10 새 주제 재분류 · 구독 684000"
   # 영우캠핑카 (travel→outdoor)
   - channel_id: UCWY_-67ftlegJA05EC5T6Yg
-    topic: outdoor
+    topic: music  # 2026-11-11 재분류 outdoor→music (영상 단위 주제 다수결). 이전 주석: 
     note: "2026-11-10 새 주제 재분류 · 구독 611000"
   # 동네오빠 짬낚시 (travel→outdoor)
   - channel_id: UCE1I2zznKQ47cWqJEhEs9Rg
-    topic: outdoor
+    topic: travel  # 2026-11-11 재분류 outdoor→travel (영상 단위 주제 다수결). 이전 주석: 
     note: "2026-11-10 새 주제 재분류 · 구독 574000"
   # 캠핑쥐campingG (travel→outdoor)
   - channel_id: UCbaU6-0RF7FCbNfJtkkbagw
@@ -1108,7 +1108,7 @@ approve:
     note: "2026-11-10 새 주제 재분류 · 구독 92700"
   # 낚시쪼아TV (travel→outdoor)
   - channel_id: UCG_FS8Br0BXXfaP81bQODJg
-    topic: outdoor
+    topic: travel  # 2026-11-11 재분류 outdoor→travel (영상 단위 주제 다수결). 이전 주석: 
     note: "2026-11-10 새 주제 재분류 · 구독 77700"
   # 낚시TV핼다람 (travel→outdoor)
   - channel_id: UCVYIHeYo7FJO46ls6bHvKJQ
@@ -1120,11 +1120,11 @@ approve:
     note: "2026-11-10 새 주제 재분류 · 구독 29000"
   # 차박팩토리경기지사 (travel→outdoor)
   - channel_id: UCXuiJgFGFlMZN4kj2LnWf6A
-    topic: outdoor
+    topic: travel  # 2026-11-11 재분류 outdoor→travel (영상 단위 주제 다수결). 이전 주석: 
     note: "2026-11-10 새 주제 재분류 · 구독 8860"
   # 차박팩토리  광주·전라지사 (travel→outdoor)
   - channel_id: UC-7kIKXkqJELY1eq_Fu2hPg
-    topic: outdoor
+    topic: travel  # 2026-11-11 재분류 outdoor→travel (영상 단위 주제 다수결). 이전 주석: 
     note: "2026-11-10 새 주제 재분류 · 구독 1850"
   # 정리왕 (vlog→living)
   - channel_id: UCmErD4mBSQUUIxHFB8RTJLA
@@ -1156,6 +1156,435 @@ approve:
     note: "2026-11-10 새 주제 재분류 · 구독 67700"
   # 살림역 (vlog→living)
   - channel_id: UCjXPWDQKPdMLd6r9ouFobCA
-    topic: living
+    topic: vlog  # 2026-11-11 재분류 living→vlog (영상 단위 주제 다수결). 이전 주석: 
     note: "2026-11-10 새 주제 재분류 · 구독 66700"
+  # 2026-11-11 주제 오분류 정리(PERSONA12·13, 사용자 승인): 영상 단위 주제(video_l1) 다수결과 채널 주제가 크게 어긋난 채널. 근거: vignal scripts/topic-mismatch.py
+  # 보물섬 · 구독 2070000 · 영상 6개 중 web-drama 100%, 현재 주제 beauty-life 0%
+  - channel_id: UC9ZLv1m7QDLv991X1-p50AA
+    topic: web-drama
+    note: "2026-11-11 재분류 beauty-life→web-drama (영상 단위 주제 다수결)"
+  # 팁끌모아살림 · 구독 55300 · 영상 11개 중 living 91%, 현재 주제 beauty-life 0%
+  - channel_id: UC_KBVQUwgmE-RIA9Bb1UxqQ
+    topic: living
+    note: "2026-11-11 재분류 beauty-life→living (영상 단위 주제 다수결)"
+  # 쫑알부부 · 구독 240000 · 영상 8개 중 vlog 75%, 현재 주제 beauty-life 12%
+  - channel_id: UCykeP8c_VxzQxH9DCPdluMg
+    topic: vlog
+    note: "2026-11-11 재분류 beauty-life→vlog (영상 단위 주제 다수결)"
+  # 숏박스 · 구독 4060000 · 영상 10개 중 web-drama 70%, 현재 주제 beauty-life 20%
+  - channel_id: UC1B6SalAoiJD7eHfMUA9QrA
+    topic: web-drama
+    note: "2026-11-11 재분류 beauty-life→web-drama (영상 단위 주제 다수결)"
+  # 시니어살림노트 · 구독 119000 · 영상 14개 중 cooking 57%, 현재 주제 beauty-life 0%
+  - channel_id: UCn-u2CG-jtoY-UOVfbubp6g
+    topic: cooking
+    note: "2026-11-11 재분류 beauty-life→cooking (영상 단위 주제 다수결)"
+  # 옐언니 · 구독 4410000 · 영상 22개 중 web-drama 55%, 현재 주제 beauty-life 23%
+  - channel_id: UCpPXYy0WNbwDZ0npS414sEQ
+    topic: web-drama
+    note: "2026-11-11 재분류 beauty-life→web-drama (영상 단위 주제 다수결)"
+  # 살림노트 · 구독 165000 · 영상 16개 중 living 50%, 현재 주제 beauty-life 12%
+  - channel_id: UCIiKu-jpfMXCV8kW16gzBsA
+    topic: living
+    note: "2026-11-11 재분류 beauty-life→living (영상 단위 주제 다수결)"
+  # MBC강원영동 MUSIC · 구독 114000 · 영상 5개 중 music 100%, 현재 주제 celeb 0%
+  - channel_id: UCl2ITCIEPEjf1UhmVwJ6alQ
+    topic: music
+    note: "2026-11-11 재분류 celeb→music (영상 단위 주제 다수결)"
+  # 연예인한입 · 구독 84200 · 영상 42개 중 web-drama 98%, 현재 주제 celeb 2%
+  - channel_id: UC1JtVFtN_4MUIMg75-rqMUA
+    topic: web-drama
+    note: "2026-11-11 재분류 celeb→web-drama (영상 단위 주제 다수결)"
+  # 원주MBC NEWS · 구독 58500 · 영상 153개 중 news 93%, 현재 주제 celeb 0%
+  - channel_id: UCwCrPg60zuzeHt3IsQRrJrg
+    topic: news
+    note: "2026-11-11 재분류 celeb→news (영상 단위 주제 다수결)"
+  # 여수MBCPrime · 구독 193000 · 영상 29개 중 travel 66%, 현재 주제 celeb 3%
+  - channel_id: UCwWqBWIe72xKV016rcXGaaA
+    topic: travel
+    note: "2026-11-11 재분류 celeb→travel (영상 단위 주제 다수결)"
+  # 광주MBC뉴스 · 구독 202000 · 영상 183개 중 news 58%, 현재 주제 celeb 1%
+  - channel_id: UCr0LBUePUC5XnejgV4JmboA
+    topic: news
+    note: "2026-11-11 재분류 celeb→news (영상 단위 주제 다수결)"
+  # 제주MBC NEWS · 구독 232000 · 영상 164개 중 news 54%, 현재 주제 celeb 3%
+  - channel_id: UC5YM8Ln-4iMBR9ZEqcDN5kw
+    topic: news
+    note: "2026-11-11 재분류 celeb→news (영상 단위 주제 다수결)"
+  # 춘천MBC뉴스 · 구독 265000 · 영상 153개 중 politics 54%, 현재 주제 celeb 1%
+  - channel_id: UCBnUdp-4hIKkGlz8MVL7s3g
+    topic: politics
+    note: "2026-11-11 재분류 celeb→politics (영상 단위 주제 다수결)"
+  # JJAEMI 째미 · 구독 1450000 · 영상 6개 중 mukbang 100%, 현재 주제 cooking 0%
+  - channel_id: UCSg2Jqo_AGTtWHAMYxNf11g
+    topic: mukbang
+    note: "2026-11-11 재분류 cooking→mukbang (영상 단위 주제 다수결)"
+  # 응밥해 · 구독 100000 · 영상 17개 중 game 65%, 현재 주제 cooking 24%
+  - channel_id: UCFwjHZt15mVKg6acwH03R2A
+    topic: game
+    note: "2026-11-11 재분류 cooking→game (영상 단위 주제 다수결)"
+  # 젠틀홍의 부동산TV · 구독 236000 · 영상 16개 중 real-estate 100%, 현재 주제 economy 0%
+  - channel_id: UCATeM6x-WYFp2cXQ69AmYNw
+    topic: real-estate
+    note: "2026-11-11 재분류 economy→real-estate (영상 단위 주제 다수결)"
+  # 에스엠 도시연구소 · 구독 7340 · 영상 16개 중 real-estate 100%, 현재 주제 economy 0%
+  - channel_id: UCFymyL1t-_f0WhG4YH1u3fg
+    topic: real-estate
+    note: "2026-11-11 재분류 economy→real-estate (영상 단위 주제 다수결)"
+  # 더원부동산 투자연구소 · 구독 57000 · 영상 11개 중 real-estate 100%, 현재 주제 economy 0%
+  - channel_id: UCm_6ScXDMFQv9nM93RSIsRA
+    topic: real-estate
+    note: "2026-11-11 재분류 economy→real-estate (영상 단위 주제 다수결)"
+  # 지금 명의 · 구독 57400 · 영상 129개 중 fitness 95%, 현재 주제 economy 4%
+  - channel_id: UCgGns5mTguUQYAZvVZ-wWpg
+    topic: fitness
+    note: "2026-11-11 재분류 economy→fitness (영상 단위 주제 다수결)"
+  # 민이 아빠 · 구독 75900 · 영상 9개 중 tech 78%, 현재 주제 economy 0%
+  - channel_id: UCmSATnvpjE9gPCPNgwcpuFA
+    topic: tech
+    note: "2026-11-11 재분류 economy→tech (영상 단위 주제 다수결)"
+  # 이영종의 북한은 지금 · 구독 40700 · 영상 67개 중 news 54%, 현재 주제 economy 18%
+  - channel_id: UC9r83YLj-LvZzqEAIJB5jkQ
+    topic: news
+    note: "2026-11-11 재분류 economy→news (영상 단위 주제 다수결)"
+  # 책데이트 · 구독 183000 · 영상 5개 중 self-dev 100%, 현재 주제 education 0%
+  - channel_id: UCHLTLvCNq7_tTyyvEuGT2Qg
+    topic: self-dev
+    note: "2026-11-11 재분류 education→self-dev (영상 단위 주제 다수결)"
+  # 스터디언 · 구독 1990000 · 영상 74개 중 self-dev 88%, 현재 주제 education 9%
+  - channel_id: UCtfGLmp6xMwvPoYpI-A5Kdg
+    topic: self-dev
+    note: "2026-11-11 재분류 education→self-dev (영상 단위 주제 다수결)"
+  # 순천리빙TV (유실수연구소) · 구독 57200 · 영상 6개 중 living 83%, 현재 주제 education 0%
+  - channel_id: UCVZfaMrudFzoSbrt-2peMZA
+    topic: living
+    note: "2026-11-11 재분류 education→living (영상 단위 주제 다수결)"
+  # 교양식 · 구독 58900 · 영상 12개 중 economy 50%, 현재 주제 education 0%
+  - channel_id: UCxKStIHz831RiHAiiCY3pnQ
+    topic: economy
+    note: "2026-11-11 재분류 education→economy (영상 단위 주제 다수결)"
+  # 스트릿TV · 구독 64500 · 영상 33개 중 economy 70%, 현재 주제 fashion 21%
+  - channel_id: UCBztIYIgMyDd0wBTP0meL5Q
+    topic: economy
+    note: "2026-11-11 재분류 fashion→economy (영상 단위 주제 다수결)"
+  # 건강이좋다 · 구독 101000 · 영상 15개 중 cooking 73%, 현재 주제 fitness 13%
+  - channel_id: UCPe8r7OGO9HhCxzq8HnEMLg
+    topic: cooking
+    note: "2026-11-11 재분류 fitness→cooking (영상 단위 주제 다수결)"
+  # 건강백단 - 건강정보 · 구독 200000 · 영상 24개 중 cooking 54%, 현재 주제 fitness 17%
+  - channel_id: UCSqJOwP528MNmSBHjLQRW1A
+    topic: cooking
+    note: "2026-11-11 재분류 fitness→cooking (영상 단위 주제 다수결)"
+  # KT소닉붐_tv · 구독 42900 · 영상 21개 중 sports 100%, 현재 주제 game 0%
+  - channel_id: UC_nAQFbS0JylS__d1r8NS8Q
+    topic: sports
+    note: "2026-11-11 재분류 game→sports (영상 단위 주제 다수결)"
+  # kt wiz - 위즈TV · 구독 135000 · 영상 48개 중 sports 92%, 현재 주제 game 8%
+  - channel_id: UCvScyjGkBUx2CJDMNAi9Twg
+    topic: sports
+    note: "2026-11-11 재분류 game→sports (영상 단위 주제 다수결)"
+  # 텐끼 Tenkki · 구독 143000 · 영상 8개 중 mukbang 75%, 현재 주제 game 25%
+  - channel_id: UClllpRU5lbwN_MamuKtttIA
+    topic: mukbang
+    note: "2026-11-11 재분류 game→mukbang (영상 단위 주제 다수결)"
+  # 홍구네 · 구독 858000 · 영상 8개 중 mukbang 50%, 현재 주제 game 25%
+  - channel_id: UCaNGiz6D2vHP7XLj9d5691A
+    topic: mukbang
+    note: "2026-11-11 재분류 game→mukbang (영상 단위 주제 다수결)"
+  # 나는 만타 · 구독 7980 · 영상 5개 중 game 100%, 현재 주제 issue 0%
+  - channel_id: UC8ffmqmNOuJTaIZ5n-It7Hg
+    topic: game
+    note: "2026-11-11 재분류 issue→game (영상 단위 주제 다수결)"
+  # 사思고치는김치샐러드 · 구독 124000 · 영상 51개 중 celeb 69%, 현재 주제 issue 29%
+  - channel_id: UCzCsu0nCqa2DCi3euaw2gmg
+    topic: celeb
+    note: "2026-11-11 재분류 issue→celeb (영상 단위 주제 다수결)"
+  # 라이너의 컬쳐쇼크 · 구독 370000 · 영상 8개 중 movie-review 50%, 현재 주제 issue 25%
+  - channel_id: UCIXvXBYSc9fQ7Ri5SM1r8xA
+    topic: movie-review
+    note: "2026-11-11 재분류 issue→movie-review (영상 단위 주제 다수결)"
+  # 1% - 급등투자연구소 · 구독 73700 · 영상 66개 중 economy 100%, 현재 주제 movie-review 0%
+  - channel_id: UCavTU2b3XOw8MiBOCVF47jg
+    topic: economy
+    note: "2026-11-11 재분류 movie-review→economy (영상 단위 주제 다수결)"
+  # 오은영리포트 결혼지옥 · 구독 272000 · 영상 71개 중 web-drama 87%, 현재 주제 movie-review 13%
+  - channel_id: UCXIgINn0-8z51wfIOQPnbtA
+    topic: web-drama
+    note: "2026-11-11 재분류 movie-review→web-drama (영상 단위 주제 다수결)"
+  # 열쓰 10s · 구독 101000 · 영상 7개 중 tech 86%, 현재 주제 movie-review 0%
+  - channel_id: UCKp20MpZRmS719n4dS_9hGg
+    topic: tech
+    note: "2026-11-11 재분류 movie-review→tech (영상 단위 주제 다수결)"
+  # 너굴경제 · 구독 293000 · 영상 15개 중 economy 73%, 현재 주제 movie-review 0%
+  - channel_id: UCXD1p0ghcxXj8u4s5jYbGkw
+    topic: economy
+    note: "2026-11-11 재분류 movie-review→economy (영상 단위 주제 다수결)"
+  # 생방송 오늘 아침 · 구독 33400 · 영상 61개 중 news 54%, 현재 주제 movie-review 2%
+  - channel_id: UC9j3nxUjLanlNoVLSGSJt9w
+    topic: news
+    note: "2026-11-11 재분류 movie-review→news (영상 단위 주제 다수결)"
+  # 오늘의주토크 · 구독 65000 · 영상 55개 중 economy 98%, 현재 주제 music 2%
+  - channel_id: UCfK0mGjeohC5e9b8P9bUR1A
+    topic: economy
+    note: "2026-11-11 재분류 music→economy (영상 단위 주제 다수결)"
+  # 톡톡시아 Toctocsia · 구독 1120000 · 영상 14개 중 mukbang 86%, 현재 주제 music 14%
+  - channel_id: UCtwIQuacIhDO8v-ZpQuDxKg
+    topic: mukbang
+    note: "2026-11-11 재분류 music→mukbang (영상 단위 주제 다수결)"
+  # 김근우의 투자공식 · 구독 2420 · 영상 21개 중 economy 100%, 현재 주제 news 0%
+  - channel_id: UCPrin4AbpymZmrX24RUK2BA
+    topic: economy
+    note: "2026-11-11 재분류 news→economy (영상 단위 주제 다수결)"
+  # 김경민의 노트 · 구독 37400 · 영상 8개 중 real-estate 100%, 현재 주제 news 0%
+  - channel_id: UCU09s-DZfqlZsbIm49WbOZw
+    topic: real-estate
+    note: "2026-11-11 재분류 news→real-estate (영상 단위 주제 다수결)"
+  # 박재훈의 투자농장 · 구독 22000 · 영상 13개 중 economy 100%, 현재 주제 news 0%
+  - channel_id: UCvOAEo6w0QlDeDJKjG6P3_g
+    topic: economy
+    note: "2026-11-11 재분류 news→economy (영상 단위 주제 다수결)"
+  # ㅊㅊ Studio - 츠츠 스튜디오 · 구독 229000 · 영상 58개 중 music 95%, 현재 주제 news 0%
+  - channel_id: UCASwP3GUCHGZfdy7Oj2bKjQ
+    topic: music
+    note: "2026-11-11 재분류 news→music (영상 단위 주제 다수결)"
+  # 미국 주식 채널 - 에디 Eddie · 구독 270000 · 영상 33개 중 economy 91%, 현재 주제 news 9%
+  - channel_id: UCMupe3fvv1-Hi3SRxZzSsTw
+    topic: economy
+    note: "2026-11-11 재분류 news→economy (영상 단위 주제 다수결)"
+  # TomatoTV · 구독 410000 · 영상 207개 중 economy 90%, 현재 주제 news 7%
+  - channel_id: UCgJ5pT6S2NuTVP-6-AlLZew
+    topic: economy
+    note: "2026-11-11 재분류 news→economy (영상 단위 주제 다수결)"
+  # 김선형의 헤세드경제 · 구독 32500 · 영상 81개 중 economy 89%, 현재 주제 news 9%
+  - channel_id: UC0KrhWr_wO9n_QNnkne0l5g
+    topic: economy
+    note: "2026-11-11 재분류 news→economy (영상 단위 주제 다수결)"
+  # 경제 읽어주는 남자(김광석TV) · 구독 532000 · 영상 69개 중 economy 88%, 현재 주제 news 7%
+  - channel_id: UC3pfEoxaRDT6hvZZjpHu7Tg
+    topic: economy
+    note: "2026-11-11 재분류 news→economy (영상 단위 주제 다수결)"
+  # 강적들 · 구독 216000 · 영상 41개 중 politics 88%, 현재 주제 news 10%
+  - channel_id: UC9nMI127g4Asi_oxJRL0RqA
+    topic: politics
+    note: "2026-11-11 재분류 news→politics (영상 단위 주제 다수결)"
+  # 김형일의 트렌드매매 · 구독 1220 · 영상 8개 중 economy 88%, 현재 주제 news 12%
+  - channel_id: UCrWf2jU7gEJ3DZuQ6C35JXg
+    topic: economy
+    note: "2026-11-11 재분류 news→economy (영상 단위 주제 다수결)"
+  # TVCHOSUN DRAMA · 구독 51600 · 영상 45개 중 movie-review 87%, 현재 주제 news 4%
+  - channel_id: UC9qrbRdZvyqiMTIuncx1fiA
+    topic: movie-review
+    note: "2026-11-11 재분류 news→movie-review (영상 단위 주제 다수결)"
+  # 한국경제TV · 구독 1400000 · 영상 257개 중 economy 84%, 현재 주제 news 10%
+  - channel_id: UCF8AeLlUbEpKju6v1H6p8Eg
+    topic: economy
+    note: "2026-11-11 재분류 news→economy (영상 단위 주제 다수결)"
+  # 허반석의 모멘텀 투자레터 · 구독 4150 · 영상 42개 중 economy 83%, 현재 주제 news 17%
+  - channel_id: UClL-8OLsc9KrdZxCCZfWMeQ
+    topic: economy
+    note: "2026-11-11 재분류 news→economy (영상 단위 주제 다수결)"
+  # #OOTV : OBS 오리지널 TV 콘텐츠 · 구독 65400 · 영상 41개 중 economy 83%, 현재 주제 news 0%
+  - channel_id: UCfIwg8_G5ur6MppY4Vjn6Yw
+    topic: economy
+    note: "2026-11-11 재분류 news→economy (영상 단위 주제 다수결)"
+  # TVCHOSUN LIFE · 구독 330000 · 영상 67개 중 fitness 81%, 현재 주제 news 3%
+  - channel_id: UCb5ymSxGa41rYAMDvh22I2Q
+    topic: fitness
+    note: "2026-11-11 재분류 news→fitness (영상 단위 주제 다수결)"
+  # 씨네21 · 구독 71700 · 영상 14개 중 movie-review 79%, 현재 주제 news 7%
+  - channel_id: UCz4vMhiedEWgICIF7NBYiYA
+    topic: movie-review
+    note: "2026-11-11 재분류 news→movie-review (영상 단위 주제 다수결)"
+  # 경제통마늘 · 구독 15400 · 영상 167개 중 economy 78%, 현재 주제 news 13%
+  - channel_id: UCWv9hNM-8pNa7K8yMrXokYQ
+    topic: economy
+    note: "2026-11-11 재분류 news→economy (영상 단위 주제 다수결)"
+  # 이정주의 질문하는 기자 · 구독 161000 · 영상 100개 중 politics 77%, 현재 주제 news 23%
+  - channel_id: UCIvwdx6nCpysQto1gzVm4Rw
+    topic: politics
+    note: "2026-11-11 재분류 news→politics (영상 단위 주제 다수결)"
+  # 한동훈 · 구독 466000 · 영상 177개 중 politics 77%, 현재 주제 news 19%
+  - channel_id: UCris9QMbviXz-Zh__wA4JFA
+    topic: politics
+    note: "2026-11-11 재분류 news→politics (영상 단위 주제 다수결)"
+  # 바바비디오 · 구독 73600 · 영상 17개 중 politics 76%, 현재 주제 news 24%
+  - channel_id: UCVcNP-G3-f56N7f1JXKOc6w
+    topic: politics
+    note: "2026-11-11 재분류 news→politics (영상 단위 주제 다수결)"
+  # TVCHOSUN MUSIC · 구독 921000 · 영상 160개 중 music 75%, 현재 주제 news 1%
+  - channel_id: UC33yEDM8q3N8BeMpZMdP66Q
+    topic: music
+    note: "2026-11-11 재분류 news→music (영상 단위 주제 다수결)"
+  # 시사건건 · 구독 410000 · 영상 44개 중 politics 75%, 현재 주제 news 23%
+  - channel_id: UCN7rkrXKCddsdKqH9xBiUTw
+    topic: politics
+    note: "2026-11-11 재분류 news→politics (영상 단위 주제 다수결)"
+  # TVCHOSUN FOOD · 구독 88900 · 영상 76개 중 mukbang 75%, 현재 주제 news 0%
+  - channel_id: UCtQZCFX4trYiFc3d3psq0KA
+    topic: mukbang
+    note: "2026-11-11 재분류 news→mukbang (영상 단위 주제 다수결)"
+  # 정치본색티비 · 구독 148000 · 영상 84개 중 politics 74%, 현재 주제 news 20%
+  - channel_id: UCK1DZp9dQ0QhbdDSaprYNEw
+    topic: politics
+    note: "2026-11-11 재분류 news→politics (영상 단위 주제 다수결)"
+  # 송국건의 혼술 · 구독 789000 · 영상 202개 중 politics 71%, 현재 주제 news 29%
+  - channel_id: UC-U6-u6w-zNM_w6ilDVYqHQ
+    topic: politics
+    note: "2026-11-11 재분류 news→politics (영상 단위 주제 다수결)"
+  # 굿뉴스 · 구독 106000 · 영상 214개 중 politics 68%, 현재 주제 news 29%
+  - channel_id: UCMscwXAQZh74vzINkv8sv1A
+    topic: politics
+    note: "2026-11-11 재분류 news→politics (영상 단위 주제 다수결)"
+  # 김용민TV · 구독 893000 · 영상 169개 중 politics 68%, 현재 주제 news 30%
+  - channel_id: UCljnbFCt-4doBr7wtEIIbbw
+    topic: politics
+    note: "2026-11-11 재분류 news→politics (영상 단위 주제 다수결)"
+  # 오마이TV · 구독 2460000 · 영상 795개 중 politics 68%, 현재 주제 news 28%
+  - channel_id: UClAfLVQYZSLrMAQQ_SXPVZw
+    topic: politics
+    note: "2026-11-11 재분류 news→politics (영상 단위 주제 다수결)"
+  # 정치일범 · 구독 85200 · 영상 84개 중 politics 67%, 현재 주제 news 29%
+  - channel_id: UCAsCK4B_l0eozlardnAx9rw
+    topic: politics
+    note: "2026-11-11 재분류 news→politics (영상 단위 주제 다수결)"
+  # IB토마토 · 구독 11900 · 영상 62개 중 economy 66%, 현재 주제 news 21%
+  - channel_id: UCO_R3DYw8Vjk87-sMhteDUw
+    topic: economy
+    note: "2026-11-11 재분류 news→economy (영상 단위 주제 다수결)"
+  # 옛능: OBS 예능 · 구독 156000 · 영상 152개 중 web-drama 64%, 현재 주제 news 5%
+  - channel_id: UCT3usBwYM36YFlJmsLY7bIA
+    topic: web-drama
+    note: "2026-11-11 재분류 news→web-drama (영상 단위 주제 다수결)"
+  # 토마토패스 · 구독 9220 · 영상 33개 중 education 64%, 현재 주제 news 3%
+  - channel_id: UCb-tmpWRLYFkfYF7-uZ5NuA
+    topic: education
+    note: "2026-11-11 재분류 news→education (영상 단위 주제 다수결)"
+  # 과학촙촙 · 구독 12800 · 영상 10개 중 science 60%, 현재 주제 news 0%
+  - channel_id: UCpQkJ6mLU4FvWndi_OAA2ww
+    topic: science
+    note: "2026-11-11 재분류 news→science (영상 단위 주제 다수결)"
+  # 미스&미스터트롯 · 구독 2100000 · 영상 170개 중 music 55%, 현재 주제 news 0%
+  - channel_id: UCskIKQGpjI5sG2ZLtWLYSmw
+    topic: music
+    note: "2026-11-11 재분류 news→music (영상 단위 주제 다수결)"
+  # 채널에이드: 채널A Drama & Enjoy · 구독 1280000 · 영상 160개 중 web-drama 54%, 현재 주제 news 22%
+  - channel_id: UCB-ogYCX9Me8nP9gEGpMjUg
+    topic: web-drama
+    note: "2026-11-11 재분류 news→web-drama (영상 단위 주제 다수결)"
+  # 김기자 TV · 구독 182000 · 영상 151개 중 celeb 54%, 현재 주제 news 21%
+  - channel_id: UC1bM-swi2Q9ptnv5Ra_fpag
+    topic: celeb
+    note: "2026-11-11 재분류 news→celeb (영상 단위 주제 다수결)"
+  # 씨네플레이 CINEPLAY · 구독 88500 · 영상 23개 중 web-drama 52%, 현재 주제 news 0%
+  - channel_id: UCCqlE0lqyjr5BBpWn8G4cLA
+    topic: web-drama
+    note: "2026-11-11 재분류 news→web-drama (영상 단위 주제 다수결)"
+  # TV CHOSUN ENTERTAINMENT & MEDIA · 구독 26600 · 영상 25개 중 music 52%, 현재 주제 news 0%
+  - channel_id: UCRW7NvCQNUB7kH05wqRuIow
+    topic: music
+    note: "2026-11-11 재분류 news→music (영상 단위 주제 다수결)"
+  # SBS 옛날 드라마 - 빽드 · 구독 1060000 · 영상 99개 중 movie-review 88%, 현재 주제 pets 2%
+  - channel_id: UC41Vyqs1wSY0FTMqDsLsELA
+    topic: movie-review
+    note: "2026-11-11 재분류 pets→movie-review (영상 단위 주제 다수결)"
+  # SBS 옛날 예능 - 빽능 · 구독 1930000 · 영상 182개 중 web-drama 81%, 현재 주제 pets 12%
+  - channel_id: UCvRIeQeTZDHRcqVZRu0XBug
+    topic: web-drama
+    note: "2026-11-11 재분류 pets→web-drama (영상 단위 주제 다수결)"
+  # 런닝맨 - 스브스 공식 채널 · 구독 3360000 · 영상 78개 중 web-drama 78%, 현재 주제 pets 10%
+  - channel_id: UCaKod3X1Tn4c7Ci0iUKcvzQ
+    topic: web-drama
+    note: "2026-11-11 재분류 pets→web-drama (영상 단위 주제 다수결)"
+  # SBS 스브스 Drama · 구독 7040000 · 영상 118개 중 movie-review 71%, 현재 주제 pets 7%
+  - channel_id: UC6erIDuvbOaAO-OT5rB2Xew
+    topic: movie-review
+    note: "2026-11-11 재분류 pets→movie-review (영상 단위 주제 다수결)"
+  # [스토리 뮤직] OSTㅣBGMㅣ명장면 MV 채널 · 구독 186000 · 영상 39개 중 movie-review 59%, 현재 주제 pets 10%
+  - channel_id: UCKGufP1Q1QWJG1nvzXhWcEg
+    topic: movie-review
+    note: "2026-11-11 재분류 pets→movie-review (영상 단위 주제 다수결)"
+  # SBS Catch · 구독 3510000 · 영상 64개 중 movie-review 53%, 현재 주제 pets 12%
+  - channel_id: UC3re3ueOE_6VZK85zlEUWFA
+    topic: movie-review
+    note: "2026-11-11 재분류 pets→movie-review (영상 단위 주제 다수결)"
+  # SBS Entertainment · 구독 7520000 · 영상 331개 중 web-drama 51%, 현재 주제 pets 15%
+  - channel_id: UCmjNKt6kITwaZTqvWuaSPLg
+    topic: web-drama
+    note: "2026-11-11 재분류 pets→web-drama (영상 단위 주제 다수결)"
+  # 박쌤의 개발새발 · 구독 82600 · 영상 8개 중 fitness 88%, 현재 주제 sports 12%
+  - channel_id: UCxOhohy2cZHuJ67leDWZMPw
+    topic: fitness
+    note: "2026-11-11 재분류 sports→fitness (영상 단위 주제 다수결)"
+  # 알파경제TV · 구독 112000 · 영상 165개 중 economy 61%, 현재 주제 sports 3%
+  - channel_id: UCKEFCtNcX947ymUW1bpPrDg
+    topic: economy
+    note: "2026-11-11 재분류 sports→economy (영상 단위 주제 다수결)"
+  # SBS D FORUM (SDF) · 구독 17400 · 영상 12개 중 science 50%, 현재 주제 sports 25%
+  - channel_id: UCNZzbT6flEsfPDZ7Pjd-VXw
+    topic: science
+    note: "2026-11-11 재분류 sports→science (영상 단위 주제 다수결)"
+  # 쌈밥TV SSAMBOB · 구독 305000 · 영상 29개 중 game 100%, 현재 주제 tech 0%
+  - channel_id: UCaHIZAKows704_gk6bjdAog
+    topic: game
+    note: "2026-11-11 재분류 tech→game (영상 단위 주제 다수결)"
+  # 레트로 각종아재 Retro Gakjong · 구독 27100 · 영상 22개 중 game 91%, 현재 주제 tech 9%
+  - channel_id: UCyV80qbKfmV6xZya3IqLTLg
+    topic: game
+    note: "2026-11-11 재분류 tech→game (영상 단위 주제 다수결)"
+  # 신사용 · 구독 260000 · 영상 9개 중 cars 78%, 현재 주제 tech 22%
+  - channel_id: UC6QJowhz8WHwkKr1KeN7FWg
+    topic: cars
+    note: "2026-11-11 재분류 tech→cars (영상 단위 주제 다수결)"
+  # MTN 머니투데이방송 · 구독 1190000 · 영상 208개 중 economy 58%, 현재 주제 tech 29%
+  - channel_id: UClErHbdZKUnD1NyIUeQWvuQ
+    topic: economy
+    note: "2026-11-11 재분류 tech→economy (영상 단위 주제 다수결)"
+  # Joe튜브 · 구독 778000 · 영상 11개 중 vlog 55%, 현재 주제 tech 9%
+  - channel_id: UCag-vLxfCjAUNebW9gA0yRg
+    topic: vlog
+    note: "2026-11-11 재분류 tech→vlog (영상 단위 주제 다수결)"
+  # 꼬북등산tv · 구독 229000 · 영상 76개 중 fitness 59%, 현재 주제 travel 8%
+  - channel_id: UC8JHSJ83OlA4N6sS3GJt0jA
+    topic: fitness
+    note: "2026-11-11 재분류 travel→fitness (영상 단위 주제 다수결)"
+  # MinTube 민크스TV · 구독 97600 · 영상 5개 중 game 100%, 현재 주제 vlog 0%
+  - channel_id: UCXMUDEtGWtW-75osXwx-DaA
+    topic: game
+    note: "2026-11-11 재분류 vlog→game (영상 단위 주제 다수결)"
+  # 배움의 현장 · 구독 19400 · 영상 7개 중 self-dev 100%, 현재 주제 vlog 0%
+  - channel_id: UCicK0GgDHfbRCanpplIfA5Q
+    topic: self-dev
+    note: "2026-11-11 재분류 vlog→self-dev (영상 단위 주제 다수결)"
+  # HIU 하이유 · 구독 6720000 · 영상 22개 중 mukbang 95%, 현재 주제 vlog 0%
+  - channel_id: UCw-QmownJwilhTje10TYlIg
+    topic: mukbang
+    note: "2026-11-11 재분류 vlog→mukbang (영상 단위 주제 다수결)"
+  # 냉이킴 · 구독 86300 · 영상 11개 중 game 82%, 현재 주제 vlog 18%
+  - channel_id: UCcHVk5SFxfYhCbbX8pWWuVg
+    topic: game
+    note: "2026-11-11 재분류 vlog→game (영상 단위 주제 다수결)"
+  # 알파남 - 부업으로 부자되는 방법 · 구독 168000 · 영상 16개 중 self-dev 81%, 현재 주제 vlog 6%
+  - channel_id: UC-SDn1Rid0XP06ovSQwLnZg
+    topic: self-dev
+    note: "2026-11-11 재분류 vlog→self-dev (영상 단위 주제 다수결)"
+  # 카페집사 · 구독 199000 · 영상 5개 중 pets 80%, 현재 주제 vlog 20%
+  - channel_id: UCmyFB-ySHaEG2W31RYLwROA
+    topic: pets
+    note: "2026-11-11 재분류 vlog→pets (영상 단위 주제 다수결)"
+  # Leeby리비 · 구독 500000 · 영상 16개 중 mukbang 75%, 현재 주제 vlog 19%
+  - channel_id: UCI3-5FX4IrRyniAiUnK1BWQ
+    topic: mukbang
+    note: "2026-11-11 재분류 vlog→mukbang (영상 단위 주제 다수결)"
+  # 핫식당 · 구독 461000 · 영상 7개 중 mukbang 71%, 현재 주제 vlog 14%
+  - channel_id: UCSfEgovcmL4kl-wFLlaKKRg
+    topic: mukbang
+    note: "2026-11-11 재분류 vlog→mukbang (영상 단위 주제 다수결)"
+  # 아마존 글로벌셀링 · 구독 31600 · 영상 22개 중 economy 59%, 현재 주제 vlog 0%
+  - channel_id: UCG9ppgo2mL91FTHyt3YOZpQ
+    topic: economy
+    note: "2026-11-11 재분류 vlog→economy (영상 단위 주제 다수결)"
+  # 과롱사 · 구독 8220 · 영상 35개 중 game 74%, 현재 주제 web-drama 26%
+  - channel_id: UCfc_WGYnpub6LuEHiwcWdNg
+    topic: game
+    note: "2026-11-11 재분류 web-drama→game (영상 단위 주제 다수결)"
 untrack: []

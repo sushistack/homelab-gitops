@@ -222,7 +222,7 @@ subtopics:
     default: true
   - slug: mr-review
     parent: movie-review
-    label: '리뷰·해설'
+    label: '영화 리뷰·해설'
     aliases: [영화리뷰, 결말포함, 줄거리요약]
   - slug: mr-clip
     parent: movie-review
@@ -264,3 +264,45 @@ subtopics:
     parent: beauty-life
     label: '기타 뷰티'
     default: true
+  # 2026-11-11 (PERSONA13, operator approved): sports peers were baseball/football/variety for a golf channel,
+  # self-dev had no side-hustle node, movie-review mixed film reviews with drama recaps.
+  - slug: golf
+    parent: sports
+    label: '골프'
+    aliases: [골프레슨, 스윙, 드라이버]
+  - slug: baseball
+    parent: sports
+    label: '야구'
+    aliases: [KBO, MLB, 프로야구]
+  - slug: football
+    parent: sports
+    label: '축구'
+    aliases: [EPL, K리그, 해외축구]
+  - slug: basketball
+    parent: sports
+    label: '농구·배구'
+    aliases: [NBA, KBL, 배구]
+  - slug: sports-etc
+    parent: sports
+    label: '기타 스포츠'
+    default: true
+  - slug: side-hustle
+    parent: self-dev
+    label: '부업·돈 버는 법'
+    aliases: [부업, 수익화, N잡]
+  - slug: motivation
+    parent: self-dev
+    label: '동기부여·성공'
+    aliases: [동기부여, 성공습관]
+  - slug: mind
+    parent: self-dev
+    label: '마인드·심리'
+    aliases: [심리학, 마음공부, 인간관계]
+  - slug: selfdev-etc
+    parent: self-dev
+    label: '기타 자기계발'
+    default: true
+  - slug: mr-drama
+    parent: movie-review
+    label: '드라마 리뷰·해설'
+    aliases: [드라마리뷰, 드라마요약]
