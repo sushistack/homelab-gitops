@@ -12,7 +12,6 @@ spec:
     - https://charts.jetstack.io   # Story 1.5: cert-manager Helm chart (vendor repo referenced as a source)
     - https://argoproj.github.io/argo-helm   # Story 2.1: ArgoCD self-management chart (argocd/apps/argocd.yaml)
     - https://bitnami.github.io/sealed-secrets   # Story 2.3: Sealed Secrets controller Helm chart (vendor repo referenced as a source)
-    - https://langfuse.github.io/langfuse-k8s   # Langfuse v3 self-hosted observability (argocd/apps/langfuse.yaml)
     - ghcr.io/actions/actions-runner-controller-charts   # 2026-11-06: ARC controller + runner scale sets (OCI Helm, argocd/apps/arc-*.yaml)
   destinations:
     - server: https://kubernetes.default.svc

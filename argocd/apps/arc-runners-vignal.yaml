@@ -2,7 +2,7 @@
 # never point a self-hosted runner at a public repo, an outside PR would run code in the homelab) run here as
 # ephemeral pods: one pod per job, removed when the job ends, 0 pods when idle.
 #
-# Multi-source Application (like langfuse.yaml):
+# Multi-source Application:
 #   Source 1: the gha-runner-scale-set chart (version pinned in versions.yaml).
 #   Source 2: infra/arc-runners/ — the SealedSecret `arc-github` (key github_token: a fine-grained PAT on
 #             sushistack/vignal with Administration read/write, which repo-level runner registration needs).
