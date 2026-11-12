@@ -1628,3 +1628,479 @@ approve:
     topic: self-dev
     note: "scout:featured 구독 46300 롱폼 44/50 최근 업로드 2026-11-11"
 untrack: []
+
+# 2026-11-12 (user-approved, PERSONA15~18: 당뇨/당뇨병, 인공지능/AI split one subject's counts): duplicate subjects
+# found by a shared name key (same type), wrong pairs removed by hand; each group merges into its most-linked subject.
+subjects:
+  - action: merge
+    subject: s_qiqaj47h
+    into: s_5m5c3twh
+    note: "항저우 아시안게임 → 2022 항저우 아시안게임"
+  - action: merge
+    subject: s_4w62eam7
+    into: s_5m5c3twh
+    note: "2022년 항저우 아시안 게임 → 2022 항저우 아시안게임"
+  - action: merge
+    subject: s_jakj3e3e
+    into: s_qkhdkruf
+    note: "아이치-나고야 아시안게임 → 2026 아이치·나고야 아시안게임"
+  - action: merge
+    subject: s_wjhdkspz
+    into: s_qkhdkruf
+    note: "나고야 아시안게임 → 2026 아이치·나고야 아시안게임"
+  - action: merge
+    subject: s_byzt3r7h
+    into: s_qkhdkruf
+    note: "2026년 아이치·나고야 아시안 게임 → 2026 아이치·나고야 아시안게임"
+  - action: merge
+    subject: s_6sidoqa3
+    into: s_e3iy4a2l
+    note: "ACLE → AFC 챔피언스 리그 엘리트"
+  - action: merge
+    subject: s_f5ubndog
+    into: s_jdftir4b
+    note: "Bilibili Gaming → BLG"
+  - action: merge
+    subject: s_tnwpoiuo
+    into: s_jdftir4b
+    note: "빌리빌리 게이밍 → BLG"
+  - action: merge
+    subject: s_76w3n5mi
+    into: s_546txi36
+    note: "미국 소비자물가지수 → CPI"
+  - action: merge
+    subject: s_ctvey5wp
+    into: s_mhj7bc5j
+    note: "코덱스 → Codex"
+  - action: merge
+    subject: s_7ksly7rk
+    into: s_stwcfsnq
+    note: "튀지마세요 → DONT SPLASH"
+  - action: merge
+    subject: s_umuagyzg
+    into: s_ebddfodh
+    note: "바르셀로나 → FC 바르셀로나"
+  - action: merge
+    subject: s_iy77ihu7
+    into: s_lt53wyhg
+    note: "피파온라인4 → FC온라인"
+  - action: merge
+    subject: s_onwxkuni
+    into: s_sqouue3h
+    note: "G2 → G2 Esports"
+  - action: merge
+    subject: s_mhvigqf7
+    into: s_hf4ze644
+    note: "그랜드 테프트 오토 V → GTA5"
+  - action: merge
+    subject: s_n7n57pig
+    into: s_wheisrul
+    note: "제네시스 GV80 → GV80"
+  - action: merge
+    subject: s_wikb6rx4
+    into: s_qdo4nsus
+    note: "박혜원 → HYNN"
+  - action: merge
+    subject: s_dknrv32b
+    into: s_ar26dqzd
+    note: "인빅터스 게이밍 → IG"
+  - action: merge
+    subject: s_7z7ythj2
+    into: s_g45yxpe2
+    note: "국제통화기금 → IMF"
+  - action: merge
+    subject: s_j6b3fugp
+    into: s_3cidu7kz
+    note: "기아 K8 → K8"
+  - action: merge
+    subject: s_dtvllb4a
+    into: s_vcucczqo
+    note: "KBO → KBO 리그"
+  - action: merge
+    subject: s_63gw72sx
+    into: s_6s43jpww
+    note: "기아 타이거즈 → KIA 타이거즈"
+  - action: merge
+    subject: s_6zsmt5d4
+    into: s_aclg6ymf
+    note: "카르민코프 → Karmine Corp"
+  - action: merge
+    subject: s_433zjpr7
+    into: s_aclg6ymf
+    note: "KC → Karmine Corp"
+  - action: merge
+    subject: s_3t7dl52w
+    into: s_6tgmioyi
+    note: "로스앤젤레스 다저스 → LA 다저스"
+  - action: merge
+    subject: s_455ggn74
+    into: s_jbmmpkyd
+    note: "LH → LH한국토지주택공사"
+  - action: merge
+    subject: s_2aeukb63
+    into: s_oes7k66a
+    note: "메이저리그 → MLB"
+  - action: merge
+    subject: s_4cn4izuq
+    into: s_a2v3s7t6
+    note: "엔시티 드림 → NCT DREAM"
+  - action: merge
+    subject: s_amlj4drj
+    into: s_7tmqiiss
+    note: "엔시티 위시 → NCT WISH"
+  - action: merge
+    subject: s_h4kmvlza
+    into: s_tc3redov
+    note: "노드VPN → NordVPN"
+  - action: merge
+    subject: s_wxi3ugwv
+    into: s_i4csmhew
+    note: "플레이스테이션 5 프로 → PS5 Pro"
+  - action: merge
+    subject: s_cep4v5d7
+    into: s_4lvgzex3
+    note: "기아 PV5 → PV5"
+  - action: merge
+    subject: s_gm3pwvmb
+    into: s_q4h5nzdu
+    note: "포테이토 플리즈 → Potato Please"
+  - action: merge
+    subject: s_7z7pvzyf
+    into: s_la2j675t
+    note: "TES → Top Esports"
+  - action: merge
+    subject: s_2rlbhsdi
+    into: s_3ptvhu64
+    note: "kt wiz → kt 위즈"
+  - action: merge
+    subject: s_gpu35its
+    into: s_bihejzba
+    note: "갤럭시 Z 폴드 → 갤럭시 폴드"
+  - action: merge
+    subject: s_255vea4h
+    into: s_f77otfxu
+    note: "달걀을깨서훔치기 → 계란을훔치다"
+  - action: merge
+    subject: s_rmdkrdrm
+    into: s_o72ynoja
+    note: "Google → 구글"
+  - action: merge
+    subject: s_d6qcfx6e
+    into: s_k3bogphf
+    note: "구구덕 → 구스구스덕"
+  - action: merge
+    subject: s_tessaqp2
+    into: s_cha4aeln
+    note: "국정원 → 국가정보원"
+  - action: merge
+    subject: s_c2qyvk4z
+    into: s_wh5c25y2
+    note: "현대 그랜저 → 그랜저"
+  - action: merge
+    subject: s_vjlaqa57
+    into: s_o34n723q
+    note: "타스만 → 기아 타스만"
+  - action: merge
+    subject: s_vxwpc5cx
+    into: s_fprj4fo7
+    note: "빠숑 → 김학렬"
+  - action: merge
+    subject: s_ivtfvgjr
+    into: s_fuejdft2
+    note: "나는 SOLO : 사랑은 계속된다 → 나솔사계"
+  - action: merge
+    subject: s_7grmebou
+    into: s_fuejdft2
+    note: "나는 솔로, 사랑은 계속된다 → 나솔사계"
+  - action: merge
+    subject: s_dhneasgu
+    into: s_jakip6nm
+    note: "농협중앙회 → 농협"
+  - action: merge
+    subject: s_f2p6stl6
+    into: s_xd5wvojg
+    note: "NewJeans → 뉴진스"
+  - action: merge
+    subject: s_nmfa3l2y
+    into: s_koia4xe4
+    note: "당근 → 당근마켓"
+  - action: merge
+    subject: s_kc2gearf
+    into: s_axv65kkj
+    note: "당뇨 → 당뇨병"
+  - action: merge
+    subject: s_g6irg76d
+    into: s_3jobtrs2
+    note: "대한민국 대통령 → 대통령"
+  - action: merge
+    subject: s_pc24vq6q
+    into: s_hvl55rle
+    note: "수능 → 대학수학능력시험"
+  - action: merge
+    subject: s_4xuaqjml
+    into: s_pj7o6gzp
+    note: "국회 → 대한민국 국회"
+  - action: merge
+    subject: s_vfnmsoy7
+    into: s_u7556wan
+    note: "대한민국 남자 축구 국가대표팀 → 대한민국 축구 국가대표팀"
+  - action: merge
+    subject: s_f24hs6el
+    into: s_vjmn6lrp
+    note: "민주당 → 더불어민주당"
+  - action: merge
+    subject: s_ntkdp3ko
+    into: s_2gaswnkx
+    note: "Dressmaker → 드레스메이커"
+  - action: merge
+    subject: s_zhkrif4g
+    into: s_hdblhk6h
+    note: "디즈니+ → 디즈니플러스"
+  - action: merge
+    subject: s_ws2ay5kq
+    into: s_6enzblun
+    note: "DWG KIA → 디플러스 기아"
+  - action: merge
+    subject: s_apaft6qi
+    into: s_yltqb7ub
+    note: "우크라이나 전쟁 → 러시아-우크라이나 전쟁"
+  - action: merge
+    subject: s_ifivyhvb
+    into: s_yltqb7ub
+    note: "러우전쟁 → 러시아-우크라이나 전쟁"
+  - action: merge
+    subject: s_zpxorngm
+    into: s_knugqqyt
+    note: "레알 마드리드 CF → 레알 마드리드"
+  - action: merge
+    subject: s_5giyaaub
+    into: s_gcymzara
+    note: "롤드컵 → 리그 오브 레전드 월드 챔피언십"
+  - action: merge
+    subject: s_hy366urb
+    into: s_ycvd2po6
+    note: "RESCENE → 리센느"
+  - action: merge
+    subject: s_phepe7qu
+    into: s_yfsg4euc
+    note: "메시 → 리오넬 메시"
+  - action: merge
+    subject: s_ou5zzlyc
+    into: s_3isybtqo
+    note: "Meta → 메타"
+  - action: merge
+    subject: s_sjzyvjca
+    into: s_ztwtd4u6
+    note: "명조 → 명조: 워더링 웨이브"
+  - action: merge
+    subject: s_ekazgglt
+    into: s_dwae7bwg
+    note: "MEOVV → 미야오"
+  - action: merge
+    subject: s_6knaix5p
+    into: s_v32tsnyr
+    note: "알배추 → 배추"
+  - action: merge
+    subject: s_n2tryzp5
+    into: s_jcszaakh
+    note: "벤야민 네타냐후 → 베냐민 네타냐후"
+  - action: merge
+    subject: s_gro5zghn
+    into: s_pb7xvnhp
+    note: "보스턴 다이나믹스 → 보스턴다이내믹스"
+  - action: merge
+    subject: s_6cwtqcbr
+    into: s_aepaoouq
+    note: "BOYNEXTDOOR → 보이넥스트도어"
+  - action: merge
+    subject: s_tbfjfeye
+    into: s_ctowoxdt
+    note: "빠른무한 → 빨른무한"
+  - action: merge
+    subject: s_akaw2eb6
+    into: s_hfeqotyb
+    note: "Postpartum → 산후조리원"
+  - action: merge
+    subject: s_h2ekdoft
+    into: s_hfoitrxf
+    note: "기아 셀토스 → 셀토스"
+  - action: merge
+    subject: s_edsomy54
+    into: s_r3he7jqc
+    note: "수원삼성 → 수원 삼성 블루윙즈"
+  - action: merge
+    subject: s_5dv2uix5
+    into: s_ma23dpjz
+    note: "스타듀밸리 → 스다주밸리"
+  - action: merge
+    subject: s_plwojinv
+    into: s_wrxtuody
+    note: "Stupid Never Dies → 스튜피드 네버 다이즈"
+  - action: merge
+    subject: s_zkg4x3al
+    into: s_hfwohkdf
+    note: "SpaceX → 스페이스X"
+  - action: merge
+    subject: s_4eggvtei
+    into: s_bqie56fe
+    note: "무청시래기 → 시래기"
+  - action: merge
+    subject: s_mfcfagvz
+    into: s_bbzhmwz6
+    note: "Siri → 시리"
+  - action: merge
+    subject: s_lp3ku6z5
+    into: s_52wcgryp
+    note: "신천지예수교 증거장막성전 → 신천지"
+  - action: merge
+    subject: s_vqxl3uq2
+    into: s_6l5vqalj
+    note: "현대 아반떼 → 아반떼"
+  - action: merge
+    subject: s_kr2elr6r
+    into: s_fylxf3cf
+    note: "아스널 → 아스날 FC"
+  - action: merge
+    subject: s_kk7dxo53
+    into: s_fylxf3cf
+    note: "아스날 → 아스날 FC"
+  - action: merge
+    subject: s_cblaukyy
+    into: s_fylxf3cf
+    note: "아스널 FC → 아스날 FC"
+  - action: merge
+    subject: s_i66jhrr5
+    into: s_x4pvynbh
+    note: "ILLIT → 아일릿"
+  - action: merge
+    subject: s_hcorfmeu
+    into: s_dejfezn7
+    note: "AND2BLE → 앤더블"
+  - action: merge
+    subject: s_pb476ypb
+    into: s_lrdus5i5
+    note: "Anthropic → 앤트로픽"
+  - action: merge
+    subject: s_mrk75cb4
+    into: s_3mhrmmcb
+    note: "ATEEZ → 에이티즈"
+  - action: merge
+    subject: s_cgsstrlm
+    into: s_6j7v4bfq
+    note: "NVIDIA → 엔비디아"
+  - action: merge
+    subject: s_m6vrjjxk
+    into: s_h5be2yxo
+    note: "미국 연방준비제도 → 연준"
+  - action: merge
+    subject: s_koefk6un
+    into: s_h5be2yxo
+    note: "연방준비제도 → 연준"
+  - action: merge
+    subject: s_pc6knck6
+    into: s_bq72taxr
+    note: "ALLDAY PROJECT → 올데이프로젝트"
+  - action: merge
+    subject: s_t4sadgys
+    into: s_d5asopu2
+    note: "울산 HD → 울산 HD FC"
+  - action: merge
+    subject: s_sti2o6fz
+    into: s_gcprdeiq
+    note: "워렌버핏 → 워런 버핏"
+  - action: merge
+    subject: s_ffskudmj
+    into: s_slyryljt
+    note: "AI → 인공지능"
+  - action: merge
+    subject: s_lsnjebpp
+    into: s_ytm22vhp
+    note: "ITZY → 있지"
+  - action: merge
+    subject: s_6xyskcyo
+    into: s_v35wpixh
+    note: "Japanese Ramen Simulator → 재패니즈 라멘 시뮬레이터"
+  - action: merge
+    subject: s_zlygalvr
+    into: s_amdmncwh
+    note: "전국체육대회 → 전국체전"
+  - action: merge
+    subject: s_p3isjuso
+    into: s_5jql23we
+    note: "G80 → 제네시스 G80"
+  - action: merge
+    subject: s_l2ds373p
+    into: s_3tysfwfz
+    note: "Gemini → 제미나이"
+  - action: merge
+    subject: s_7he7sgwk
+    into: s_5nexp7fb
+    note: "젠지 e스포츠 → 젠지"
+  - action: merge
+    subject: s_ri2gcgpl
+    into: s_h2fq3w7c
+    note: "종부세 → 종합부동산세"
+  - action: merge
+    subject: s_tfqrlh4i
+    into: s_zuxnziy3
+    note: "중수청 → 중대범죄수사청"
+  - action: merge
+    subject: s_oq6ynybe
+    into: s_2abwneuw
+    note: "선관위 → 중앙선거관리위원회"
+  - action: merge
+    subject: s_rszcxqrj
+    into: s_jbyn5tmf
+    note: "천궁2 → 천궁-II"
+  - action: merge
+    subject: s_ne7ssf6q
+    into: s_qgbphyc4
+    note: "KAIST → 카이스트"
+  - action: merge
+    subject: s_dis5x5sk
+    into: s_p3bse6rj
+    note: "Claude Opus 5.5 → 클로드 오퍼스 5.5"
+  - action: merge
+    subject: s_x4jykatm
+    into: s_xxxpb7mu
+    note: "이현우 → 클템"
+  - action: merge
+    subject: s_zjm7rtqf
+    into: s_jzxdkjeb
+    note: "음바페 → 킬리안 음바페"
+  - action: merge
+    subject: s_sjxqfblw
+    into: s_sinpsz67
+    note: "로드스터 → 테슬라 로드스터"
+  - action: merge
+    subject: s_y27atuzn
+    into: s_huf3kvhk
+    note: "모델 Y → 테슬라 모델Y"
+  - action: merge
+    subject: s_65avocnh
+    into: s_c2roecv6
+    note: "현대 투싼 → 투싼"
+  - action: merge
+    subject: s_mufngxd4
+    into: s_3xufhmqt
+    note: "TWS → 투어스"
+  - action: merge
+    subject: s_spristeh
+    into: s_flqq5rlf
+    note: "KAI → 한국항공우주산업"
+  - action: merge
+    subject: s_dtwk6tsl
+    into: s_uhruvwwg
+    note: "오해원 → 해원"
+  - action: merge
+    subject: s_wtj45g2y
+    into: s_62shym6p
+    note: "HoYoverse → 호요버스"
+  - action: merge
+    subject: s_ibo444wa
+    into: s_ernc4xc7
+    note: "흑백요리사: 요리 계급 전쟁 → 흑백요리사"
+  - action: merge
+    subject: s_7q4fnjxe
+    into: s_izlengc2
+    note: "Higgsfield → 힉스필드"
