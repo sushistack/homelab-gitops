@@ -46,6 +46,9 @@ spec:
                       cpu: "1"
                       memory: 2Gi
                     limits:
+                      # 2 cores: an unbounded build took 3+ cores of a 4-vCPU node and spun the mini-PC fan
+                      # (2026-11-12). Builds run a bit slower; raise if CI time matters more than noise.
+                      cpu: "2"
                       memory: 6Gi   # vitest + Playwright e2e peak
     - repoURL: https://github.com/sushistack/homelab-gitops.git
       targetRevision: HEAD
