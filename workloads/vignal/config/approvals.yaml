@@ -1627,6 +1627,46 @@ approve:
   - channel_id: UCM-eG7xyhO5CPnVyr7qQHuA
     topic: self-dev
     note: "scout:featured 구독 46300 롱폼 44/50 최근 업로드 2026-11-11"
+  # 배틀그라운드 모바일 이스포츠 - PUBG MOBILE Esports KR (scout 2026-11-12)
+  - channel_id: UCCvEN8bTeF8Z2jcN513T1Gg
+    topic: game
+    note: "scout:mention 구독 33700 롱폼 16/50 최근 업로드 2026-10-30"
+  # 오프는 쉬는 날 (scout 2026-11-12)
+  - channel_id: UCTdBl-ksjdObuasuuPCydkQ
+    topic: beauty-life
+    note: "scout:mention 구독 15400 롱폼 4/50 최근 업로드 2026-11-09"
+  # 돈쌤 정현두 (scout 2026-11-12)
+  - channel_id: UC_IfodIHPHEc33FN_1CA6iw
+    topic: economy
+    note: "scout:mention 구독 36700 롱폼 42/50 최근 업로드 2026-11-12"
+  # 국밥 (scout 2026-11-12)
+  - channel_id: UCbQSNsVu1vK4G8Jh9Vb6k_g
+    topic: game
+    note: "scout:mention 구독 19900 롱폼 3/9 최근 업로드 2026-10-30"
+  # 살구 풀영상 (scout 2026-11-12)
+  - channel_id: UCihUwfQnmBTXwPS88fzbDgA
+    topic: game
+    note: "scout:mention 구독 36200 롱폼 50/50 최근 업로드 2026-11-01"
+  # REMILIA (scout 2026-11-12)
+  - channel_id: UCpeRFpJFnFVjGPFjbe05amQ
+    topic: game
+    note: "scout:mention 구독 83000 롱폼 45/50 최근 업로드 2026-11-09"
+  # 송파갑 박정훈 (scout 2026-11-12)
+  - channel_id: UCcnTo9FIpadCyY9RlCMcYQw
+    topic: news
+    note: "scout:popular 구독 27000 롱폼 27/50 최근 업로드 2026-11-12"
+  # 수쟁 (scout 2026-11-12)
+  - channel_id: UC2KANQLT612hxkaBkz1YP3w
+    topic: game
+    note: "scout:featured 구독 90500 롱폼 48/50 최근 업로드 2026-11-11"
+  # 석모기 (scout 2026-11-12)
+  - channel_id: UC2LSQHkWR0xvc-eue82iM8g
+    topic: game
+    note: "scout:featured 구독 38400 롱폼 1/50 최근 업로드 2026-11-12"
+  # GOLDENDRIVER [골든드라이버] (scout 2026-11-12)
+  - channel_id: UCCh1gXbyyn2x2oA_irIeguA
+    topic: fitness
+    note: "scout:featured 구독 21400 롱폼 6/34 최근 업로드 2026-11-11"
 untrack: []
 
 # 2026-11-12 (user-approved, PERSONA15~18: 당뇨/당뇨병, 인공지능/AI split one subject's counts): duplicate subjects
