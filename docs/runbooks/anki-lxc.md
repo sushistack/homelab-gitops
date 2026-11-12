@@ -4,6 +4,12 @@ Always-on Anki host for the `english-quest` n8n workflow. Runs two systemd servi
 unprivileged Proxmox LXC: `anki-headless` (AnkiConnect HTTP API on :8765) and `anki-syncserver`
 (:27701). k3s pods reach AnkiConnect by LAN IP — no ArgoCD, no cluster involvement.
 
+> **현재 상태 (2026-11-12): sync server 전용.** `english-quest` 워크플로우를 unpublish하면서
+> `anki-headless` + `xvfb`를 `systemctl disable --now`로 껐고 CT 메모리를 512M로 낮춤
+> (sync server만 ~66MB 사용). 폰 Anki는 계속 `anki.eli.kr`로 동기화함. 자동 카드 생성을
+> 다시 켜려면: `systemctl enable --now xvfb anki-headless` + `pct set 202 --memory 2048` +
+> 워크플로우 publish.
+
 > See [spec-anki-lxc.md](../../_bmad-output/implementation-artifacts/spec-anki-lxc.md) for design
 > rationale. See `versions.yaml` (repo root) for the pinned Anki version.
 
