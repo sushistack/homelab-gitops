@@ -328,7 +328,9 @@ tagging:
 # video_l1 에 둔다(25개씩 한 요청, llm: 블록·월 상한 공유). 실측 영상 1만 개 ≈ $0.16 → 월 약 $3.
 video_topics:
   enabled: true
-  max_per_run: 3000
+  # 2026-11-12 (user-approved kind backfill, one-off): 3000 -> 30000 so the dev step labels every 30-day video's kind
+  # (~120k, ≈ $2-3 once). The prod collector's image predates kind and only labels new videos. Back to 3000 after.
+  max_per_run: 30000
   group_size: 25
 
 # 관찰 태그 (Story 28.3, FR-86, AD-40). 썸네일·제목의 enum 태그는 config/observe-tags.yaml 에 정의한다.

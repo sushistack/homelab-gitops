@@ -51,7 +51,7 @@ spec:
               type: RuntimeDefault
           containers:
             - name: vignal
-              image: ghcr.io/sushistack/vignal@sha256:56f3c01bed1b34bab4a0ae58a9326ec6fdb6132a287096d4e51397c1abed78ee   # sha-d0e33a8 (dev: video kind, noise filters, tag grouping; dev state kind column)
+              image: ghcr.io/sushistack/vignal@sha256:63cf2fe35dc1c2b8100ef3b949d33d6468d32fad1e9c7f5ab66c109cfe0067f4   # sha-69a6b6d (dev: video kind with narrowed clip)
               args: ["publish-dev"]
               env:
                 - name: TZ
