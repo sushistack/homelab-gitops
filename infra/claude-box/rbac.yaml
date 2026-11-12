@@ -1,0 +1,98 @@
+# claude-box agent (LXC 203 `claude`, 10.0.0.13) — operator identity, NOT admin.
+# Previously applied by hand from github.com/sushistack/claude-box (claude-readonly-rbac.yaml +
+# kube-readonly.sh); now owned by ArgoCD so it can't silently drift or vanish.
+#
+# Allowed: everything `view` reads + ops verbs (restart/scale, delete pods, exec/port-forward,
+#   run Jobs, cordon/drain nodes).
+# Denied (by omission): secrets read, RBAC/CRD/namespace/PV writes, arbitrary create/update.
+# Config changes go through git PRs (gh) → ArgoCD; selfHeal reverts manual drift anyway.
+# Known gap: pods/exec can read a pod's own mounted secrets/env — accepted for debugging.
+#
+# Token: the SA token Secret below (filled by the token controller). The box's ~/.kube/config
+# embeds it; rotate = delete the Secret, let ArgoCD recreate, re-run claude-box/kube-readonly.sh.
+apiVersion: v1
+kind: Namespace
+metadata: {name: claude-box}
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata: {name: claude, namespace: claude-box}
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: claude-token
+  namespace: claude-box
+  annotations: {kubernetes.io/service-account.name: claude}
+type: kubernetes.io/service-account-token
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata: {name: claude-box-view}
+roleRef: {apiGroup: rbac.authorization.k8s.io, kind: ClusterRole, name: view}
+subjects: [{kind: ServiceAccount, name: claude, namespace: claude-box}]
+---
+# `view` skips cluster-scoped infra; add read on nodes/namespaces/PVs/storageclasses.
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata: {name: claude-box-cluster-read}
+rules:
+- apiGroups: [""]
+  resources: [nodes, namespaces, persistentvolumes]
+  verbs: [get, list, watch]
+- apiGroups: [storage.k8s.io]
+  resources: [storageclasses]
+  verbs: [get, list, watch]
+- apiGroups: [metrics.k8s.io]
+  resources: [nodes, pods]
+  verbs: [get, list]
+- apiGroups: [argoproj.io]   # ArgoCD sync/health status
+  resources: [applications, applicationsets, appprojects]
+  verbs: [get, list, watch]
+- apiGroups: [traefik.io]    # IngressRoute/Middleware debugging (view doesn't cover CRDs)
+  resources: ["*"]
+  verbs: [get, list, watch]
+- apiGroups: [cert-manager.io, bitnami.com]
+  resources: ["*"]
+  verbs: [get, list, watch]
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata: {name: claude-box-cluster-read}
+roleRef: {apiGroup: rbac.authorization.k8s.io, kind: ClusterRole, name: claude-box-cluster-read}
+subjects: [{kind: ServiceAccount, name: claude, namespace: claude-box}]
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata: {name: claude-box-operator}
+rules:
+- apiGroups: [""]                       # kill a stuck pod (controller recreates it)
+  resources: [pods]
+  verbs: [delete]
+- apiGroups: [""]                       # debugging
+  resources: [pods/exec, pods/portforward, pods/attach]
+  verbs: [create, get]
+- apiGroups: [""]                       # kubectl drain
+  resources: [pods/eviction]
+  verbs: [create]
+- apiGroups: [""]                       # kubectl cordon/uncordon
+  resources: [nodes]
+  verbs: [patch]
+- apiGroups: [apps]                     # rollout restart (patches a template annotation)
+  resources: [deployments, statefulsets, daemonsets]
+  verbs: [patch]
+- apiGroups: [apps]
+  resources: [deployments/scale, statefulsets/scale]
+  verbs: [get, patch, update]
+- apiGroups: [batch]                    # kubectl create job --from=cronjob/x ; clean up after
+  resources: [jobs]
+  verbs: [create, delete]
+- apiGroups: [batch]                    # suspend/resume a CronJob
+  resources: [cronjobs]
+  verbs: [patch]
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata: {name: claude-box-operator}
+roleRef: {apiGroup: rbac.authorization.k8s.io, kind: ClusterRole, name: claude-box-operator}
+subjects: [{kind: ServiceAccount, name: claude, namespace: claude-box}]

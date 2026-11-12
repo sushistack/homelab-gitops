@@ -1,0 +1,24 @@
+# claude-box agent identity (SA + RBAC) — see infra/claude-box/rbac.yaml for the permission model.
+# Self-authored kustomize in THIS repo (same pattern as ops-alerts / cluster-issuer).
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: claude-box
+  namespace: argocd
+  annotations:
+    argocd.argoproj.io/sync-wave: "2"
+spec:
+  project: homelab
+  source:
+    repoURL: https://github.com/sushistack/homelab-gitops.git
+    targetRevision: HEAD
+    path: infra/claude-box
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: claude-box
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - ServerSideApply=true
