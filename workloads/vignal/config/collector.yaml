@@ -76,7 +76,7 @@ snapshots:
 # 로 그대로 발행된다. 해시가 바뀌었는데 버전이 같으면 publish 가 실패한다(checkMetricHashes,
 # AD-11 과 같은 패턴). r24 는 G-5 승인 전까지 config/policy.json 에서 disabled 로 남는다.
 metrics:
-  version: 1
+  version: 2 # 2026-11-12 (user-approved): same-length usual + growth-curve estimates (vignal main af85f84). 이전 1
   baseline_max: 10 # AD-17: 같은 채널·같은 타깃 스냅샷의 최근 N 개(발행일 내림차순)
   baseline_min: 5 # AD-17: 표본이 이보다 적으면 배수 없음(insufficient)
   low_base_views: 100 # [ASSUMPTION] H-4, 운영자 결정(epic-7-decisions.md #4): 중앙값이 이보다 낮으면 low_base
@@ -320,6 +320,7 @@ tagging:
   description_chars: 400 # 설명란 앞부분(메모리에서만 사용). 2026-11-03 200→400(33.10 소재 정확도)
   skip_short_s: 180 # 2026-10-30 운영자(vignal D-45, FR-92): 이 초 이하 영상은 태깅 안 함. 0 = 끔
   per_channel_per_day: 2 # 2026-10-30 운영자(vignal D-45, FR-92): 채널·UTC 게시일당 K 개만 태깅. 0 = 끔
+  group_size: 5 # 2026-11-12 (user-approved, cost): 같은 채널 영상을 요청 1건에 5개까지 묶는다. 1 = 예전 방식
   channel_l2_share: 0.6 # tags pending 이 채널 2단계를 제안하는 비중
   subjects:
     hint_count: 10 # 2026-11-02 운영자(vignal Story 33.2): 프롬프트 힌트로 주는 채널 최근 30일 active 소재 수. 소재 추출을 끄려면 config/subject-types.yaml 을 ConfigMap 에서 뺀다
