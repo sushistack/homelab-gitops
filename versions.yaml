@@ -216,7 +216,8 @@ workloads:
 # time from https://github.com/ankitects/anki/releases.
 host-layer:
   anki:
-    # Proxmox LXC anki (#210). Runs anki-headless (AnkiConnect :8765) + anki-syncserver (:27701).
+    # Proxmox LXC anki (#202). anki-syncserver (:27701) only since 2026-11-12; anki-headless
+    # (AnkiConnect :8765) is installed but disabled — see the runbook's 현재 상태 note.
     # See docs/runbooks/anki-lxc.md. AnkiConnect add-on ID: 2055492159 (installed separately).
     version: 25.02.7          # CONFIRM at install — must match desktop + phone client versions
     ankiconnect_addon: "2055492159"
