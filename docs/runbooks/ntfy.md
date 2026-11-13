@@ -87,7 +87,7 @@ kubectl -n ntfy delete job ntfy-restore
 kubectl -n ntfy scale deploy/ntfy --replicas=1
 ```
 
-*B. Pinned node dead (`ntfy-data` PV is local-path on `k3s-cp-1`) — restore onto another node.*
+*B. Pinned node dead (`ntfy-data` PV is local-path on one node — `k3s-cp-2` since 2026-11-13) — restore onto another node.*
 Only if the node isn't coming back soon (its volume is newer than R2; the old PV is `Retain`, untouched):
 
 1. **PR: delete the `volumeName:` line** in `workloads/ntfy/pvc.yaml`, merge (else the recreated PVC
@@ -95,6 +95,10 @@ Only if the node isn't coming back soon (its volume is newer than R2; the old PV
 2. ```
    kubectl -n ntfy scale deploy/ntfy --replicas=0
    kubectl -n ntfy delete pod -l app.kubernetes.io/name=ntfy --force --grace-period=0
+   # COMPLETED backup-Job pods still reference the PVC and pvc-protection blocks deletion until they're gone
+   # (2026-11-13 live run: kuma stalled 9 min here). Delete those Jobs first:
+   kubectl -n ntfy get pods -o json | jq -r '.items[]|select(any(.spec.volumes[]?; .persistentVolumeClaim.claimName=="ntfy-data"))|.metadata.ownerReferences[0].name' \
+     | sort -u | xargs -r kubectl -n ntfy delete job
    kubectl -n ntfy delete pvc ntfy-data      # Argo recreates it → Pending (WaitForFirstConsumer); else `argocd app sync ntfy`
    kubectl apply -f workloads/ntfy/_restore/restore-job.yaml   # first consumer → volume lands on a live node
    kubectl -n ntfy logs -f job/ntfy-restore
@@ -104,6 +108,8 @@ Only if the node isn't coming back soon (its volume is newer than R2; the old PV
 3. Verify: `kubectl exec -n ntfy deploy/ntfy -- ntfy user list` shows the expected users/ACL; the next
    ops-alerter run logs no `ERROR: ntfy publish failed`; UptimeRobot back to UP.
 4. Later: optionally re-pin the new `volumeName` via PR; delete the dead node's Released PV when sure.
+
+*Live run of B (2026-11-13, PASS):* executed in production — ntfy moved cp-1 → cp-2, downtime 18s, users=7 tokens=5 acl=8, ops-alerter publish OK afterwards. Old PV `pvc-39bad596-…` left `Released` on cp-1 as a fallback.
 
 *Drill (2026-11-13, PASS):* scratch ns on `k3s-cp-3`, PVC + this Job (namespace sed'ed, `NotIn k3s-cp-1`
 affinity), then a ntfy pod started with CLI flags **without `upstream-base-url`** (so nothing reaches
