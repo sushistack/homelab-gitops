@@ -32,7 +32,7 @@ spec:
           # surprise DB schema migration). Upgrade = re-inspect, bump this digest via PR (revertible).
           # This digest IS the version SSOT for navidrome (workload images live in their manifest,
           # not versions.yaml — that file tracks platform components only; matches the ntfy precedent).
-          image: deluan/navidrome@sha256:c4b5cb36a790b3eb63ca6a68bbe2fe149c2d7fa2e586f7a480e61db630e6664b
+          image: deluan/navidrome:0.62.0@sha256:c4b5cb36a790b3eb63ca6a68bbe2fe149c2d7fa2e586f7a480e61db630e6664b
           ports:
             - containerPort: 4533   # navidrome's internal port (Compose host-mapped 1970 -> 4533)
           # Non-secret config from the ConfigMap; Last.fm secret from the SealedSecret.

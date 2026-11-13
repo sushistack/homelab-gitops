@@ -53,7 +53,7 @@ spec:
         - name: slskd
           # slskd/slskd — digest-pinned (AR29; :latest is floating). Re-resolve on a deliberate bump:
           #   docker buildx imagetools inspect slskd/slskd:latest
-          image: slskd/slskd@sha256:ab9ed50e028b524cefdb7c1dd8ebca368a076e18441ee8ac2326473eb850b4c3  # latest @ 2026-06-23
+          image: slskd/slskd:0.25.1@sha256:ab9ed50e028b524cefdb7c1dd8ebca368a076e18441ee8ac2326473eb850b4c3  # latest @ 2026-06-23
           ports:
             - containerPort: 5030   # web UI / API (HTTP)
             - containerPort: 50300  # Soulseek peer listen (no inbound port-forward; server relay is fine)

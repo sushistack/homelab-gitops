@@ -29,7 +29,7 @@ spec:
           # EXACT digest the live Compose host runs (was :latest = 1.23.17), so the migrated kuma.db
           # is read by the same schema (avoids the komga 1.21-vs-1.24 trap from 5.6). Re-confirm via
           #   docker buildx imagetools inspect louislam/uptime-kuma:1.23.17
-          image: louislam/uptime-kuma@sha256:3d632903e6af34139a37f18055c4f1bfd9b7205ae1138f1e5e8940ddc1d176f9
+          image: louislam/uptime-kuma:1.23.17@sha256:3d632903e6af34139a37f18055c4f1bfd9b7205ae1138f1e5e8940ddc1d176f9
           ports:
             - containerPort: 3001
           env:

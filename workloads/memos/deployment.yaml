@@ -26,7 +26,7 @@ spec:
         - name: memos
           # neosmemo/memos:stable floats -> pinned by digest (AR29). v0.30.0, amd64.
           # Upgrade = re-pin the digest for the new tag via PR (GitOps-revertible).
-          image: neosmemo/memos@sha256:51a4cef418b1f173ac37139ad99de08da5b8662136007231d3ac8a0498a3095a
+          image: neosmemo/memos:0.30.0@sha256:51a4cef418b1f173ac37139ad99de08da5b8662136007231d3ac8a0498a3095a
           ports:
             - containerPort: 5230
           env:
