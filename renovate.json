@@ -85,6 +85,11 @@
       "matchPackageNames": ["ghcr.io/grishy/any-sync-bundle"],
       "versioning": "regex:^(?<major>\\d+)\\.(?<minor>\\d+)\\.(?<patch>\\d+)-\\d{4}-\\d{2}-\\d{2}$",
       "dependencyDashboardApproval": true
+    },
+    {
+      "description": "Meilisearch (karakeep's search index) can change its on-disk index format even on MINOR releases — an in-place bump may refuse to open the old data. Every update waits for dashboard approval; plan a karakeep reindex (or dump/import) with it.",
+      "matchPackageNames": ["getmeili/meilisearch"],
+      "dependencyDashboardApproval": true
     }
   ]
 }
