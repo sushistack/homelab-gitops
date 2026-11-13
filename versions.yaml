@@ -199,7 +199,7 @@ workloads:
   # to the digest the host last ran (2026.6.1). Same tunnel/token — only its home changed.
   cloudflared:
     manifest: infra/cloudflared/deployment.yaml
-    image: cloudflare/cloudflared:2026.6.1@sha256:6d91c121b803126f7a5344005d17a9324788fc09d305b6e2560ec6040a7ae283
+    image: cloudflare/cloudflared:2026.10.7@sha256:4955524aeaa379e154023d5a027c250f7b35041a2e7e950cf13f144bc9b9c5ba
   # Stage 1 (public-host-automation) — external-dns automates public *.eli.kr CF DNS off Traefik
   # IngressRoutes. Tag pinned now (lint passes); SWAP TO @sha256 at apply (AR29):
   #   crane digest registry.k8s.io/external-dns/external-dns:v0.21.0

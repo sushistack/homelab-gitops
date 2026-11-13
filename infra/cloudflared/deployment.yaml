@@ -33,7 +33,7 @@ spec:
       containers:
         - name: cloudflared
           # Pinned in versions.yaml (Story 5.3 SSOT). Was :latest on .20 — pinned on the move.
-          image: cloudflare/cloudflared:2026.6.1@sha256:6d91c121b803126f7a5344005d17a9324788fc09d305b6e2560ec6040a7ae283
+          image: cloudflare/cloudflared:2026.10.7@sha256:4955524aeaa379e154023d5a027c250f7b35041a2e7e950cf13f144bc9b9c5ba
           # Stage 2: credentials-file mode. The tunnel id + ingress (catch-all → Traefik) live in
           # config.yaml (ConfigMap, git SSOT); --no-autoupdate/--metrics moved there too. The TUNNEL_TOKEN
           # envFrom is gone — auth is now the credentials.json Secret. /ready still on :2000 (metrics addr).
