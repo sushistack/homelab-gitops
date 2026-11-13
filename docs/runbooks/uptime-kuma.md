@@ -1,7 +1,7 @@
 # Runbook: uptime-kuma
 
 > HTTP prober for the homelab (ns `uptime-kuma`), alerts via ntfy. SQLite (`kuma.db`) on a
-> `local-path-retain` PVC → **pinned to one node** (today `k3s-cp-1`). Manifests:
+> `local-path-retain` PVC → **pinned to one node** (today `k3s-cp-2`, moved from cp-1 on 2026-11-13). Manifests:
 > [`workloads/uptime-kuma/`](../../workloads/uptime-kuma/). Kuma itself is watched out-of-band by
 > healthchecks.io (see [ops-alerts.md](ops-alerts.md) "Self-monitoring").
 
@@ -53,6 +53,10 @@ is `Retain`, so nothing below destroys it.
    ```
    kubectl -n uptime-kuma scale deploy/uptime-kuma --replicas=0
    kubectl -n uptime-kuma delete pod -l app.kubernetes.io/name=uptime-kuma --force --grace-period=0
+   # COMPLETED backup-Job pods still reference the PVC and pvc-protection blocks deletion until they're gone
+   # (2026-11-13 live run: kuma stalled 9 min here). Delete those Jobs first:
+   kubectl -n uptime-kuma get pods -o json | jq -r '.items[]|select(any(.spec.volumes[]?; .persistentVolumeClaim.claimName=="uptime-kuma-data"))|.metadata.ownerReferences[0].name' \
+     | sort -u | xargs -r kubectl -n uptime-kuma delete job
    kubectl -n uptime-kuma delete pvc uptime-kuma-data
    ```
    Argo recreates the PVC (no volumeName) → `Pending` (WaitForFirstConsumer) — expected.
@@ -81,3 +85,10 @@ Restore into a scratch namespace on a non-cp-1 node; prod untouched:
 
 Finding from the drill: the newest backup was 5h old and missed a monitor added that day → the RPO
 note above.
+
+## Live run of B (2026-11-13, PASS)
+
+Executed procedure B in production (cp-1 simulated lost via `NotIn k3s-cp-1` on the restore Job):
+kuma moved cp-1 → **cp-2**, 16/16 monitors restored. Downtime 618s — 9 min of it stuck on PVC
+deletion because completed backup-Job pods held the claim (step 2 now deletes them first; ntfy's run
+with that step: 18s). Old PV `pvc-5c7c6b4c-…` left `Released` on cp-1 as a fallback.

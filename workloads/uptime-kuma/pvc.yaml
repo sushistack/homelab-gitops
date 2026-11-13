@@ -12,6 +12,7 @@ spec:
   accessModes:
     - ReadWriteOnce
   storageClassName: local-path-retain
+  volumeName: pvc-0b68819c-d382-4f28-b318-6e648be903ad   # re-pinned after the 2026-11-13 cp-1→cp-2 move (runbook B)
   resources:
     requests:
       storage: 2Gi   # kuma.db + screenshot/heartbeat history; grow via PR if it fills
