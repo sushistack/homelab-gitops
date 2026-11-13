@@ -76,12 +76,6 @@ spec:
                   value: dev/snapshot/vignal-dev.db.gz
                 - name: TMPDIR
                   value: /tmp
-                # 2026-11-13 one-off: relabel the level-1 labels a stratified audit found confused (dramas under web-drama,
-                # esports under sports, defectors under mystery, channel topic copied in history/outdoor). Remove after it runs.
-                - name: VIGNAL_RETAG_BEFORE
-                  value: "2026-11-13T08:00:00Z"
-                - name: VIGNAL_RELABEL_L1
-                  value: web-drama,sports,mystery,history,outdoor
               envFrom:
                 - secretRef:
                     name: vignal-secrets   # R2_* (public bucket write), GEMINI_API_KEY; same as the prod job
