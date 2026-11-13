@@ -175,7 +175,7 @@ workloads:
   # (AR29 — each manifest comment carries the `imagetools inspect` command).
   semaphore:
     manifest: workloads/semaphore/deployment.yaml
-    image: semaphoreui/semaphore:v2.18.12
+    image: semaphoreui/semaphore:v2.20.23
   heimdall:
     manifest: workloads/heimdall/deployment.yaml
     image: lscr.io/linuxserver/heimdall:2.8.4
