@@ -122,11 +122,25 @@ ntfy's `auth.db`, backed up by the `ntfy-backup` CronJob). Nothing to back up he
   (`readyReplicas < desired`) — it catches a down pod even when the public endpoint is cached/healthy
   or internal-only. Do not re-implement Kuma's HTTP checks here. Whether Kuma is retired for a
   Prometheus/ntfy pipeline is an Epic 5 (NFR15b / Phase 3) decision, not this slice's.
-- **🔴 Self-monitoring gap (recorded honestly):** in-cluster alerting has a single point of failure —
-  **ntfy itself.** This poller cannot alert on ntfy's own outage (chicken-and-egg handed over by
-  Story 4.1 Task 6). **ntfy-down is detected out-of-band by uptime-kuma** (it probes `${SECRET:DOMAIN_NTFY}`).
-  A second independent channel (e.g. a healthchecks.io dead-man's-switch the CronJob pings each run,
-  so silence = alert) is the correct fix but is **NFR15b / Phase-3 scope** — deliberately not built here.
+- **Self-monitoring (out-of-band, built 2026-11-13):** ntfy, kuma and this poller all run in-cluster
+  (ntfy + kuma pinned to one node via local-path), so they fail together. Watchers that never touch
+  our ntfy, all alerting to **Discord**:
+
+  | Watcher | Watches | Fed by | Fires after |
+  |---|---|---|---|
+  | healthchecks.io `homelab ops alerter` (15m / 10m grace) | this poller, cluster, home uplink | `alert.sh` last line pings `$HC_PING_URL` on a **fully successful** run | ~25 min silence |
+  | healthchecks.io `homelab uptime kuma` (5m / 5m) | kuma process | Kuma HTTP monitor "Healthchecks Heartbeat" (interval 300, notifications off; lives in `kuma.db`) | ~10 min silence |
+  | UptimeRobot (free, 5m) | tunnel / DNS / CF / Traefik / ntfy from outside | HTTP check of `https://${SECRET:DOMAIN_NTFY}/v1/health` (Discord, `@here`) | 1 failed check |
+
+  - `HC_PING_URL` lives in the `ops-alerts-secrets` SealedSecret (the URL is a credential — anyone
+    holding it can fake "alive"). Rotate: regenerate the URL in healthchecks → reseal the key.
+  - **healthchecks DOWN for ops-alerter** → run "If DOWN do this" above (a script crash also stops the
+    ping, by design). **kuma check DOWN** → `kubectl get pods -n uptime-kuma -o wide` + node health.
+    **UptimeRobot DOWN** but healthchecks green → cluster is fine, the public path broke: cloudflared
+    tunnel / DNS / CF.
+  - Planned maintenance: pause the checks in the healthchecks UI first, or expect alerts.
+  - Rehearse end-to-end: `curl https://hc-ping.com/<uuid>/fail` → Discord DOWN; a normal ping (or next
+    poll) → UP. Uses the real check + real integration; no cluster change needed.
 
 ## NFR15 split (AC3 — resolves the PRD timing gap)
 
