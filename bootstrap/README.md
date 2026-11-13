@@ -12,7 +12,7 @@ Everything after it reconciles.
      `--tls-san` (all three node IPs); **no** `--disable=traefik`.
    - nodes 2 & 3: join with `--server https://<node1>:6443` + the shared node-token, as `server`
      (**NOT** agent) → etcd **quorum=3, never 2**.
-   - then on node 1, once: install **ArgoCD** (chart `9.5.21`, appVersion `v3.4.3`) via Helm →
+   - then on node 1, once: install **ArgoCD** (chart `9.7.1`, appVersion `v3.4.4`) via Helm →
      inject the ArgoCD **repository Secret** directly → inject the **Cloudflare DNS-01 token**
      Secret (`cloudflare-dns01-token`, ns `cert-manager`) directly (AR4 — never via Sealed Secrets).
 3. **The single manual line** (Ansible does not own this):
