@@ -23,7 +23,7 @@ spec:
         - name: calibre
           # lscr.io/linuxserver/calibre-web. CONFIRM the current tag + SWAP TO @sha256 at cutover (AR29):
           #   docker buildx imagetools inspect lscr.io/linuxserver/calibre-web:latest
-          image: lscr.io/linuxserver/calibre-web:0.6.24
+          image: lscr.io/linuxserver/calibre-web:0.6.27
           ports:
             - containerPort: 8083
           env:
