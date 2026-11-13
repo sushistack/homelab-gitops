@@ -160,7 +160,7 @@ workloads:
   # at cutover (AR29 — the manifest comments carry the `imagetools inspect` command for each).
   komga:
     manifest: workloads/komga/deployment-komga.yaml
-    image: gotson/komga:1.30.1   # must match the LXC DB schema (older = TEMP_STRING_LIST breakage)
+    image: gotson/komga:1.30.1   # forward-only DB migrations — never downgrade; rollback = restore backup
   suwayomi:
     manifest: workloads/komga/deployment-suwayomi.yaml
     image: ghcr.io/suwayomi/tachidesk@sha256:6bb8fa8cf1cf86589e5851f2f1c2ede5c8248d53982ec1795a715dcde85b1da2  # stable @ 2026-06-19 (retired floating :stable, AR29)
