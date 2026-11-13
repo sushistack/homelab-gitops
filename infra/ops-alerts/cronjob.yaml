@@ -29,7 +29,7 @@ spec:
             - name: alerter
               # bundles kubectl + jq + curl. PIN to a digest at hardening (AR29 — exact tag for now):
               #   docker buildx imagetools inspect alpine/k8s:1.31.0
-              image: alpine/k8s:1.31.0
+              image: alpine/k8s:1.37.1
               command: ["/bin/sh", "/scripts/alert.sh"]
               env:
                 - name: NTFY_URL
