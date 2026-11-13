@@ -76,11 +76,6 @@ spec:
                   value: dev/snapshot/vignal-dev.db.gz
                 - name: TMPDIR
                   value: /tmp
-                # 2026-11-13 one-off: re-label dev game rows with the new vtopic prompt (as prod). Remove after.
-                - name: VIGNAL_RETAG_BEFORE
-                  value: "2026-11-13T00:00:00Z"
-                - name: VIGNAL_RELABEL_L1
-                  value: game
               envFrom:
                 - secretRef:
                     name: vignal-secrets   # R2_* (public bucket write), GEMINI_API_KEY; same as the prod job
@@ -89,7 +84,7 @@ spec:
                   cpu: 50m
                   memory: 128Mi
                 limits:
-                  memory: 2Gi              # OOM at 1Gi 2026-11-10 (vtopic + observe_tags + publish in one job); OOM at 512Mi 2026-11-03
+                  memory: 3Gi              # OOM at 2Gi 2026-11-13 (sha-998f618: peers/stats/provisional facts); OOM at 1Gi 2026-11-10 (vtopic + observe_tags + publish in one job); OOM at 512Mi 2026-11-03
               securityContext:
                 allowPrivilegeEscalation: false
                 readOnlyRootFilesystem: true
