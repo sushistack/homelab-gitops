@@ -178,7 +178,7 @@ workloads:
     image: semaphoreui/semaphore:v2.18.12
   heimdall:
     manifest: workloads/heimdall/deployment.yaml
-    image: lscr.io/linuxserver/heimdall:2.6.3
+    image: lscr.io/linuxserver/heimdall:2.8.4
   # Beszel decommissioned 2026-06-22 — superseded by Netdata (node + per-pod + Proxmox-child). See DECISIONS.md.
   # Netdata — heavier-detail node + per-pod monitoring (parent dashboard/dbengine + children DaemonSet
   # streaming). SAME image for both roles (role = config). Tag pinned now (lint passes); SWAP TO @sha256
