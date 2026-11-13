@@ -1667,6 +1667,46 @@ approve:
   - channel_id: UCCh1gXbyyn2x2oA_irIeguA
     topic: fitness
     note: "scout:featured 구독 21400 롱폼 6/34 최근 업로드 2026-11-11"
+  # 진꼰대 (scout 2026-11-13)
+  - channel_id: UCT433V5RRIlwHVv2t3Lv6PA
+    topic: game
+    note: "scout:mention 구독 95800 롱폼 28/50 최근 업로드 2026-11-05"
+  # 에릭의 거장연구소 (scout 2026-11-13)
+  - channel_id: UCgF5fyJGpkScPHLmhIrlUHg
+    topic: economy
+    note: "scout:mention 구독 24800 롱폼 49/50 최근 업로드 2026-11-12"
+  # 파랑일번지 (scout 2026-11-13)
+  - channel_id: UCbpvwdQkaG8_geq_111VjfQ
+    topic: news
+    note: "scout:popular 구독 11000 롱폼 50/50 최근 업로드 2026-11-13"
+  # 시니어IT교실 (scout 2026-11-13)
+  - channel_id: UCo2KOWkI_C52uewK8BIXCag
+    topic: tech
+    note: "scout:popular 구독 10200 롱폼 9/13 최근 업로드 2026-11-11"
+  # 도깨비의세계 (scout 2026-11-13)
+  - channel_id: UCo6HhzSfiIO_4BKGQ4_BY0g
+    topic: game
+    note: "scout:popular 구독 38800 롱폼 24/50 최근 업로드 2026-11-10"
+  # 격시탈 MMA뉴스 (scout 2026-11-13)
+  - channel_id: UCqOBMLiSXIxDK7dAzpgB_tQ
+    topic: news
+    note: "scout:popular 구독 96100 롱폼 50/50 최근 업로드 2026-11-13"
+  # 강원특별자치도 - GANGWON (scout 2026-11-13)
+  - channel_id: UC499dzcb2Fx9RD39Vqpz-lg
+    topic: celeb
+    note: "scout:featured 구독 45800 롱폼 3/50 최근 업로드 2026-11-13"
+  # 멍냥이 잼반응 (scout 2026-11-13)
+  - channel_id: UC5GGc-dM1qXXQDfllbODuEA
+    topic: web-drama
+    note: "scout:featured 구독 44900 롱폼 45/50 최근 업로드 2026-11-12"
+  # 토니마루 (scout 2026-11-13)
+  - channel_id: UCAo6a3BUoA5en5aauxUyAZQ
+    topic: game
+    note: "scout:featured 구독 17400 롱폼 2/50 최근 업로드 2026-11-09"
+  # 이도투 (scout 2026-11-13)
+  - channel_id: UCBXY1QwziAPkHA1QQi_NGXQ
+    topic: game
+    note: "scout:featured 구독 60800 롱폼 50/50 최근 업로드 2026-11-12"
 untrack: []
 
 # 2026-11-12 (user-approved, PERSONA15~18: 당뇨/당뇨병, 인공지능/AI split one subject's counts): duplicate subjects
