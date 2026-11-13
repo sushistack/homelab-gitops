@@ -51,7 +51,7 @@ spec:
               type: RuntimeDefault
           containers:
             - name: vignal
-              image: ghcr.io/sushistack/vignal@sha256:699793913c6d5d4bd978c4f981d1a345176037136a955d8aefebe05494116b4c   # sha-a486457 (dev: + topic-overrides.yaml)
+              image: ghcr.io/sushistack/vignal@sha256:138ec683133b1cf3e849fa6bd1e48b23f669cde3bf83cad69feaf04c232166fb   # sha-00c2a11 (dev: + topic-overrides.yaml + empty-label resend)
               args: ["publish-dev"]
               env:
                 - name: TZ
