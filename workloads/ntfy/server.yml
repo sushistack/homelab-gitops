@@ -6,7 +6,7 @@
 base-url: https://${SECRET:DOMAIN_NTFY}
 listen-http: :80
 cache-file: /var/cache/ntfy/cache.db
-cache-duration: 12h
+cache-duration: 168h   # 7d: ntfy-web History view reads a week of messages (cache.db ~2MB at current volume)
 auth-file: /var/cache/ntfy/auth.db
 auth-default-access: deny-all
 behind-proxy: true
