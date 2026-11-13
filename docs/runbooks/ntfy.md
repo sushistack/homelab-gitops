@@ -66,28 +66,49 @@ kubectl logs -n ntfy job/ntfy-backup-manual -f
 rclone lsl r2:homelab-k3s-services-backup/ntfy/ | tail
 ```
 
-**Restore (auth.db is the durable state; cache.db is disposable):**
-```
-# 1. fetch the chosen archive from R2 and unpack
-rclone copy r2:homelab-k3s-services-backup/ntfy/ntfy-<ts>.tar.gz /tmp/
-tar -C /tmp -xzf /tmp/ntfy-<ts>.tar.gz          # -> /tmp/auth.db, /tmp/cache.db
+**RPO = up to 6h** (users/tokens/ACL changed since the last backup are lost). After `ntfy user` /
+`ntfy access` / `ntfy token` changes, take a backup on demand (above).
 
-# 2. quiesce the pod so nothing holds the SQLite WAL, then copy into the PVC.
-#    FIRST suspend autosync — selfHeal:true would revert --replicas=0 back to 1 mid-restore and
-#    the re-spawned pod + ingest pod would both want the RWO PVC (Multi-Attach / racing writers).
-argocd app set ntfy --sync-policy none      # or: kubectl -n argocd patch app ntfy --type merge -p '{"spec":{"syncPolicy":{"automated":null}}}'
-kubectl scale deploy/ntfy -n ntfy --replicas=0
-#    (re-use the cutover ingest pod to get write access to the RWO PVC)
-kubectl apply -f workloads/ntfy/_cutover/ingest-job.yaml
-pod=$(kubectl -n ntfy get pod -l job-name=ntfy-ingest -o name | head -1)
-kubectl -n ntfy cp /tmp/auth.db "${pod#pod/}:/data/auth.db"
-kubectl -n ntfy delete -f workloads/ntfy/_cutover/ingest-job.yaml
+**Restore** — tool: [`_restore/restore-job.yaml`](../../workloads/ntfy/_restore/restore-job.yaml)
+(not Argo-managed). Pulls the newest R2 archive (or `BACKUP_FILE`), `integrity_check`s both DBs,
+drops stale `-wal/-shm`, copies `auth.db` (+ `cache.db`) into the PVC. Refuses to overwrite an
+existing `auth.db` unless `FORCE=1`. Drill-measured: restore ~9s, ntfy Ready ~1s after start.
 
-# 3. bring ntfy back, re-enable autosync, and verify the user/token count
-kubectl scale deploy/ntfy -n ntfy --replicas=1
-argocd app set ntfy --sync-policy automated --self-heal
-kubectl exec -n ntfy deploy/ntfy -- sqlite3 /var/cache/ntfy/auth.db "select count(*) from user;"
+The workloads ApplicationSet ignores Deployment `/spec/replicas` → `kubectl scale` is NOT reverted by
+selfHeal; no need to disable autosync.
+
+*A. DB corrupt / bad ACL change, node healthy (same PVC):*
 ```
+kubectl -n ntfy scale deploy/ntfy --replicas=0
+sed 's/{name: FORCE, value: "0"}/{name: FORCE, value: "1"}/' \
+  workloads/ntfy/_restore/restore-job.yaml | kubectl apply -f -
+kubectl -n ntfy logs -f job/ntfy-restore          # → "restored: users=N tokens=N acl=N"
+kubectl -n ntfy delete job ntfy-restore
+kubectl -n ntfy scale deploy/ntfy --replicas=1
+```
+
+*B. Pinned node dead (`ntfy-data` PV is local-path on `k3s-cp-1`) — restore onto another node.*
+Only if the node isn't coming back soon (its volume is newer than R2; the old PV is `Retain`, untouched):
+
+1. **PR: delete the `volumeName:` line** in `workloads/ntfy/pvc.yaml`, merge (else the recreated PVC
+   tries to bind the dead node's PV and stays Pending).
+2. ```
+   kubectl -n ntfy scale deploy/ntfy --replicas=0
+   kubectl -n ntfy delete pod -l app.kubernetes.io/name=ntfy --force --grace-period=0
+   kubectl -n ntfy delete pvc ntfy-data      # Argo recreates it → Pending (WaitForFirstConsumer); else `argocd app sync ntfy`
+   kubectl apply -f workloads/ntfy/_restore/restore-job.yaml   # first consumer → volume lands on a live node
+   kubectl -n ntfy logs -f job/ntfy-restore
+   kubectl -n ntfy delete -f workloads/ntfy/_restore/restore-job.yaml
+   kubectl -n ntfy scale deploy/ntfy --replicas=1
+   ```
+3. Verify: `kubectl exec -n ntfy deploy/ntfy -- ntfy user list` shows the expected users/ACL; the next
+   ops-alerter run logs no `ERROR: ntfy publish failed`; UptimeRobot back to UP.
+4. Later: optionally re-pin the new `volumeName` via PR; delete the dead node's Released PV when sure.
+
+*Drill (2026-11-13, PASS):* scratch ns on `k3s-cp-3`, PVC + this Job (namespace sed'ed, `NotIn k3s-cp-1`
+affinity), then a ntfy pod started with CLI flags **without `upstream-base-url`** (so nothing reaches
+phones via ntfy.sh). Results: users=7 tokens=5 acl=8, user/ACL list identical to prod; the real
+ops-alerter token → `200` on `homelab-ops`, `403` on a non-granted topic; anonymous → `403` (deny-all).
 
 ## Escalation / depends-on
 

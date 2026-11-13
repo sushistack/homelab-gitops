@@ -1,0 +1,58 @@
+# ONE-SHOT restore Job: R2 backup -> ntfy-data PVC. THROWAWAY: NOT in kustomization.yaml, so ArgoCD
+# never manages it. Procedure + when to use: docs/runbooks/ntfy.md "Restore".
+#
+# Run ONLY with ntfy scaled to 0 (RWO + SQLite). Pulls the newest archive, or BACKUP_FILE. auth.db
+# (users/tokens/ACL) is the durable state; cache.db (12h message cache) is restored too when present.
+# Refuses to overwrite an existing auth.db unless FORCE=1 (a stray apply is a no-op, not data loss).
+#
+#   kubectl apply -f workloads/ntfy/_restore/restore-job.yaml
+#   kubectl -n ntfy logs -f job/ntfy-restore
+#   kubectl -n ntfy delete -f workloads/ntfy/_restore/restore-job.yaml
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: ntfy-restore
+  namespace: ntfy
+spec:
+  backoffLimit: 0
+  activeDeadlineSeconds: 600
+  template:
+    spec:
+      restartPolicy: Never
+      containers:
+        - name: restore
+          image: alpine:3.20
+          command: [/bin/sh, -ceu]
+          args:
+            - |
+              apk add --no-cache sqlite rclone ca-certificates >/dev/null
+              src=r2:homelab-k3s-services-backup/ntfy
+              f="${BACKUP_FILE:-$(rclone lsf "$src/" | sort | tail -1)}"
+              [ -n "$f" ] || { echo "FATAL: no archive in $src"; exit 1; }
+              if [ -f /data/auth.db ] && [ "${FORCE:-0}" != 1 ]; then
+                echo "FATAL: /data/auth.db exists — set FORCE=1 to overwrite"; exit 1
+              fi
+              echo "restoring $f"
+              rclone copy "$src/$f" /tmp/
+              mkdir /tmp/x && tar -C /tmp/x -xzf "/tmp/$f"
+              for db in /tmp/x/*.db; do
+                [ "$(sqlite3 "$db" 'PRAGMA integrity_check;')" = ok ] || { echo "FATAL: integrity_check failed: $db"; exit 1; }
+              done
+              for db in auth.db cache.db; do
+                [ -f "/tmp/x/$db" ] || continue
+                rm -f "/data/$db" "/data/$db-wal" "/data/$db-shm"   # stale WAL must not replay over the restore
+                cp "/tmp/x/$db" "/data/$db"
+              done
+              echo "restored: users=$(sqlite3 /data/auth.db 'select count(*) from user;') tokens=$(sqlite3 /data/auth.db 'select count(*) from user_token;') acl=$(sqlite3 /data/auth.db 'select count(*) from user_access;')"
+          env:
+            - {name: RCLONE_CONFIG_R2_NO_CHECK_BUCKET, value: "true"}
+            - {name: BACKUP_FILE, value: ""}   # e.g. ntfy-2026-11-13T03-40-01.tar.gz; empty = newest
+            - {name: FORCE, value: "0"}
+          envFrom:
+            - secretRef: {name: ntfy-backup-r2}
+          volumeMounts:
+            - {name: data, mountPath: /data}
+      volumes:
+        - name: data
+          persistentVolumeClaim:
+            claimName: ntfy-data
