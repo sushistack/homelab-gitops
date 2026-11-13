@@ -18,6 +18,7 @@
       "description": "Workload image refs — kept identical in the manifest AND versions.yaml (bin/version-lint enforces the mirror), so match both globs in one manager => one PR rewrites both files.",
       "fileMatch": [
         "^workloads/.+\\.yaml$",
+        "^infra/.+\\.yaml$",
         "^versions\\.yaml$"
       ],
       "matchStrings": [
