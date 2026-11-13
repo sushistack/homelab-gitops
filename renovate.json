@@ -90,6 +90,11 @@
       "description": "Meilisearch (karakeep's search index) can change its on-disk index format even on MINOR releases — an in-place bump may refuse to open the old data. Every update waits for dashboard approval; plan a karakeep reindex (or dump/import) with it.",
       "matchPackageNames": ["getmeili/meilisearch"],
       "dependencyDashboardApproval": true
+    },
+    {
+      "description": "alpine/k8s bundles kubectl for the ops-alerter; kubectl is only supported within ±1 minor of the apiserver (k3s v1.35 → kubectl ≤1.36). Raise this ceiling in the same PR as a k3s upgrade (versions.yaml k3s.version).",
+      "matchPackageNames": ["alpine/k8s"],
+      "allowedVersions": "<1.37"
     }
   ]
 }
