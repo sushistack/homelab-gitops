@@ -58,7 +58,7 @@ spec:
               # versions + needs egress to the alpine CDN — fine under today's allow-all + the
               # backup-egress policy; bake a pinned sqlite+rclone image (and pin alpine by digest) when
               # the network-baseline default-deny sweep lands (upgrade path).
-              image: alpine:3.20
+              image: alpine:3.24
               command:
                 - /bin/sh
                 - -ceu
@@ -126,7 +126,7 @@ spec:
                   topologyKey: kubernetes.io/hostname   # land on the node holding bridge-data
           containers:
             - name: backup
-              image: alpine:3.20
+              image: alpine:3.24
               command:
                 - /bin/sh
                 - -ceu

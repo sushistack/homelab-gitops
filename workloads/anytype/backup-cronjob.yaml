@@ -61,7 +61,7 @@ spec:
               # rclone + kubectl + tar in alpine. // ponytail: runtime `apk add` floats versions and
               # needs CDN egress — fine under today's allow-all; bake a pinned image when the
               # network-baseline default-deny lands (upgrade path). PIN by digest at cutover.
-              image: alpine:3.20
+              image: alpine:3.24
               command:
                 - /bin/sh
                 - -ceu
@@ -140,7 +140,7 @@ spec:
                   topologyKey: kubernetes.io/hostname
           containers:
             - name: backup
-              image: alpine:3.20
+              image: alpine:3.24
               command:
                 - /bin/sh
                 - -ceu

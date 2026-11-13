@@ -33,7 +33,7 @@ spec:
                   topologyKey: kubernetes.io/hostname
           containers:
             - name: backup
-              image: alpine:3.20
+              image: alpine:3.24
               command:
                 - /bin/sh
                 - -ceu
