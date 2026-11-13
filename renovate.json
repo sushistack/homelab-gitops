@@ -58,9 +58,24 @@
       "enabled": false
     },
     {
-      "description": "Pin-by-digest stays pinned: refresh the digest when the upstream tag moves. Images pinned `name@sha256:` with NO tag are immutable and not Renovate-trackable (no tag to follow) — pin as `name:<tag>@sha256:<digest>` to make a workload trackable. Honest ceiling, documented in the runbook.",
+      "description": "Pin-by-digest stays pinned: refresh the digest when the upstream tag moves. CAUTION: images pinned `name@sha256:` with NO tag are tracked against `latest` — their 'digest' PRs can hide a MAJOR jump (gated by the approval rule below). Pin as `name:<tag>@sha256:<digest>` to get semver-aware PRs.",
       "matchDatasources": ["docker"],
       "pinDigests": true
+    },
+    {
+      "description": "Argo CD Image Updater stays on the classic 0.x chart (annotation-based). 1.x is a CRD-operator rewrite that breaks our Application annotations — never offer it.",
+      "matchPackageNames": ["argocd-image-updater"],
+      "allowedVersions": "<1"
+    },
+    {
+      "description": "Own images (ghcr.io/sushistack/*) are rolled by Argo CD Image Updater / their own CI and are private (no registry auth here) — not Renovate's job.",
+      "matchPackageNames": ["ghcr.io/sushistack/**"],
+      "enabled": false
+    },
+    {
+      "description": "Majors and tagless-digest bumps need a human look first (DB migrations, breaking config; a tagless digest PR may be a hidden major). They wait in the Dependency Dashboard until the checkbox is ticked.",
+      "matchUpdateTypes": ["major", "digest"],
+      "dependencyDashboardApproval": true
     }
   ]
 }
