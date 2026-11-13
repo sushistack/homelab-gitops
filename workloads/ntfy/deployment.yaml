@@ -39,6 +39,9 @@ spec:
           env:
             - name: TZ
               value: Asia/Seoul
+          envFrom:
+            - secretRef:
+                name: ntfy-webpush   # NTFY_WEB_PUSH_PRIVATE_KEY (Web Push VAPID private key)
           resources:
             requests:
               cpu: 100m
