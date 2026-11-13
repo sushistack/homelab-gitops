@@ -26,9 +26,9 @@ spec:
       terminationGracePeriodSeconds: 30   # WAL checkpoint flush on shutdown
       containers:
         - name: komga
-          # gotson/komga — MUST match the version that wrote the migrated DB (LXC #203 ran 1.24.4);
-          # an older komga can't handle the newer DB schema -> broken TEMP_STRING_LIST temp-table. (AR29: digest-pin later)
-          image: gotson/komga:1.24.4
+          # gotson/komga — DB migrations are FORWARD-ONLY: never pin an older komga than the one that last
+          # wrote the DB (broken TEMP_STRING_LIST temp-table). Rollback = restore the pre-upgrade backup. (AR29: digest-pin later)
+          image: gotson/komga:1.30.1
           ports:
             - containerPort: 25600
           env:
