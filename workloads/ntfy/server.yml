@@ -13,3 +13,10 @@ behind-proxy: true
 # Mobile background push (FCM/APNs) relayed via the ntfy.sh upstream — without it, apps get no
 # notification while backgrounded. ntfy.sh is public, so it is NOT tokenized.
 upstream-base-url: https://ntfy.sh
+
+# Web Push (browser push for ntfy-web / installed PWA, works with the tab closed).
+# Private key comes from env NTFY_WEB_PUSH_PRIVATE_KEY (SealedSecret ntfy-webpush). The public key below
+# must match ntfy-web deploy/config.js web_push_public_key.
+web-push-public-key: BATLo5RHqStR9rQEspTkce_yL2X7W30SOzXZTq-rg1D8GxOgKpW7Wa-Lc6i7VCZ-uFODXeBrObheJgt8h7MsmqY
+web-push-file: /var/cache/ntfy/webpush.db   # subscriptions; on the ntfy-data PVC next to cache/auth db
+web-push-email-address: kjm81812@gmail.com  # VAPID contact sent to push services
