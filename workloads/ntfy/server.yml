@@ -20,3 +20,4 @@ upstream-base-url: https://ntfy.sh
 web-push-public-key: BATLo5RHqStR9rQEspTkce_yL2X7W30SOzXZTq-rg1D8GxOgKpW7Wa-Lc6i7VCZ-uFODXeBrObheJgt8h7MsmqY
 web-push-file: /var/cache/ntfy/webpush.db   # subscriptions; on the ntfy-data PVC next to cache/auth db
 web-push-email-address: kjm81812@gmail.com  # VAPID contact sent to push services
+firebase-key-file: /etc/ntfy-firebase/firebase-key.json  # FCM for Notify Android (kr.eli.notify); deny-all topics get poll_request only, no message content to Google

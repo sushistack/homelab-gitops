@@ -73,6 +73,9 @@ spec:
             - name: config
               mountPath: /etc/ntfy          # server.yml (ConfigMap, ro)
               readOnly: true
+            - name: firebase
+              mountPath: /etc/ntfy-firebase # firebase-key.json (Secret ntfy-firebase, ro); not under /etc/ntfy (ConfigMap mount)
+              readOnly: true
       volumes:
         - name: data
           persistentVolumeClaim:
@@ -80,3 +83,6 @@ spec:
         - name: config
           configMap:
             name: ntfy-config
+        - name: firebase
+          secret:
+            secretName: ntfy-firebase
