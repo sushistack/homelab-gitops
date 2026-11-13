@@ -37,7 +37,7 @@ spec:
         - name: n8n
           # Already pinned to 2.23.4 in Compose — KEEP IT (AR29 carve-out): a copy-not-upgrade cutover
           # must not trigger a surprise n8n DB schema migration. Upgrade = bump this tag via PR (revertible).
-          image: n8nio/n8n:2.23.4
+          image: n8nio/n8n:2.48.0
           ports:
             - containerPort: 5678
           # envFrom ONLY (NOT per-key valueFrom / inline env: ${VAR}) — avoids the empty-string overwrite
