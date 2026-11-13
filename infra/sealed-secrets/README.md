@@ -13,11 +13,11 @@ Decision context: [`docs/DECISIONS.md`](../../docs/DECISIONS.md) and
 
 ## What is pinned / configured
 
-- **Controller v0.37.0, chart 2.18.6** (Bitnami `sealed-secrets`), wave 0,
+- **Controller v0.41.2, chart 2.22.0** (Bitnami `sealed-secrets`), wave 0,
   namespace `sealed-secrets`, release/controller name `sealed-secrets`,
   `ServerSideApply=true` (large CRD). Pin lives in
   [`versions.yaml`](../../versions.yaml); the local `kubeseal` CLI is kept at
-  the **same** v0.37.0.
+  the **same** v0.41.2.
 - **Consumption contract: `envFrom: secretRef` ONLY.** No inline `env: ${VAR}`,
   no per-key `env: valueFrom` — both re-introduce the Compose empty-overwrite
   trap (AR22).

@@ -39,15 +39,15 @@ sealed-secrets:
   # Story 2.3: workload-secret encryption, wave 0 (controller + CRD must exist before any
   # later-wave workload references a materialized Secret). Vendor Bitnami Helm chart referenced
   # as an ArgoCD `source` (argocd/apps/sealed-secrets.yaml) — NOT mirrored.
-  # Chart 2.18.6 maps to controller appVersion 0.37.0 (verified against the chart's Chart.yaml at
-  # install time, per Dev Notes). The local `kubeseal` CLI is pinned to the SAME v0.37.0 so the
+  # Chart 2.22.0 maps to controller appVersion 0.41.2 (verified against the chart's Chart.yaml at
+  # install time, per Dev Notes). The local `kubeseal` CLI is pinned to the SAME v0.41.2 so the
   # sealing format stays aligned with the controller. ServerSideApply required (large CRD — AR7).
   repo: https://bitnami.github.io/sealed-secrets   # repo moved bitnami-labs -> bitnami (old Pages site 404s)
   chart: sealed-secrets
   # renovate: datasource=helm depName=sealed-secrets registryUrl=https://bitnami.github.io/sealed-secrets
-  chartVersion: 2.22.0     # -> appVersion v0.37.0
-  appVersion: v0.37.0
-  kubeseal: v0.37.0        # local CLI pin — keep in lockstep with appVersion on any bump
+  chartVersion: 2.22.0     # -> appVersion v0.41.2
+  appVersion: v0.41.2
+  kubeseal: v0.41.2        # local CLI pin — keep in lockstep with appVersion on any bump
 
 argocd-image-updater:
   # Auto-digest follow for ntfy-web ONLY (our own app; CI repins :latest every main push). Tracks
