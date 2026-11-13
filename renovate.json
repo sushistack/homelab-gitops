@@ -7,19 +7,19 @@
   "prConcurrentLimit": 6,
   "labels": ["renovate", "upgrade"],
   "argocd": {
-    "fileMatch": [
-      "^argocd/apps/.+\\.yaml$",
-      "^argocd/applicationsets/.+\\.yaml$"
+    "managerFilePatterns": [
+      "/^argocd/apps/.+\\.yaml$/",
+      "/^argocd/applicationsets/.+\\.yaml$/"
     ]
   },
   "customManagers": [
     {
       "customType": "regex",
       "description": "Workload image refs — kept identical in the manifest AND versions.yaml (bin/version-lint enforces the mirror), so match both globs in one manager => one PR rewrites both files.",
-      "fileMatch": [
-        "^workloads/.+\\.yaml$",
-        "^infra/.+\\.yaml$",
-        "^versions\\.yaml$"
+      "managerFilePatterns": [
+        "/^workloads/.+\\.yaml$/",
+        "/^infra/.+\\.yaml$/",
+        "/^versions\\.yaml$/"
       ],
       "matchStrings": [
         "image:\\s*(?<depName>[^\\s:@]+(?:/[^\\s:@]+)*)(?::(?<currentValue>[^\\s@\"']+))?(?:@(?<currentDigest>sha256:[a-f0-9]+))?"
@@ -29,7 +29,9 @@
     {
       "customType": "regex",
       "description": "Platform Helm chart pins in versions.yaml (mirror of the argocd/apps targetRevisions). Inline `# renovate:` comments carry datasource/depName/registryUrl; depName matches the chart name the argocd manager uses, so both files bump in one PR.",
-      "fileMatch": ["^versions\\.yaml$"],
+      "managerFilePatterns": [
+        "/^versions\\.yaml$/"
+      ],
       "matchStrings": [
         "# renovate: datasource=(?<datasource>\\S+) depName=(?<depName>\\S+) registryUrl=(?<registryUrl>\\S+)\\s+chartVersion:\\s*[\"']?(?<currentValue>[^\"'\\s]+)"
       ]
