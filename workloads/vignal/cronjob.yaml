@@ -43,7 +43,7 @@ spec:
             - name: vignal
               # Immutable sha tag from the app repo's CI (NOT :latest — version-lint rejects
               # floating refs). Upgrade = bump here + versions.yaml in one PR.
-              image: ghcr.io/sushistack/vignal@sha256:ae3191f2caf8dab6d030235a3a74272759d0225591fd039b6c7f563ba6e05036   # sha-cda2128 (vignal main: tag hold_hours + compact vtopic + topic-overrides.yaml, 2026-11-13 user-approved + audited vtopic rules + empty-label resend)
+              image: ghcr.io/sushistack/vignal@sha256:006e7ccf80c851332727aaf100730d2484ebe4f528dcd95e39756c378920b404   # sha-a9bcd43 (vignal main: tag hold_hours + compact vtopic + topic-overrides.yaml, 2026-11-13 user-approved + audited vtopic rules + empty-label resend + override relabel)
               args: ["run"]
               env:
                 - name: TZ
