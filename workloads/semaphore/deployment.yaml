@@ -55,7 +55,7 @@ spec:
           # semaphoreui/semaphore. CONFIRM the current stable tag at install (this is a plausible
           # placeholder) + SWAP TO @sha256 digest at cutover (AR29):
           #   docker buildx imagetools inspect semaphoreui/semaphore:v2.18.12
-          image: semaphoreui/semaphore:v2.18.12
+          image: semaphoreui/semaphore:v2.20.23
           # Install sops into /usr/local/bin (on PATH) after start — see header. Best-effort: a download
           # failure must NOT crash-loop the Semaphore UI (sops is only needed when a task runs; a missing
           # sops surfaces as a clear task error, not an outage). Re-runs on every (re)start; ~1s.
