@@ -40,7 +40,7 @@ spec:
             - name: vignal
               # Immutable sha tag from the app repo's CI (NOT :latest — version-lint rejects
               # floating refs). Upgrade = bump here + versions.yaml in one PR.
-              image: ghcr.io/sushistack/vignal@sha256:b5ade4d051448236af90893c596157a9323f96f847f90392241c5b2808dad8e0   # sha-af85f84 (vignal main af85f84: epic-34 collector/publisher, no screen changes)
+              image: ghcr.io/sushistack/vignal@sha256:3fb263b5e6f1a3c2c618367653c63300e68930885aaa59c678e8f282c1fa9bfd   # sha-a8d240a (vignal main a8d240a: tagging prompt + one-off retag/relabel, no screen changes)
               args: ["run", "--stage", "tag"]
               env:
                 - name: TZ
@@ -55,6 +55,14 @@ spec:
                   value: https://${SECRET:DOMAIN_VIGNAL_SITE}/schema-support.json
                 - name: TMPDIR
                   value: /tmp
+                # 2026-11-13 one-off (PERSONA22, user-approved): re-send the last 30 days' LLM tags of these topics with the
+                # new prompt, and game vtopic labels. Idempotent (only rows tagged before the cutoff). Remove after the backfill.
+                - name: VIGNAL_RETAG_BEFORE
+                  value: "2026-11-13T00:00:00Z"
+                - name: VIGNAL_RETAG_TOPICS
+                  value: game,movie-review,mukbang,vlog,web-drama,beauty-life,cooking,self-dev,fashion,fitness,education
+                - name: VIGNAL_RELABEL_L1
+                  value: game
               envFrom:
                 - secretRef:
                     name: vignal-secrets
