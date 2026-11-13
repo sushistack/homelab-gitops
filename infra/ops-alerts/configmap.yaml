@@ -297,3 +297,8 @@ data:
     fi
 
     echo "ops-alerter poll complete"
+
+    # Dead-man's switch (healthchecks.io): ping ONLY on a full successful run. Cluster down / tunnel
+    # down / script crash (set -eu) => no ping => healthchecks emails out-of-band (never via our ntfy).
+    # ponytail: success-only ping, no /start or /fail signals — add if you want run-duration/fail detail.
+    [ -n "${HC_PING_URL:-}" ] && curl -fsS -m 10 --retry 3 -o /dev/null "$HC_PING_URL" || echo "hc ping failed/skipped"
