@@ -28,6 +28,7 @@ configMapGenerator:
       - config/open-score.yaml   # Story 21.3 (FR-63): open_score components/weights, copy of vignal config/open-score.yaml
       - config/observe-tags.yaml   # Story 28.3 (FR-86): observe tag enums, copy of vignal config/observe-tags.yaml
       - config/subject-types.yaml   # Story 33.1/33.2 (FR-101, AD-49): subject type list; absent = subject extraction off, topic tagging continues
+      - config/topic-overrides.yaml   # 2026-11-13: hand-checked channel/video topics (source of truth lives only here, like approvals.yaml); images before sha-a486457 ignore it
   # 2026-11-11 (user-approved): seed waves w3/w4 swapped -- 111 over-cap vlog/web-drama/education channels out, tech/
   # mukbang/movie-review/cooking/beauty 1만~5만 in (same count). The CronJobs (applied outside GitOps, see vignal
   # docs/ops/seeds/seed-2026-11-09.cronjob.yaml) mount these by name. Remove both entries after 2026-11-13.
