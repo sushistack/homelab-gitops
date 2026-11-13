@@ -17,4 +17,4 @@ labels:
       app.kubernetes.io/component: web
 images:
   - name: ghcr.io/sushistack/ntfy-web
-    digest: sha256:bdb747073eda4d62a4a72d0359d59827c9c082b38077dfa57c78a806af20b8be
+    digest: sha256:f0f40222b13bec63b1c03b8a9882a790d23802d6900493119b1aaaed730b0ee1
