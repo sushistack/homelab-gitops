@@ -51,9 +51,9 @@ spec:
           resources:
             requests:
               cpu: 100m
-              memory: 256Mi    # Node.js — above the 64Mi default tier
+              memory: 384Mi    # Node.js — 2.48 idles well above the old 256Mi
             limits:
-              memory: 512Mi    # memory limit only — no cpu limit (avoids CFS throttling on bursty runs)
+              memory: 1Gi      # 2.48 crashed at 512Mi (V8 heap OOM, exit 134 on boot). Memory limit only — no cpu limit (avoids CFS throttling on bursty runs)
           # Ports the Compose healthcheck `wget --spider http://localhost:5678/healthz` (AR31).
           # startupProbe holds liveness back while n8n boots + opens SQLite (+ WAL replay after an unclean
           # stop) — up to 30*5s = 150s; without it the default liveness window can kill the pod mid-boot
