@@ -51,7 +51,7 @@ spec:
           effect: NoSchedule
       containers:
         - name: netdata
-          image: netdata/netdata:v2.10.3
+          image: netdata/netdata:v2.12.3
           securityContext:
             capabilities:
               add:

@@ -185,10 +185,10 @@ workloads:
   # at cutover (AR29):  docker buildx imagetools inspect netdata/netdata:v2.10.3
   netdata-parent:
     manifest: workloads/netdata/deployment-parent.yaml
-    image: netdata/netdata:v2.10.3
+    image: netdata/netdata:v2.12.3
   netdata-children:
     manifest: workloads/netdata/daemonset-children.yaml
-    image: netdata/netdata:v2.10.3
+    image: netdata/netdata:v2.12.3
   # Story 5.8 — uptime-kuma migrated INTO k3s (was Compose/NPM on .20). Pinned to the exact digest
   # the live host ran (:latest == 1.23.17) so the migrated kuma.db schema matches (AR29).
   uptime-kuma:
