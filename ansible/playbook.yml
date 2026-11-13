@@ -137,6 +137,49 @@
         dest: /var/lib/rancher/k3s/server/manifests/traefik-config.yaml
         mode: '0644'
 
+- name: Play 2b — Docker Hub pull auth on every node (registries.yaml)
+  # All nodes share one public IP, so anonymous Docker Hub pulls share ONE 100/h bucket — on
+  # 2026-11-13 a burst of manifest lookups exhausted it and a rollout sat in ImagePullBackOff.
+  # An authenticated (free account, read-only PAT) pull gets its own, larger quota.
+  # Run alone:  DOCKERHUB_USERNAME=... DOCKERHUB_TOKEN=... ansible-playbook -i <inv> playbook.yml --tags registries
+  # Skipped (not failed) when the env vars are unset, so a rebuild without them still works anonymously.
+  hosts: all
+  become: true
+  serial: 1            # k3s restarts one node at a time — etcd keeps quorum (2/3) throughout
+  tags: [registries]
+  vars:
+    dockerhub_username: "{{ lookup('ansible.builtin.env', 'DOCKERHUB_USERNAME') }}"
+    dockerhub_token: "{{ lookup('ansible.builtin.env', 'DOCKERHUB_TOKEN') }}"
+  tasks:
+    - name: Write /etc/rancher/k3s/registries.yaml (docker.io auth)
+      ansible.builtin.copy:
+        dest: /etc/rancher/k3s/registries.yaml
+        mode: "0600"
+        content: |
+          configs:
+            registry-1.docker.io:
+              auth:
+                username: {{ dockerhub_username }}
+                password: {{ dockerhub_token }}
+      no_log: true
+      when: dockerhub_username | length > 0 and dockerhub_token | length > 0
+      register: registries_file
+
+    - name: Restart k3s so containerd picks up registries.yaml
+      ansible.builtin.systemd:
+        name: k3s
+        state: restarted
+      when: registries_file is changed
+
+    - name: Wait for this node to be Ready again before moving to the next
+      ansible.builtin.shell: k3s kubectl get node "$(hostname)" --no-headers | grep -qw Ready
+      register: node_ready
+      retries: 30
+      delay: 10
+      until: node_ready.rc == 0
+      changed_when: false
+      when: registries_file is changed
+
 - name: Play 3 — ArgoCD + bootstrap creds (node 1 only, installed ONCE)
   hosts: k3s_init
   become: true
