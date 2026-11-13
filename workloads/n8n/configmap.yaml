@@ -19,3 +19,4 @@ data:
   GENERIC_TIMEZONE: "Asia/Seoul"
   TZ: "Asia/Seoul"
   N8N_BLOCK_ENV_ACCESS_IN_NODE: "false"   # ports the Compose setting — workflows may read process env
+  N8N_DISABLED_MODULES: "instance-ai"     # 2.35+ enables the instance-ai module by default — operator opted out
