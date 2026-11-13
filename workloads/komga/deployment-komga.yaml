@@ -28,7 +28,7 @@ spec:
         - name: komga
           # gotson/komga — MUST match the version that wrote the migrated DB (LXC #203 ran 1.24.4);
           # an older komga can't handle the newer DB schema -> broken TEMP_STRING_LIST temp-table. (AR29: digest-pin later)
-          image: gotson/komga:1.24.4
+          image: gotson/komga:1.30.1
           ports:
             - containerPort: 25600
           env:
