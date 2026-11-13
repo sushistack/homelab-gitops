@@ -18,7 +18,7 @@ spec:
       # ConfigMap; Homepage then fills in the rest. ConfigMap hash still drives auto-rollout.
       initContainers:
         - name: seed-config
-          image: busybox:1.36
+          image: busybox:1.38
           command: ["sh", "-c", "cp /config-src/* /app/config/"]
           volumeMounts:
             - name: config-src

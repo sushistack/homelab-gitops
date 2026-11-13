@@ -31,7 +31,7 @@ spec:
         runAsUser: 1000      # downloaded files uid-1000 owned (consistent for Navidrome); /app chowned below
       initContainers:
         - name: data-fix
-          image: busybox:1.36
+          image: busybox:1.38
           command:
             - sh
             - -xc
