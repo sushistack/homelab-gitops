@@ -51,7 +51,7 @@ spec:
               # versions and needs egress to the alpine CDN — fine under today's allow-all; when the
               # network-baseline default-deny lands, allow egress to the CDN + R2, or bake a pinned
               # sqlite+rclone image (upgrade path). Pin alpine by digest in that same sweep.
-              image: alpine:3.20
+              image: alpine:3.24
               command:
                 - /bin/sh
                 - -ceu

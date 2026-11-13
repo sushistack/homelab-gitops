@@ -28,7 +28,7 @@ spec:
       restartPolicy: Never
       containers:
         - name: ingest
-          image: alpine:3.20   # only needs `sleep` + a shell for `kubectl cp`; pin by digest if desired
+          image: alpine:3.24   # only needs `sleep` + a shell for `kubectl cp`; pin by digest if desired
           command: ["/bin/sh", "-c", "echo 'ready for kubectl cp into /data; sleeping'; sleep 3600"]
           volumeMounts:
             - name: data

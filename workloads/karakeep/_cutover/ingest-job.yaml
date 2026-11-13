@@ -46,7 +46,7 @@ spec:
       # so its copied files need no chown. `kubectl cp` flows apiserver->kubelet, not pod egress.
       containers:
         - name: ingest
-          image: alpine:3.20   # only needs a shell + sleep for `kubectl cp`; pin by digest if desired
+          image: alpine:3.24   # only needs a shell + sleep for `kubectl cp`; pin by digest if desired
           command: ["/bin/sh", "-c", "echo 'ready for kubectl cp into /data-web and /data-bridge; sleeping'; sleep 3600"]
           volumeMounts:
             - name: web-data
