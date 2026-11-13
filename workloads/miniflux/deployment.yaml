@@ -30,7 +30,7 @@ spec:
           # version running live at cutover (2.3.1), so the restored DB needs no cross-version
           # migration delta. Digest captured 2026-06-18:
           #   miniflux/miniflux@sha256:42f14382a035e9d9bbc33910ca53f72d47177f75c3c638d2c5a85adf5582d538
-          image: miniflux/miniflux:2.3.1
+          image: miniflux/miniflux:2.3.5
           ports:
             - containerPort: 8080
           # Non-secret env from the ConfigMap; DATABASE_URL + POSTGRES_* from the SealedSecret.

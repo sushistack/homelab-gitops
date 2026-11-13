@@ -107,7 +107,7 @@ workloads:
     image: deluan/navidrome@sha256:c4b5cb36a790b3eb63ca6a68bbe2fe149c2d7fa2e586f7a480e61db630e6664b
   miniflux:
     manifest: workloads/miniflux/deployment.yaml
-    image: miniflux/miniflux:2.3.1     # upstream ships no stable digest tag stream; explicit semver tag
+    image: miniflux/miniflux:2.3.5     # upstream ships no stable digest tag stream; explicit semver tag
   miniflux-db:
     manifest: workloads/miniflux/db-deployment.yaml
     image: postgres:18                 # major pin (client major == server major, AR29); patch floats within 18
