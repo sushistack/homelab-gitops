@@ -37,7 +37,7 @@ spec:
         - name: external-dns
           # Pinned in versions.yaml (Story 5.3 SSOT). CONFIRM the current stable tag and SWAP TO
           # @sha256 at apply (AR29): crane digest registry.k8s.io/external-dns/external-dns:v0.21.0
-          image: registry.k8s.io/external-dns/external-dns:v0.21.0@sha256:f53faaf71cb270d1ca9dce6ea0c94bfebf1a18696263487f0fbc74b9bf2bd7ff
+          image: registry.k8s.io/external-dns/external-dns:v0.24.0@sha256:a80a146d2540fa138565e404f0625157271071a06093021f27ae19d8316d10f9
           args:
             - --source=traefik-proxy
             - --provider=cloudflare
@@ -46,10 +46,13 @@ spec:
             - --policy=upsert-only            # this stage: never delete. Promote to sync later (Ask First)
             - --registry=txt
             - --txt-owner-id=homelab-k3s
-            # NO --default-targets: it is ignored by the traefik-proxy source in v0.21.0; the public
+            # NO --default-targets: it was ignored by the traefik-proxy source as of v0.21.0; the public
             # target comes from each route's `external-dns.alpha.kubernetes.io/target` annotation.
             - --cloudflare-proxied             # bare bool (kingpin) = true; cfargotunnel CNAMEs must be orange-cloud
             - --interval=1m
+            # v0.22+ changed the default prefix to external-dns.kubernetes.io/ and stopped reading the old one —
+            # all our routes (target + controller:none locks) use the alpha prefix. Keep reading it.
+            - --annotation-prefix=external-dns.alpha.kubernetes.io/
           env:
             - name: TZ
               value: Asia/Seoul
