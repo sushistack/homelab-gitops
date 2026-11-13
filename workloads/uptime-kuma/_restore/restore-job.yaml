@@ -1,0 +1,53 @@
+# ONE-SHOT restore Job: R2 backup -> uptime-kuma-data PVC. THROWAWAY: NOT in kustomization.yaml, so
+# ArgoCD never manages it. Procedure + when to use: docs/runbooks/uptime-kuma.md "Restore".
+#
+# Run ONLY with the app scaled to 0 (RWO + SQLite: never two writers). Pulls the newest archive, or
+# the one named in BACKUP_FILE. Refuses to overwrite an existing kuma.db unless FORCE=1 (so a stray
+# apply against a healthy volume is a no-op, not data loss).
+#
+#   kubectl apply -f workloads/uptime-kuma/_restore/restore-job.yaml
+#   kubectl -n uptime-kuma logs -f job/uptime-kuma-restore
+#   kubectl -n uptime-kuma delete -f workloads/uptime-kuma/_restore/restore-job.yaml
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: uptime-kuma-restore
+  namespace: uptime-kuma
+spec:
+  backoffLimit: 0
+  activeDeadlineSeconds: 600
+  template:
+    spec:
+      restartPolicy: Never
+      containers:
+        - name: restore
+          image: alpine:3.20
+          command: [/bin/sh, -ceu]
+          args:
+            - |
+              apk add --no-cache sqlite rclone ca-certificates >/dev/null
+              src=r2:homelab-k3s-services-backup/uptime-kuma
+              f="${BACKUP_FILE:-$(rclone lsf "$src/" | sort | tail -1)}"
+              [ -n "$f" ] || { echo "FATAL: no archive in $src"; exit 1; }
+              if [ -f /data/kuma.db ] && [ "${FORCE:-0}" != 1 ]; then
+                echo "FATAL: /data/kuma.db exists — set FORCE=1 to overwrite"; exit 1
+              fi
+              echo "restoring $f"
+              rclone copy "$src/$f" /tmp/
+              tar -C /tmp -xzf "/tmp/$f"
+              [ "$(sqlite3 /tmp/kuma.db 'PRAGMA integrity_check;')" = ok ] || { echo "FATAL: integrity_check failed"; exit 1; }
+              rm -f /data/kuma.db /data/kuma.db-wal /data/kuma.db-shm   # stale WAL must not replay over the restore
+              cp /tmp/kuma.db /data/kuma.db
+              echo "restored: monitors=$(sqlite3 /data/kuma.db 'select count(*) from monitor;') — $(sqlite3 /data/kuma.db 'select group_concat(name) from monitor;')"
+          env:
+            - {name: RCLONE_CONFIG_R2_NO_CHECK_BUCKET, value: "true"}
+            - {name: BACKUP_FILE, value: ""}   # e.g. uptime-kuma-2026-11-13T03-50-01.tar.gz; empty = newest
+            - {name: FORCE, value: "0"}
+          envFrom:
+            - secretRef: {name: uptime-kuma-backup-r2}
+          volumeMounts:
+            - {name: data, mountPath: /data}
+      volumes:
+        - name: data
+          persistentVolumeClaim:
+            claimName: uptime-kuma-data
