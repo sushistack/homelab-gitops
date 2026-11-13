@@ -19,7 +19,7 @@ spec:
   source:
     repoURL: https://charts.jetstack.io
     chart: cert-manager
-    targetRevision: v1.19.5   # == versions.yaml cert-manager.chartVersion
+    targetRevision: v1.21.3   # == versions.yaml cert-manager.chartVersion
     helm:
       values: |
         # v1.19.x: install the CRDs with the chart (older charts used `installCRDs: true`).
