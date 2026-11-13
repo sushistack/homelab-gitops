@@ -55,14 +55,6 @@ spec:
                   value: https://${SECRET:DOMAIN_VIGNAL_SITE}/schema-support.json
                 - name: TMPDIR
                   value: /tmp
-                # 2026-11-13 one-off (PERSONA22, user-approved): re-send the last 30 days' LLM tags of these topics with the
-                # new prompt, and game vtopic labels. Idempotent (only rows tagged before the cutoff). Remove after the backfill.
-                - name: VIGNAL_RETAG_BEFORE
-                  value: "2026-11-13T00:00:00Z"
-                - name: VIGNAL_RETAG_TOPICS
-                  value: game,movie-review,mukbang,vlog,web-drama,beauty-life,cooking,self-dev,fashion,fitness,education
-                - name: VIGNAL_RELABEL_L1
-                  value: game
               envFrom:
                 - secretRef:
                     name: vignal-secrets
