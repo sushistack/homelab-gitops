@@ -95,7 +95,7 @@ workloads:
     image: excalidraw/excalidraw@sha256:f7ee194addd607bf831d2af0f0a34463dd4225e426cf35199ef0b12a803398e9
   ntfy:
     manifest: workloads/ntfy/deployment.yaml
-    image: binwiederhier/ntfy:v2.24.0@sha256:f8a9b104313b87cc24ae4f775f39e6328205b57dff6ede3eaf098a91e5d79f59
+    image: binwiederhier/ntfy:v2.37.2@sha256:1875ddcf815c8a3c981d6d78c67a93452d0abba79b1ab9520b1f5f5238902bd7
   memos:
     manifest: workloads/memos/deployment.yaml
     image: neosmemo/memos:0.30.0@sha256:51a4cef418b1f173ac37139ad99de08da5b8662136007231d3ac8a0498a3095a   # v0.30.0
