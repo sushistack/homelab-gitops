@@ -20,7 +20,7 @@
 repoServer:
   extraContainers:
     - name: cmp-render
-      image: quay.io/argoproj/argocd:v3.4.3   # reuse the argocd image: kustomize + argocd-cmp-server present, no custom build
+      image: quay.io/argoproj/argocd:v3.4.4   # reuse the argocd image: kustomize + argocd-cmp-server present, no custom build
       command: ["/var/run/argocd/argocd-cmp-server"]
       env:
         - name: RENDER_TOKENS

@@ -14,8 +14,8 @@ argocd:
   repo: https://argoproj.github.io/argo-helm
   chart: argo-cd
   # renovate: datasource=helm depName=argo-cd registryUrl=https://argoproj.github.io/argo-helm
-  chartVersion: 9.5.21   # -> appVersion v3.4.3
-  appVersion: v3.4.3
+  chartVersion: 9.7.1   # -> appVersion v3.4.4
+  appVersion: v3.4.4
 
 helm:
   # The Helm CLI is just the install tool, but pin it too: the upstream get-helm-3
