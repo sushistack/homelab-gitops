@@ -40,7 +40,7 @@ spec:
       # A freshly-provisioned Longhorn volume mounts root:root 0755 -> EACCES on first SQLite open.
       initContainers:
         - name: data-fix
-          image: busybox:1.36
+          image: busybox:1.38
           command:
             - sh
             - -xc

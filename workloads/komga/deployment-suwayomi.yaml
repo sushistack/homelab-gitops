@@ -35,7 +35,7 @@ spec:
       # perms were set at copy time (chown 1000 on k3s-cp-1:/mnt/manga), not here.
       initContainers:
         - name: data-fix
-          image: busybox:1.36
+          image: busybox:1.38
           command:
             - sh
             - -xc
