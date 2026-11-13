@@ -11,6 +11,7 @@ resources:
   - backup-cronjob.yaml    # the reusable backup actor (replaces the offen sidecar)
   - sealedsecret.yaml      # ntfy-backup-r2: R2 cred for the CronJob (sealed to name+ns; safe to commit)
   - sealedsecret-webpush.yaml  # ntfy-webpush: VAPID private key for Web Push (sealed to name+ns)
+  - sealedsecret-firebase.yaml # ntfy-firebase: FCM service-account key for Notify Android (sealed to name+ns)
 # NOT included on purpose:
 #   _cutover/          -> one-shot ingest Job, applied by hand during the cutover (must NOT be ArgoCD-managed)
 
