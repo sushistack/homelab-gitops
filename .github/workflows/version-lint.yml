@@ -1,0 +1,16 @@
+name: version-lint
+
+# versions.yaml <-> manifest mirror + no floating image refs. Repo-local script (bin/version-lint).
+# Was only run by hand and silently rotted (stale entries, drifted pins) — gate every PR on it.
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  version-lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - name: versions.yaml mirror + pinned image refs
+        run: bash bin/version-lint

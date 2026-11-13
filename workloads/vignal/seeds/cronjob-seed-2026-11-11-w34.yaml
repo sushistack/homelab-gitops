@@ -27,7 +27,7 @@ spec:
               type: RuntimeDefault
           initContainers:
             - name: guard
-              image: keinos/sqlite3:latest
+              image: keinos/sqlite3:3.54.1
               command:
                 - sh
                 - -c
