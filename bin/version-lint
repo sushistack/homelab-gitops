@@ -74,6 +74,7 @@ echo "== version-lint: no floating image refs (no :latest, no untagged) =="
 # is never synced).
 floating=$(grep -rnE --exclude-dir=_template '^[[:space:]]*image:[[:space:]]*[^[:space:]#]' workloads/ infra/ argocd/ 2>/dev/null \
   | awk -F'image:' '{ r=$2; sub(/[[:space:]]*#.*/,"",r); gsub(/["[:space:]]/,"",r);
+      if (r ~ /^https?:/) next   # a URL value (e.g. homepage background image), not a container ref
       if (r ~ /:latest$/ || r !~ /(@sha256:[0-9a-f]+|:[A-Za-z0-9_][A-Za-z0-9._-]*)$/) print }')
 if [[ -n "$floating" ]]; then
   echo "$floating"
