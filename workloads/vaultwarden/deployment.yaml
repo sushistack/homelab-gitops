@@ -35,7 +35,7 @@ spec:
           # is the version SSOT for vaultwarden (workload images live in their manifest). To bump:
           # capture the new digest (`docker buildx imagetools inspect vaultwarden/server:<tag>`) and
           # replace below via PR (GitOps-revertible).
-          image: vaultwarden/server@sha256:ebdfe70701c60ac0c28c697e787cea767d7972940b786037b29fe0d507f821e8
+          image: vaultwarden/server:1.37.1@sha256:ebdfe70701c60ac0c28c697e787cea767d7972940b786037b29fe0d507f821e8
           ports:
             - containerPort: 80   # vaultwarden internal port (Compose host-mapped ${VAULTWARDEN_PORT:-8012} -> 80)
           # Non-secret config from the ConfigMap; ADMIN_TOKEN from the SealedSecret. envFrom (NOT

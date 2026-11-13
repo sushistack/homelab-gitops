@@ -58,7 +58,7 @@ spec:
           # ghcr.io/suwayomi/tachidesk — digest-pinned (AR29; :stable is a FLOATING tag, retired).
           # Digest = the live-running image as of 2026-06-19. Re-resolve on a deliberate bump:
           #   docker buildx imagetools inspect ghcr.io/suwayomi/tachidesk:stable
-          image: ghcr.io/suwayomi/tachidesk@sha256:6bb8fa8cf1cf86589e5851f2f1c2ede5c8248d53982ec1795a715dcde85b1da2  # stable @ 2026-06-19
+          image: ghcr.io/suwayomi/tachidesk:v2.2.2100@sha256:6bb8fa8cf1cf86589e5851f2f1c2ede5c8248d53982ec1795a715dcde85b1da2  # stable @ 2026-06-19
           ports:
             - containerPort: 4567
           env:

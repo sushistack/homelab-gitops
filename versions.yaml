@@ -95,13 +95,13 @@ workloads:
     image: excalidraw/excalidraw@sha256:f7ee194addd607bf831d2af0f0a34463dd4225e426cf35199ef0b12a803398e9
   ntfy:
     manifest: workloads/ntfy/deployment.yaml
-    image: binwiederhier/ntfy@sha256:f8a9b104313b87cc24ae4f775f39e6328205b57dff6ede3eaf098a91e5d79f59
+    image: binwiederhier/ntfy:v2.24.0@sha256:f8a9b104313b87cc24ae4f775f39e6328205b57dff6ede3eaf098a91e5d79f59
   memos:
     manifest: workloads/memos/deployment.yaml
-    image: neosmemo/memos@sha256:51a4cef418b1f173ac37139ad99de08da5b8662136007231d3ac8a0498a3095a   # v0.30.0
+    image: neosmemo/memos:0.30.0@sha256:51a4cef418b1f173ac37139ad99de08da5b8662136007231d3ac8a0498a3095a   # v0.30.0
   navidrome:
     manifest: workloads/navidrome/deployment.yaml
-    image: deluan/navidrome@sha256:c4b5cb36a790b3eb63ca6a68bbe2fe149c2d7fa2e586f7a480e61db630e6664b
+    image: deluan/navidrome:0.62.0@sha256:c4b5cb36a790b3eb63ca6a68bbe2fe149c2d7fa2e586f7a480e61db630e6664b
   miniflux:
     manifest: workloads/miniflux/deployment.yaml
     image: miniflux/miniflux:2.3.5     # upstream ships no stable digest tag stream; explicit semver tag
@@ -140,10 +140,10 @@ workloads:
     image: ghcr.io/sushistack/home.server/anytype-heart@sha256:8f1de0ea70e34ef976b98a2cbdc9622fd7ee24c713c724d301500a066f8aac73
   anytype-anysync:
     manifest: workloads/anytype/deployment-anysync.yaml
-    image: ghcr.io/grishy/any-sync-bundle@sha256:f25e0a648c78a3b36fa44dc8c0deda8c4b35c8b3f50799f04b31ba4531e732d5
+    image: ghcr.io/grishy/any-sync-bundle:1.4.3-2026-04-21@sha256:f25e0a648c78a3b36fa44dc8c0deda8c4b35c8b3f50799f04b31ba4531e732d5
   karakeep-web:
     manifest: workloads/karakeep/deployment-web.yaml
-    image: ghcr.io/karakeep-app/karakeep@sha256:64d6a9bbf2d37b5c808cf06b5d87f1f1c7846fdd3844724145a9741aeb06fd31
+    image: ghcr.io/karakeep-app/karakeep:0.32.0@sha256:64d6a9bbf2d37b5c808cf06b5d87f1f1c7846fdd3844724145a9741aeb06fd31
   karakeep-meilisearch:
     manifest: workloads/karakeep/deployment-meilisearch.yaml
     image: getmeili/meilisearch@sha256:860fa4baed04ae1c235de870edab0c8006227546dea1bbb6411fbfc5e27cf1db
@@ -155,7 +155,7 @@ workloads:
     image: ghcr.io/sushistack/home.server/karakeep-anytype-bridge@sha256:d39011c4002edb387ffda07cd12c7cfcd41cc8951627e415d90dab4714414afb
   vaultwarden:
     manifest: workloads/vaultwarden/deployment.yaml
-    image: vaultwarden/server@sha256:ebdfe70701c60ac0c28c697e787cea767d7972940b786037b29fe0d507f821e8
+    image: vaultwarden/server:1.37.1@sha256:ebdfe70701c60ac0c28c697e787cea767d7972940b786037b29fe0d507f821e8
   # Story 5.6 — standalone-LXC consolidation. Tags pinned now (lint passes); SWAP TO @sha256 digests
   # at cutover (AR29 — the manifest comments carry the `imagetools inspect` command for each).
   komga:
@@ -163,7 +163,7 @@ workloads:
     image: gotson/komga:1.30.1   # forward-only DB migrations — never downgrade; rollback = restore backup
   suwayomi:
     manifest: workloads/komga/deployment-suwayomi.yaml
-    image: ghcr.io/suwayomi/tachidesk@sha256:6bb8fa8cf1cf86589e5851f2f1c2ede5c8248d53982ec1795a715dcde85b1da2  # stable @ 2026-06-19 (retired floating :stable, AR29)
+    image: ghcr.io/suwayomi/tachidesk:v2.2.2100@sha256:6bb8fa8cf1cf86589e5851f2f1c2ede5c8248d53982ec1795a715dcde85b1da2  # stable @ 2026-06-19 (retired floating :stable, AR29)
   calibre:
     manifest: workloads/calibre/deployment.yaml
     image: lscr.io/linuxserver/calibre-web:0.6.27
@@ -187,7 +187,7 @@ workloads:
   # the live host ran (:latest == 1.23.17) so the migrated kuma.db schema matches (AR29).
   uptime-kuma:
     manifest: workloads/uptime-kuma/deployment.yaml
-    image: louislam/uptime-kuma@sha256:3d632903e6af34139a37f18055c4f1bfd9b7205ae1138f1e5e8940ddc1d176f9
+    image: louislam/uptime-kuma:1.23.17@sha256:3d632903e6af34139a37f18055c4f1bfd9b7205ae1138f1e5e8940ddc1d176f9
   # Story 5.10 — cloudflared relocated off the retiring docker LXC (.20) INTO k3s as a 2-replica
   # infra Deployment (the public *.eli.kr edge / Plane 0). Was :latest on .20; pinned on the move
   # to the digest the host last ran (2026.6.1). Same tunnel/token — only its home changed.

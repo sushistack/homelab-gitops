@@ -40,7 +40,7 @@ spec:
           # LIVE Compose container actually runs. This is a COPY-not-upgrade migration — before the
           # flip, confirm it matches the live image, else pin the live one:
           #   docker inspect --format '{{.Image}}' anytype
-          image: ghcr.io/grishy/any-sync-bundle@sha256:f25e0a648c78a3b36fa44dc8c0deda8c4b35c8b3f50799f04b31ba4531e732d5
+          image: ghcr.io/grishy/any-sync-bundle:1.4.3-2026-04-21@sha256:f25e0a648c78a3b36fa44dc8c0deda8c4b35c8b3f50799f04b31ba4531e732d5
           ports:
             - name: sync-tcp
               containerPort: 33010
