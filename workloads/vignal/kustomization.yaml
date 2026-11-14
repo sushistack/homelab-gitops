@@ -10,6 +10,7 @@ resources:
   - sealedsecret.yaml        # vignal-secrets: collector API/R2/CF/ntfy/ping/age-recipient (sealed to name+ns)
   - sealedsecret-ghcr.yaml   # ghcr-sushistack: pull cred for the PRIVATE collector image (re-sealed for ns vignal)
   - seeds/cronjob-seed-2026-11-14.yaml   # 2026-11-14 one-off seed 13:30 KST, 223 thin-genre channels (user-approved); remove after it ran
+  - seeds/cronjob-seed-2026-11-15.yaml   # 2026-11-15 one-off seed 13:30 KST, 160 yt-dlp-found channels (user-approved); remove after it ran
 # NOT included on purpose: seal.sh / secrets.env.example (operator tooling; secrets.env is git-ignored).
 # No Service / Ingress: the collector has no public inbound (vignal AD-1).
 
@@ -31,6 +32,9 @@ configMapGenerator:
   - name: vignal-seed-2026-11-14
     files:
       - seed.yaml=seeds/seed-2026-11-14.yaml
+  - name: vignal-seed-2026-11-15
+    files:
+      - seed.yaml=seeds/seed-2026-11-15.yaml
 generatorOptions:
   disableNameSuffixHash: true
 
