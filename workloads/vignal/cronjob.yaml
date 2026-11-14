@@ -1,4 +1,4 @@
-# vignal collector — ONE CronJob, every 6h, `vignal run` (ten stages, single-process run lock).
+# vignal collector — ONE CronJob, every 6h at :30 KST (06:30 run ready ≈06:55 for morning live prep, PERSONA31 유나), `vignal run` (ten stages, single-process run lock).
 # Own image, built by the app repo's CI `image` job -> GHCR (private; pulled with ghcr-sushistack).
 #
 # KILL SWITCH = commit `spec.suspend: true` here (PR -> merge). `kubectl patch ... suspend` is NOT
@@ -8,7 +8,7 @@ kind: CronJob
 metadata:
   name: vignal
 spec:
-  schedule: "0 */6 * * *"
+  schedule: "30 */6 * * *"
   timeZone: Asia/Seoul
   concurrencyPolicy: Forbid
   # suspend: false since 2026-09-30 — vignal-web is live on vignal.kr (schema-support.json served),
