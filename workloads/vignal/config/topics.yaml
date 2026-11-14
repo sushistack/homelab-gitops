@@ -277,7 +277,7 @@ subtopics:
   - slug: football
     parent: sports
     label: '축구'
-    aliases: [EPL, K리그, 해외축구]
+    aliases: [EPL, K리그, 해외축구, 프리미어리그, 라리가, 분데스리가, 챔피언스리그, 토트넘, 손흥민, 이강인, 황희찬]
   - slug: basketball
     parent: sports
     label: '농구·배구'
