@@ -27,7 +27,7 @@ spec:
               type: RuntimeDefault
           initContainers:
             - name: guard
-              image: keinos/sqlite3:latest
+              image: keinos/sqlite3@sha256:9064091a943982e2a90f095219d0d6adec03472f9042529563e3e66c9632af66   # = latest on 2026-11-14, the digest vignal pods already run
               command:
                 - sh
                 - -c
