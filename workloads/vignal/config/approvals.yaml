@@ -1707,6 +1707,46 @@ approve:
   - channel_id: UCBXY1QwziAPkHA1QQi_NGXQ
     topic: game
     note: "scout:featured 구독 60800 롱폼 50/50 최근 업로드 2026-11-12"
+  # 우주항공청 KASA (scout 2026-11-14)
+  - channel_id: UCVJYk1n9MdioVVTl4Ne9Zjg
+    topic: news
+    note: "scout:mention 구독 12300 롱폼 10/50 최근 업로드 2026-11-13"
+  # 칙폭이 (scout 2026-11-14)
+  - channel_id: UCdstkC80yAwzmNQj0zxTZ0w
+    topic: vlog
+    note: "scout:popular 구독 22200 롱폼 8/8 최근 업로드 2026-11-14"
+  # 정치 인사이트TV (scout 2026-11-14)
+  - channel_id: UCkmFwnvIFPJb48T2vdn9eMQ
+    topic: news
+    note: "scout:popular 구독 11300 롱폼 50/50 최근 업로드 2026-11-14"
+  # 헐이 (scout 2026-11-14)
+  - channel_id: UC1mCUOdg29BNG99WWEOc5Jg
+    topic: anime
+    note: "scout:featured 구독 13000 롱폼 9/50 최근 업로드 2026-11-05"
+  # 다락원 출판사 (scout 2026-11-14)
+  - channel_id: UCBnPBCPwIF9HRrR6QheCBFg
+    topic: education
+    note: "scout:featured 구독 69700 롱폼 43/50 최근 업로드 2026-10-28"
+  # 영어식 사고ㅣ원어민 팟캐스트 (scout 2026-11-14)
+  - channel_id: UCE0Wpy2DlQRkR4LR6wJAbaw
+    topic: education
+    note: "scout:featured 구독 13600 롱폼 18/18 최근 업로드 2026-11-12"
+  # 박준모음집 (scout 2026-11-14)
+  - channel_id: UCJFDLjgMNGRYUe0leGc40kw
+    topic: game
+    note: "scout:featured 구독 17200 롱폼 50/50 최근 업로드 2026-10-22"
+  # 포구 (scout 2026-11-14)
+  - channel_id: UCLevMlsqAXGYA7aRgH_ZBzw
+    topic: game
+    note: "scout:featured 구독 29000 롱폼 19/20 최근 업로드 2026-10-28"
+  # -Team KorD-호락 (scout 2026-11-14)
+  - channel_id: UCMsNb2uHROt2u_OKTFmKZ8Q
+    topic: anime
+    note: "scout:featured 구독 51000 롱폼 3/50 최근 업로드 2026-11-11"
+  # 체스프릭김창훈 (scout 2026-11-14)
+  - channel_id: UCO5rDIUWfCX7gsCzURXMUCg
+    topic: game
+    note: "scout:featured 구독 55600 롱폼 48/50 최근 업로드 2026-11-07"
 untrack: []
 
 # 2026-11-12 (user-approved, PERSONA15~18: 당뇨/당뇨병, 인공지능/AI split one subject's counts): duplicate subjects
