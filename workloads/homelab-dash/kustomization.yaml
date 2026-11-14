@@ -1,15 +1,12 @@
----
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
-
 resources:
   - namespace.yaml
   - deployment.yaml
   - service.yaml
-  - ingressroute.yaml        # INTERNAL (CF Access app `monitoring`); host monitor.<zone>
-  - certificate.yaml         # letsencrypt-prod DNS-01
-  - sealedsecret-ghcr.yaml   # ghcr-sushistack: pull cred for the PRIVATE image (re-sealed for ns homelab-dash)
-
+  - ingressroute.yaml # INTERNAL (CF Access app `monitoring`); host monitor.<zone>
+  - certificate.yaml # letsencrypt-prod DNS-01
+  - sealedsecret-ghcr.yaml # ghcr-sushistack: pull cred for the PRIVATE image (re-sealed for ns homelab-dash)
 labels:
   - includeSelectors: false
     pairs:
@@ -17,9 +14,8 @@ labels:
       app.kubernetes.io/part-of: homelab-dash
       app.kubernetes.io/managed-by: argocd
       app.kubernetes.io/component: dashboard
-
 # Live image = this override, written by Argo CD Image Updater (argocd/apps/homelab-dash.yaml) whenever CI
 # repins :latest. deployment.yaml keeps a baseline digest only.
 images:
   - name: ghcr.io/sushistack/homelab-dash
-    digest: sha256:085b1b5f394f263e1d20dc2b53d77acca23385e59ee674c883a715792f35d4e1
+    digest: sha256:e5eb8e4b6ea8ec3cd9b05ebea5b95bce5a1352a6e37ced5279e77236c2d95f4d
