@@ -125,6 +125,11 @@ workloads:
     # vignal runner scale set (gha-runner-scale-set chart) + the runner image it starts per job.
     chartVersion: 0.15.1
     image: ghcr.io/actions/actions-runner:2.338.2
+  arc-runners-homelab-dash:
+    manifest: argocd/apps/arc-runners-homelab-dash.yaml
+    # homelab-dash runner scale set; same chart + runner image as arc-runners-vignal.
+    chartVersion: 0.15.1
+    image: ghcr.io/actions/actions-runner:2.338.2
   vignal:
     manifest: workloads/vignal/cronjob.yaml
     # Own app (github.com/sushistack/vignal, private), built by its CI `image` job -> GHCR (amd64).
@@ -134,7 +139,7 @@ workloads:
     manifest: workloads/homelab-dash/deployment.yaml
     # Own app (github.com/sushistack/homelab-dash, private) -> GHCR (amd64). Pinned by digest
     # (comment = source sha); bump here + deployment.yaml in one PR.
-    image: ghcr.io/sushistack/homelab-dash@sha256:a44bdb8a659b669670c1f94d214c5d394c0c15e2c7b385bc668ea0252f6b07af   # sha-e49adc1
+    image: ghcr.io/sushistack/homelab-dash@sha256:28790f545794d8301bca8bdac60bcd11b0c609eba1cb0faf9371107a43d4ca36   # sha-d0d2323
   vignal-dev-publish:
     manifest: workloads/vignal/cronjob-dev-publish.yaml
     # Built from the app repo's `dev` branch (CI `image` job on dev pushes, or crane append on the prod image while

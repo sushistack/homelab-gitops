@@ -1,0 +1,52 @@
+# homelab-dash's runner scale set `homelab-dash-k3s` — CI of github.com/sushistack/homelab-dash (PRIVATE repo
+# only; see arc-runners-vignal.yaml for why). Ephemeral pod per job, 0 when idle. No Docker: the CI builds
+# the image with crane. Reuses the `arc-github` GitHub App secret in ns arc-runners (owned by the
+# arc-runners-vignal app's infra/arc-runners source) — the App installation must include homelab-dash.
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: arc-runners-homelab-dash
+  namespace: argocd
+  annotations:
+    argocd.argoproj.io/sync-wave: "3"   # after the controller's CRDs (wave 0)
+spec:
+  project: homelab
+  sources:
+    - repoURL: ghcr.io/actions/actions-runner-controller-charts   # OCI; declared in arc-oci-repo.yaml
+      chart: gha-runner-scale-set
+      targetRevision: 0.15.1   # == versions.yaml arc-runners-homelab-dash.chartVersion
+      helm:
+        releaseName: homelab-dash-k3s
+        values: |
+          githubConfigUrl: https://github.com/sushistack/homelab-dash
+          githubConfigSecret: arc-github
+          runnerScaleSetName: homelab-dash-k3s
+          minRunners: 0
+          # 3 nodes x 4 CPU / 12 GiB, shared with the collector and the rest of the homelab.
+          maxRunners: 1
+          controllerServiceAccount:
+            namespace: arc-systems
+            name: arc-gha-rs-controller
+          template:
+            spec:
+              containers:
+                - name: runner
+                  image: ghcr.io/actions/actions-runner:2.338.2   # == versions.yaml arc-runners-homelab-dash.image
+                  command: ["/home/runner/run.sh"]
+                  resources:
+                    requests:
+                      cpu: 500m
+                      memory: 1Gi
+                    limits:
+                      cpu: "2"
+                      memory: 3Gi   # vite build of the Astryx bundle
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: arc-runners
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
+      - ServerSideApply=true

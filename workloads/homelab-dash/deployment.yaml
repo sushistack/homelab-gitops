@@ -19,7 +19,7 @@ spec:
       containers:
         - name: homelab-dash
           # Pinned by digest (comment = source sha); bump here + versions.yaml in one PR.
-          image: ghcr.io/sushistack/homelab-dash@sha256:a44bdb8a659b669670c1f94d214c5d394c0c15e2c7b385bc668ea0252f6b07af   # sha-e49adc1
+          image: ghcr.io/sushistack/homelab-dash@sha256:28790f545794d8301bca8bdac60bcd11b0c609eba1cb0faf9371107a43d4ca36   # sha-d0d2323
           ports:
             - containerPort: 8080
           env:
