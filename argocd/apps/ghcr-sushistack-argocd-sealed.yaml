@@ -1,0 +1,17 @@
+# ghcr-sushistack in ns argocd: lets Argo CD Image Updater READ the PRIVATE ghcr.io/sushistack/homelab-dash
+# tags/digests (annotation homelabdash.pull-secret in argocd/apps/homelab-dash.yaml). Same dockerconfigjson
+# as the per-workload copies, re-sealed for ns argocd (sealed to name+ns). Adopted by the app-of-apps root.
+---
+apiVersion: bitnami.com/v1alpha1
+kind: SealedSecret
+metadata:
+  name: ghcr-sushistack
+  namespace: argocd
+spec:
+  encryptedData:
+    .dockerconfigjson: AgCYAriIpzBA3tphNZy6aD3RFycbH7Ogo9so72XXY65CWusiAnhEmzb4M8Mz9EcZawiBMPXO8yR30ZEOv+MZRbDVx8qtYlUTOZxEGjIcARzDoxWrP5R3Hx+O/ByZ582VHPzM6n3fasdnocZwPznt//bdFcb556G1gYyga5rvvZF3HQc1+D6BTy1kHzgtQNszkrY9FN593YpLwpEO68HSC46gHALEH9QM9SjYs8Wt2q1pAhsyxicHLVg6QYfKrXiyxGYRrAHhVUBMrcdtwkuUUAFbolX1lXi7es4mPo9Tmi9Fs/tjzw9lpr9gbw0PmLhLv9xtKXitiXCpuWg3mftu+Njo0s4umG6QSsPKIvIkVq98/lTrOG4BLBIMs9PplkH59c5+vsPAYnzt7wlDjxD02YPy6jtJttKYvkq8nz9bCFSHzxirTH0mWcYFs2BnReHiL8F5YxZp346mEcdncg6tF2D/IsWLkAQiDLI+pzD+wTxG4TGMbgEJr+Mbbi7zjFIV9T9uBWfG0Nhsh5IH084+TCTy8YpOy7RXWT7Z5HQF9I6SwwVTlCaucfk0YM34QodeEM+AjDCM2eTOL2JgO5yOxoCgLkeVEU74MfgxeLPbDM0rir8wmckdq0STlWftm9GxDyiua6hrb8/jK5tg2sv5eRy48wpQT6vK3HXd2ds2fSk5L4hK62/I4U9Xjiys0mdeaw7gyVU3cdeA++yT5wlyJENZNvLrIF20Jszh1d9Nqbwjfu4U5ZXAnvhbQHwBQLfcBugBu6zvzoDx1rqF+X1K4/qLspgqyDpkfQsI8topGn8KVobhwrwJH07bhFT+FOBL7TTwLgeGLbO3O0t6/1Bq+B8eUQyX3ch8GunQTf2gssynZfYcfXViebx5GCSvAmXjnuIz9Npv57EvF1NouYPeQXTW2UjJy6VF4tzdRsNs5htp5/u2gg==
+  template:
+    metadata:
+      name: ghcr-sushistack
+      namespace: argocd
+    type: kubernetes.io/dockerconfigjson
