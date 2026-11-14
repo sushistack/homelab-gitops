@@ -29,6 +29,9 @@ spec:
             name: arc-gha-rs-controller
           template:
             spec:
+              # CI runs on k3s-cp-3 = the pve-k12 host (dev/CI machine), never next to services on pve.
+              nodeSelector:
+                kubernetes.io/hostname: k3s-cp-3
               containers:
                 - name: runner
                   image: ghcr.io/actions/actions-runner:2.338.2   # == versions.yaml arc-runners-homelab-dash.image
