@@ -54,7 +54,7 @@ local_dns_overrides:
 **After** (21줄 → 1줄):
 ```yaml
 local_dns_overrides:
-  - "/eli.kr/::"             # AAAA 억제 (Traefik IPv4-only 레이스 방지) — 유지
+  # "/eli.kr/::" 제거됨 (2026-11-14): 와일드카드와 같이 두면 AAAA에 :: 응답 → 모바일 Chrome ERR_TOO_MANY_RETRIES. AAAA 억제는 uci server=/eli.kr/ (NODATA)
   - "/eli.kr/10.0.0.101"     # ★ 모든 *.eli.kr → Traefik. 위 21개 개별 항목을 대체
   - "/miner-eth/10.0.0.200"  # eli.kr 아님 → 개별 유지
   - "/miner-xrp/10.0.0.201"
@@ -72,7 +72,7 @@ ansible-playbook -i inventory.yml playbook-apply.yml --diff --limit openwrt --ta
 ssh root@10.0.0.1 "uci -q get dhcp.@dnsmasq[0].address"          # 5개 항목만 남아야 함
 dig +short @10.0.0.1 vault.eli.kr        # → 10.0.0.101
 dig +short @10.0.0.1 anything-new.eli.kr # → 10.0.0.101 (개별 항목 없이도)
-dig +short @10.0.0.1 vault.eli.kr AAAA   # → (빈 응답: :: 억제 동작)
+dig +short @10.0.0.1 vault.eli.kr AAAA   # → (빈 응답: server=/eli.kr/ 로 NODATA)
 # 롤백: git revert 후 동일 apply. (dns.yml 은 set 비교로 idempotent — 안전)
 ```
 
