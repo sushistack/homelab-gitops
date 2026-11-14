@@ -9,6 +9,7 @@ resources:
   - cronjob-dev-publish.yaml   # dev data (2026-11-06): daily `vignal publish-dev` -> public bucket dev/
   - sealedsecret.yaml        # vignal-secrets: collector API/R2/CF/ntfy/ping/age-recipient (sealed to name+ns)
   - sealedsecret-ghcr.yaml   # ghcr-sushistack: pull cred for the PRIVATE collector image (re-sealed for ns vignal)
+  - seeds/cronjob-seed-2026-11-14.yaml   # 2026-11-14 one-off seed 13:30 KST, 223 thin-genre channels (user-approved); remove after it ran
 # NOT included on purpose: seal.sh / secrets.env.example (operator tooling; secrets.env is git-ignored).
 # No Service / Ingress: the collector has no public inbound (vignal AD-1).
 
@@ -27,6 +28,9 @@ configMapGenerator:
       - config/observe-tags.yaml   # Story 28.3 (FR-86): observe tag enums, copy of vignal config/observe-tags.yaml
       - config/subject-types.yaml   # Story 33.1/33.2 (FR-101, AD-49): subject type list; absent = subject extraction off, topic tagging continues
       - config/topic-overrides.yaml   # 2026-11-13: hand-checked channel/video topics (source of truth lives only here, like approvals.yaml); images before sha-a486457 ignore it
+  - name: vignal-seed-2026-11-14
+    files:
+      - seed.yaml=seeds/seed-2026-11-14.yaml
 generatorOptions:
   disableNameSuffixHash: true
 

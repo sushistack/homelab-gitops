@@ -42,4 +42,19 @@ channels:
   - channel_id: UCX4P0iYaQx8YueLcn6o63Ew
     topic: fashion
     note: "패션애완쏭 · 패션 하울 채널인데 pets. fashion 8·pets 3 (2026-11-13 표본 검수, claude)"
+  - channel_id: UCOno0QRUz5huGHiCAT7Dysg
+    topic: vlog
+    note: "정명히 · beauty-life 로 분류됐지만 친구·연인 일상 브이로그. 협찬 후보 뷰티 1위로 나와 PERSONA24 수진 지적 (2026-11-13, claude 제목 확인)"
+  - channel_id: UCeS6R89S32mSOxTNoEqrN7g
+    topic: web-drama
+    note: "사내뷰공업 beautyfool · beauty-life 로 분류됐지만 '빌런' 콩트 쇼츠(코미디·예능). /me/topic 뷰티 상위가 콩트로 채워짐, PERSONA24 하린 (2026-11-13, claude 제목 확인)"
+  - channel_id: UCEdixbN7er9w3--3v3ResOQ
+    topic: web-drama
+    note: "용쥬르이용주 · beauty-life 로 분류됐지만 커플 코미디 쇼츠(이선민 POV·어록). PERSONA24 하린 (2026-11-13, claude 제목 확인)"
+  - channel_id: UCvZhBe0Of9gbevwYhqkfeKw
+    topic: issue
+    note: "글로벌한국 · tech 로 분류됐지만 해외 반응 채널(여행·음식·폰 반응 섞임). IT 리뷰 또래로 잡힘, PERSONA24 준호×2 (2026-11-13, claude 제목 확인)"
+  - channel_id: UCSfd9_deRjVAk0V9G7idgUg
+    topic: issue
+    note: "지구본 뉴스 · tech 로 분류됐지만 한국 드라마·여행 해외 반응 채널. PERSONA24 드라마 (2026-11-13, claude 제목 확인)"
 videos: []

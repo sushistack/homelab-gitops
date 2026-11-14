@@ -1,0 +1,88 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: vignal-seed-2026-11-14
+spec:
+  schedule: "30 13 14 11 *"
+  timeZone: Asia/Seoul
+  concurrencyPolicy: Forbid
+  startingDeadlineSeconds: 3600
+  successfulJobsHistoryLimit: 1
+  failedJobsHistoryLimit: 1
+  jobTemplate:
+    spec:
+      backoffLimit: 0
+      template:
+        spec:
+          restartPolicy: Never
+          automountServiceAccountToken: false
+          imagePullSecrets:
+            - name: ghcr-sushistack
+          securityContext:
+            runAsNonRoot: true
+            runAsUser: 65532
+            runAsGroup: 65532
+            fsGroup: 65532
+            seccompProfile:
+              type: RuntimeDefault
+          initContainers:
+            - name: guard
+              image: keinos/sqlite3@sha256:9064091a943982e2a90f095219d0d6adec03472f9042529563e3e66c9632af66   # = latest on 2026-11-14, the digest vignal pods already run
+              command:
+                - sh
+                - -c
+                - |
+                  set -e
+                  [ "$(date -u +%Y%m%d)" = "$(printf '202611%02d' 14)" ] || { echo "not 2026-11-14, skip"; exit 1; }
+                  n=$(sqlite3 -readonly /data/vignal.db "select count(*) from channels where quota_delayed_run_id is not null;")
+                  [ "$n" = 0 ] || { echo "quota_delayed $n, wave 2026-11-14 held"; exit 1; }
+                  t=$(sqlite3 -readonly /data/vignal.db "select count(*) from channels where tracking_state in ('active','warm','dormant');")
+                  w=$(grep -c channel_id: /seeds/seed.yaml)
+                  [ $((t + w)) -le 3700 ] || { echo "tracked $t + wave $w > 3700, wave 2026-11-14 held"; exit 1; }
+                  echo "guard ok (tracked $t + $w)"
+              securityContext: &csc
+                allowPrivilegeEscalation: false
+                readOnlyRootFilesystem: true
+                capabilities:
+                  drop: ["ALL"]
+              volumeMounts:
+                - name: data
+                  mountPath: /data
+                - name: seeds
+                  mountPath: /seeds
+                  readOnly: true
+            - name: dry-run
+              image: ghcr.io/sushistack/vignal@sha256:1944df6dc3ba71f8b381e432de1464b0082390d1dadbd993491916f3b6dded12
+              args: ["approve", "--from", "/seeds/seed.yaml", "--dry-run"]
+              env: &env
+                - name: VIGNAL_DB
+                  value: /data/vignal.db
+                - name: VIGNAL_CONFIG_DIR
+                  value: /config
+              securityContext: *csc
+              volumeMounts: &mounts
+                - name: data
+                  mountPath: /data
+                - name: config
+                  mountPath: /config
+                  readOnly: true
+                - name: seeds
+                  mountPath: /seeds
+                  readOnly: true
+          containers:
+            - name: apply
+              image: ghcr.io/sushistack/vignal@sha256:1944df6dc3ba71f8b381e432de1464b0082390d1dadbd993491916f3b6dded12
+              args: ["approve", "--from", "/seeds/seed.yaml"]
+              env: *env
+              securityContext: *csc
+              volumeMounts: *mounts
+          volumes:
+            - name: data
+              persistentVolumeClaim:
+                claimName: vignal-data
+            - name: config
+              configMap:
+                name: vignal-config
+            - name: seeds
+              configMap:
+                name: vignal-seed-2026-11-14

@@ -193,6 +193,8 @@ publish:
   public_base_url: https://${SECRET:DOMAIN_VIGNAL_DATA}
   # Story 2.8: backups/ 가 들어가는 비공개 버킷(r2 대상). local 은 env VIGNAL_BACKUP_DIR.
   private_bucket: vignal-private
+  # 2026-11-14 (user-approved, R2 Class A): 채널·기록 파일을 256개 묶음(b{k}.json)으로 올린다. 실행당 업로드 ~6.8k → ~560. 0 = 채널마다 파일
+  channel_bundles: 256
   # AD-31 (Story 23.1, FR-68): 채널마다 공개 영상 행 상한. 최근 latest 개(공개 시각 내림차순)
   # + 나머지 중 조회수 상위 top_views 개. 개수(uploads_30d·meta.*_count·totals)는 상한 전 값.
   # 값은 여기에만 있다. 0 이하·누락이면 설정 오류로 실행 실패.
