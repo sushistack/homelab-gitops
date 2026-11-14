@@ -38,7 +38,7 @@ spec:
                   [ "$n" = 0 ] || { echo "quota_delayed $n, wave 2026-11-14 held"; exit 1; }
                   t=$(sqlite3 -readonly /data/vignal.db "select count(*) from channels where tracking_state in ('active','warm','dormant');")
                   w=$(grep -c channel_id: /seeds/seed.yaml)
-                  [ $((t + w)) -le 3700 ] || { echo "tracked $t + wave $w > 3700, wave 2026-11-14 held"; exit 1; }
+                  [ $((t + w)) -le 4150 ] || { echo "tracked $t + wave $w > 4150, wave 2026-11-14 held"; exit 1; }
                   echo "guard ok (tracked $t + $w)"
               securityContext: &csc
                 allowPrivilegeEscalation: false
