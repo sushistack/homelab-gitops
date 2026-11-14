@@ -1,5 +1,17 @@
 ---
 # Top info bar: clock + weather + search. (resources widget removed)
+- kubernetes:
+    cluster:
+      show: true
+      cpu: true
+      memory: true
+      showLabel: true
+      label: k3s
+    nodes:
+      show: true
+      cpu: true
+      memory: true
+      showLabel: true
 - datetime:
     text_size: xl
     format:
