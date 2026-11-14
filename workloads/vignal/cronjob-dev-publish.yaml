@@ -18,10 +18,10 @@ metadata:
   name: vignal-dev-publish
 spec:
   # 03:30 KST: between prod runs (00:00/06:00, ~45 min each). A snapshot is consistent even if they overlap.
-  # Every 6 h, right after each prod run (00/06/12/18 KST, ~45-52 min): the release meta says refresh_interval_hours 6,
+  # Every 6 h, right after each prod run (00:30/06:30/12:30/18:30 KST, ~45-52 min; this runs 55 min after each): the release meta says refresh_interval_hours 6,
   # so a daily dev release showed the "갱신 지연" banner after 12 h (2026-11-06). A snapshot taken during a prod run is
   # still consistent (WAL read transaction).
-  schedule: "55 */6 * * *"
+  schedule: "25 1-23/6 * * *"
   timeZone: Asia/Seoul
   concurrencyPolicy: Forbid
   suspend: false
