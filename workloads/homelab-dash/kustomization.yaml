@@ -6,7 +6,7 @@ resources:
   - namespace.yaml
   - deployment.yaml
   - service.yaml
-  - ingressroute.yaml        # INTERNAL (CF Access app `monitoring`); host monitor.eli.kr
+  - ingressroute.yaml        # INTERNAL (CF Access app `monitoring`); host monitor.<zone>
   - certificate.yaml         # letsencrypt-prod DNS-01
   - sealedsecret-ghcr.yaml   # ghcr-sushistack: pull cred for the PRIVATE image (re-sealed for ns homelab-dash)
 

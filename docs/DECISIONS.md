@@ -715,5 +715,5 @@ material, IP, or `*.<zone>` host appears; Plane 0 secrets stay off-repo.
   `customapi` temps); (2) **`workloads/homelab-dash`** — own SPA (github.com/sushistack/homelab-dash,
   React 19 + Astryx + recharts) for time series, VM/LXC and pod drill-down. No backend: nginx proxies
   `GET /api/*` to the netdata Service (POST denied). Internal behind CF Access app `monitoring`
-  (monitor.eli.kr added to the app BEFORE the DNS record existed — the netdata API is unauthenticated).
+  (monitor.<zone> added to the app BEFORE the DNS record existed — the netdata API is unauthenticated).
   Still NOT Prometheus/Grafana. | homelab-dash

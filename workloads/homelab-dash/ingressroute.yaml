@@ -1,4 +1,4 @@
-# Monitoring UI — INTERNAL behind CF Access (app `monitoring`, same as kuma/netdata; monitor.eli.kr was
+# Monitoring UI — INTERNAL behind CF Access (app `monitoring`, same as kuma/netdata; monitor.<zone> was
 # added to that Access app BEFORE this record existed). The UI proxies the unauthenticated netdata API,
 # so CF Access (public) + LAN-only DNS are the gate — never drop the Access entry.
 ---
