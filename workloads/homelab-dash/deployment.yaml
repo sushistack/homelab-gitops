@@ -18,7 +18,7 @@ spec:
         - name: ghcr-sushistack   # PRIVATE ghcr.io/sushistack/* (re-sealed for ns homelab-dash)
       containers:
         - name: homelab-dash
-          # Pinned by digest (comment = source sha); bump here + versions.yaml in one PR.
+          # Baseline only — the live digest is the kustomization.yaml `images:` override (Image Updater).
           image: ghcr.io/sushistack/homelab-dash@sha256:085b1b5f394f263e1d20dc2b53d77acca23385e59ee674c883a715792f35d4e1   # sha-aea8d92 (self-hosted CI, crane)
           ports:
             - containerPort: 8080

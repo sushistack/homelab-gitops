@@ -50,7 +50,7 @@ sealed-secrets:
   kubeseal: v0.41.2        # local CLI pin — keep in lockstep with appVersion on any bump
 
 argocd-image-updater:
-  # Auto-digest follow for ntfy-web ONLY (our own app; CI repins :latest every main push). Tracks
+  # Auto-digest follow for ntfy-web + homelab-dash ONLY (our own apps; CI repins :latest every main push). Tracks
   # the digest :latest points to and writes it back to git → ArgoCD syncs. Every OTHER image stays
   # on the manual versions.yaml mirror below (scoped via per-Application annotations). Vendor
   # argo-helm chart referenced as an ArgoCD `source` (argocd/apps/argocd-image-updater.yaml) — NOT
@@ -135,11 +135,6 @@ workloads:
     # Own app (github.com/sushistack/vignal, private), built by its CI `image` job -> GHCR (amd64).
     # Pinned by digest (comment = source sha); bump here + cronjob.yaml in one PR.
     image: ghcr.io/sushistack/vignal@sha256:1944df6dc3ba71f8b381e432de1464b0082390d1dadbd993491916f3b6dded12   # sha-d62f9aa
-  homelab-dash:
-    manifest: workloads/homelab-dash/deployment.yaml
-    # Own app (github.com/sushistack/homelab-dash, private) -> GHCR (amd64). Pinned by digest
-    # (comment = source sha); bump here + deployment.yaml in one PR.
-    image: ghcr.io/sushistack/homelab-dash@sha256:085b1b5f394f263e1d20dc2b53d77acca23385e59ee674c883a715792f35d4e1   # sha-aea8d92 (self-hosted CI, crane)
   vignal-dev-publish:
     manifest: workloads/vignal/cronjob-dev-publish.yaml
     # Built from the app repo's `dev` branch (CI `image` job on dev pushes, or crane append on the prod image while

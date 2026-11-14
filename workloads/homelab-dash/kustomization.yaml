@@ -17,3 +17,9 @@ labels:
       app.kubernetes.io/part-of: homelab-dash
       app.kubernetes.io/managed-by: argocd
       app.kubernetes.io/component: dashboard
+
+# Live image = this override, written by Argo CD Image Updater (argocd/apps/homelab-dash.yaml) whenever CI
+# repins :latest. deployment.yaml keeps a baseline digest only.
+images:
+  - name: ghcr.io/sushistack/homelab-dash
+    digest: sha256:085b1b5f394f263e1d20dc2b53d77acca23385e59ee674c883a715792f35d4e1

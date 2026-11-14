@@ -30,6 +30,9 @@ spec:
           # can't carry per-app. Same dual-creation guard as anytype.
           - path: workloads/ntfy-web
             exclude: true
+          # homelab-dash: THIRD hand-written exception (Image Updater annotations), argocd/apps/homelab-dash.yaml.
+          - path: workloads/homelab-dash
+            exclude: true
   template:
     metadata:
       name: '{{.path.basename}}'

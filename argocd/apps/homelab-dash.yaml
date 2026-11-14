@@ -1,0 +1,38 @@
+# HAND-WRITTEN Application for homelab-dash — THIRD per-directory exception (after anytype, ntfy-web), for the
+# same reason as ntfy-web: Argo CD Image Updater config lives in annotations on the Application CR.
+# workloads/homelab-dash is EXCLUDED from the `workloads` ApplicationSet so only this one exists.
+#
+# Flow: push to homelab-dash main -> CI (ARC homelab-dash-k3s) pushes sha-<7> and repins :latest ->
+# updater sees the new :latest digest -> commits it into workloads/homelab-dash/kustomization.yaml
+# (`images:` block, via git-creds) -> Argo CD syncs. Revert = git revert of that commit.
+# See argocd/apps/ntfy-web.yaml for what each annotation does.
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: homelab-dash
+  namespace: argocd
+  annotations:
+    argocd.argoproj.io/sync-wave: "3"   # same wave as the ApplicationSet-generated workload it replaces
+    argocd-image-updater.argoproj.io/image-list: homelabdash=ghcr.io/sushistack/homelab-dash:latest
+    argocd-image-updater.argoproj.io/homelabdash.update-strategy: digest
+    argocd-image-updater.argoproj.io/write-back-method: git:secret:argocd/git-creds
+    argocd-image-updater.argoproj.io/git-branch: master
+    argocd-image-updater.argoproj.io/write-back-target: kustomization
+    # PRIVATE package -> registry read cred (argocd/apps/ghcr-sushistack-argocd-sealed.yaml)
+    argocd-image-updater.argoproj.io/homelabdash.pull-secret: pullsecret:argocd/ghcr-sushistack
+spec:
+  project: homelab
+  source:
+    repoURL: https://github.com/sushistack/homelab-gitops.git
+    targetRevision: HEAD
+    path: workloads/homelab-dash
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: homelab-dash
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
+      - ServerSideApply=true
