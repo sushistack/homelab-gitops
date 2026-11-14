@@ -1,0 +1,7 @@
+---
+# In-cluster ServiceAccount (rbac.yaml). Discovery off: services stay hand-written in services.yaml;
+# this only powers the top-bar kubernetes widget + per-service pod CPU/MEM.
+mode: cluster
+ingress: false
+traefik: false
+gateway: false

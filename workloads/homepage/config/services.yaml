@@ -8,20 +8,28 @@
         href: https://${SECRET:DOMAIN_N8N}
         icon: n8n.png
         description: Workflow automation
+        namespace: n8n
+        app: n8n
     - vault:
         href: https://${SECRET:DOMAIN_VAULTWARDEN}
         icon: vaultwarden.png
         description: Vaultwarden
+        namespace: vaultwarden
+        app: vaultwarden
     - draw:
         href: https://${SECRET:DOMAIN_DRAW}
         icon: excalidraw.png
         description: Excalidraw
+        namespace: excalidraw
+        app: excalidraw
 
 - Reads:
     - keep:
         href: https://${SECRET:DOMAIN_KEEP}
         icon: karakeep.png
         description: Karakeep
+        namespace: karakeep
+        app: karakeep-web
         widget:
           type: karakeep
           url: https://${SECRET:DOMAIN_KEEP}
@@ -30,6 +38,8 @@
         href: https://${SECRET:DOMAIN_KOMGA}
         icon: komga.png
         description: Komga
+        namespace: komga
+        app: komga
         widget:
           type: komga
           url: https://${SECRET:DOMAIN_KOMGA}
@@ -38,6 +48,8 @@
         href: https://${SECRET:DOMAIN_CALIBRE}
         icon: calibre.png
         description: Calibre
+        namespace: calibre
+        app: calibre
         widget:
           type: calibreweb
           url: https://${SECRET:DOMAIN_CALIBRE}
@@ -47,6 +59,8 @@
         href: https://${SECRET:DOMAIN_RSS}
         icon: miniflux.png
         description: Miniflux
+        namespace: miniflux
+        app: miniflux
         widget:
           type: miniflux
           url: https://${SECRET:DOMAIN_RSS}
@@ -57,15 +71,25 @@
         href: https://${SECRET:DOMAIN_KUMA}
         icon: uptime-kuma.png
         description: Uptime Kuma
+        namespace: uptime-kuma
+        app: uptime-kuma
         widget:
           type: uptimekuma
           url: https://${SECRET:DOMAIN_KUMA}
           # ponytail: slug is public (status page URL) — no secret needed; change if slug differs
           slug: default
+    - monitor:
+        href: https://${SECRET:DOMAIN_MONITOR}
+        icon: mdi-monitor-dashboard
+        description: Proxmox · k3s · Pod 모니터링
+        namespace: homelab-dash
+        app: homelab-dash
     - netdata:
         href: https://${SECRET:DOMAIN_NETDATA}
         icon: netdata.png
         description: Netdata
+        namespace: netdata
+        app: netdata
         widget:
           type: netdata
           url: https://${SECRET:DOMAIN_NETDATA}
@@ -73,6 +97,8 @@
         href: https://${SECRET:DOMAIN_NTFY_WEB}
         icon: ntfy.png
         description: ntfy notifications
+        namespace: ntfy
+        app: ntfy
         widgets:
           - type: ntfy
             url: https://${SECRET:DOMAIN_NTFY}
@@ -110,6 +136,8 @@
         href: https://${SECRET:DOMAIN_NAVIDROME}
         icon: navidrome.png
         description: Navidrome
+        namespace: navidrome
+        app: navidrome
         widget:
           type: navidrome
           url: https://${SECRET:DOMAIN_NAVIDROME}
@@ -123,6 +151,8 @@
         href: https://${SECRET:DOMAIN_SLSKD}
         icon: slskd.png
         description: Soulseek client
+        namespace: slskd
+        app: slskd
         widget:
           type: slskd
           url: https://${SECRET:DOMAIN_SLSKD}
@@ -135,6 +165,8 @@
         href: https://${SECRET:DOMAIN_ARGOCD}
         icon: argo-cd.png
         description: GitOps
+        namespace: argocd
+        app: argocd-server
         widget:
           type: argocd
           url: https://${SECRET:DOMAIN_ARGOCD}
@@ -143,24 +175,73 @@
         href: https://${SECRET:DOMAIN_TRAEFIK}/dashboard/
         icon: traefik.png
         description: Ingress dashboard
+        namespace: kube-system
+        app: traefik
         widget:
           type: traefik
           url: https://${SECRET:DOMAIN_TRAEFIK}
 
 - Infra:
-    - proxmox:
+    # One card per Proxmox node (proxmox API node name ↔ netdata host name differ for the
+    # first node: pve ↔ proxmox). Charts/graphs/VM detail live in the monitoring dashboard.
+    - pve:
         href: https://${SECRET:DOMAIN_PROXMOX}
         icon: proxmox.png
-        description: Proxmox VE
-        widget:
-          # Hit the FQDN, not 10.0.0.2:8006 — proxmox.eli.kr is fronted by this cluster's
-          # Traefik with a valid LE cert (edge-proxies/proxmox.yaml), so TLS verifies and no
-          # NODE_TLS relaxation is needed. LAN-only DNS; the pod resolves it via the LAN resolver.
-          # token id/secret come from the homepage-secrets Secret via runtime {{HOMEPAGE_VAR_*}}.
-          type: proxmox
-          url: https://${SECRET:DOMAIN_PROXMOX}
-          username: "{{HOMEPAGE_VAR_PROXMOX_TOKEN_ID}}"
-          password: "{{HOMEPAGE_VAR_PROXMOX_TOKEN_SECRET}}"
+        description: Proxmox node pve
+        widgets:
+          # Proxmox API filtered to this node: VMs / LXC / CPU / MEM.
+          - type: proxmox
+            url: https://${SECRET:DOMAIN_PROXMOX}
+            username: "{{HOMEPAGE_VAR_PROXMOX_TOKEN_ID}}"
+            password: "{{HOMEPAGE_VAR_PROXMOX_TOKEN_SECRET}}"
+            node: pve
+          # Temps + root disk from the netdata parent (in-cluster, no auth/CF Access hop).
+          # Object-style field paths: netdata chart ids contain dots, which break dot-notation.
+          - type: customapi
+            url: http://netdata.netdata.svc.cluster.local:19999/host/proxmox/api/v1/allmetrics?format=json&filter=sensors.temperature_k10temp-pci-00c3_temp1_Tctl_input%20sensors.temperature_nvme-pci-0500_temp1_Composite_input%20disk_space./
+            refreshInterval: 10000
+            mappings:
+              - label: CPU temp
+                field: { sensors.temperature_k10temp-pci-00c3_temp1_Tctl_input: { dimensions: { input: value } } }
+                format: float
+                suffix: "°C"
+              - label: NVMe temp
+                field: { sensors.temperature_nvme-pci-0500_temp1_Composite_input: { dimensions: { input: value } } }
+                format: float
+                suffix: "°C"
+              - label: Root used
+                field: { disk_space./: { dimensions: { used: value } } }
+                format: float
+                suffix: " GiB"
+    - pve-k12:
+        href: https://${SECRET:DOMAIN_PROXMOX}
+        icon: proxmox.png
+        description: Proxmox node pve-k12
+        widgets:
+          # Proxmox API filtered to this node: VMs / LXC / CPU / MEM.
+          - type: proxmox
+            url: https://${SECRET:DOMAIN_PROXMOX}
+            username: "{{HOMEPAGE_VAR_PROXMOX_TOKEN_ID}}"
+            password: "{{HOMEPAGE_VAR_PROXMOX_TOKEN_SECRET}}"
+            node: pve-k12
+          # Temps + root disk from the netdata parent (in-cluster, no auth/CF Access hop).
+          # Object-style field paths: netdata chart ids contain dots, which break dot-notation.
+          - type: customapi
+            url: http://netdata.netdata.svc.cluster.local:19999/host/pve-k12/api/v1/allmetrics?format=json&filter=sensors.temperature_k10temp-pci-00c3_temp1_Tctl_input%20sensors.temperature_nvme-pci-0100_temp1_Composite_input%20disk_space./
+            refreshInterval: 10000
+            mappings:
+              - label: CPU temp
+                field: { sensors.temperature_k10temp-pci-00c3_temp1_Tctl_input: { dimensions: { input: value } } }
+                format: float
+                suffix: "°C"
+              - label: NVMe temp
+                field: { sensors.temperature_nvme-pci-0100_temp1_Composite_input: { dimensions: { input: value } } }
+                format: float
+                suffix: "°C"
+              - label: Root used
+                field: { disk_space./: { dimensions: { used: value } } }
+                format: float
+                suffix: " GiB"
     - openwrt:
         href: https://${SECRET:DOMAIN_OPENWRT}
         icon: openwrt.png

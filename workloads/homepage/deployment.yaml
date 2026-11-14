@@ -13,6 +13,7 @@ spec:
       labels:
         app.kubernetes.io/name: homepage
     spec:
+      serviceAccountName: homepage   # rbac.yaml — kubernetes integration (mode: cluster)
       # Homepage v1.13.2 bootstraps missing config files + a logs dir INTO /app/config at
       # startup, so that dir must be writable. Seed a writable emptyDir from the (read-only)
       # ConfigMap; Homepage then fills in the rest. ConfigMap hash still drives auto-rollout.

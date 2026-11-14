@@ -1,0 +1,41 @@
+# Monitoring UI (github.com/sushistack/homelab-dash, private): static SPA + nginx proxying GET /api/*
+# to the netdata parent Service. Stateless, no secrets beyond the GHCR pull cred.
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: homelab-dash
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: homelab-dash
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: homelab-dash
+    spec:
+      imagePullSecrets:
+        - name: ghcr-sushistack   # PRIVATE ghcr.io/sushistack/* (re-sealed for ns homelab-dash)
+      containers:
+        - name: homelab-dash
+          # Pinned by digest (comment = source sha); bump here + versions.yaml in one PR.
+          image: ghcr.io/sushistack/homelab-dash@sha256:5478e743576d714a5b6c1f57d6cdd1f5befed84f19cbd5f0e862af39f91321e6   # sha-64a5791
+          ports:
+            - containerPort: 8080
+          env:
+            - name: NETDATA_URL
+              value: http://netdata.netdata.svc.cluster.local:19999
+          readinessProbe:
+            httpGet:
+              path: /healthz
+              port: 8080
+          livenessProbe:
+            httpGet:
+              path: /healthz
+              port: 8080
+          resources:
+            requests:
+              cpu: 10m
+              memory: 16Mi
+            limits:
+              memory: 64Mi
