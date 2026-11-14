@@ -78,6 +78,12 @@
           url: https://${SECRET:DOMAIN_KUMA}
           # ponytail: slug is public (status page URL) — no secret needed; change if slug differs
           slug: default
+    - monitor:
+        href: https://${SECRET:DOMAIN_MONITOR}
+        icon: mdi-monitor-dashboard
+        description: Proxmox · k3s · Pod 모니터링
+        namespace: homelab-dash
+        app: homelab-dash
     - netdata:
         href: https://${SECRET:DOMAIN_NETDATA}
         icon: netdata.png

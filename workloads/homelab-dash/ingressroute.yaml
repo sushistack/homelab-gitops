@@ -1,0 +1,49 @@
+# Monitoring UI — INTERNAL behind CF Access (app `monitoring`, same as kuma/netdata; monitor.eli.kr was
+# added to that Access app BEFORE this record existed). The UI proxies the unauthenticated netdata API,
+# so CF Access (public) + LAN-only DNS are the gate — never drop the Access entry.
+---
+apiVersion: traefik.io/v1alpha1
+kind: Middleware
+metadata:
+  name: homelab-dash-redirect-https
+spec:
+  redirectScheme:
+    scheme: https
+    permanent: true
+---
+apiVersion: traefik.io/v1alpha1
+kind: IngressRoute
+metadata:
+  name: homelab-dash
+  annotations:
+    # Public record so CF Access (Google SSO) can gate it.
+    external-dns.alpha.kubernetes.io/target: 761ca633-e9d6-4af8-8508-727bba00f0a9.cfargotunnel.com
+spec:
+  entryPoints:
+    - websecure
+  routes:
+    - match: Host(`${SECRET:DOMAIN_MONITOR}`)
+      kind: Rule
+      services:
+        - name: homelab-dash
+          port: 80
+  tls:
+    secretName: homelab-dash-tls
+---
+apiVersion: traefik.io/v1alpha1
+kind: IngressRoute
+metadata:
+  name: homelab-dash-redirect
+  annotations:
+    external-dns.alpha.kubernetes.io/controller: none   # record owned by the websecure route only
+spec:
+  entryPoints:
+    - web
+  routes:
+    - match: Host(`${SECRET:DOMAIN_MONITOR}`)
+      kind: Rule
+      middlewares:
+        - name: homelab-dash-redirect-https
+      services:
+        - name: homelab-dash   # required by the IngressRoute schema; middleware redirects before it's hit
+          port: 80

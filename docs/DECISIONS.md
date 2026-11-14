@@ -704,3 +704,16 @@ material, IP, or `*.<zone>` host appears; Plane 0 secrets stay off-repo.
   still dumped to services-backup) via a job-less `no-offsite` Longhorn group, keeping total R2 ≈ 5.8 GiB
   under the 8 GiB ops-alerter threshold / 10 GiB free tier. Verified end-to-end (one-off backup → R2
   Completed). The legacy `home-server-backups` bucket (Compose-era, 59 GB) was deleted by the operator. | Story 5.10 (backup)
+
+## Monitoring UI on top of Netdata — homelab-dash + homepage stats (2026-11-14)
+
+- 2026-11-14 | **Netdata stays the collector; the netdata UI is no longer the primary view.** Operator
+  found the netdata dashboard hard to read. Instead of swapping collectors again (Beszel was retired
+  2026-06-22 for lacking per-pod detail), two read-only views sit on the netdata parent API:
+  (1) **homepage** glance layer — kubernetes integration (top-bar node CPU/MEM, per-card pod stats,
+  read-only ClusterRole) + one card per Proxmox node (proxmox widget `node:` filter + netdata
+  `customapi` temps); (2) **`workloads/homelab-dash`** — own SPA (github.com/sushistack/homelab-dash,
+  React 19 + Astryx + recharts) for time series, VM/LXC and pod drill-down. No backend: nginx proxies
+  `GET /api/*` to the netdata Service (POST denied). Internal behind CF Access app `monitoring`
+  (monitor.eli.kr added to the app BEFORE the DNS record existed — the netdata API is unauthenticated).
+  Still NOT Prometheus/Grafana. | homelab-dash

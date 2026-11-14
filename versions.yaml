@@ -130,6 +130,11 @@ workloads:
     # Own app (github.com/sushistack/vignal, private), built by its CI `image` job -> GHCR (amd64).
     # Pinned by digest (comment = source sha); bump here + cronjob.yaml in one PR.
     image: ghcr.io/sushistack/vignal@sha256:48ab991b22331cd99b450098c79d619b610bb45dc9b775019530316d5ce514c7   # sha-48a7e7e
+  homelab-dash:
+    manifest: workloads/homelab-dash/deployment.yaml
+    # Own app (github.com/sushistack/homelab-dash, private) -> GHCR (amd64). Pinned by digest
+    # (comment = source sha); bump here + deployment.yaml in one PR.
+    image: ghcr.io/sushistack/homelab-dash@sha256:a44bdb8a659b669670c1f94d214c5d394c0c15e2c7b385bc668ea0252f6b07af   # sha-e49adc1
   vignal-dev-publish:
     manifest: workloads/vignal/cronjob-dev-publish.yaml
     # Built from the app repo's `dev` branch (CI `image` job on dev pushes, or crane append on the prod image while
