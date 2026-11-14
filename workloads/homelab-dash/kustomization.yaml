@@ -18,4 +18,4 @@ labels:
 # repins :latest. deployment.yaml keeps a baseline digest only.
 images:
   - name: ghcr.io/sushistack/homelab-dash
-    digest: sha256:e5eb8e4b6ea8ec3cd9b05ebea5b95bce5a1352a6e37ced5279e77236c2d95f4d
+    digest: sha256:d1abf8aac412a0269c33fb2d279d555922ff85cb83fb95ac3f619f947d169532
