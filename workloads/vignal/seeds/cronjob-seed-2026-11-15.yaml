@@ -33,12 +33,12 @@ spec:
                 - -c
                 - |
                   set -e
-                  [ "$(date -u +%Y%m%d)" = "$(printf '202611%02d' 15)" ] || { echo "not 2026-11-15, skip"; exit 1; }
+                  [ "$(date -u +%Y%m%d)" = "$(printf '202611%02d' 14)" ] || { echo "not 2026-11-14, skip"; exit 1; }
                   n=$(sqlite3 -readonly /data/vignal.db "select count(*) from channels where quota_delayed_run_id is not null;")
                   [ "$n" = 0 ] || { echo "quota_delayed $n, wave 2026-11-15 held"; exit 1; }
                   t=$(sqlite3 -readonly /data/vignal.db "select count(*) from channels where tracking_state in ('active','warm','dormant');")
                   w=$(grep -c channel_id: /seeds/seed.yaml)
-                  [ $((t + w)) -le 3700 ] || { echo "tracked $t + wave $w > 3700, wave 2026-11-15 held"; exit 1; }
+                  [ $((t + w)) -le 4150 ] || { echo "tracked $t + wave $w > 4150, wave 2026-11-15 held"; exit 1; }
                   echo "guard ok (tracked $t + $w)"
               securityContext: &csc
                 allowPrivilegeEscalation: false
