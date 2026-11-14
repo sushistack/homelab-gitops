@@ -12,6 +12,9 @@ spec:
   accessModes:
     - ReadWriteOnce
   storageClassName: local-path-retain
+  # 2026-11-14: the namespace was pruned (broken kustomization, #207) and the PVC went with it; the Retain PV kept
+  # the data. Pinned so the recreated claim binds that PV instead of provisioning an empty one.
+  volumeName: pvc-3e1354ea-cce9-48c5-9c19-1ef9cbf274b9
   resources:
     requests:
       storage: 2Gi   # 30-day retention keeps the DB small; grow via PR if needed
