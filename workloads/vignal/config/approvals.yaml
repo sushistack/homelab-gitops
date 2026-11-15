@@ -1747,6 +1747,46 @@ approve:
   - channel_id: UCO5rDIUWfCX7gsCzURXMUCg
     topic: game
     note: "scout:featured 구독 55600 롱폼 48/50 최근 업로드 2026-11-07"
+  # 네건 (scout 2026-11-15)
+  - channel_id: UC0dzSeefT8twKtHh-1mjScA
+    topic: game
+    note: "scout:popular 구독 63300 롱폼 27/49 최근 업로드 2026-11-14"
+  # 연곰의 꿀단지 (scout 2026-11-15)
+  - channel_id: UC4BtrGUBY0axlIRUYVzDUqQ
+    topic: game
+    note: "scout:featured 구독 13900 롱폼 8/50 최근 업로드 2026-11-14"
+  # 해마티엘 (scout 2026-11-15)
+  - channel_id: UC4SlbSjWjrCICz1V_t4GT7Q
+    topic: game
+    note: "scout:featured 구독 74700 롱폼 38/50 최근 업로드 2026-11-14"
+  # Sira LIFE (scout 2026-11-15)
+  - channel_id: UC7eGNV3h-d4rCZe_hvtN9BQ
+    topic: science
+    note: "scout:featured 구독 78200 롱폼 4/50 최근 업로드 2026-11-15"
+  # 루시 Luci (scout 2026-11-15)
+  - channel_id: UCAlAZQaw_3rIm5q2qLIIJXA
+    topic: game
+    note: "scout:featured 구독 10300 롱폼 23/50 최근 업로드 2026-11-13"
+  # 야구는 엠스플 (scout 2026-11-15)
+  - channel_id: UCDHIto3v5jKVLMaVlaMF-Gg
+    topic: sports
+    note: "scout:featured 구독 61800 롱폼 18/50 최근 업로드 2026-11-13"
+  # 먼닉 Munnik (scout 2026-11-15)
+  - channel_id: UCHAZ5IzqGqK6UtC_j_1s61w
+    topic: game
+    note: "scout:featured 구독 73800 롱폼 29/50 최근 업로드 2026-11-13"
+  # 월광쾅준 (scout 2026-11-15)
+  - channel_id: UCL7q_IS6RK3_sh1LolSqPxw
+    topic: game
+    note: "scout:featured 구독 23700 롱폼 28/50 최근 업로드 2026-11-09"
+  # DIAMI 다이아미 (scout 2026-11-15)
+  - channel_id: UCPegSi0lqfMq3v9N7S7CMHg
+    topic: beauty-life
+    note: "scout:featured 구독 14700 롱폼 2/50 최근 업로드 2026-11-06"
+  # 영어 회화 인강도 다락원 (scout 2026-11-15)
+  - channel_id: UCQT7znaczuADTOfQsSq4RRQ
+    topic: education
+    note: "scout:featured 구독 12600 롱폼 11/50 최근 업로드 2026-11-12"
 untrack: []
 
 # 2026-11-12 (user-approved, PERSONA15~18: 당뇨/당뇨병, 인공지능/AI split one subject's counts): duplicate subjects
