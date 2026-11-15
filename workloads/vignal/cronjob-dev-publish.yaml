@@ -51,7 +51,7 @@ spec:
               type: RuntimeDefault
           containers:
             - name: vignal
-              image: ghcr.io/sushistack/vignal@sha256:616e80bb0ec1ceb40a6e5ac9a17f61705aedae9ebdbda3071df76101aedfd558   # sha-1d71d18 (dev: 100만+ peer band with top-quarter hits, official-channels.yaml, hand-set level 2 wins in peers)
+              image: ghcr.io/sushistack/vignal@sha256:324b82a575ee8503bbee9d04e26f93744cb980747c0625812f051621d44cf989   # sha-51b284f (dev: upload-time grid in peers, reaction rate in channel stats)
               args: ["publish-dev"]
               env:
                 - name: TZ
@@ -67,7 +67,7 @@ spec:
                 - name: VIGNAL_DEV_PREFIX
                   value: dev/
                 - name: VIGNAL_DEV_ALLOW
-                  value: subject_flow,r24,observe_tags
+                  value: subject_flow,r24,observe_tags,aux_ratios   # aux_ratios 2026-11-15: compare views-per-video + reaction rate (dev only)
                 - name: VIGNAL_DEV_STATE
                   value: /data/vignal-dev-state.db   # dev-only tag rows; never read by the prod collector
                 - name: VIGNAL_DEV_KEEP
