@@ -33,6 +33,7 @@ channels:
     note: "청룡영화상 · 청룡시리즈어워즈 · 배우 인터뷰 채널인데 sports. celeb 67 (2026-11-13 표본 검수, claude)"
   - channel_id: UCQLfH7IZ9kktA2Hq4NDZ1LQ
     topic: fitness
+    topic_l2: fitness/home-workout
     note: "최박사의 운동 혁명 · 운동생리학 채널인데 self-dev. fitness 40·self-dev 1 (2026-11-13 표본 검수, claude)"
   - channel_id: UCSB5FOwUVnAhGo_o99IhxYA
     topic: movie-review
@@ -1496,6 +1497,7 @@ channels:
     note: "벙구 · web-drama -> mystery, 괴담·공포 영상 위주 (2026-11-15 수동 검수, claude)"
   - channel_id: UC3hRpIQ4x5niJDwjajQSVPg
     topic: fitness
+    topic_l2: fitness/gym
     note: "핏블리 FITVELY · web-drama -> fitness, 운동 자세·체형 영상 위주 (2026-11-15 수동 검수, claude)"
   - channel_id: UCXql5C57vS4ogUt6CPEWWHA
     topic: news
@@ -1655,6 +1657,426 @@ channels:
   - channel_id: UC4iVwGvZhx79QF3aFhkRltQ
     topic: issue
     note: "건강밥상TV · fitness -> issue, 시장 상인·연예인 일화 쇼츠 위주로 운동·건강 아님 (2026-11-15 수동 검수, claude)"
+  - channel_id: UCesTanm8EwhMo3Kwhyj7yDA
+    topic: fitness
+    topic_l2: fitness/home-workout
+    note: "원정혜명상요가 (samskrity) · L2 없음 -> home-workout, 요가 영상 위주 (2026-11-15 수동 검수, claude)"
+  - channel_id: UCjU_DYxwqdg5P_wW5RxPU_A
+    topic: fitness
+    topic_l2: fitness/home-workout
+    note: "더올바른필라테스 자격증 · L2 없음 -> home-workout, 필라테스·하체 운동 영상 위주 (2026-11-15 수동 검수, claude)"
+  - channel_id: UCKdvqF-mmgiifS_pinO_bRA
+    topic: fitness
+    topic_l2: fitness/health-info
+    note: "EBS 건강 · L2 없음 -> health-info, 근감소증·노화 질환 정보 위주 (2026-11-15 수동 검수, claude)"
+  - channel_id: UCGa7bzc9nchy7PQshb85I5Q
+    topic: fitness
+    topic_l2: fitness/home-workout
+    note: "인간미 넘치는 건강멘토 · L2 없음 -> home-workout, 굽은 등·어깨 교정 운동 위주 (2026-11-15 수동 검수, claude)"
+  - channel_id: UCWddpyMTj8UAkCUxS8h2S-g
+    topic: fitness
+    topic_l2: fitness/health-info
+    note: "건강톡톡스 · L2 없음 -> health-info, 미세전류 테라피 등 건강·관리 정보 (2026-11-15 수동 검수, claude)"
+  - channel_id: UCbMq7tUH0YMPal0gnlm7RRg
+    topic: fitness
+    topic_l2: fitness/home-workout
+    note: "류사부의 원리다이어트 · L2 없음 -> home-workout, 허리·하체 근육 풀기 운동 위주 (2026-11-15 수동 검수, claude)"
+  - channel_id: UChBKRycwLWou13wTAF--_mw
+    topic: fitness
+    topic_l2: fitness/home-workout
+    note: "3분 운동과학 · L2 없음 -> home-workout, 스트레칭·가동성 운동 설명 (2026-11-15 수동 검수, claude)"
+  - channel_id: UCnu0XN4W6nz4lYVonzL_FCA
+    topic: fitness
+    topic_l2: fitness/home-workout
+    note: "려경요가 RK yoga · L2 없음 -> home-workout, 하타요가 수련 영상 (2026-11-15 수동 검수, claude)"
+  - channel_id: UCFfHIE0ynmBh1FYLx50cKLA
+    topic: fitness
+    topic_l2: fitness/health-info
+    note: "건강지도사 · L2 없음 -> health-info, 탈모 정보 위주(같은 주제의 탈모 채널이 health-info) (2026-11-15 수동 검수, claude)"
+  - channel_id: UCzfoIbslSwEjlFdFRvh3RLg
+    topic: fitness
+    topic_l2: fitness/home-workout
+    note: "요가은YoGaEun · L2 없음 -> home-workout, 요가·스트레칭·명상 영상 (2026-11-15 수동 검수, claude)"
+  - channel_id: UCxM_KJ601hwrOpjVC07iMVQ
+    topic: beauty-life
+    topic_l2: beauty-life/skincare
+    note: "다노언니 제시 · fitness -> beauty-life/skincare, 피부장벽·클렌저 등 스킨케어 영상 위주 (2026-11-15 수동 검수, claude)"
+  - channel_id: UCeaB7s_kJoj_lWwKLApEHig
+    topic: game
+    topic_l2: game/mobile
+    note: "킹덤러너 · fitness -> game/mobile, 쿠키런:킹덤 계정평가·업데이트 영상 (2026-11-15 수동 검수, claude)"
+  - channel_id: UCezt_gfn8nJyFltdQUvFM0g
+    topic: education
+    topic_l2: education/language
+    note: "지름길영어 - 영어가 늦었을 땐 빠른 길로 · L2 없음 -> language, 어학 강의 영상 위주 (2026-11-15 수동 검수, claude)"
+  - channel_id: UCOfPBjrT7sFiBe3Bl2e9bEA
+    topic: education
+    topic_l2: education/language
+    note: "캘리쌤 브이로그 영어 · L2 없음 -> language, 어학 강의 영상 위주 (2026-11-15 수동 검수, claude)"
+  - channel_id: UCIf8PM6RbYoMvsl6Yc7iI_A
+    topic: education
+    topic_l2: education/language
+    note: "그랑프리영어 Grand Prix English · L2 없음 -> language, 어학 강의 영상 위주 (2026-11-15 수동 검수, claude)"
+  - channel_id: UCUyOOQKJxRhzxrPOSLArYTA
+    topic: education
+    topic_l2: education/language
+    note: "리틀팍스 - 영어동화 세상 · L2 없음 -> language, 어학 강의 영상 위주 (2026-11-15 수동 검수, claude)"
+  - channel_id: UCvCM7u00Ez4u44NViSwFqtA
+    topic: education
+    topic_l2: education/language
+    note: "점점영어 - Advanced · L2 없음 -> language, 어학 강의 영상 위주 (2026-11-15 수동 검수, claude)"
+  - channel_id: UCJm_0C08ZDYvpADDIh6Ow6g
+    topic: education
+    topic_l2: education/language
+    note: "영어 읽어주는 남자 · L2 없음 -> language, 어학 강의 영상 위주 (2026-11-15 수동 검수, claude)"
+  - channel_id: UCZBCyq3cjSnDH5_t9duSCQg
+    topic: education
+    topic_l2: education/language
+    note: "은하수업, 은하쌤의 친절한 영어 · L2 없음 -> language, 어학 강의 영상 위주 (2026-11-15 수동 검수, claude)"
+  - channel_id: UC5bAQKjAHUvQ1MQV24YyGTw
+    topic: education
+    topic_l2: education/language
+    note: "친절한 대학 기초영어 · L2 없음 -> language, 어학 강의 영상 위주 (2026-11-15 수동 검수, claude)"
+  - channel_id: UC-0QNFuHfNbBwRsT1CUx0tg
+    topic: education
+    topic_l2: education/language
+    note: "기초영어 Step by Step · L2 없음 -> language, 어학 강의 영상 위주 (2026-11-15 수동 검수, claude)"
+  - channel_id: UCWbdX2OQlZkpXBw9M21pjzQ
+    topic: education
+    topic_l2: education/language
+    note: "프랭크쌤영어 · L2 없음 -> language, 어학 강의 영상 위주 (2026-11-15 수동 검수, claude)"
+  - channel_id: UCgLYy6GGv5ooNxZlqNUvDpQ
+    topic: education
+    topic_l2: education/language
+    note: "바로일본어 수지센세 · L2 없음 -> language, 어학 강의 영상 위주 (2026-11-15 수동 검수, claude)"
+  - channel_id: UCHt6QDai3Gx7tm_SrHkeFiA
+    topic: education
+    topic_l2: education/language
+    note: "일본어경숙쌤ㅣ말하기 수업 전문 · L2 없음 -> language, 어학 강의 영상 위주 (2026-11-15 수동 검수, claude)"
+  - channel_id: UCtdFj2BnAul5lWycpCHMBaw
+    topic: education
+    topic_l2: education/language
+    note: "쑥쑥 영어(에리카) · L2 없음 -> language, 어학 강의 영상 위주 (2026-11-15 수동 검수, claude)"
+  - channel_id: UC53Xn-yXH33HsrjRmJOOP6Q
+    topic: education
+    topic_l2: education/language
+    note: "밀가루쌤영어 · L2 없음 -> language, 어학 강의 영상 위주 (2026-11-15 수동 검수, claude)"
+  - channel_id: UCokUZClKh1ZK0TjJgxVK5-g
+    topic: education
+    topic_l2: education/language
+    note: "주아쌤_소리튠영어 · L2 없음 -> language, 어학 강의 영상 위주 (2026-11-15 수동 검수, claude)"
+  - channel_id: UCq0pVPNYdDWQk1iTS4jTk2w
+    topic: education
+    topic_l2: education/language
+    note: "브릿센트 x 영국영어 · L2 없음 -> language, 어학 강의 영상 위주 (2026-11-15 수동 검수, claude)"
+  - channel_id: UCsV6fgPgSA47vjD_rV0sR1Q
+    topic: education
+    topic_l2: education/language
+    note: "[영어똑띠]영어를 똑똑하게 공부하는 방법 · L2 없음 -> language, 어학 강의 영상 위주 (2026-11-15 수동 검수, claude)"
+  - channel_id: UCBARjw2l2cbTzxQLIYwFm6w
+    topic: education
+    topic_l2: education/language
+    note: "중국어도 역시1위 해커스중국어 · L2 없음 -> language, 어학 강의 영상 위주 (2026-11-15 수동 검수, claude)"
+  - channel_id: UCSyomjvhjZ4Qp6Zp3dbXxTA
+    topic: education
+    topic_l2: education/language
+    note: "굿럭영어 · L2 없음 -> language, 어학 강의 영상 위주 (2026-11-15 수동 검수, claude)"
+  - channel_id: UCTr8uVRydTiIUbkrO88U9qA
+    topic: education
+    topic_l2: education/language
+    note: "일본어스타터 · L2 없음 -> language, 어학 강의 영상 위주 (2026-11-15 수동 검수, claude)"
+  - channel_id: UCkZR05SzacfqtouCsOx9qYw
+    topic: education
+    topic_l2: education/language
+    note: "매일영어Study English · L2 없음 -> language, 어학 강의 영상 위주 (2026-11-15 수동 검수, claude)"
+  - channel_id: UC8Ur-HYGmHEjXtudJUaISWg
+    topic: education
+    topic_l2: education/language
+    note: "시사일본어 · L2 없음 -> language, 어학 강의 영상 위주 (2026-11-15 수동 검수, claude)"
+  - channel_id: UCRvdXwPSmcZZuR4zRP-6bIw
+    topic: education
+    topic_l2: education/language
+    note: "프랭크쌤 기초영어 · L2 없음 -> language, 어학 강의 영상 위주 (2026-11-15 수동 검수, claude)"
+  - channel_id: UCbb378qOCJNzZLkJ38fvnxg
+    topic: education
+    topic_l2: education/language
+    note: "프랭크쌤 영어 듣기 · L2 없음 -> language, 어학 강의 영상 위주 (2026-11-15 수동 검수, claude)"
+  - channel_id: UClPWDge6kFVESzlzcuXKJfw
+    topic: education
+    topic_l2: education/language
+    note: "친절한 대학 · L2 없음 -> language, 어학 강의 영상 위주 (2026-11-15 수동 검수, claude)"
+  - channel_id: UCuwqlUE1mgdBuoYbut9fgmw
+    topic: education
+    topic_l2: education/language
+    note: "쓰는영어 · L2 없음 -> language, 어학 강의 영상 위주 (2026-11-15 수동 검수, claude)"
+  - channel_id: UCJJv5M4cirGff57vqG2MLjg
+    topic: education
+    topic_l2: education/language
+    note: "서아쌤의 비밀과외 · L2 없음 -> language, 어학 강의 영상 위주 (2026-11-15 수동 검수, claude)"
+  - channel_id: UCqQR8b-MTXuMgrV7scZfq_w
+    topic: education
+    topic_l2: education/language
+    note: "어션영어BasicEnglish · L2 없음 -> language, 어학 강의 영상 위주 (2026-11-15 수동 검수, claude)"
+  - channel_id: UC47qXxdyxM7d3suceRbZ-Ag
+    topic: education
+    topic_l2: education/language
+    note: "아무튼영어 토익 · L2 없음 -> language, 어학 강의 영상 위주 (2026-11-15 수동 검수, claude)"
+  - channel_id: UCJJpZmjVwvZX0lhELWTNV3A
+    topic: education
+    topic_l2: education/language
+    note: "스푼영어 · L2 없음 -> language, 어학 강의 영상 위주 (2026-11-15 수동 검수, claude)"
+  - channel_id: UC3qwgQhgVZAjDAkb2rZbNPA
+    topic: education
+    topic_l2: education/language
+    note: "영어식 사고 l 러너블 티처조  · L2 없음 -> language, 어학 강의 영상 위주 (2026-11-15 수동 검수, claude)"
+  - channel_id: UC0eZuKTP1pcMIENI3fqwN3g
+    topic: education
+    topic_l2: education/language
+    note: "말트영어(기초&여행&생활영어) · L2 없음 -> language, 어학 강의 영상 위주 (2026-11-15 수동 검수, claude)"
+  - channel_id: UCbvOip7-xXlwww5J-D8VZZQ
+    topic: education
+    topic_l2: education/language
+    note: "체인지스피킹 · L2 없음 -> language, 어학 강의 영상 위주 (2026-11-15 수동 검수, claude)"
+  - channel_id: UCpOF4cuywmc4RH-m4EcX1LA
+    topic: education
+    topic_l2: education/language
+    note: "헤일리 영어 · L2 없음 -> language, 어학 강의 영상 위주 (2026-11-15 수동 검수, claude)"
+  - channel_id: UCYdolXPDoWMQMBLfdHQaWPw
+    topic: education
+    topic_l2: education/language
+    note: "노마쌤 - 즐거운 영어 습관 · L2 없음 -> language, 어학 강의 영상 위주 (2026-11-15 수동 검수, claude)"
+  - channel_id: UCWlU4erM93Fd3e0SS3IjDWA
+    topic: education
+    topic_l2: education/language
+    note: "들리니영어-왕초보영어회화 · L2 없음 -> language, 어학 강의 영상 위주 (2026-11-15 수동 검수, claude)"
+  - channel_id: UC7EwAqrMqlnTcLklQWqObkA
+    topic: education
+    topic_l2: education/language
+    note: "10초 영어회화 · L2 없음 -> language, 어학 강의 영상 위주 (2026-11-15 수동 검수, claude)"
+  - channel_id: UCNM9TmyfbOD_GWAfd9qyOMw
+    topic: education
+    topic_l2: education/language
+    note: "제나쌤 | 영어독학 · L2 없음 -> language, 어학 강의 영상 위주 (2026-11-15 수동 검수, claude)"
+  - channel_id: UCkw9Ys6DS4Qc_oyM0P98rQA
+    topic: education
+    topic_l2: education/language
+    note: "영어한입🎧Listen to English · L2 없음 -> language, 어학 강의 영상 위주 (2026-11-15 수동 검수, claude)"
+  - channel_id: UCQdHElgPNLP7XacJRGffjHA
+    topic: education
+    topic_l2: education/language
+    note: "윤재성영어 · L2 없음 -> language, 어학 강의 영상 위주 (2026-11-15 수동 검수, claude)"
+  - channel_id: UCu28oTGhkLo-ONSI7mbLX8g
+    topic: education
+    topic_l2: education/language
+    note: "두마디영어 · L2 없음 -> language, 어학 강의 영상 위주 (2026-11-15 수동 검수, claude)"
+  - channel_id: UCOfl4ZI1CMiAYFqLdPjFzkA
+    topic: education
+    topic_l2: education/language
+    note: "Cake English I 케이크 영어 · L2 없음 -> language, 어학 강의 영상 위주 (2026-11-15 수동 검수, claude)"
+  - channel_id: UCggR1BSIKXtIT6nMhcvzFYA
+    topic: education
+    topic_l2: education/language
+    note: "1일1영어 · L2 없음 -> language, 어학 강의 영상 위주 (2026-11-15 수동 검수, claude)"
+  - channel_id: UCwk1mPtTL0VpxHh1uXrYOLw
+    topic: education
+    topic_l2: education/language
+    note: "쓰이는 중국어만 알고싶다 · L2 없음 -> language, 어학 강의 영상 위주 (2026-11-15 수동 검수, claude)"
+  - channel_id: UCkaHU9bA3BACxvQ4LyV4NDw
+    topic: education
+    topic_l2: education/language
+    note: "영어청취마스터(English Listening Master) · L2 없음 -> language, 어학 강의 영상 위주 (2026-11-15 수동 검수, claude)"
+  - channel_id: UCyT7STg4rXf32vw962eMMkA
+    topic: education
+    topic_l2: education/language
+    note: "영어 톡앤톡 · L2 없음 -> language, 어학 강의 영상 위주 (2026-11-15 수동 검수, claude)"
+  - channel_id: UCOXy4aQgRqg8cCfTKnCLDdA
+    topic: education
+    topic_l2: education/language
+    note: "일본어 교육 1위, 시원스쿨 일본어 · L2 없음 -> language, 어학 강의 영상 위주 (2026-11-15 수동 검수, claude)"
+  - channel_id: UCaDNCvu4rJazto8CdN95B8w
+    topic: education
+    topic_l2: education/language
+    note: "키위엔 기초영어 · L2 없음 -> language, 어학 강의 영상 위주 (2026-11-15 수동 검수, claude)"
+  - channel_id: UCbVeF5UXcLWfTHvl9j8d9iQ
+    topic: education
+    topic_l2: education/language
+    note: "원어민 일본어 진쌤 · L2 없음 -> language, 어학 강의 영상 위주 (2026-11-15 수동 검수, claude)"
+  - channel_id: UCghYTQJZzJEqThwhjoPSF3Q
+    topic: education
+    topic_l2: education/language
+    note: "패턴영어tv · L2 없음 -> language, 어학 강의 영상 위주 (2026-11-15 수동 검수, claude)"
+  - channel_id: UCr_It_djCi9evh7FVlQOGgg
+    topic: education
+    topic_l2: education/language
+    note: "영누 최영아T | 대치동 영어강사 · L2 없음 -> language, 어학 강의 영상 위주 (2026-11-15 수동 검수, claude)"
+  - channel_id: UC19bLFMBYY1YChAWQ7sNl8A
+    topic: education
+    topic_l2: education/language
+    note: " 시원스쿨 베트남어 - 공식 YouTube · L2 없음 -> language, 어학 강의 영상 위주 (2026-11-15 수동 검수, claude)"
+  - channel_id: UCXVT5aG7md2dis1xiIE9qyA
+    topic: education
+    topic_l2: education/language
+    note: "트랭디 · L2 없음 -> language, 어학 강의 영상 위주 (2026-11-15 수동 검수, claude)"
+  - channel_id: UCfXtyQ-KiZ7CGy4txbnPGtg
+    topic: education
+    topic_l2: education/language
+    note: "알려줘 랭짱 · L2 없음 -> language, 어학 강의 영상 위주 (2026-11-15 수동 검수, claude)"
+  - channel_id: UCwDjqYGK4oEAnhE1C49sByg
+    topic: education
+    topic_l2: education/language
+    note: "시원스쿨 중국어 · L2 없음 -> language, 어학 강의 영상 위주 (2026-11-15 수동 검수, claude)"
+  - channel_id: UCam5BTX9qo6Lf9itKcfhXEQ
+    topic: education
+    topic_l2: education/language
+    note: "Sophie Ban의 '쓸만한 영어' · L2 없음 -> language, 어학 강의 영상 위주 (2026-11-15 수동 검수, claude)"
+  - channel_id: UCZH5gqdGQs3IKoEOGAYuvdw
+    topic: education
+    topic_l2: education/language
+    note: "아하영어 AhaEn · L2 없음 -> language, 어학 강의 영상 위주 (2026-11-15 수동 검수, claude)"
+  - channel_id: UCDwocU-T3PPaB075K_PbUHA
+    topic: education
+    topic_l2: education/language
+    note: "영어말하기-Speak English · L2 없음 -> language, 어학 강의 영상 위주 (2026-11-15 수동 검수, claude)"
+  - channel_id: UCnVJGlCcNZtmgTW9Ilg5LYQ
+    topic: education
+    topic_l2: education/language
+    note: "듣고배우는영어 · L2 없음 -> language, 어학 강의 영상 위주 (2026-11-15 수동 검수, claude)"
+  - channel_id: UC2owPym75IZth4z4U5Xro2Q
+    topic: education
+    topic_l2: education/language
+    note: "신분상승 영어 · L2 없음 -> language, 어학 강의 영상 위주 (2026-11-15 수동 검수, claude)"
+  - channel_id: UCQrGtqkjOwziNriUB8X6a6Q
+    topic: education
+    topic_l2: education/language
+    note: "본즈 기초 영어 · L2 없음 -> language, 어학 강의 영상 위주 (2026-11-15 수동 검수, claude)"
+  - channel_id: UCMEwjiagAaxOBJyyGNUGERw
+    topic: education
+    topic_l2: education/language
+    note: "본즈 영어 · L2 없음 -> language, 어학 강의 영상 위주 (2026-11-15 수동 검수, claude)"
+  - channel_id: UCv3aqvZYZM6FUMLqhMO9l6Q
+    topic: education
+    topic_l2: education/language
+    note: "영어 키위새 · L2 없음 -> language, 어학 강의 영상 위주 (2026-11-15 수동 검수, claude)"
+  - channel_id: UCVI65BUSkVVebNrPov0WeIw
+    topic: education
+    topic_l2: education/language
+    note: "회사영어 제인 · L2 없음 -> language, 어학 강의 영상 위주 (2026-11-15 수동 검수, claude)"
+  - channel_id: UCmwspFbQlWYlUrHHMyWXAhw
+    topic: education
+    topic_l2: education/language
+    note: "폼나는 영어 · L2 없음 -> language, 어학 강의 영상 위주 (2026-11-15 수동 검수, claude)"
+  - channel_id: UCUv_svpnABtC3WXYYKHwawA
+    topic: education
+    topic_l2: education/language
+    note: "예능토익연구소 · L2 없음 -> language, 어학 강의 영상 위주 (2026-11-15 수동 검수, claude)"
+  - channel_id: UCgqj2htG_G4VmPATB3Y9tqg
+    topic: education
+    topic_l2: education/language
+    note: "정재현영어꿀단지 · L2 없음 -> language, 어학 강의 영상 위주 (2026-11-15 수동 검수, claude)"
+  - channel_id: UCT76W18BvOH2KRwD4ccC6LA
+    topic: education
+    topic_l2: education/language
+    note: "고딸영어 · L2 없음 -> language, 어학 강의 영상 위주 (2026-11-15 수동 검수, claude)"
+  - channel_id: UC4o5nOjyZwtKSGS9kCFwRHg
+    topic: education
+    topic_l2: education/language
+    note: "영어가 막막할 땐 - 길잡이영어 · L2 없음 -> language, 어학 강의 영상 위주 (2026-11-15 수동 검수, claude)"
+  - channel_id: UCdpCE3luE1GLSVhFIFhO2sA
+    topic: education
+    topic_l2: education/language
+    note: "프렌들리 영어 · L2 없음 -> language, 어학 강의 영상 위주 (2026-11-15 수동 검수, claude)"
+  - channel_id: UCOiY9xcXZ9Cz0hBf3PKp4wQ
+    topic: education
+    topic_l2: education/language
+    note: "제니구 잉글리시 · L2 없음 -> language, 어학 강의 영상 위주 (2026-11-15 수동 검수, claude)"
+  - channel_id: UCumUP1MXkHUmCXNq1HQkHpA
+    topic: education
+    topic_l2: education/language
+    note: "다락원 일본어 회화, JLPT 인강 · L2 없음 -> language, 어학 강의 영상 위주 (2026-11-15 수동 검수, claude)"
+  - channel_id: UC7hrCSHxv9OsT-resFeVr-A
+    topic: education
+    topic_l2: education/language
+    note: "혜영쌤영어 · L2 없음 -> language, 어학 강의 영상 위주 (2026-11-15 수동 검수, claude)"
+  - channel_id: UCE0Wpy2DlQRkR4LR6wJAbaw
+    topic: education
+    topic_l2: education/language
+    note: "영어식 사고ㅣ원어민 팟캐스트 · L2 없음 -> language, 어학 강의 영상 위주 (2026-11-15 수동 검수, claude)"
+  - channel_id: UC-Epg0cmJNbKFx3RqCnKs7Q
+    topic: education
+    topic_l2: education/exam
+    note: "입시왕 · L2 없음 -> exam, 수능·입시 대비 영상 위주 (2026-11-15 수동 검수, claude)"
+  - channel_id: UC4NoD4RTKUlt7op2CXpYTsw
+    topic: education
+    topic_l2: education/exam
+    note: "입시탐탐 · L2 없음 -> exam, 수능·입시 대비 영상 위주 (2026-11-15 수동 검수, claude)"
+  - channel_id: UCSvQJiTYECOrw-AYOr4yzqA
+    topic: education
+    topic_l2: education/exam
+    note: "유니브클래스 · L2 없음 -> exam, 수능·입시 대비 영상 위주 (2026-11-15 수동 검수, claude)"
+  - channel_id: UC-JSzYAYzGI19jPtanJ3mEQ
+    topic: education
+    topic_l2: education/exam
+    note: "이현호(미친국어) · L2 없음 -> exam, 수능·입시 대비 영상 위주 (2026-11-15 수동 검수, claude)"
+  - channel_id: UCEdNRdGhJhH51pTyGN1mn3w
+    topic: education
+    topic_l2: education/exam
+    note: "수능 이코치 · L2 없음 -> exam, 수능·입시 대비 영상 위주 (2026-11-15 수동 검수, claude)"
+  - channel_id: UC8S64ijkpe5VhiXNWmGGwVg
+    topic: education
+    topic_l2: education/exam
+    note: "수학혁명 김지석 · L2 없음 -> exam, 수능·입시 대비 영상 위주 (2026-11-15 수동 검수, claude)"
+  - channel_id: UCgx42Ag1v4v9BbLEgqSxxGA
+    topic: education
+    topic_l2: education/exam
+    note: "IDA입시연구소 · L2 없음 -> exam, 수능·입시 대비 영상 위주 (2026-11-15 수동 검수, claude)"
+  - channel_id: UCwXRhIYfVLOa2eU_Ux4TrMA
+    topic: education
+    topic_l2: education/exam
+    note: "수학하는 땅우 · L2 없음 -> exam, 수능·입시 대비 영상 위주 (2026-11-15 수동 검수, claude)"
+  - channel_id: UCVkMCHP44uMkZg74cljtQxg
+    topic: education
+    topic_l2: education/exam
+    note: "수학의 역설계, 어피셜 · L2 없음 -> exam, 수능·입시 대비 영상 위주 (2026-11-15 수동 검수, claude)"
+  - channel_id: UCAJ5vXzyGtqugMkVTG5qYog
+    topic: education
+    topic_l2: education/exam
+    note: "민중쌤tv · L2 없음 -> exam, 수능·입시 대비 영상 위주 (2026-11-15 수동 검수, claude)"
+  - channel_id: UChTTMT1EfEDr5pyq9GaF91g
+    topic: education
+    topic_l2: education/exam
+    note: "윤도영통합과학시스템 · L2 없음 -> exam, 수능·입시 대비 영상 위주 (2026-11-15 수동 검수, claude)"
+  - channel_id: UCdtTiYkGqkwWreXH4GCfzKQ
+    topic: education
+    topic_l2: education/exam
+    note: "제이슨킹수학 · L2 없음 -> exam, 수능·입시 대비 영상 위주 (2026-11-15 수동 검수, claude)"
+  - channel_id: UC_hxQxDCLpb8MRYDgcsDevA
+    topic: education
+    topic_l2: education/exam
+    note: "김광진 영어 · L2 없음 -> exam, 수능·입시 대비 영상 위주 (2026-11-15 수동 검수, claude)"
+  - channel_id: UCkuHw3zIi8hdl2IJ8P7el9Q
+    topic: education
+    topic_l2: education/license
+    note: "김토리쌤 · L2 없음 -> license, 자격시험 대비 영상 위주 (2026-11-15 수동 검수, claude)"
+  - channel_id: UCRqRnqdyD0gmsRQogL-roeA
+    topic: education
+    topic_l2: education/license
+    note: "공부돼지 · L2 없음 -> license, 자격시험 대비 영상 위주 (2026-11-15 수동 검수, claude)"
+  - channel_id: UCb-tmpWRLYFkfYF7-uZ5NuA
+    topic: education
+    topic_l2: education/license
+    note: "토마토패스 · L2 없음 -> license, 자격시험 대비 영상 위주 (2026-11-15 수동 검수, claude)"
+  - channel_id: UC9oxRR3Oyua_mHOKEtd4Lnw
+    topic: education
+    topic_l2: education/license
+    note: "합격다드림_균쌤 · L2 없음 -> license, 자격시험 대비 영상 위주 (2026-11-15 수동 검수, claude)"
+  - channel_id: UCSo9B_19KMfSuxR5i2prTFw
+    topic: education
+    topic_l2: education/license
+    note: "준희쌤 요양보호교육 · L2 없음 -> license, 자격시험 대비 영상 위주 (2026-11-15 수동 검수, claude)"
+  - channel_id: UCaw7mNC-vdZynklnlfybwFQ
+    topic: education
+    topic_l2: education/license
+    note: "해설없는요양보호사문제 · L2 없음 -> license, 자격시험 대비 영상 위주 (2026-11-15 수동 검수, claude)"
 videos:
   - video_id: FwccZHAHu3U
     l1: web-drama
