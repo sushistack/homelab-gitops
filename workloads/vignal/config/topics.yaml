@@ -327,3 +327,46 @@ subtopics:
     parent: mukbang
     label: '기타 먹방'
     default: true
+  # 2026-11-15 (PERSONA35~37, operator approved): 육아·홈트·트로트·가전·인문·모바일 channels asked for their own level 2 --
+  # their peers and weekly lists were other kinds of channel in the same level 1. Channels checked by hand go in
+  # topic-overrides.yaml; the rest read their level 2 from titles (aliases).
+  - slug: family
+    parent: vlog
+    label: '육아·가족'
+    aliases: [육아, 육아브이로그, 아기, 신생아, 임신, 출산, 쌍둥이, 아들맘, 딸맘]
+  - slug: vlog-etc
+    parent: vlog
+    label: '일상 브이로그'
+    default: true
+  - slug: home-workout
+    parent: fitness
+    label: '홈트·다이어트'
+    aliases: [홈트, 홈트레이닝, 다이어트, 필라테스, 요가, 뱃살, 운동 따라하기]
+  - slug: gym
+    parent: fitness
+    label: '헬스·보디빌딩'
+    aliases: [헬스, 보디빌딩, 벤치프레스, 데드리프트, 3대, 오운완, 벌크업]
+  - slug: health-info
+    parent: fitness
+    label: '건강·의학 정보'
+    aliases: [건강정보, 의사, 약사, 한의사, 증상, 갱년기]
+  - slug: fitness-etc
+    parent: fitness
+    label: '기타 운동'
+    default: true
+  - slug: trot
+    parent: music
+    label: '트로트'
+    aliases: [트로트, 미스트롯, 미스터트롯, 현역가왕, 트롯]
+  - slug: mobile
+    parent: game
+    label: '모바일 게임'
+    aliases: [모바일게임, 리니지M, 원신, 니케, 블루아카이브, 명조, 가챠]
+  - slug: appliance
+    parent: tech
+    label: '가전 리뷰'
+    aliases: [가전, 청소기, 로봇청소기, 식기세척기, 건조기, 에어프라이어, 냉장고]
+  - slug: humanities
+    parent: self-dev
+    label: '인문·철학'
+    aliases: [철학, 니체, 쇼펜하우어, 동양철학, 고전]
