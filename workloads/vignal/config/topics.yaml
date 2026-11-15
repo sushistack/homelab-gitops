@@ -216,6 +216,11 @@ subtopics:
     parent: education
     label: '자격증·공무원'
     aliases: [자격증, 공무원시험]
+  # 2026-11-15 (blind panel 교육, user-approved): 학부모 대상 공부법·자녀 교육 채널이 영어회화·그림 채널과 비교됐다.
+  - slug: parenting-study
+    parent: education
+    label: '학부모·공부법'
+    aliases: [공부법, 학부모, 자녀교육, 공부습관, 초등공부]
   - slug: education-etc
     parent: education
     label: '기타 교육'
