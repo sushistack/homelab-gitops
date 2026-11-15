@@ -51,7 +51,7 @@ spec:
               type: RuntimeDefault
           containers:
             - name: vignal
-              image: ghcr.io/sushistack/vignal@sha256:fcb8001083afcbf3b3ef5b8e137b13274ae9863390cbb0cab2fbf19576f6f460   # sha-1a4dcbd (dev: 30-day subscriber change in channel stats)
+              image: ghcr.io/sushistack/vignal@sha256:36dec7504b5b16d5c9bf651023414c7316dacc4198dcd00e10c794906908a6e2   # sha-419abdf (dev: home 30-day subjects for quiet topics)
               args: ["publish-dev"]
               env:
                 - name: TZ
