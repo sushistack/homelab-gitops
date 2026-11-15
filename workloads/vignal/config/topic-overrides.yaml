@@ -2077,6 +2077,38 @@ channels:
     topic: education
     topic_l2: education/license
     note: "해설없는요양보호사문제 · L2 없음 -> license, 자격시험 대비 영상 위주 (2026-11-15 수동 검수, claude)"
+  - channel_id: UCsLgKKiv8kDDGy1stC8BxVA
+    topic: education
+    topic_l2: education/parenting-study
+    note: "공부의신 강성태 · L2 없음 -> parenting-study, 공부법·학습 습관 (2026-11-15 수동 검수, claude)"
+  - channel_id: UCNpYdUKMRScgFuoUiTq6RrA
+    topic: education
+    topic_l2: education/parenting-study
+    note: "스터디코드 STUDYCODE · L2 없음 -> parenting-study, 공부법·학습 습관 (2026-11-15 수동 검수, claude)"
+  - channel_id: UC5m1d4sPHnpcLCJEu3j2FpQ
+    topic: education
+    topic_l2: education/parenting-study
+    note: "최민준의 아들TV · L2 없음 -> parenting-study, 아들 키우는 학부모 대상 자녀 교육 (2026-11-15 수동 검수, claude)"
+  - channel_id: UCtLdMob0xzPFiViZWCFt_6Q
+    topic: education
+    topic_l2: education/parenting-study
+    note: "미쉘TV · L2 없음 -> parenting-study, 학부모 대상 자녀 교육 (2026-11-15 수동 검수, claude)"
+  - channel_id: UCB0WcCsLWxcCz7d8MGjAqMw
+    topic: education
+    topic_l2: education/parenting-study
+    note: "대치동 영어학원 내부고발자 · L2 없음 -> parenting-study, 학부모 대상 자녀 영어 교육 조언 (2026-11-15 수동 검수, claude)"
+  - channel_id: UCmC_DPfSybUXqrkSaL1R4Gw
+    topic: education
+    topic_l2: education/parenting-study
+    note: "초등교사안쌤TV · L2 없음 -> parenting-study, 초등 학부모 대상 교육 (2026-11-15 수동 검수, claude)"
+  - channel_id: UCzWhNn2cvx5waerz7TbJgAA
+    topic: education
+    topic_l2: education/parenting-study
+    note: "골라줄게 영어책 · L2 없음 -> parenting-study, 학부모 대상 자녀 영어책 추천 (2026-11-15 수동 검수, claude)"
+  - channel_id: UCFRjA43Kt6ohmn9G9glZylQ
+    topic: education
+    topic_l2: education/parenting-study
+    note: "수학통역사_조안호 · L2 없음 -> parenting-study, 학부모 대상 자녀 수학 공부법 (2026-11-15 수동 검수, claude)"
 videos:
   - video_id: FwccZHAHu3U
     l1: web-drama
