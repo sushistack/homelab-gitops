@@ -26,6 +26,7 @@ channels:
     note: "춘천MBC뉴스 · 지역 뉴스인데 politics. 판정 politics 188 은 채널 주제 힌트를 따라간 것(배추 절임·대설주의보도 politics) (2026-11-13 표본 검수, claude)"
   - channel_id: UC6c5iDSFnBI49qpSGJJ0VLg
     topic: music
+    topic_l2: music/trot
     note: "목포MBC 가요센터 · 트로트 무대 채널인데 celeb. music 39·celeb 28 (2026-11-13 표본 검수, claude)"
   - channel_id: UCIutzmcKUfwl_5QVgkpQ1pQ
     topic: celeb
@@ -57,4 +58,1607 @@ channels:
   - channel_id: UCSfd9_deRjVAk0V9G7idgUg
     topic: issue
     note: "지구본 뉴스 · tech 로 분류됐지만 한국 드라마·여행 해외 반응 채널. PERSONA24 드라마 (2026-11-13, claude 제목 확인)"
-videos: []
+  # 2026-11-15 수동 검수 (PERSONA35~37): 게임·브이로그·운동·음악·부동산·코미디·영화·자기계발·테크·뷰티·여행·요리·먹방 채널을
+  # 채널명과 최근 영상 5개 제목으로 확인. 1단계가 틀린 채널과 새 2단계(육아·가족, 홈트·다이어트, 헬스, 건강·의학 정보, 트로트,
+  # 모바일 게임, 가전 리뷰, 인문·철학)에 분명히 맞는 채널만 넣었다. 애매한 채널은 넣지 않았다.
+  - channel_id: UCWpY0eSJtyO-qNAPbKFRSSg
+    topic: web-drama
+    note: "안녕하세요원이입니다잘부탁드립니다 · beauty-life -> web-drama, 걸그룹 콘셉트 웹예능 콘텐츠 (2026-11-15 수동 검수, claude)"
+  - channel_id: UC2tbZfs11e-5MND58_jfDCA
+    topic: vlog
+    topic_l2: vlog/family
+    note: "순자엄마 · beauty-life -> vlog, 시부모·출산·육아 가족 영상 (2026-11-15 수동 검수, claude)"
+  - channel_id: UC4ZA57iJrf73bJlApKFeLRw
+    topic: web-drama
+    note: "스튜디오 수제 · beauty-life -> web-drama, 또간집 풍자 등 예능 클립 (2026-11-15 수동 검수, claude)"
+  - channel_id: UCrfiD6ArN-EjVwlp_X2RYJg
+    topic: living
+    note: "인테리어SHOW · beauty-life -> living, 인테리어 정보 (2026-11-15 수동 검수, claude)"
+  - channel_id: UCAvMbWfQGpK05wUDP0dukRw
+    topic: living
+    note: "인테리언니 백예진 · beauty-life -> living, 인테리어 정보 (2026-11-15 수동 검수, claude)"
+  - channel_id: UC1a0JQT7R4uHIQYKNaJOVcw
+    topic: living
+    note: "정희숙의 똑똑한 정리 · beauty-life -> living, 정리수납 (2026-11-15 수동 검수, claude)"
+  - channel_id: UCtKUlW4W7uT1nqtnUY-DxTQ
+    topic: sports
+    topic_l2: sports/sports-etc
+    note: "외발자전거채널 · beauty-life -> sports, 외발자전거 묘기 (2026-11-15 수동 검수, claude)"
+  - channel_id: UCrL4jK3HalwxwE_HDzXqI0A
+    topic: living
+    note: "털몽치 Mongchi Crochet · beauty-life -> living, 코바늘 뜨개 (2026-11-15 수동 검수, claude)"
+  - channel_id: UCpU3qFSOgrYyrlhPGFF2Peg
+    topic: living
+    note: "숩니공방 soobni’s knitting · beauty-life -> living, 뜨개질 (2026-11-15 수동 검수, claude)"
+  - channel_id: UC6FxnuV09nyja9zOh35yFSA
+    topic: mukbang
+    topic_l2: mukbang/mb-etc
+    note: "준맛 jun taste · beauty-life -> mukbang, 먹방 쇼츠 (2026-11-15 수동 검수, claude)"
+  - channel_id: UCZB8FKm68UQPGWKebOel4Pw
+    topic: vlog
+    topic_l2: vlog/vlog-etc
+    note: "수쩡민 · beauty-life -> vlog, 상해 유학 브이로그 (2026-11-15 수동 검수, claude)"
+  - channel_id: UC_0j3MqVquldicqNC9lKACg
+    topic: vlog
+    topic_l2: vlog/vlog-etc
+    note: "츄라임 Chu Lime · beauty-life -> vlog, 직장인 일상 브이로그 (2026-11-15 수동 검수, claude)"
+  - channel_id: UCOByc6akvw27KbJ1p9jn3BQ
+    topic: vlog
+    topic_l2: vlog/family
+    note: "누가영Nugayoung · beauty-life -> vlog, 가족 일상·이사 브이로그 (2026-11-15 수동 검수, claude)"
+  - channel_id: UC7jL5tY32fARwuQf8y3lyXg
+    topic: living
+    note: "살림맨 · beauty-life -> living, 코스트코 장보기·살림템 (2026-11-15 수동 검수, claude)"
+  - channel_id: UCVqFUfMxX8N6j8q3oQZUAuA
+    topic: living
+    note: "소디 : 소비하는디자이너 · beauty-life -> living, 살림템·세제·청소 (2026-11-15 수동 검수, claude)"
+  - channel_id: UCPPy71r5PbqqiXNSg1gHJgg
+    topic: vlog
+    topic_l2: vlog/vlog-etc
+    note: "나오는대로 리뷰 · beauty-life -> vlog, 일상 브이로그 (2026-11-15 수동 검수, claude)"
+  - channel_id: UCzDz8MtdDeRjxeT3kzD5o_A
+    topic: living
+    note: "매일코바늘 - 실로이룸 뜨개 패키지  · beauty-life -> living, 코바늘 뜨개 패키지 (2026-11-15 수동 검수, claude)"
+  - channel_id: UCFPn7twIbSJ7Bt8QS_qkOTw
+    topic: living
+    note: "예쁜곰팅 gom crochet · beauty-life -> living, 코바늘 수세미 (2026-11-15 수동 검수, claude)"
+  - channel_id: UCPU31xuOo-Ir4AqdFQR8FHw
+    topic: living
+    note: "슬로우플로우 · beauty-life -> living, 뜨개질 (2026-11-15 수동 검수, claude)"
+  - channel_id: UCEowQ3Kt_CLqCNugljoocBQ
+    topic: living
+    note: "Moony Crochet(무늬 코바늘) · beauty-life -> living, 코바늘 뜨개 (2026-11-15 수동 검수, claude)"
+  - channel_id: UCWvG8z7Z7oBVjBpVBaEHAJg
+    topic: living
+    note: "하쿠의 정원 Haku`s Garden · beauty-life -> living, 실내 가드닝 (2026-11-15 수동 검수, claude)"
+  - channel_id: UCk4Lelrg8sETIFFl-SXv6jA
+    topic: living
+    note: "청소고수 · beauty-life -> living, 청소 노하우 (2026-11-15 수동 검수, claude)"
+  - channel_id: UC4RUS_IZjPOthrSel6zIT5A
+    topic: living
+    note: "슬이뷰 · beauty-life -> living, 다이소·코스트코 생활꿀팁 (2026-11-15 수동 검수, claude)"
+  - channel_id: UCKHezxupxlT7P4Rg6EoVBEA
+    topic: outdoor
+    note: "낚놈 · beauty-life -> outdoor, 바다낚시 (2026-11-15 수동 검수, claude)"
+  - channel_id: UCf6DZ6Y18ogOig1xaY7Ib9A
+    topic: music
+    topic_l2: music/singing
+    note: "누가 더 예쁜데 · beauty-life -> music, 커버곡·앨범 활동 (2026-11-15 수동 검수, claude)"
+  - channel_id: UC9Ji0-yyImYeg8nllLyDjiQ
+    topic: vlog
+    topic_l2: vlog/vlog-etc
+    note: "misonugool미소너굴 · beauty-life -> vlog, 직장인 브이로그 (2026-11-15 수동 검수, claude)"
+  - channel_id: UCpA2ao9DCPwveAqI4ruXQlg
+    topic: fashion
+    note: "아이 엠 베티 i am betty · beauty-life -> fashion, 코디·옷 구매 기록 (2026-11-15 수동 검수, claude)"
+  - channel_id: UCPLo-rNY1rmknNRQ9m0P6AA
+    topic: fashion
+    note: "서록 seorok · beauty-life -> fashion, 겨울 패션템·아우터 (2026-11-15 수동 검수, claude)"
+  - channel_id: UCvzViMPSztQ6tb3TYFsxHFQ
+    topic: fashion
+    note: "희지 Heezy · beauty-life -> fashion, 아우터·부츠 언박싱 (2026-11-15 수동 검수, claude)"
+  - channel_id: UCeJGO07aSJVhkWORRO3sccg
+    topic: living
+    note: "꿀맛살림 · beauty-life -> living, 인테리어·살림꿀템 (2026-11-15 수동 검수, claude)"
+  - channel_id: UCdnPsj3IEKNzswFbEHw-YFg
+    topic: living
+    note: "르미뇽살림 · beauty-life -> living, 살림템·세탁·정리 (2026-11-15 수동 검수, claude)"
+  - channel_id: UCTnZvrXO2BZJKGKV8eZKyVw
+    topic: living
+    note: "홈그래피 · beauty-life -> living, 셀프인테리어·살림꿀팁 (2026-11-15 수동 검수, claude)"
+  - channel_id: UCXfXo1FXjMlnixmS7lm1FYQ
+    topic: cooking
+    note: "살림의달인 - 살림 노하우 · beauty-life -> cooking, 김치·반찬 레시피 (2026-11-15 수동 검수, claude)"
+  - channel_id: UCeVGnvEZaZf0Xia4bJ5HL1Q
+    topic: living
+    note: "이유살림 · beauty-life -> living, 살림·생활 소비템 (2026-11-15 수동 검수, claude)"
+  - channel_id: UCXlD7Si-bLHgCva9377ateg
+    topic: vlog
+    topic_l2: vlog/vlog-etc
+    note: "김유진짜로 · beauty-life -> vlog, 일상 브이로그 (2026-11-15 수동 검수, claude)"
+  - channel_id: UCHIYg9mtuNGAbRiNUS8IvUQ
+    topic: living
+    note: "하충효 인테리어 · beauty-life -> living, 인테리어 시공 정보 (2026-11-15 수동 검수, claude)"
+  - channel_id: UCKS7b2p55wNX2RMi797DKbA
+    topic: living
+    note: "리우비즈  · beauty-life -> living, 비즈공예 (2026-11-15 수동 검수, claude)"
+  - channel_id: UCXMEzsz9BAFHjbiVxmmGfOw
+    topic: living
+    note: "102동뜨개 · beauty-life -> living, 뜨개질 (2026-11-15 수동 검수, claude)"
+  - channel_id: UCtV0TAGKMBakq-MlYfQhPxQ
+    topic: living
+    note: "살림멘토 · beauty-life -> living, 다이소·세탁 살림팁 (2026-11-15 수동 검수, claude)"
+  - channel_id: UCKfx_B62xyteI5tqD408OGA
+    topic: living
+    note: "살림대장 · beauty-life -> living, 청소·세탁 살림팁 (2026-11-15 수동 검수, claude)"
+  - channel_id: UCvh1AtO12W2A15ftNEGIRyg
+    topic: living
+    note: "쇼핑스토리 · beauty-life -> living, 생활 꿀템 리뷰 (2026-11-15 수동 검수, claude)"
+  - channel_id: UC7uzfya1TmNQ1jSqsjlGRcw
+    topic: living
+    note: "식물왕 꽃천재 greemeet · beauty-life -> living, 식물·트리 플로리스트 (2026-11-15 수동 검수, claude)"
+  - channel_id: UCAMkxBApMIJFXGWNJZqbSrA
+    topic: living
+    note: "공감쇼핑 · beauty-life -> living, 청소·살림팁 (2026-11-15 수동 검수, claude)"
+  - channel_id: UC4Sz7v5viqjDVZ-u4aw03gw
+    topic: living
+    note: "지디노 살림 · beauty-life -> living, 살림템·난방 절약 (2026-11-15 수동 검수, claude)"
+  - channel_id: UCL2Th9BvCLhz07d-Esk-_2Q
+    topic: science
+    note: "일상의 유레카 · beauty-life -> science, 과학·상식 쇼츠 (2026-11-15 수동 검수, claude)"
+  - channel_id: UCSagaY7oCLDrjV7JmAFUnvA
+    topic: living
+    note: "식물로그 · beauty-life -> living, 식물 가꾸기 (2026-11-15 수동 검수, claude)"
+  - channel_id: UCz-uZaVaeVERjug4WSelCQA
+    topic: cooking
+    note: "이로운살림 · beauty-life -> cooking, 밀프렙 레시피 (2026-11-15 수동 검수, claude)"
+  - channel_id: UC_iusq2QTnKgYXV1LrP294A
+    topic: living
+    note: "슬기로운꽃집생활 the wise k- florist · beauty-life -> living, 플라워·식집사 (2026-11-15 수동 검수, claude)"
+  - channel_id: UCDnMry_13TAt-yIRTWPjWxg
+    topic: news
+    note: "차살말 · beauty-life -> news, 복지·정책 시사 정보 (2026-11-15 수동 검수, claude)"
+  - channel_id: UCTdBl-ksjdObuasuuPCydkQ
+    topic: web-drama
+    note: "오프는 쉬는 날 · beauty-life -> web-drama, 직장 공감 스케치 콘텐츠 (2026-11-15 수동 검수, claude)"
+  - channel_id: UCPll9ZfV8mThBCT1qKTeQZQ
+    topic: outdoor
+    note: "캠핑제국 Camping Empire · travel -> outdoor, 캠핑·차박 정보 (2026-11-15 수동 검수, claude)"
+  - channel_id: UCE1I2zznKQ47cWqJEhEs9Rg
+    topic: outdoor
+    note: "동네오빠 짬낚시 · travel -> outdoor, 바다낚시터 (2026-11-15 수동 검수, claude)"
+  - channel_id: UC7D_3Uvxz10O2zA2odN9mpQ
+    topic: mukbang
+    topic_l2: mukbang/mb-etc
+    note: "오빠스테이크 · travel -> mukbang, 스테이크·음식 영상 (2026-11-15 수동 검수, claude)"
+  - channel_id: UC2y7dk-NmZkunjloOo5pfDA
+    topic: outdoor
+    note: "[그리는연유]Drawing YeonYoo · travel -> outdoor, 트럭캠핑·우중캠핑 (2026-11-15 수동 검수, claude)"
+  - channel_id: UC5JtIP2gExbPDMbNMFr3aHA
+    topic: sports
+    topic_l2: sports/football
+    note: "창박골 Changbakgol · travel -> sports, 말라위 축구 구단 영상 (2026-11-15 수동 검수, claude)"
+  - channel_id: UCfyXiM-YNkgo_k_ipjD3B_w
+    topic: sports
+    topic_l2: sports/sports-etc
+    note: "민디_Mindy · travel -> sports, 자전거 라이딩 (2026-11-15 수동 검수, claude)"
+  - channel_id: UCYhJcg4BcEXd3hckQ1yQzbQ
+    topic: outdoor
+    note: "라라의 집시 라이프  · travel -> outdoor, 차박·낚시 캠핑 (2026-11-15 수동 검수, claude)"
+  - channel_id: UCQjvIEhwboMIE1IPSVIQv1A
+    topic: outdoor
+    note: "사랑애 Sarangae · travel -> outdoor, 백패킹 장비 (2026-11-15 수동 검수, claude)"
+  - channel_id: UC7LnA1DG1k6rEb_GQXrpOoQ
+    topic: outdoor
+    note: "짜루캠핑 · travel -> outdoor, 차박캠핑 (2026-11-15 수동 검수, claude)"
+  - channel_id: UCXuiJgFGFlMZN4kj2LnWf6A
+    topic: outdoor
+    note: "차박팩토리경기지사 · travel -> outdoor, 차박 키트·캠핑카 (2026-11-15 수동 검수, claude)"
+  - channel_id: UC-7kIKXkqJELY1eq_Fu2hPg
+    topic: outdoor
+    note: "차박팩토리  광주·전라지사 · travel -> outdoor, 차박 키트 (2026-11-15 수동 검수, claude)"
+  - channel_id: UCG_FS8Br0BXXfaP81bQODJg
+    topic: outdoor
+    note: "낚시쪼아TV · travel -> outdoor, 바다낚시 (2026-11-15 수동 검수, claude)"
+  - channel_id: UCZ-NAsGaVlY-Bq2aM8wg4bA
+    topic: pets
+    topic_l2: pets/pets-etc
+    note: "성영민람 · travel -> pets, 판다 영상 (2026-11-15 수동 검수, claude)"
+  - channel_id: UCXME0jhaXzTE1r_FFhHIsrQ
+    topic: vlog
+    topic_l2: vlog/family
+    note: "호이쏘이 𝙃𝙊𝙔 𝙎𝙊𝙔 · travel -> vlog, 임신·출산 브이로그 (2026-11-15 수동 검수, claude)"
+  - channel_id: UCLow5fruZx10L56LZ-G_BMg
+    topic: vlog
+    topic_l2: vlog/vlog-etc
+    note: "곽준성 · travel -> vlog, 일상 브이로그 (2026-11-15 수동 검수, claude)"
+  - channel_id: UCah3J1N96v4GbEI6_0hHPDQ
+    topic: music
+    topic_l2: music/music-etc
+    note: "인남해콘서트TV · travel -> music, 지역 공연 영상 (2026-11-15 수동 검수, claude)"
+  - channel_id: UCWU0v7LAUq0IkXfuUWB0org
+    topic: news
+    note: "용진캠프 글로벌 · travel -> news, 국제 정세 시사 (2026-11-15 수동 검수, claude)"
+  - channel_id: UCoPTIaKWLi3vtImEQrx32Ew
+    topic: outdoor
+    note: "헌터퐝 · cooking -> outdoor, 바다 조업·직접 잡아먹기 영상 위주 (2026-11-15 수동 검수, claude)"
+  - channel_id: UCg16fV-BKHHxnK_6eaDDtDw
+    topic: outdoor
+    note: "마초TV · cooking -> outdoor, 낚시·선상 조업 영상 위주 (2026-11-15 수동 검수, claude)"
+  - channel_id: UCTrfqg_jf37pVetVuLBjZ0g
+    topic: vlog
+    topic_l2: vlog/vlog-etc
+    note: "제로크림 · cooking -> vlog, 학창시절 썰 위주 (2026-11-15 수동 검수, claude)"
+  - channel_id: UC-CnwTZJ_A5v-AQK92fNYKw
+    topic: travel
+    note: "maji마지 · cooking -> travel, 서울 장소 추천 코스 영상 (2026-11-15 수동 검수, claude)"
+  - channel_id: UCSqJOwP528MNmSBHjLQRW1A
+    topic: living
+    note: "건강백단 · cooking -> living, 세탁·청소·칼갈이 등 살림 팁 위주 (2026-11-15 수동 검수, claude)"
+  - channel_id: UCUDvG4CPnP4Y6RLaS_nI8tw
+    topic: game
+    topic_l2: game/rpg
+    note: "꾸킹 · cooking -> game, 메이플 등 게임 플레이·일주일 브이로그 위주 (2026-11-15 수동 검수, claude)"
+  - channel_id: UCMJf9serA42ShIDi74-ZQmQ
+    topic: self-dev
+    topic_l2: self-dev/mind
+    note: "작가 김상현 · cooking -> self-dev, 대화·심리·인문 교양 영상 (2026-11-15 수동 검수, claude)"
+  - channel_id: UCL12ddKeiBTMGZ_g6X7PhXw
+    topic: mukbang
+    topic_l2: mukbang/mb-tour
+    note: "코우지 TV · cooking -> mukbang, 일본 시장·맛집 탐방 영상 위주 (2026-11-15 수동 검수, claude)"
+  - channel_id: UChbZEmY6uHbTRHxu5g--c7Q
+    topic: mukbang
+    topic_l2: mukbang/mb-tour
+    note: "일타쿠마 · cooking -> mukbang, 일본 맛집 먹방 영상 위주 (2026-11-15 수동 검수, claude)"
+  - channel_id: UCfqVrM2cvwxG3-EvxbsN0KQ
+    topic: vlog
+    topic_l2: vlog/vlog-etc
+    note: "걍밍경 · mukbang -> vlog, 먹방 아닌 일상 브이로그 (2026-11-15 수동 검수, claude)"
+  - channel_id: UCaKQ7_GT0k8u_sL0nE2tgkA
+    topic: travel
+    note: "비밀이야 bimirya · mukbang -> travel, 일본 료칸·여행 영상 위주 (2026-11-15 수동 검수, claude)"
+  - channel_id: UCOVgnOcjlut-LusGwqXD2HA
+    topic: vlog
+    topic_l2: vlog/family
+    note: "흥삶이네 Heungsam's Life · mukbang -> vlog, 결혼 준비·가족 일상 브이로그 (2026-11-15 수동 검수, claude)"
+  - channel_id: UC1EiHIhV6UDRWOY6BaEavdw
+    topic: vlog
+    topic_l2: vlog/family
+    note: "집나간햄지 · mukbang -> vlog, 임신·결혼·시골 일상 브이로그 위주 (2026-11-15 수동 검수, claude)"
+  - channel_id: UC3iSLVH0MxHfwO69oHKpvog
+    topic: fitness
+    topic_l2: fitness/health-info
+    note: "리틀약사 · fitness -> fitness/health-info, 의사·약사·건강 정보 영상 위주 (2026-11-15 수동 검수, claude)"
+  - channel_id: UCj8zZ1a8Lqtj4wY2bHbcIaQ
+    topic: fitness
+    topic_l2: fitness/health-info
+    note: "정세연의 라이프연구소 · fitness -> fitness/health-info, 의사·약사·건강 정보 영상 위주 (2026-11-15 수동 검수, claude)"
+  - channel_id: UCudsKcgg2SFhcT6H6RfLYGw
+    topic: fitness
+    topic_l2: fitness/health-info
+    note: "건강오름 · fitness -> fitness/health-info, 의사·약사·건강 정보 영상 위주 (2026-11-15 수동 검수, claude)"
+  - channel_id: UC7UF-uHiPTv1Ed12iFpH7wA
+    topic: fitness
+    topic_l2: fitness/health-info
+    note: "건강뉴스 · fitness -> fitness/health-info, 의사·약사·건강 정보 영상 위주 (2026-11-15 수동 검수, claude)"
+  - channel_id: UC0TR0Ciw0rQSJzgU5NiwvRQ
+    topic: fitness
+    topic_l2: fitness/health-info
+    note: "동네 의사 이상욱 · fitness -> fitness/health-info, 의사·약사·건강 정보 영상 위주 (2026-11-15 수동 검수, claude)"
+  - channel_id: UCzXIFIChH0pN_8ZLvf5pgQg
+    topic: fitness
+    topic_l2: fitness/health-info
+    note: "오징어약사TV - 가장 쉬운 건강채널 · fitness -> fitness/health-info, 의사·약사·건강 정보 영상 위주 (2026-11-15 수동 검수, claude)"
+  - channel_id: UChXDq9Izwq-pTzeUWzwXL3A
+    topic: fitness
+    topic_l2: fitness/health-info
+    note: "다이어트 과학자 최겸 Gyum Choi · fitness -> fitness/health-info, 의사·약사·건강 정보 영상 위주 (2026-11-15 수동 검수, claude)"
+  - channel_id: UCTE1QMdxE1vKjyHPUM2uuKQ
+    topic: fitness
+    topic_l2: fitness/health-info
+    note: "조동혁의100세 건강시대 · fitness -> fitness/health-info, 의사·약사·건강 정보 영상 위주 (2026-11-15 수동 검수, claude)"
+  - channel_id: UCtTzA9_TTSWnVNxsN4GiLgA
+    topic: fitness
+    topic_l2: fitness/health-info
+    note: "건강의 신 · fitness -> fitness/health-info, 의사·약사·건강 정보 영상 위주 (2026-11-15 수동 검수, claude)"
+  - channel_id: UCkARt3BEOlHCNtLPVuKZgQA
+    topic: fitness
+    topic_l2: fitness/health-info
+    note: "바른건강 · fitness -> fitness/health-info, 의사·약사·건강 정보 영상 위주 (2026-11-15 수동 검수, claude)"
+  - channel_id: UCvJweEBlMAB4DrcxJYZHXAA
+    topic: fitness
+    topic_l2: fitness/health-info
+    note: "닥터조의 건강이야기 · fitness -> fitness/health-info, 의사·약사·건강 정보 영상 위주 (2026-11-15 수동 검수, claude)"
+  - channel_id: UCBRu5Mdo2otA7ZJIS619FpQ
+    topic: fitness
+    topic_l2: fitness/health-info
+    note: "한남자TV-건강을 소개하는 남자 · fitness -> fitness/health-info, 의사·약사·건강 정보 영상 위주 (2026-11-15 수동 검수, claude)"
+  - channel_id: UCX-xku_pieGjA-PAxP02BIA
+    topic: fitness
+    topic_l2: fitness/health-info
+    note: "건강되찾기 프로젝트 · fitness -> fitness/health-info, 의사·약사·건강 정보 영상 위주 (2026-11-15 수동 검수, claude)"
+  - channel_id: UCB1_zmwX--s9ccT0dNNFe8g
+    topic: fitness
+    topic_l2: fitness/health-info
+    note: "김진오의 뉴헤어 프로젝트 · fitness -> fitness/health-info, 의사·약사·건강 정보 영상 위주 (2026-11-15 수동 검수, claude)"
+  - channel_id: UC_ZpSj2WGAEg_BnD1UpOUgw
+    topic: fitness
+    topic_l2: fitness/health-info
+    note: "건강 똑소리 · fitness -> fitness/health-info, 의사·약사·건강 정보 영상 위주 (2026-11-15 수동 검수, claude)"
+  - channel_id: UChTPzXfHG33OFWb55LDFSyA
+    topic: fitness
+    topic_l2: fitness/health-info
+    note: "다른방법 · fitness -> fitness/health-info, 의사·약사·건강 정보 영상 위주 (2026-11-15 수동 검수, claude)"
+  - channel_id: UC5UwSbZuTkyaf_Givu_2bxQ
+    topic: fitness
+    topic_l2: fitness/health-info
+    note: "암 찾는 의사 이원경 · fitness -> fitness/health-info, 의사·약사·건강 정보 영상 위주 (2026-11-15 수동 검수, claude)"
+  - channel_id: UCn3UIIcPHZUbm3L_u8AzFTA
+    topic: fitness
+    topic_l2: fitness/health-info
+    note: "건강천재 - 건강정보 · fitness -> fitness/health-info, 의사·약사·건강 정보 영상 위주 (2026-11-15 수동 검수, claude)"
+  - channel_id: UCDGiDdclwBxH0xWWSIyA4zA
+    topic: fitness
+    topic_l2: fitness/health-info
+    note: "건강 스케치 · fitness -> fitness/health-info, 의사·약사·건강 정보 영상 위주 (2026-11-15 수동 검수, claude)"
+  - channel_id: UC897htqSWjwPSgfCaVmh_XA
+    topic: fitness
+    topic_l2: fitness/health-info
+    note: "꾸러기 건강닥터 · fitness -> fitness/health-info, 의사·약사·건강 정보 영상 위주 (2026-11-15 수동 검수, claude)"
+  - channel_id: UCDEJGoanlf_WqDWWIufqftA
+    topic: fitness
+    topic_l2: fitness/health-info
+    note: "건강방정식 · fitness -> fitness/health-info, 의사·약사·건강 정보 영상 위주 (2026-11-15 수동 검수, claude)"
+  - channel_id: UCedl3ClIwMtTdmHeiiS1czg
+    topic: fitness
+    topic_l2: fitness/health-info
+    note: "제철건강 · fitness -> fitness/health-info, 의사·약사·건강 정보 영상 위주 (2026-11-15 수동 검수, claude)"
+  - channel_id: UCr8tJHAIz4MOOwgdt8H0ceQ
+    topic: fitness
+    topic_l2: fitness/health-info
+    note: "약사 메디슨맨 TV · fitness -> fitness/health-info, 의사·약사·건강 정보 영상 위주 (2026-11-15 수동 검수, claude)"
+  - channel_id: UC8EMF6H5YOCk-BdNEuYnkbA
+    topic: fitness
+    topic_l2: fitness/health-info
+    note: "의사친[의사사람친구] · fitness -> fitness/health-info, 의사·약사·건강 정보 영상 위주 (2026-11-15 수동 검수, claude)"
+  - channel_id: UCY-mXLM6DsS9cmSwlh0tqSA
+    topic: fitness
+    topic_l2: fitness/health-info
+    note: "영양과학자 양과자 · fitness -> fitness/health-info, 의사·약사·건강 정보 영상 위주 (2026-11-15 수동 검수, claude)"
+  - channel_id: UCmZRSk5CS95k-bCbE8nKTQw
+    topic: fitness
+    topic_l2: fitness/health-info
+    note: "썰닥 · fitness -> fitness/health-info, 의사·약사·건강 정보 영상 위주 (2026-11-15 수동 검수, claude)"
+  - channel_id: UCsHHEnpc9lUZXPQZ5I8c-wA
+    topic: fitness
+    topic_l2: fitness/health-info
+    note: "자하연한의원 : 자율신경 심장 바로잡다 · fitness -> fitness/health-info, 의사·약사·건강 정보 영상 위주 (2026-11-15 수동 검수, claude)"
+  - channel_id: UCPr_tkDD0-3I8JZAP4nxQJQ
+    topic: fitness
+    topic_l2: fitness/health-info
+    note: "심플약사 · fitness -> fitness/health-info, 의사·약사·건강 정보 영상 위주 (2026-11-15 수동 검수, claude)"
+  - channel_id: UCegFIx1LTAYGAHvvGq8UGng
+    topic: fitness
+    topic_l2: fitness/health-info
+    note: "KK건강TV · fitness -> fitness/health-info, 의사·약사·건강 정보 영상 위주 (2026-11-15 수동 검수, claude)"
+  - channel_id: UCeISn7AHbPIqXwWKCB_6eHg
+    topic: fitness
+    topic_l2: fitness/health-info
+    note: "건강의학전문채널 하이닥 · fitness -> fitness/health-info, 의사·약사·건강 정보 영상 위주 (2026-11-15 수동 검수, claude)"
+  - channel_id: UC8JHSJ83OlA4N6sS3GJt0jA
+    topic: fitness
+    topic_l2: fitness/health-info
+    note: "꼬북등산tv · fitness -> fitness/health-info, 의사·약사·건강 정보 영상 위주 (2026-11-15 수동 검수, claude)"
+  - channel_id: UCXNspTDRHyuv0ZPJthlqk2g
+    topic: fitness
+    topic_l2: fitness/health-info
+    note: "신체발란스운동건강연구소(하임) · fitness -> fitness/health-info, 의사·약사·건강 정보 영상 위주 (2026-11-15 수동 검수, claude)"
+  - channel_id: UCzDs6GlAZsYlGbd_OUBdjmA
+    topic: fitness
+    topic_l2: fitness/health-info
+    note: "건강지식TV · fitness -> fitness/health-info, 의사·약사·건강 정보 영상 위주 (2026-11-15 수동 검수, claude)"
+  - channel_id: UC-OldTguSguK0v-d21Tmryw
+    topic: fitness
+    topic_l2: fitness/health-info
+    note: "김수연의 우아한 노화 · fitness -> fitness/health-info, 의사·약사·건강 정보 영상 위주 (2026-11-15 수동 검수, claude)"
+  - channel_id: UCIjwtJ_Ib0hMkarB2j9zYQg
+    topic: fitness
+    topic_l2: fitness/health-info
+    note: "닥터리TV_건강한 다이어트 · fitness -> fitness/health-info, 의사·약사·건강 정보 영상 위주 (2026-11-15 수동 검수, claude)"
+  - channel_id: UC-6BfHzSG1_ZfcQZn5PeoMg
+    topic: fitness
+    topic_l2: fitness/health-info
+    note: "이음여성한의원 김우성 원장 · fitness -> fitness/health-info, 의사·약사·건강 정보 영상 위주 (2026-11-15 수동 검수, claude)"
+  - channel_id: UCySY2OPx0a6dwa-VgF26Hog
+    topic: fitness
+    topic_l2: fitness/health-info
+    note: "건강채널 민트TV · fitness -> fitness/health-info, 의사·약사·건강 정보 영상 위주 (2026-11-15 수동 검수, claude)"
+  - channel_id: UCpY0_3SqKzxttWPaptnkBfQ
+    topic: fitness
+    topic_l2: fitness/health-info
+    note: "어떤약사 · fitness -> fitness/health-info, 의사·약사·건강 정보 영상 위주 (2026-11-15 수동 검수, claude)"
+  - channel_id: UCzqCV-5wGCu9jyJj1qJ_CHw
+    topic: fitness
+    topic_l2: fitness/health-info
+    note: "건기남TV · fitness -> fitness/health-info, 의사·약사·건강 정보 영상 위주 (2026-11-15 수동 검수, claude)"
+  - channel_id: UCiFmxss-0hJO0JBXXftTc9A
+    topic: fitness
+    topic_l2: fitness/health-info
+    note: "태선생운동건강연구원 · fitness -> fitness/health-info, 의사·약사·건강 정보 영상 위주 (2026-11-15 수동 검수, claude)"
+  - channel_id: UCeh974Sawcl7D-7d55GPqJg
+    topic: fitness
+    topic_l2: fitness/health-info
+    note: "건강하마 · fitness -> fitness/health-info, 의사·약사·건강 정보 영상 위주 (2026-11-15 수동 검수, claude)"
+  - channel_id: UCOsQE_5FNrGoTBialPjKuSQ
+    topic: fitness
+    topic_l2: fitness/health-info
+    note: "암에 미친 메디람 · fitness -> fitness/health-info, 의사·약사·건강 정보 영상 위주 (2026-11-15 수동 검수, claude)"
+  - channel_id: UCkQSUPVfthyAt2EtwZ8kEVA
+    topic: fitness
+    topic_l2: fitness/health-info
+    note: "박주홍TV · fitness -> fitness/health-info, 의사·약사·건강 정보 영상 위주 (2026-11-15 수동 검수, claude)"
+  - channel_id: UCMYFfUu0IHJTF7J4hE-1lGg
+    topic: fitness
+    topic_l2: fitness/health-info
+    note: "이건민의 풍성한 이야기 · fitness -> fitness/health-info, 의사·약사·건강 정보 영상 위주 (2026-11-15 수동 검수, claude)"
+  - channel_id: UC70hC0mVGURG6rCBibw9Wug
+    topic: fitness
+    topic_l2: fitness/health-info
+    note: "SLEEP Dr. 신원철 꿀잠튜브 · fitness -> fitness/health-info, 의사·약사·건강 정보 영상 위주 (2026-11-15 수동 검수, claude)"
+  - channel_id: UCVC21HvJs4W6FclmYr7pFGw
+    topic: fitness
+    topic_l2: fitness/health-info
+    note: "톡투건강TV · fitness -> fitness/health-info, 의사·약사·건강 정보 영상 위주 (2026-11-15 수동 검수, claude)"
+  - channel_id: UCooWEDmZtpKCNFzARKVVG-g
+    topic: fitness
+    topic_l2: fitness/health-info
+    note: "Kevin의건강 캠프 · fitness -> fitness/health-info, 의사·약사·건강 정보 영상 위주 (2026-11-15 수동 검수, claude)"
+  - channel_id: UCZMl1lsaz3HqqLWye8_VLdw
+    topic: fitness
+    topic_l2: fitness/health-info
+    note: "양닥터 · fitness -> fitness/health-info, 의사·약사·건강 정보 영상 위주 (2026-11-15 수동 검수, claude)"
+  - channel_id: UCGY08LkO9vw4RH1aAat6toA
+    topic: fitness
+    topic_l2: fitness/health-info
+    note: "건강온터뷰 · fitness -> fitness/health-info, 의사·약사·건강 정보 영상 위주 (2026-11-15 수동 검수, claude)"
+  - channel_id: UC6ggXTuBVchhwHeQ12Ita1w
+    topic: fitness
+    topic_l2: fitness/health-info
+    note: "친한미국약사 PharmacistPal · fitness -> fitness/health-info, 의사·약사·건강 정보 영상 위주 (2026-11-15 수동 검수, claude)"
+  - channel_id: UC5LX0vGS6l2No8vcoYS9nhA
+    topic: fitness
+    topic_l2: fitness/health-info
+    note: "롱민 · fitness -> fitness/health-info, 의사·약사·건강 정보 영상 위주 (2026-11-15 수동 검수, claude)"
+  - channel_id: UCELt4y1rPfN8lnHWlF7Yr1A
+    topic: fitness
+    topic_l2: fitness/health-info
+    note: "삼탈모tv · fitness -> fitness/health-info, 의사·약사·건강 정보 영상 위주 (2026-11-15 수동 검수, claude)"
+  - channel_id: UC08pbeuzAK3uRsdrma3Gx0Q
+    topic: fitness
+    topic_l2: fitness/health-info
+    note: "후후비당고한의원 - 대사질환 性지식채널 · fitness -> fitness/health-info, 의사·약사·건강 정보 영상 위주 (2026-11-15 수동 검수, claude)"
+  - channel_id: UCz2mkGlL3plh-HU0ew_6STQ
+    topic: fitness
+    topic_l2: fitness/health-info
+    note: "당뇨생활 · fitness -> fitness/health-info, 의사·약사·건강 정보 영상 위주 (2026-11-15 수동 검수, claude)"
+  - channel_id: UCj9qFl8jadgbSEneWZC6bDw
+    topic: fitness
+    topic_l2: fitness/health-info
+    note: "인생건강센터 · fitness -> fitness/health-info, 의사·약사·건강 정보 영상 위주 (2026-11-15 수동 검수, claude)"
+  - channel_id: UCBdjXurCBNFAeVhMyz9c93w
+    topic: fitness
+    topic_l2: fitness/health-info
+    note: "진짜건강 · fitness -> fitness/health-info, 의사·약사·건강 정보 영상 위주 (2026-11-15 수동 검수, claude)"
+  - channel_id: UCtddk8OgBk2ijy7S4zkqoOQ
+    topic: fitness
+    topic_l2: fitness/health-info
+    note: "닥터광사부 · fitness -> fitness/health-info, 의사·약사·건강 정보 영상 위주 (2026-11-15 수동 검수, claude)"
+  - channel_id: UC-6Zy7pcCcTjG77U3DnqLfQ
+    topic: fitness
+    topic_l2: fitness/health-info
+    note: "건강톡스 · fitness -> fitness/health-info, 의사·약사·건강 정보 영상 위주 (2026-11-15 수동 검수, claude)"
+  - channel_id: UCzSlgj4Ja1SmkCmTyujDSbQ
+    topic: fitness
+    topic_l2: fitness/health-info
+    note: "건강 똑순이 · fitness -> fitness/health-info, 의사·약사·건강 정보 영상 위주 (2026-11-15 수동 검수, claude)"
+  - channel_id: UCwn7Pl3dUWDeN_TWh8tl54Q
+    topic: fitness
+    topic_l2: fitness/health-info
+    note: "시니어복지건강TV · fitness -> fitness/health-info, 의사·약사·건강 정보 영상 위주 (2026-11-15 수동 검수, claude)"
+  - channel_id: UCxhPxxkRJeLOZWGdYXrPO7g
+    topic: fitness
+    topic_l2: fitness/health-info
+    note: "암 공부하는 의사 강형창 · fitness -> fitness/health-info, 의사·약사·건강 정보 영상 위주 (2026-11-15 수동 검수, claude)"
+  - channel_id: UCrc--8Z5wbsx5w4AWhdP8xw
+    topic: fitness
+    topic_l2: fitness/health-info
+    note: "박지영박사의 건강돋보기TV · fitness -> fitness/health-info, 의사·약사·건강 정보 영상 위주 (2026-11-15 수동 검수, claude)"
+  - channel_id: UC2rdDlzfElI5d90ijlTJYgg
+    topic: fitness
+    topic_l2: fitness/health-info
+    note: "치매닥터 강민 · fitness -> fitness/health-info, 의사·약사·건강 정보 영상 위주 (2026-11-15 수동 검수, claude)"
+  - channel_id: UCuqvo3Sona-273f0XK2qbXw
+    topic: fitness
+    topic_l2: fitness/health-info
+    note: "굿닥터 김태균 · fitness -> fitness/health-info, 의사·약사·건강 정보 영상 위주 (2026-11-15 수동 검수, claude)"
+  - channel_id: UCxkwgIYCm3vLlYITOzdByZg
+    topic: fitness
+    topic_l2: fitness/health-info
+    note: "우수한 영양학 · fitness -> fitness/health-info, 의사·약사·건강 정보 영상 위주 (2026-11-15 수동 검수, claude)"
+  - channel_id: UCoi4V1acTv1EfBe_ooxoBqQ
+    topic: fitness
+    topic_l2: fitness/health-info
+    note: "건강이알고싶다 · fitness -> fitness/health-info, 의사·약사·건강 정보 영상 위주 (2026-11-15 수동 검수, claude)"
+  - channel_id: UCiXQA5y3W1blcdeEH0rKLjA
+    topic: fitness
+    topic_l2: fitness/health-info
+    note: "1분건강 · fitness -> fitness/health-info, 의사·약사·건강 정보 영상 위주 (2026-11-15 수동 검수, claude)"
+  - channel_id: UCWabQWP9SxoMXRakEIQxWCQ
+    topic: fitness
+    topic_l2: fitness/health-info
+    note: "비타민 박사 염창환 TV · fitness -> fitness/health-info, 의사·약사·건강 정보 영상 위주 (2026-11-15 수동 검수, claude)"
+  - channel_id: UCxqoHA_ZT-RtSt4v7v4lndA
+    topic: fitness
+    topic_l2: fitness/health-info
+    note: "의사 박용우 · fitness -> fitness/health-info, 의사·약사·건강 정보 영상 위주 (2026-11-15 수동 검수, claude)"
+  - channel_id: UCgGns5mTguUQYAZvVZ-wWpg
+    topic: fitness
+    topic_l2: fitness/health-info
+    note: "지금 명의 · fitness -> fitness/health-info, 의사·약사·건강 정보 영상 위주 (2026-11-15 수동 검수, claude)"
+  - channel_id: UC21mgaKHI1G5lVsjjuJI_kA
+    topic: fitness
+    topic_l2: fitness/health-info
+    note: "형제약사의 약이야기 · fitness -> fitness/health-info, 의사·약사·건강 정보 영상 위주 (2026-11-15 수동 검수, claude)"
+  - channel_id: UCPsApmFia_Ej6lcxNkNMp4A
+    topic: fitness
+    topic_l2: fitness/health-info
+    note: "리틀약사 Shorts · fitness -> fitness/health-info, 의사·약사·건강 정보 영상 위주 (2026-11-15 수동 검수, claude)"
+  - channel_id: UCKEspD9kts44sG5E80kQcjQ
+    topic: fitness
+    topic_l2: fitness/home-workout
+    note: "이지은 다이어트 Jiny diet · fitness -> fitness/home-workout, 홈트·다이어트 영상 위주 (2026-11-15 수동 검수, claude)"
+  - channel_id: UCxWRe2A7LMTEwMBErR4DkgQ
+    topic: fitness
+    topic_l2: fitness/home-workout
+    note: "삐약스핏 [살빼주는 병맛 다이어트채널] · fitness -> fitness/home-workout, 홈트·다이어트 영상 위주 (2026-11-15 수동 검수, claude)"
+  - channel_id: UCRrZ5RYIalHLiHq5ftzxM6A
+    topic: fitness
+    topic_l2: fitness/home-workout
+    note: "빵느 · fitness -> fitness/home-workout, 홈트·다이어트 영상 위주 (2026-11-15 수동 검수, claude)"
+  - channel_id: UC2CmamCD9CTWs4vo_t_gt9Q
+    topic: fitness
+    topic_l2: fitness/home-workout
+    note: "다이어트 해커 이서울 · fitness -> fitness/home-workout, 홈트·다이어트 영상 위주 (2026-11-15 수동 검수, claude)"
+  - channel_id: UCmOaOFwxOXfZLgZPFhjT_1Q
+    topic: fitness
+    topic_l2: fitness/home-workout
+    note: "서리요가seoriyoga · fitness -> fitness/home-workout, 홈트·다이어트 영상 위주 (2026-11-15 수동 검수, claude)"
+  - channel_id: UCdpp8Mnu597ytrpNQlhUbxA
+    topic: fitness
+    topic_l2: fitness/home-workout
+    note: "제로요가 ZEROYOGA · fitness -> fitness/home-workout, 홈트·다이어트 영상 위주 (2026-11-15 수동 검수, claude)"
+  - channel_id: UCCMPqyuETEawtYeZtXEM5Jg
+    topic: fitness
+    topic_l2: fitness/home-workout
+    note: "슬로우 필라테스 · fitness -> fitness/home-workout, 홈트·다이어트 영상 위주 (2026-11-15 수동 검수, claude)"
+  - channel_id: UCS0EHYZUTD7LnRczJbCh3iA
+    topic: fitness
+    topic_l2: fitness/home-workout
+    note: "몸박사 정주호 · fitness -> fitness/home-workout, 홈트·다이어트 영상 위주 (2026-11-15 수동 검수, claude)"
+  - channel_id: UCpNGDhuzGy6Jp-MyhYnN-RA
+    topic: fitness
+    topic_l2: fitness/home-workout
+    note: "김혜윤의 누워서 살빼기 · fitness -> fitness/home-workout, 홈트·다이어트 영상 위주 (2026-11-15 수동 검수, claude)"
+  - channel_id: UCq4et6CG5dmP8f0xKJDYQ3g
+    topic: fitness
+    topic_l2: fitness/home-workout
+    note: "다이어트하는 사람들 · fitness -> fitness/home-workout, 홈트·다이어트 영상 위주 (2026-11-15 수동 검수, claude)"
+  - channel_id: UC8XJlUpHHPcT-kEUt9gFzTw
+    topic: fitness
+    topic_l2: fitness/home-workout
+    note: "갱선생의 호르몬 다이어트 · fitness -> fitness/home-workout, 홈트·다이어트 영상 위주 (2026-11-15 수동 검수, claude)"
+  - channel_id: UCQ0k5GCSGS-LveVW32GPRkw
+    topic: fitness
+    topic_l2: fitness/home-workout
+    note: "중년건강 다요톡 diettalk · fitness -> fitness/home-workout, 홈트·다이어트 영상 위주 (2026-11-15 수동 검수, claude)"
+  - channel_id: UC75EntGNeMyOZ19paum0LiQ
+    topic: fitness
+    topic_l2: fitness/home-workout
+    note: "비만은 역시 김용수TV - 초고도비만 다이어트 · fitness -> fitness/home-workout, 홈트·다이어트 영상 위주 (2026-11-15 수동 검수, claude)"
+  - channel_id: UC6Mf-wiyKvWup51wgGzjE4A
+    topic: fitness
+    topic_l2: fitness/home-workout
+    note: "엄마들을 위한 대사 다이어트 / 감비환 · fitness -> fitness/home-workout, 홈트·다이어트 영상 위주 (2026-11-15 수동 검수, claude)"
+  - channel_id: UCBFKb7wVUFOGIXsC5yDvUQw
+    topic: fitness
+    topic_l2: fitness/home-workout
+    note: "함께하는 다이어트, 강짐 · fitness -> fitness/home-workout, 홈트·다이어트 영상 위주 (2026-11-15 수동 검수, claude)"
+  - channel_id: UC0NazDJj6HZnqXR9x9HiXEg
+    topic: fitness
+    topic_l2: fitness/home-workout
+    note: "디어다빈_속 편한 다이어트 · fitness -> fitness/home-workout, 홈트·다이어트 영상 위주 (2026-11-15 수동 검수, claude)"
+  - channel_id: UCDkbjIaqkEAQugZcWo4O_DA
+    topic: fitness
+    topic_l2: fitness/home-workout
+    note: "해독장선생의 다이어트 식단 · fitness -> fitness/home-workout, 홈트·다이어트 영상 위주 (2026-11-15 수동 검수, claude)"
+  - channel_id: UCF97u_Y5C3FxAcD0nn1DCKQ
+    topic: fitness
+    topic_l2: fitness/gym
+    note: "보통사람을 위한 운동채널 · fitness -> fitness/gym, 헬스·보디빌딩 영상 위주 (2026-11-15 수동 검수, claude)"
+  - channel_id: UCc5mVNF4R6ywMqbty91J0rQ
+    topic: fitness
+    topic_l2: fitness/gym
+    note: "김명섭의 헬스교실 · fitness -> fitness/gym, 헬스·보디빌딩 영상 위주 (2026-11-15 수동 검수, claude)"
+  - channel_id: UC9sVGhXl4VClbv82iMjpLVA
+    topic: fitness
+    topic_l2: fitness/gym
+    note: "시금치맨 운동상식 · fitness -> fitness/gym, 헬스·보디빌딩 영상 위주 (2026-11-15 수동 검수, claude)"
+  - channel_id: UCcMSJmR90Y_McofszAVxjAQ
+    topic: fitness
+    topic_l2: fitness/gym
+    note: "김성환헬스유튜브 (Kim Seong Hwan) · fitness -> fitness/gym, 헬스·보디빌딩 영상 위주 (2026-11-15 수동 검수, claude)"
+  - channel_id: UCsJz24ntgtEsdC1sfQ7bZTQ
+    topic: fitness
+    topic_l2: fitness/gym
+    note: "동면중 · fitness -> fitness/gym, 헬스·보디빌딩 영상 위주 (2026-11-15 수동 검수, claude)"
+  - channel_id: UCQvFuV0dZdRMxseUkCIM62A
+    topic: issue
+    note: "유성호의 데맨톡(Deadmantalk) · fitness -> issue, 법의학 사건 이야기 위주 (2026-11-15 수동 검수, claude)"
+  - channel_id: UCFkAwpvztBaAEzwyDimpDiA
+    topic: vlog
+    topic_l2: vlog/vlog-etc
+    note: "아가리어터 · fitness -> vlog/vlog-etc, 브이로그 위주 (2026-11-15 수동 검수, claude)"
+  - channel_id: UC7bk_HwZ8nei6BXolBc633w
+    topic: vlog
+    topic_l2: vlog/vlog-etc
+    note: "태국시골약사 이와라 · fitness -> vlog/vlog-etc, 태국 일상 브이로그 위주 (2026-11-15 수동 검수, claude)"
+  - channel_id: UCAKxbjXBfld3O3xJaz6ouzQ
+    topic: music
+    topic_l2: music/dance
+    note: "토마토댄스 Tomato dance · fitness -> music/dance, 댄스스포츠 영상 위주 (2026-11-15 수동 검수, claude)"
+  - channel_id: UCF7NoENX-41sUpN6DJ0v6-w
+    topic: music
+    topic_l2: music/dance
+    note: "김기주라인댄스Linedancekijukim · fitness -> music/dance, 라인댄스 영상 위주 (2026-11-15 수동 검수, claude)"
+  - channel_id: UCY8KCw_KgDYc5uUiv1vLeuA
+    topic: music
+    topic_l2: music/dance
+    note: "미미댄스 TV · fitness -> music/dance, 사교댄스 영상 위주 (2026-11-15 수동 검수, claude)"
+  - channel_id: UCBRjQ4OELKYUpoGTr_em-Eg
+    topic: music
+    topic_l2: music/dance
+    note: "Lala Linedance [노원 라라 라인댄스] · fitness -> music/dance, 라인댄스 영상 위주 (2026-11-15 수동 검수, claude)"
+  - channel_id: UCet4VXBGsHn8PRUOOhnCFgQ
+    topic: mukbang
+    topic_l2: mukbang/mb-tour
+    note: "산골맛집김선생 · fitness -> mukbang/mb-tour, 맛집 탐방 영상 위주 (2026-11-15 수동 검수, claude)"
+  - channel_id: UCj9v_ThF9C97nrraZKlxKfg
+    topic: game
+    topic_l2: game/mobile
+    note: "ND러너 · fitness -> game/mobile, 쿠키런 모바일 게임 영상 위주 (2026-11-15 수동 검수, claude)"
+  - channel_id: UC4_mKNLlx5viAPIGWTuWeCg
+    topic: movie-review
+    topic_l2: movie-review/mr-review
+    note: "흑자.지껄 SurplusTalk · fitness -> movie-review/mr-review, 영화·드라마 해설 위주 (2026-11-15 수동 검수, claude)"
+  - channel_id: UCevBKgl8-nLrSfW59s92xcQ
+    topic: beauty-life
+    topic_l2: beauty-life/skincare
+    note: "한입건강 · fitness -> beauty-life/skincare, 피부 시술·스킨케어 영상 위주 (2026-11-15 수동 검수, claude)"
+  - channel_id: UCK3LXvpDt3Wngb0QvIBgxNQ
+    topic: travel
+    note: "임기자가간다 · fitness -> travel, 여행지 추천 영상 위주 (2026-11-15 수동 검수, claude)"
+  - channel_id: UCCh1gXbyyn2x2oA_irIeguA
+    topic: sports
+    topic_l2: sports/golf
+    note: "GOLDENDRIVER [골든드라이버] · fitness -> sports/golf, 골프 레슨 영상 위주 (2026-11-15 수동 검수, claude)"
+  - channel_id: UCskIKQGpjI5sG2ZLtWLYSmw
+    topic: music
+    topic_l2: music/trot
+    note: "미스&미스터트롯 · music -> music/trot, 트로트 무대·커버 영상 위주 (2026-11-15 수동 검수, claude)"
+  - channel_id: UC33yEDM8q3N8BeMpZMdP66Q
+    topic: music
+    topic_l2: music/trot
+    note: "TVCHOSUN MUSIC · music -> music/trot, 트로트 무대·커버 영상 위주 (2026-11-15 수동 검수, claude)"
+  - channel_id: UCwjVcMTea1yIoZzLdE3Riaw
+    topic: music
+    topic_l2: music/trot
+    note: "손앙드레 · music -> music/trot, 트로트 무대·커버 영상 위주 (2026-11-15 수동 검수, claude)"
+  - channel_id: UC7ITxSrzq-nhyyYzozpPmLA
+    topic: music
+    topic_l2: music/trot
+    note: "트로트 맛집 - 국민의뽕짝 · music -> music/trot, 트로트 무대·커버 영상 위주 (2026-11-15 수동 검수, claude)"
+  - channel_id: UCkSwDXvnDdWhI_4oIcSRfAA
+    topic: music
+    topic_l2: music/trot
+    note: "황호찬 올겐 전화노래방 · music -> music/trot, 트로트 무대·커버 영상 위주 (2026-11-15 수동 검수, claude)"
+  - channel_id: UCl2ITCIEPEjf1UhmVwJ6alQ
+    topic: music
+    topic_l2: music/trot
+    note: "MBC강원영동 MUSIC · music -> music/trot, 트로트 무대·커버 영상 위주 (2026-11-15 수동 검수, claude)"
+  - channel_id: UC_x9JViW1fKbZbBgroBVf6Q
+    topic: music
+    topic_l2: music/trot
+    note: "오케이콘서트 · music -> music/trot, 트로트 무대·커버 영상 위주 (2026-11-15 수동 검수, claude)"
+  - channel_id: UC27X7sTj-bm4vOEimi_UlqQ
+    topic: music
+    topic_l2: music/trot
+    note: "콘서트TV (뻑가요, 이판사판 노래방) · music -> music/trot, 트로트 무대·커버 영상 위주 (2026-11-15 수동 검수, claude)"
+  - channel_id: UCC_SaR2bvmBHrCE6UsB_gJw
+    topic: music
+    topic_l2: music/trot
+    note: "드럼빠 · music -> music/trot, 트로트 무대·커버 영상 위주 (2026-11-15 수동 검수, claude)"
+  - channel_id: UCeubR4oC-jj0F74hhvpQ3cA
+    topic: music
+    topic_l2: music/trot
+    note: "KBS 2라디오 HappyFM · music -> music/trot, 트로트 무대·커버 영상 위주 (2026-11-15 수동 검수, claude)"
+  - channel_id: UCbiF_iDtGc8ESSn0wkmQjhg
+    topic: music
+    topic_l2: music/trot
+    note: "국악신동 아기호랑이 김태연TV · music -> music/trot, 트로트 무대·커버 영상 위주 (2026-11-15 수동 검수, claude)"
+  - channel_id: UCRW7NvCQNUB7kH05wqRuIow
+    topic: music
+    topic_l2: music/trot
+    note: "TV CHOSUN ENTERTAINMENT & MEDIA · music -> music/trot, 트로트 무대·커버 영상 위주 (2026-11-15 수동 검수, claude)"
+  - channel_id: UCINDDO-JxWFFCeIHJh5UszQ
+    topic: music
+    topic_l2: music/trot
+    note: "한초성 3시희망tv(월~금)전화노래방 · music -> music/trot, 트로트 무대·커버 영상 위주 (2026-11-15 수동 검수, claude)"
+  - channel_id: UCgZlBRLRB1-0l-qL9BkecLQ
+    topic: music
+    topic_l2: music/dance
+    note: "ARTBEAT · music -> music/dance, 댄스·안무 영상 위주 (2026-11-15 수동 검수, claude)"
+  - channel_id: UC0G3ShKXy9CnfgyinX89kIg
+    topic: music
+    topic_l2: music/dance
+    note: "마일리 파피니스 MYLEE POPINESS · music -> music/dance, 댄스·안무 영상 위주 (2026-11-15 수동 검수, claude)"
+  - channel_id: UC1HevvP1DDxfKnQCfG_Fn2Q
+    topic: music
+    topic_l2: music/dance
+    note: "크림서현의랜덤댄스 · music -> music/dance, 댄스·안무 영상 위주 (2026-11-15 수동 검수, claude)"
+  - channel_id: UCiPnlxZpY0m-YNxJ7oYKlNw
+    topic: music
+    topic_l2: music/dance
+    note: "소정이의 랜덤댄스 · music -> music/dance, 댄스·안무 영상 위주 (2026-11-15 수동 검수, claude)"
+  - channel_id: UC4xWrcM4KMDGrUppMTVt0Ww
+    topic: music
+    topic_l2: music/dance
+    note: "Aloha채릉 · music -> music/dance, 댄스·안무 영상 위주 (2026-11-15 수동 검수, claude)"
+  - channel_id: UCSjWqHuWDGZaCNOhOOQNPSw
+    topic: music
+    topic_l2: music/dance
+    note: "AFSTARZ 랜덤댄스 · music -> music/dance, 댄스·안무 영상 위주 (2026-11-15 수동 검수, claude)"
+  - channel_id: UCWWh6EeZnS5H81atqzJ0bxw
+    topic: music
+    topic_l2: music/dance
+    note: "TRUE DANCESTUDIO · music -> music/dance, 댄스·안무 영상 위주 (2026-11-15 수동 검수, claude)"
+  - channel_id: UC5AaaLI1d7-qTwYN1QGlQ1g
+    topic: music
+    topic_l2: music/dance
+    note: "이동우 프로댄스 · music -> music/dance, 댄스·안무 영상 위주 (2026-11-15 수동 검수, claude)"
+  - channel_id: UCataM9Xmq304vJU8Re_8QOg
+    topic: music
+    topic_l2: music/dance
+    note: "인천 선학동 김근우댄스 · music -> music/dance, 댄스·안무 영상 위주 (2026-11-15 수동 검수, claude)"
+  - channel_id: UC1FZ59NCoUOpveg6nP6Dm-A
+    topic: cooking
+    note: "어쿠스틱 드링크 · music -> cooking, 칵테일·안주 레시피 위주 (2026-11-15 수동 검수, claude)"
+  - channel_id: UCrHNPa19OOnisxa4ncj5UcQ
+    topic: sports
+    topic_l2: sports/sports-etc
+    note: "손윤제TV · music -> sports/sports-etc, 생활체육 대회 영상 (2026-11-15 수동 검수, claude)"
+  - channel_id: UCPGFLUUESbnhkOTpIt71Awg
+    topic: vlog
+    topic_l2: vlog/family
+    note: "MariAndKids · game -> vlog, 아이 육아·가족 영상 (2026-11-15 수동 검수, claude)"
+  - channel_id: UCIAH4FXl2DQ4HmLupsyFiug
+    topic: vlog
+    topic_l2: vlog/family
+    note: "MariAndFriends · game -> vlog, 아이 가족 영상 (2026-11-15 수동 검수, claude)"
+  - channel_id: UC9nFMAQcn0bqIrEV9vUdU1g
+    topic: vlog
+    topic_l2: vlog/family
+    note: "사나이 김기훈 · game -> vlog, 육아 가족 영상 (2026-11-15 수동 검수, claude)"
+  - channel_id: UClUE7d0UQ7dhLjK1r6xpG9w
+    topic: vlog
+    topic_l2: vlog/vlog-etc
+    note: "예랑가랑 · game -> vlog, 커플 일상 브이로그 (2026-11-15 수동 검수, claude)"
+  - channel_id: UC1-jInqcAOkAHvp2CO8h1zg
+    topic: vlog
+    topic_l2: vlog/vlog-etc
+    note: "애니한TV AnnieHanTV · game -> vlog, 일본 먹거리·일상 영상 (2026-11-15 수동 검수, claude)"
+  - channel_id: UC2NFRq9s2neD_Ml0tPhNC2Q
+    topic: web-drama
+    note: "우주하마 · game -> web-drama, 숏폼 코미디 (2026-11-15 수동 검수, claude)"
+  - channel_id: UCGrfaHcg6r4JWAZyo_cvKZQ
+    topic: issue
+    note: "준우 · game -> issue, 연애 사연·사건 이야기 (2026-11-15 수동 검수, claude)"
+  - channel_id: UC9ta639M37zzWKwo7kKc80A
+    topic: web-drama
+    note: "주둥이방송 · game -> web-drama, 토크·고민상담 예능 (2026-11-15 수동 검수, claude)"
+  - channel_id: UCkQCwnkQfgSuPTTnw_Y7v7w
+    topic: web-drama
+    note: "장지수 · game -> web-drama, 예능 토크 콘텐츠 (2026-11-15 수동 검수, claude)"
+  - channel_id: UC69uMhRJcUnvMnMxKT2SS0w
+    topic: web-drama
+    note: "봉준 · game -> web-drama, 소개팅·예능 콘텐츠 (2026-11-15 수동 검수, claude)"
+  - channel_id: UCnQRkIhRmXrxGrK4-8n-lVw
+    topic: web-drama
+    note: "똘킹 · game -> web-drama, 코미디 썰 영상 (2026-11-15 수동 검수, claude)"
+  - channel_id: UCJg9L0svbnuPcjOcqLbi_3g
+    topic: web-drama
+    note: "김인호TV · game -> web-drama, 썰·코미디 영상 (2026-11-15 수동 검수, claude)"
+  - channel_id: UCWq9wRjQXYC8i486uVLysUA
+    topic: web-drama
+    note: "이도원 · game -> web-drama, 코미디 영상 (2026-11-15 수동 검수, claude)"
+  - channel_id: UC1L79yKbmVepsCYusa4KHLQ
+    topic: web-drama
+    note: "깨박이 · game -> web-drama, 연애 토크 코미디 (2026-11-15 수동 검수, claude)"
+  - channel_id: UCoXoV4ebLAr30fSsCJsg4fQ
+    topic: web-drama
+    note: "따규햅번 · game -> web-drama, 상황극 코미디 (2026-11-15 수동 검수, claude)"
+  - channel_id: UC9gOI0h5ngmbTjw65UFDvRA
+    topic: web-drama
+    note: "에라이! 얘네 웃겨서 곧 뜨겠네 · game -> web-drama, 코미디 스케치 (2026-11-15 수동 검수, claude)"
+  - channel_id: UCA5vKQkvC9zlTDOSNtoMdCQ
+    topic: tech
+    note: "SK telecom · game -> tech, 통신사 공식 기업 채널 (2026-11-15 수동 검수, claude)"
+  - channel_id: UCgOrq46HHPLETItXdQzG0Og
+    topic: history
+    note: "간다효 · game -> history, 역사 해설 (2026-11-15 수동 검수, claude)"
+  - channel_id: UClwaYTScBFBfaDsU-4dcV9Q
+    topic: news
+    note: "세신사 - 세상의신기한사실들 · game -> news, 북한·군사 시사 (2026-11-15 수동 검수, claude)"
+  - channel_id: UClSuqiIAACDUJrH3gb4JcLQ
+    topic: pets
+    topic_l2: pets/cat
+    note: "야옹해 바바 Miaow baba · game -> pets, 채널명 고양이 (2026-11-15 수동 검수, claude)"
+  - channel_id: UCT_Sf9z6Cqy11VHOfbnQPNQ
+    topic: pets
+    topic_l2: pets/cat
+    note: "비콘 TV · game -> pets, 길냥이 영상 (2026-11-15 수동 검수, claude)"
+  - channel_id: UCfalpOrZfJX6961cVEpO_-A
+    topic: fitness
+    topic_l2: fitness/health-info
+    note: "치과의사 매직박 · game -> fitness, 치과의사 건강·다이어트 정보 (2026-11-15 수동 검수, claude)"
+  - channel_id: UC7uKMg7lPdCp4Nm1tLesihQ
+    topic: game
+    topic_l2: game/mobile
+    note: "마재TV · -> game/mobile, 서브컬처 가챠 게임 (2026-11-15 수동 검수, claude)"
+  - channel_id: UClJspSpzADMROqOW9HLHaoA
+    topic: game
+    topic_l2: game/mobile
+    note: "브롤스타즈 · -> game/mobile, 브롤스타즈 공식 (2026-11-15 수동 검수, claude)"
+  - channel_id: UC5pbeFWTPAUdKu65kBROsBg
+    topic: game
+    topic_l2: game/mobile
+    note: "테드TV · -> game/mobile, 브롤스타즈 (2026-11-15 수동 검수, claude)"
+  - channel_id: UCoH2pCzAr6zWDG-LtUiLWRw
+    topic: game
+    topic_l2: game/mobile
+    note: "홀릿 Youtube Holit · -> game/mobile, 브롤스타즈 (2026-11-15 수동 검수, claude)"
+  - channel_id: UCbLispC1ydHSC_69kjZI6hw
+    topic: game
+    topic_l2: game/mobile
+    note: "비누TV · -> game/mobile, 브롤스타즈·포켓몬 모바일 (2026-11-15 수동 검수, claude)"
+  - channel_id: UCMN8GsAYJem_O2pxeEojB7g
+    topic: game
+    topic_l2: game/mobile
+    note: "본이 · -> game/mobile, 브롤스타즈 (2026-11-15 수동 검수, claude)"
+  - channel_id: UCL_IvtOZo6sONpiydbzzHpA
+    topic: game
+    topic_l2: game/mobile
+    note: "JUNE · -> game/mobile, 클래시로얄 (2026-11-15 수동 검수, claude)"
+  - channel_id: UCcum1rCJ5GJeQ_xv0xrohqg
+    topic: game
+    topic_l2: game/mobile
+    note: "원신 · -> game/mobile, 원신 가챠 공식 (2026-11-15 수동 검수, claude)"
+  - channel_id: UCaHIZAKows704_gk6bjdAog
+    topic: game
+    topic_l2: game/mobile
+    note: "쌈밥TV SSAMBOB · -> game/mobile, 포켓몬 GO (2026-11-15 수동 검수, claude)"
+  - channel_id: UCLi7ULqlbpBLA1PkOE4QlKw
+    topic: game
+    topic_l2: game/mobile
+    note: "수삼티비 · -> game/mobile, 모바일 MMORPG (2026-11-15 수동 검수, claude)"
+  - channel_id: UCTLIq9jl-pb_ojAZZtoGaOQ
+    topic: game
+    topic_l2: game/mobile
+    note: "빅보스 · -> game/mobile, 리니지M 등 모바일 MMORPG (2026-11-15 수동 검수, claude)"
+  - channel_id: UCBjPppB6FOLloYBUvgbqE_A
+    topic: game
+    topic_l2: game/mobile
+    note: "불도그 · -> game/mobile, 리니지M (2026-11-15 수동 검수, claude)"
+  - channel_id: UCgjaQlejpAnIu0q-xtVfTEw
+    topic: game
+    topic_l2: game/mobile
+    note: "밍모 · -> game/mobile, 냥코 대전쟁 등 모바일 (2026-11-15 수동 검수, claude)"
+  - channel_id: UCH33CJMcI0XZUpIhWRHiUuw
+    topic: game
+    topic_l2: game/mobile
+    note: "붕괴: 스타레일 · game -> game/mobile, 스타레일 공식 채널 (2026-11-15 수동 검수, claude)"
+  - channel_id: UCKuq0c-RXYaulECSuu5hFug
+    topic: game
+    topic_l2: game/mobile
+    note: "명조:워더링 웨이브 · game -> game/mobile, 명조 공식 채널, 가챠 게임 (2026-11-15 수동 검수, claude)"
+  - channel_id: UCDyP9G30eAWmpkADQhki3zw
+    topic: game
+    topic_l2: game/mobile
+    note: "테리 · game -> game/mobile, 브롤스타즈 위주 (2026-11-15 수동 검수, claude)"
+  - channel_id: UCni34U-sGh9QB5UVo5INl2g
+    topic: game
+    topic_l2: game/mobile
+    note: "오살 OSAL · game -> game/mobile, PUBG 모바일 위주 (2026-11-15 수동 검수, claude)"
+  - channel_id: UCG70O1umzfgPpDs8sBJtvVw
+    topic: game
+    topic_l2: game/mobile
+    note: "고뇨 · game -> game/mobile, 니케·명조 등 가챠 공략 (2026-11-15 수동 검수, claude)"
+  - channel_id: UCMPedRfD9EnS1EzAQl0nf4Q
+    topic: game
+    topic_l2: game/mobile
+    note: "앙리형 · game -> game/mobile, 명조 가챠 위주 (2026-11-15 수동 검수, claude)"
+  - channel_id: UCIn9T6RZs9OyyKnGkvLRH8w
+    topic: game
+    topic_l2: game/mobile
+    note: "몽키매직 게임채널 · game -> game/mobile, 명조·스타레일·원신 가이드 (2026-11-15 수동 검수, claude)"
+  - channel_id: UC2f8VfmEF2_0-rFN4RNHaNg
+    topic: game
+    topic_l2: game/mobile
+    note: "흐구구구 HGOO · game -> game/mobile, 원신 공략 (2026-11-15 수동 검수, claude)"
+  - channel_id: UCg5Ew4lj74r_ohbc4AeQj1w
+    topic: game
+    topic_l2: game/mobile
+    note: "원신감성 Genshin Feeling · game -> game/mobile, 원신 뽑기 위주 (2026-11-15 수동 검수, claude)"
+  - channel_id: UC6JTm9ObvQFuTEOxOsbmYwA
+    topic: game
+    topic_l2: game/mobile
+    note: "Rie 리에 · game -> game/mobile, 호요버스 가챠 위주 (2026-11-15 수동 검수, claude)"
+  - channel_id: UCM9XzN_3lmh2RWzZasqdrxA
+    topic: game
+    topic_l2: game/mobile
+    note: "겜talks · game -> game/mobile, 쿠키런 위주 (2026-11-15 수동 검수, claude)"
+  - channel_id: UCmWK6rWzVYMmS1Iq-_qJZdg
+    topic: game
+    topic_l2: game/mobile
+    note: "겜생돋보기 · game -> game/mobile, 냥코대전쟁 소식 (2026-11-15 수동 검수, claude)"
+  - channel_id: UCrR_fhiJjoW8OJFzUcmlMMA
+    topic: game
+    topic_l2: game/mobile
+    note: "SODA님 · game -> game/mobile, FC모바일·컴프야 모바일 야구 (2026-11-15 수동 검수, claude)"
+  - channel_id: UCnV5tUnOVGyT-Ncj0s0tPTw
+    topic: game
+    topic_l2: game/mobile
+    note: "제이게임채널 · game -> game/mobile, 제우스 오만의 신 등 모바일 MMO (2026-11-15 수동 검수, claude)"
+  - channel_id: UC71uyaLVBWqmW5oAn1YamIA
+    topic: vlog
+    topic_l2: vlog/vlog-etc
+    note: "영평티비 YPTV · game -> vlog, 반려견·연예인 일상 영상 (2026-11-15 수동 검수, claude)"
+  - channel_id: UCMUy31CAuDHYzhqx5v8Pa8A
+    topic: web-drama
+    note: "루제이 · game -> web-drama, 상황극·콩트 영상 (2026-11-15 수동 검수, claude)"
+  - channel_id: UCyeVEuBHGDRZGt4krdMOhMA
+    topic: news
+    note: "헬마라이브 · game -> news, 시사·정치 이슈 라이브 (2026-11-15 수동 검수, claude)"
+  - channel_id: UCCjR2EbSnsVKRVeTvPjVWIA
+    topic: issue
+    note: "SANDBOX NETWORK (샌드박스네트워크) · game -> issue, 탈북 인터뷰 위주 (2026-11-15 수동 검수, claude)"
+  - channel_id: UC5wINXUndIRbjygmnFWvf0g
+    topic: vlog
+    topic_l2: vlog/vlog-etc
+    note: "채현찌 · game -> vlog, 직장·일상 먹방 브이로그 (2026-11-15 수동 검수, claude)"
+  - channel_id: UC8kgAdc_ZfQAZwBkQ-Rummg
+    topic: web-drama
+    note: "김똘복 · game -> web-drama, 상황극·콩트 영상 (2026-11-15 수동 검수, claude)"
+  - channel_id: UC55V9wd4rmowhCvjPXiTmFA
+    topic: pets
+    topic_l2: pets/dog
+    note: "깡졍일기 · game -> pets, 애견펜션 등 강아지 일상 (2026-11-15 수동 검수, claude)"
+  - channel_id: UC2Gl0AFWxb97lON4fdd5t4g
+    topic: mystery
+    note: "디로록 · game -> mystery, 괴담 영상 (2026-11-15 수동 검수, claude)"
+  - channel_id: UCUR_kXuxdfJ7ME92sR7Jigw
+    topic: mystery
+    note: "종이필름 · game -> mystery, 공포 괴담 영상 (2026-11-15 수동 검수, claude)"
+  - channel_id: UCDfbWaiic2W4lL-HKDomsGQ
+    topic: mystery
+    note: "쬰쬰 · game -> mystery, 아날로그 호러·괴담 리뷰 (2026-11-15 수동 검수, claude)"
+  - channel_id: UCOdXd8qCZhNJMoWXKLcbNag
+    topic: web-drama
+    note: "팔칠 · game -> web-drama, 콩트·스케치 영상 (2026-11-15 수동 검수, claude)"
+  - channel_id: UC0A6pmFQ3vOYQ6DWNQcC8_w
+    topic: web-drama
+    note: "팀진우 · game -> web-drama, 콩트·스케치 영상 (2026-11-15 수동 검수, claude)"
+  - channel_id: UChF0yMJLEF63BDNGUuxuMBA
+    topic: web-drama
+    note: "제임스 | 가재맨 Shorts · game -> web-drama, 웃긴 쇼츠 모음 (2026-11-15 수동 검수, claude)"
+  - channel_id: UCbNOWjJfkb_PcR04SK5HCNA
+    topic: vlog
+    topic_l2: vlog/vlog-etc
+    note: "아워빌리지 부산 · game -> vlog, 로스터리 카페 일상 (2026-11-15 수동 검수, claude)"
+  - channel_id: UCqcHlYhOAJgDcHJn_Q-qcsw
+    topic: fashion
+    note: "에이블리 · game -> fashion, 패션 앱 브랜드 홍보 영상 (2026-11-15 수동 검수, claude)"
+  - channel_id: UC6t1NCFKCiBUuIbM3ujRRPQ
+    topic: music
+    topic_l2: music/singing
+    note: "더빙걸 · game -> music, 치이카와 노래 한국어 커버 (2026-11-15 수동 검수, claude)"
+  - channel_id: UC1jgjmE0sfdHD6DzkhYa-0g
+    topic: game
+    topic_l2: game/mobile
+    note: "닌쟁이 · game -> game/mobile, 리니지M (current l2 empty, 2026-11-15 수동 검수, claude)"
+  - channel_id: UCNu00qhYj4nPeMNdxuwV6sg
+    topic: game
+    topic_l2: game/mobile
+    note: "밀핀 모바일 게임채널 · game -> game/mobile, 도깨비의세계 (current l2 empty, 2026-11-15 수동 검수, claude)"
+  - channel_id: UCp6-Gf6Bl6WjE6C6kLUaU4g
+    topic: game
+    topic_l2: game/mobile
+    note: "세븐나이츠 리버스 · game -> game/mobile, 모바일 공식 (current l2 empty, 2026-11-15 수동 검수, claude)"
+  - channel_id: UCaY7wcqhFb_c2eQ1eRB8rOQ
+    topic: game
+    topic_l2: game/mobile
+    note: "윤치 · game -> game/mobile, 원신·스타레일 가챠 (current l2 empty, 2026-11-15 수동 검수, claude)"
+  - channel_id: UC18CgYTdjrx3Bw2LEs9VDHg
+    topic: game
+    topic_l2: game/mobile
+    note: "조마루JOMARU · game -> game/mobile, 리니지M (current l2 empty, 2026-11-15 수동 검수, claude)"
+  - channel_id: UC9qwDE50UcXvdplRNZKEoPA
+    topic: game
+    topic_l2: game/mobile
+    note: "K tube · game -> game/mobile, 가챠 게임 스토리 (current l2 empty, 2026-11-15 수동 검수, claude)"
+  - channel_id: UCOKQpmfKrtu7Nu719CVSw1A
+    topic: game
+    topic_l2: game/mobile
+    note: "리그 오브 레전드: 와일드 리프트 · game -> game/mobile, 와일드 리프트 공식 (current l2 empty, 2026-11-15 수동 검수, claude)"
+  - channel_id: UCPoEVLrQMMXICwULGDwfvug
+    topic: game
+    topic_l2: game/mobile
+    note: "성대의 게임방송 · game -> game/mobile, 포켓몬카드 pocket (current l2 empty, 2026-11-15 수동 검수, claude)"
+  - channel_id: UCo6HhzSfiIO_4BKGQ4_BY0g
+    topic: game
+    topic_l2: game/mobile
+    note: "도깨비의세계 · game -> game/mobile, 도깨비의세계 공식 (current l2 empty, 2026-11-15 수동 검수, claude)"
+  - channel_id: UC0042GfGERAl0AzXR0j8TPA
+    topic: game
+    topic_l2: game/mobile
+    note: "이환 · game -> game/mobile, 이환 공식 (current l2 empty, 2026-11-15 수동 검수, claude)"
+  - channel_id: UCCvEN8bTeF8Z2jcN513T1Gg
+    topic: game
+    topic_l2: game/mobile
+    note: "배틀그라운드 모바일 이스포츠 · game -> game/mobile, 배그 모바일 (current l2 empty, 2026-11-15 수동 검수, claude)"
+  - channel_id: UCOE0gcox7DAgp0gJo3XbPkw
+    topic: game
+    topic_l2: game/mobile
+    note: "마형TV · game -> game/mobile, 트릭컬·니케 (current l2 empty, 2026-11-15 수동 검수, claude)"
+  - channel_id: UCnsr0eE77PR0igiS-nhaWPQ
+    topic: game
+    topic_l2: game/mobile
+    note: "반지 · game -> game/mobile, 운빨존많겜 (current l2 empty, 2026-11-15 수동 검수, claude)"
+  - channel_id: UCRmDzBbKI30Pnyme7KoON1w
+    topic: game
+    topic_l2: game/mobile
+    note: "도율하리 · game -> game/mobile, 운빨존많겜 (current l2 empty, 2026-11-15 수동 검수, claude)"
+  - channel_id: UCYVQdLj1g7NTRfFpN8z_yjA
+    topic: game
+    topic_l2: game/mobile
+    note: "서비니 · game -> game/mobile, 운빨존많겜 (current l2 empty, 2026-11-15 수동 검수, claude)"
+  - channel_id: UCB9TfegvaxOzEzUtwhZf0qA
+    topic: game
+    topic_l2: game/mobile
+    note: "버컴 · game -> game/mobile, 운빨존많겜 (current l2 empty, 2026-11-15 수동 검수, claude)"
+  - channel_id: UCXJFVjOu5LhQSmyYoMfAZHA
+    topic: game
+    topic_l2: game/mobile
+    note: "갑자 · game -> game/mobile, 운빨존많겜 (current l2 empty, 2026-11-15 수동 검수, claude)"
+  - channel_id: UCQTPM6U22aj-X4DAEgLOlPw
+    topic: game
+    topic_l2: game/mobile
+    note: "운빨백가 · game -> game/mobile, 운빨존많겜 (current l2 empty, 2026-11-15 수동 검수, claude)"
+  - channel_id: UCrxCfXFO9NoVa_Jho7nj-iQ
+    topic: game
+    topic_l2: game/mobile
+    note: "용 · game -> game/mobile, 운빨존많겜 (current l2 empty, 2026-11-15 수동 검수, claude)"
+  - channel_id: UCjlFb33vUwdFB7B2XtW1Rvg
+    topic: game
+    topic_l2: game/mobile
+    note: "으냐옹이 · game -> game/mobile, 운빨존많겜 (current l2 empty, 2026-11-15 수동 검수, claude)"
+  - channel_id: UC6JFiRoa_rxyk3aSPfKIMBA
+    topic: game
+    topic_l2: game/mobile
+    note: "윤치Full version · game -> game/mobile, 원신·니케 가챠 (current l2 empty, 2026-11-15 수동 검수, claude)"
+  - channel_id: UCRdbLKX1ewbm3r3vK9mr-HQ
+    topic: sports
+    topic_l2: sports/football
+    note: "뀨알Tube · game -> sports, 첼시 경기 리뷰 (2026-11-15 수동 검수, claude)"
+  - channel_id: UC4f7X7M2HcwCYXwrYLa3-PQ
+    topic: vlog
+    topic_l2: vlog/vlog-etc
+    note: "뚱뚜네핫찌 · game -> vlog, 일상 브이로그 (2026-11-15 수동 검수, claude)"
+  - channel_id: UCkQhk_vX4VVDWXEuRl-Lbww
+    topic: pets
+    topic_l2: pets/cat
+    note: "돼지방뎅이왕국! · game -> pets, 고양이 영상 (2026-11-15 수동 검수, claude)"
+  - channel_id: UCs2qlhSM4iilu8vPz5dSA_g
+    topic: vlog
+    topic_l2: vlog/vlog-etc
+    note: "아진짜모해 · game -> vlog, 나들이·일상 영상 (2026-11-15 수동 검수, claude)"
+  - channel_id: UCZjhbR54UmZ67ixwIpM0eBQ
+    topic: music
+    topic_l2: music/singing
+    note: "하데스 HADES · game -> music, 커버곡 위주 (2026-11-15 수동 검수, claude)"
+  - channel_id: UCYl17loB5QUKmMN2PXwgeBw
+    topic: anime
+    note: "이종범의 웹툰스쿨 · game -> anime, 웹툰 창작 강의 (2026-11-15 수동 검수, claude)"
+  - channel_id: UCAo6a3BUoA5en5aauxUyAZQ
+    topic: pets
+    topic_l2: pets/cat
+    note: "토니마루 · game -> pets, 고양이 영상 (2026-11-15 수동 검수, claude)"
+  - channel_id: UCQeFes-kvjR9VLhqkFSdaAQ
+    topic: beauty-life
+    topic_l2: beauty-life/beauty-etc
+    note: "최깨비 · game -> beauty-life, 피부·미용 영상 (2026-11-15 수동 검수, claude)"
+  - channel_id: UCUfX5QqRnnNv1n5w-1mZVxg
+    topic: mukbang
+    topic_l2: mukbang/mb-tour
+    note: "글로그 · game -> mukbang, 맛집 먹방 영상 (2026-11-15 수동 검수, claude)"
+  - channel_id: UCzcE2rPwgshvm6I31snipeA
+    topic: mystery
+    note: "쬰닉 · game -> mystery, 공포 쇼츠 (2026-11-15 수동 검수, claude)"
+  - channel_id: UC1dK7oMUSR9Rnk1BSpOKZng
+    topic: web-drama
+    note: "정선호(Seonho Jung) · self-dev -> web-drama, 개그·먹방성 코미디 영상 (2026-11-15 수동 검수, claude)"
+  - channel_id: UC8N0_kO0ja3J0pbJGqvyfDQ
+    topic: education
+    topic_l2: education/lecture
+    note: "우학스님 유튜브불교대학 · self-dev -> education/lecture, 불교 법문 (2026-11-15 수동 검수, claude)"
+  - channel_id: UCqmzUlAyeepChqWFs5XcXOw
+    topic: education
+    topic_l2: education/lecture
+    note: "채환 법문 쇼츠 · self-dev -> education/lecture, 불교 법문 (2026-11-15 수동 검수, claude)"
+  - channel_id: UCTFKkiazrTU0nd3_0jWYlJg
+    topic: education
+    topic_l2: education/lecture
+    note: "채환 마음길 · self-dev -> education/lecture, 불교 법문 모음 (2026-11-15 수동 검수, claude)"
+  - channel_id: UCMUZ_iIFpSWLs2BUdPW9hig
+    topic: education
+    topic_l2: education/lecture
+    note: "채환 마음공부 하루법문 · self-dev -> education/lecture, 불교 법문 (2026-11-15 수동 검수, claude)"
+  - channel_id: UCkHoCaeSzmTVpzxF10OKuKg
+    topic: music
+    topic_l2: music/singing
+    note: "채환 노래채널 Singer ChaeHwan · self-dev -> music/singing, 노래·음악방송 (2026-11-15 수동 검수, claude)"
+  - channel_id: UCimq5GQ-7Cg9VmV0q0KOY3A
+    topic: real-estate
+    note: "시골쥐의 도시생활 · self-dev -> real-estate, 실거래·집값 영상 (2026-11-15 수동 검수, claude)"
+  - channel_id: UCXIiXFzqHp4o6r8p7EhGA8Q
+    topic: issue
+    note: "친정엄마의 사이다라디오 · self-dev -> issue, 불륜·시집 사연 낭독 (2026-11-15 수동 검수, claude)"
+  - channel_id: UC1EEpE0lA9BaArXhRTHIG6w
+    topic: vlog
+    topic_l2: vlog/family
+    note: "강과장 · self-dev -> vlog/family, 육아·가족 브이로그 (2026-11-15 수동 검수, claude)"
+  - channel_id: UCBks-3eJp8Nds8Aoy8W1r0A
+    topic: vlog
+    topic_l2: vlog/family
+    note: "힐링24시 · self-dev -> vlog/family, 아기·가족 영상 (2026-11-15 수동 검수, claude)"
+  - channel_id: UCiQv5x4DcBRvqTGAcDGt8gQ
+    topic: tech
+    topic_l2: tech/tech-review
+    note: "소람 soram · self-dev -> tech/tech-review, 아이폰·아이맥 리뷰 (2026-11-15 수동 검수, claude)"
+  - channel_id: UCaVM2dodPRxdONBddfeVSnQ
+    topic: fitness
+    topic_l2: fitness/home-workout
+    note: "숨쉬는고래 Breathingwhale · self-dev -> fitness/home-workout, 요가·스트레칭 영상 (2026-11-15 수동 검수, claude)"
+  - channel_id: UC83KPjdkXrjuUfZT1dTUxrg
+    topic: travel
+    note: "길 위의 사람들 Wayfarers #길사람 · self-dev -> travel, 제주 여행 영상 (2026-11-15 수동 검수, claude)"
+  - channel_id: UCwqWwzG89LFOkZuODlT25gQ
+    topic: history
+    note: "아만보! 아는 만큼 보인다 · self-dev -> history, 한국사 영상 (2026-11-15 수동 검수, claude)"
+  - channel_id: UCf4wAv7UK7muGvpmbiwn-Hg
+    topic: celeb
+    note: "유튜브 1황 · self-dev -> celeb, 유튜버 소개 영상 (2026-11-15 수동 검수, claude)"
+  - channel_id: UC0LGfuBiVmPZLo5pUW0bshA
+    topic: self-dev
+    topic_l2: self-dev/humanities
+    note: "일당백 : 일생동안 읽어야 할 백권의 책 · self-dev -> self-dev/humanities, 인문·철학 고전 해설 (2026-11-15 수동 검수, claude)"
+  - channel_id: UC59N4YTqBjs_xte25Fc2YPA
+    topic: self-dev
+    topic_l2: self-dev/humanities
+    note: "5분 뚝딱 철학 · self-dev -> self-dev/humanities, 철학 해설 (2026-11-15 수동 검수, claude)"
+  - channel_id: UCS_8v3yJnRahqwFvxoEIupg
+    topic: self-dev
+    topic_l2: self-dev/humanities
+    note: "지혜의 빛 : 인문학의 숲 · self-dev -> self-dev/humanities, 철학·인문 해설 (2026-11-15 수동 검수, claude)"
+  - channel_id: UCJgSTH8ksptyNucZVyMWapw
+    topic: self-dev
+    topic_l2: self-dev/humanities
+    note: "인문학이랑 · self-dev -> self-dev/humanities, 문학·인문 해설 (2026-11-15 수동 검수, claude)"
+  - channel_id: UCjDudhyRiFOZjLpti74tV6w
+    topic: self-dev
+    topic_l2: self-dev/humanities
+    note: "이클립스 · self-dev -> self-dev/humanities, 니체 등 철학 해설 (2026-11-15 수동 검수, claude)"
+  - channel_id: UCUV9bHklegmYbdt091TNvjA
+    topic: self-dev
+    topic_l2: self-dev/humanities
+    note: "충코의 철학 Chungco · self-dev -> self-dev/humanities, 철학 채널 (2026-11-15 수동 검수, claude)"
+  - channel_id: UCM-eG7xyhO5CPnVyr7qQHuA
+    topic: education
+    topic_l2: education/lecture
+    note: "명강의 모음 · self-dev -> education/lecture, 강연·강의 모음 (2026-11-15 수동 검수, claude)"
+  - channel_id: UCmEx0Z66HZdOrYqQhM46w3A
+    topic: issue
+    note: "단골이슈 · tech -> issue, 시사·이슈 영상 위주 (2026-11-15 수동 검수, claude)"
+  - channel_id: UC_YMjWL8rj2TRkunDRrlUPA
+    topic: issue
+    note: "바이스톰 코리아 · tech -> issue, 해외 이슈·사건 영상 (2026-11-15 수동 검수, claude)"
+  - channel_id: UCvlSrxnx0enAAquKAg6yy_w
+    topic: tech
+    topic_l2: tech/appliance
+    note: "노써치 · tech -> tech/appliance, 세탁기 등 가전 리뷰 (2026-11-15 수동 검수, claude)"
+  - channel_id: UChMpnw3w7pmy_WGKKqVbnnw
+    topic: tech
+    topic_l2: tech/appliance
+    note: "피크픽-PEAK’s PICK · tech -> tech/appliance, 워시타워·가전 선택 가이드 (2026-11-15 수동 검수, claude)"
+  - channel_id: UCkcaRxpTcisadUeCbHOYTFw
+    topic: game
+    topic_l2: game/variety
+    note: "전자오랏맨 · tech -> game/variety, 포켓몬 게임·카드 영상 (2026-11-15 수동 검수, claude)"
+  - channel_id: UCy0oWB_icKn_S8OZwlw3U6A
+    topic: economy
+    note: "가을바람 투자노트 · tech -> economy, 양자컴퓨터 관련 주식 분석 (2026-11-15 수동 검수, claude)"
+  - channel_id: UCiDmfbYvuMEVbRxPmFP4sng
+    topic: economy
+    note: "알상무 · tech -> economy, 증시 당일전략 (2026-11-15 수동 검수, claude)"
+  - channel_id: UCk3NUOBhNqAcWpKeVC6hqlw
+    topic: vlog
+    topic_l2: vlog/family
+    note: "30대의삶 · tech -> vlog/family, 출산·육아 브이로그 (2026-11-15 수동 검수, claude)"
+  - channel_id: UCV3qIpvq6_9RGDi63mQXU0A
+    topic: cooking
+    note: "황대리TV · tech -> cooking, 레시피 영상 (2026-11-15 수동 검수, claude)"
+  - channel_id: UCTYuOPzRTopZL2mRPg1nBeQ
+    topic: travel
+    note: "솔라독 Solardog · tech -> travel, 해외 시장·음식 탐방 (2026-11-15 수동 검수, claude)"
+  - channel_id: UCcJK4mOfnUh3LZNfWbBPNEQ
+    topic: game
+    topic_l2: game/variety
+    note: "리뷰머장 · tech -> game/variety, 젤다 등 게임 리뷰 (2026-11-15 수동 검수, claude)"
+  - channel_id: UCGZLTkWU0W8sq7gdi0Z2T0g
+    topic: game
+    topic_l2: game/variety
+    note: "GAMER_LAFAN · tech -> game/variety, 레트로 게임 영상 (2026-11-15 수동 검수, claude)"
+  - channel_id: UCB31aGWC8ToRsIwfwxREgdg
+    topic: vlog
+    topic_l2: vlog/vlog-etc
+    note: "디에디트 라이프 THE EDIT · tech -> vlog/vlog-etc, 직장인 라이프 브이로그 (2026-11-15 수동 검수, claude)"
+  - channel_id: UCrvhkEt3YDJ4D2Cav6BhcxA
+    topic: economy
+    note: "b급TV · tech -> economy, 적금·재테크 (2026-11-15 수동 검수, claude)"
+  - channel_id: UCwcls6IO7_3k_RShehNUsYQ
+    topic: economy
+    note: "테크피디아 · tech -> economy, 기업·산업 뉴스 (2026-11-15 수동 검수, claude)"
+  - channel_id: UC2kiexb5MrxRn33vLg40GVg
+    topic: living
+    note: "언니야쇼핑 · tech -> living, 리빙·살림 아이템 (2026-11-15 수동 검수, claude)"
+  - channel_id: UCfCSykEUyuEuL2N4XmC0JaA
+    topic: vlog
+    topic_l2: vlog/family
+    note: "연스커플 Yeon's Couple · vlog -> vlog/family, 아기 육아 영상 (2026-11-15 수동 검수, claude)"
+  - channel_id: UCoUDrzyCl1IwU602xdTsM-g
+    topic: vlog
+    topic_l2: vlog/family
+    note: "소근커플 S.K.Couple · vlog -> vlog/family, 육아 영상 (2026-11-15 수동 검수, claude)"
+  - channel_id: UCM9m5BHwm-lU7tK07co3ClA
+    topic: vlog
+    topic_l2: vlog/family
+    note: "김계정 · vlog -> vlog/family, 육아 영상 (2026-11-15 수동 검수, claude)"
+  - channel_id: UCucybMZtilvYSg2_f3eAIHg
+    topic: vlog
+    topic_l2: vlog/family
+    note: "간니닌니 패밀리 · vlog -> vlog/family, 가족 브이로그 (2026-11-15 수동 검수, claude)"
+  - channel_id: UChfyZHzfjUkqBkOBmNIhdSQ
+    topic: vlog
+    topic_l2: vlog/family
+    note: "양홍원의 육아일기 · vlog -> vlog/family, 육아일기 (2026-11-15 수동 검수, claude)"
+  - channel_id: UCZ55qC4VYhtjcadp4wO5Wwg
+    topic: vlog
+    topic_l2: vlog/family
+    note: "예콩이네 · vlog -> vlog/family, 자녀 육아 영상 (2026-11-15 수동 검수, claude)"
+  - channel_id: UCykeP8c_VxzQxH9DCPdluMg
+    topic: vlog
+    topic_l2: vlog/family
+    note: "쫑알부부 · vlog -> vlog/family, 육아 부부 브이로그 (2026-11-15 수동 검수, claude)"
+  - channel_id: UCzP3gUCvOD22keyM9nKLpFg
+    topic: vlog
+    topic_l2: vlog/family
+    note: "윤쥬르 YOONJOUR 장윤주 · vlog -> vlog/family, 딸 육아 가족 영상 (2026-11-15 수동 검수, claude)"
+  - channel_id: UCs_fvcBBfaOP6vAJYeaD-0Q
+    topic: vlog
+    topic_l2: vlog/family
+    note: "남보라의 인생극장 · vlog -> vlog/family, 육아일기 위주 (2026-11-15 수동 검수, claude)"
+  - channel_id: UCM-P8-4_Xs15x0FkKCWWM0g
+    topic: vlog
+    topic_l2: vlog/family
+    note: "한평가족-(가족브이로그) · vlog -> vlog/family, 아기 가족 브이로그 (2026-11-15 수동 검수, claude)"
+  - channel_id: UCwoL82Isl7iDRKaMG6QArNg
+    topic: vlog
+    topic_l2: vlog/family
+    note: "비단한생활 Bidanway · vlog -> vlog/family, 초보엄마 육아 (2026-11-15 수동 검수, claude)"
+  - channel_id: UCFNUGAiaGRgzVCXrjVoe1Hw
+    topic: sports
+    topic_l2: sports/golf
+    note: "이민정 MJ · vlog -> sports, 골프 영상 위주 (2026-11-15 수동 검수, claude)"
+  - channel_id: UCvM5JKYxej9DF4Knsx7u8jQ
+    topic: fitness
+    topic_l2: fitness/health-info
+    note: "이상욱의 진료실 밖 처방전 · vlog -> fitness, 의사 건강 정보 (2026-11-15 수동 검수, claude)"
+  - channel_id: UCayVh6R-P0osQuHjIvqEUyg
+    topic: cooking
+    note: "봄짓다 · vlog -> cooking, 김치 요리 강의 (2026-11-15 수동 검수, claude)"
+  - channel_id: UCAGuRJLR3fju434gCC1RpNg
+    topic: cooking
+    note: "1위 요리 · vlog -> cooking, 채널명 요리 (2026-11-15 수동 검수, claude)"
+  - channel_id: UCLwNqQ4Hotl7LMYNQtiDtSg
+    topic: living
+    note: "권가네 식물이야기 · vlog -> living, 식물 가꾸기 (2026-11-15 수동 검수, claude)"
+  - channel_id: UCdyEK5ImzxZl0Bbnqwq-MzQ
+    topic: living
+    note: "식물집사독일카씨 · vlog -> living, 식물 가꾸기 (2026-11-15 수동 검수, claude)"
+  - channel_id: UClGXzNNnfEFd1uAbY7KCljQ
+    topic: living
+    note: "아지Aji살림_Housewife Story · vlog -> living, 살림 정리 수납 (2026-11-15 수동 검수, claude)"
+  - channel_id: UCjXPWDQKPdMLd6r9ouFobCA
+    topic: living
+    note: "살림역 · vlog -> living, 쿠팡 살림템 소개 (2026-11-15 수동 검수, claude)"
+  - channel_id: UCm2qs-s1dQR0Ew5trd1ST4g
+    topic: living
+    note: "롱이살림 · vlog -> living, 살림템 소개 (2026-11-15 수동 검수, claude)"
+  - channel_id: UCJilmacrqYKn_wNSWStdJRA
+    topic: living
+    note: "한그림 HANgrimm · vlog -> living, 집 꾸미기 인테리어 (2026-11-15 수동 검수, claude)"
+  - channel_id: UCiP-rjkT7477066KoQPzmjg
+    topic: living
+    note: "꿈마_생활꿀팁 · vlog -> living, 생활 꿀팁 DIY (2026-11-15 수동 검수, claude)"
+  - channel_id: UCHt9LQKHmw6z5HmZM4F-iTw
+    topic: living
+    note: "미노팸DIY · vlog -> living, 셀프 리모델링 (2026-11-15 수동 검수, claude)"
+  - channel_id: UCQpMAZGfjCGAKdBEboo_-Pg
+    topic: living
+    note: "로그디자인 · real-estate -> living, 인테리어 (2026-11-15 수동 검수, claude)"
+  - channel_id: UCv76qi2dQ32dtNRQJ5iWbHQ
+    topic: living
+    note: "아파트 인테리어는 아파트컬처 · real-estate -> living, 인테리어 (2026-11-15 수동 검수, claude)"
+  - channel_id: UCYkETttcDwZyNyvFpuKjYLg
+    topic: movie-review
+    note: "달빛드라마 · web-drama -> movie-review, 숏드라마 위주 (2026-11-15 수동 검수, claude)"
+  - channel_id: UC4uh4we7hF46D0ydNUhW3ww
+    topic: movie-review
+    note: "밤11시 코믹 · web-drama -> movie-review, 시니어 숏드라마 위주 (2026-11-15 수동 검수, claude)"
+  - channel_id: UC3CGT1zkfTmD1gZaXg_vGnA
+    topic: movie-review
+    note: "덕순네 드라마 · web-drama -> movie-review, 고전 단편·숏드라마 위주 (2026-11-15 수동 검수, claude)"
+  - channel_id: UCV0ZWMzaFRJXgzludBMQ7NA
+    topic: movie-review
+    note: "달빛단막극 · web-drama -> movie-review, 단막극 숏드라마 위주 (2026-11-15 수동 검수, claude)"
+  - channel_id: UCpNLDwOqCDSE9lsrSqWq7ug
+    topic: movie-review
+    note: "담담숏드라마 · web-drama -> movie-review, 숏드라마 위주 (2026-11-15 수동 검수, claude)"
+  - channel_id: UC63pavf9m-_eJRf8IYjDRXw
+    topic: movie-review
+    note: "OTN 숏폼 드라마 · web-drama -> movie-review, 숏폼 드라마 위주 (2026-11-15 수동 검수, claude)"
+  - channel_id: UCxr89be3loUcLGYCAIcj-yw
+    topic: movie-review
+    note: "1분드라마모음zip · web-drama -> movie-review, 1분 드라마 모음 (2026-11-15 수동 검수, claude)"
+  - channel_id: UC749ed-Qfdk64DyyKpoItEg
+    topic: movie-review
+    note: "Sukfilm · web-drama -> movie-review, 웹드라마 에피소드 위주 (2026-11-15 수동 검수, claude)"
+  - channel_id: UCJ-ofC67CjMxBRmRIb6s9-w
+    topic: movie-review
+    note: "PANGPANG STUDIO · web-drama -> movie-review, 숏드라마 위주 (2026-11-15 수동 검수, claude)"
+  - channel_id: UC2KSc2HQwLsvgHf5Cj7VYCg
+    topic: movie-review
+    note: "시니어 드라마 한방 · web-drama -> movie-review, 채널명 기준 시니어 드라마 (영상 제목 없음) (2026-11-15 수동 검수, claude)"
+  - channel_id: UC7lb15P-Hux7A5gBuhCxtuQ
+    topic: movie-review
+    topic_l2: movie-review/mr-clip
+    note: "MBCdrama · web-drama -> movie-review/mr-clip, MBC 드라마 공식 클립 (2026-11-15 수동 검수, claude)"
+  - channel_id: UCG5bAssl2H0wjLG4BEv5ScQ
+    topic: movie-review
+    topic_l2: movie-review/mr-clip
+    note: "옛드 · web-drama -> movie-review/mr-clip, MBC 옛날 드라마 클립 (2026-11-15 수동 검수, claude)"
+  - channel_id: UChY4PXxJI0aJYsGT1X6INWA
+    topic: movie-review
+    topic_l2: movie-review/mr-clip
+    note: "올끌 (All of MBClassic) · web-drama -> movie-review/mr-clip, MBC 드라마 클립 (2026-11-15 수동 검수, claude)"
+  - channel_id: UCpvkqYCqk2huuMcJsEuiY5g
+    topic: movie-review
+    topic_l2: movie-review/mr-clip
+    note: "드파밍 · web-drama -> movie-review/mr-clip, 드라마 하이라이트 클립 (2026-11-15 수동 검수, claude)"
+  - channel_id: UCCqlE0lqyjr5BBpWn8G4cLA
+    topic: movie-review
+    topic_l2: movie-review/mr-etc
+    note: "씨네플레이 CINEPLAY · web-drama -> movie-review/mr-etc, 영화·드라마 배우 인터뷰 클립 (2026-11-15 수동 검수, claude)"
+  - channel_id: UC31ypOxFsuU3Q0OFpQzcQ3g
+    topic: game
+    topic_l2: game/variety
+    note: "압둘알리과로사 · web-drama -> game/variety, 게임 방송 위주 (2026-11-15 수동 검수, claude)"
+  - channel_id: UCcQ-4_pCi9Ap4Mt2OAr9OUg
+    topic: game
+    topic_l2: game/variety
+    note: "모아재의 고봉밥 · web-drama -> game/variety, 게임 파밍 영상 (2026-11-15 수동 검수, claude)"
+  - channel_id: UCxyH4YNL9pnFZwnDXiZ3DrA
+    topic: game
+    topic_l2: game/sandbox
+    note: "로트키 · web-drama -> game/sandbox, 로블록스 게임 영상 위주 (2026-11-15 수동 검수, claude)"
+  - channel_id: UC-Jp4WHCXhxvWQ5Ab4JibJQ
+    topic: mystery
+    note: "벙구 · web-drama -> mystery, 괴담·공포 영상 위주 (2026-11-15 수동 검수, claude)"
+  - channel_id: UC3hRpIQ4x5niJDwjajQSVPg
+    topic: fitness
+    note: "핏블리 FITVELY · web-drama -> fitness, 운동 자세·체형 영상 위주 (2026-11-15 수동 검수, claude)"
+  - channel_id: UCXql5C57vS4ogUt6CPEWWHA
+    topic: news
+    note: "김지윤의 지식Play · web-drama -> news, 시사·국제 이슈 해설 (2026-11-15 수동 검수, claude)"
+  - channel_id: UCRWxH4fGhuNsh0klWnDbt0w
+    topic: pets
+    topic_l2: pets/cat
+    note: "언더월드 UNDER WORLD · web-drama -> pets/cat, 고양이 영상 위주 (2026-11-15 수동 검수, claude)"
+  - channel_id: UCmt37gsORDrWp2GD5k1xKxQ
+    topic: pets
+    topic_l2: pets/cat
+    note: "진절미 Jinjeolme · web-drama -> pets/cat, 고양이 영상으로 추정 (2026-11-15 수동 검수, claude)"
+  - channel_id: UCfLhUg03h0u5GYhCeUJYGPg
+    topic: music
+    topic_l2: music/music-etc
+    note: "IDM CAM · web-drama -> music/music-etc, 공연 직캠 (2026-11-15 수동 검수, claude)"
+  - channel_id: UCxkGGBHDnz_YREk8gl7G9uA
+    topic: sports
+    topic_l2: sports/basketball
+    note: "부산 OK저축은행 읏맨 프로배구단 · web-drama -> sports/basketball, 프로배구단 경기 영상 (2026-11-15 수동 검수, claude)"
+  - channel_id: UCIwwoVAosjU8uE7pgNj_vAQ
+    topic: sports
+    topic_l2: sports/baseball
+    note: "스튜디오시원 StudioC1 · web-drama -> sports/baseball, 불꽃야구 경기 영상 (2026-11-15 수동 검수, claude)"
+  - channel_id: UCVIZWeFmvOhCjJy4tZqertw
+    topic: tech
+    topic_l2: tech/tech-review
+    note: "최마태의 POST IT · web-drama -> tech/tech-review, 카메라·렌즈 리뷰 (2026-11-15 수동 검수, claude)"
+  - channel_id: UC46BbEkxhjIHUj6EJ_waw-g
+    topic: mukbang
+    topic_l2: mukbang/mb-review
+    note: "띠미 ddimmi · web-drama -> mukbang/mb-review, 디저트 먹방·시식 리뷰 (2026-11-15 수동 검수, claude)"
+  - channel_id: UCb4bVA5kBfTsZCLaN9iJqjQ
+    topic: cars
+    note: "데프콘TV · web-drama -> cars, 자동차·튜닝 영상 위주 (2026-11-15 수동 검수, claude)"
+  - channel_id: UC1x03ziDHPct2xTikLyfMDA
+    topic: sports
+    topic_l2: sports/football
+    note: "킥서비스 · web-drama -> sports/football, 축구 유니폼·선수 영상 (2026-11-15 수동 검수, claude)"
+  - channel_id: UCrBpV_pG2kyMMEHCMTNzjAQ
+    topic: economy
+    note: "리뷰엉이: Owl's Review · movie-review -> economy, 기업·산업 해설 (2026-11-15 수동 검수, claude)"
+  - channel_id: UCpCDVbUD-3-A_SIfHuGNdFA
+    topic: web-drama
+    note: "예상치 못한 필름 · movie-review -> web-drama, 직장 스케치 코미디 (2026-11-15 수동 검수, claude)"
+  - channel_id: UCMgPATRG6Ppm18TXAQ87rnw
+    topic: web-drama
+    note: "원탱 · movie-review -> web-drama, 스케치 코미디 위주 (2026-11-15 수동 검수, claude)"
+  - channel_id: UCbwHXEb3c1djpTKCmam9QNg
+    topic: web-drama
+    note: "토파리뷰 · movie-review -> web-drama, 예능 클립 위주 (2026-11-15 수동 검수, claude)"
+  - channel_id: UC8Hl-XsjNw9PM2oeYlrg_yQ
+    topic: politics
+    note: "조하나의 아일랜드 · movie-review -> politics, 정치 시사 해설 (2026-11-15 수동 검수, claude)"
+  - channel_id: UCUaFsXg6LZGxyvsH5IS8JIA
+    topic: music
+    topic_l2: music/music-etc
+    note: "당민리뷰 · movie-review -> music/music-etc, 록·메탈 음악 소개 (2026-11-15 수동 검수, claude)"
+  - channel_id: UCf0g1OxtrjXvxYnAdNHgE8Q
+    topic: game
+    topic_l2: game/variety
+    note: "엑따's Journey · movie-review -> game/variety, 워해머·젤다 등 게임 설명 (2026-11-15 수동 검수, claude)"
+  - channel_id: UC-DR5sk-YE3EIN_N928JoRA
+    topic: anime
+    note: "뻔펀 · movie-review -> anime, 애니 리뷰 위주 (2026-11-15 수동 검수, claude)"
+  - channel_id: UC1FFNjDtNxtF7xpqhZAhclw
+    topic: mystery
+    note: "리뷰서랍장 · movie-review -> mystery, 기묘한·무서운 이야기 (2026-11-15 수동 검수, claude)"
+  - channel_id: UCJ9xMKpba6B7K_xrQMqsqHg
+    topic: movie-review
+    topic_l2: movie-review/mr-drama
+    note: "잼잼리뷰,드라마&웹툰 리뷰 · movie-review -> movie-review/mr-drama, 드라마 리뷰 (2026-11-15 수동 검수, claude)"
+  - channel_id: UCIVM60pQ49C5kM7uNKf9eMg
+    topic: movie-review
+    topic_l2: movie-review/mr-drama
+    note: "드라마 톺아보기 - 드라마 리뷰 채널 · movie-review -> movie-review/mr-drama, 드라마 회차 분석 (2026-11-15 수동 검수, claude)"
+  - channel_id: UCMihiNU6QuASCWMOdsLr4Iw
+    topic: movie-review
+    topic_l2: movie-review/mr-drama
+    note: "드라마텔러 아담TV · movie-review -> movie-review/mr-drama, 드라마 줄거리 해설 (2026-11-15 수동 검수, claude)"
+  - channel_id: UCFHxRHJJOnSujccA9tZgsEQ
+    topic: movie-review
+    topic_l2: movie-review/mr-drama
+    note: "드라마퀸 (Drama Queen) · movie-review -> movie-review/mr-drama, 드라마 예고·해설 (2026-11-15 수동 검수, claude)"
+  - channel_id: UCg5nIifPhSkz9WHxj_YIvyg
+    topic: movie-review
+    topic_l2: movie-review/mr-drama
+    note: "드라마피셜 - 리뷰채널 · movie-review -> movie-review/mr-drama, 드라마 회차 리뷰 (2026-11-15 수동 검수, claude)"
+  - channel_id: UC5wxvipYmco7EUlbOwns17g
+    topic: movie-review
+    topic_l2: movie-review/mr-drama
+    note: "준또리뷰TV _ 드라마 리뷰 · movie-review -> movie-review/mr-drama, 드라마 리뷰 (2026-11-15 수동 검수, claude)"
+  - channel_id: UC3JYS9NtNWWtODgcqiujApw
+    topic: movie-review
+    topic_l2: movie-review/mr-drama
+    note: "드라마핵심리뷰 · movie-review -> movie-review/mr-drama, 드라마 핵심 리뷰 (2026-11-15 수동 검수, claude)"
+  - channel_id: UC71l12x2L65qS2ne3pObQVQ
+    topic: movie-review
+    topic_l2: movie-review/mr-drama
+    note: "이어드라마 · movie-review -> movie-review/mr-drama, 드라마 장면 요약 (2026-11-15 수동 검수, claude)"
+  - channel_id: UCls_N0_jlkfN7WU-_Zxm7BA
+    topic: movie-review
+    topic_l2: movie-review/mr-drama
+    note: "드라마예측실 · movie-review -> movie-review/mr-drama, 드라마 전개 분석 (2026-11-15 수동 검수, claude)"
+  - channel_id: UCDJEPwu2pF3x6O7QmImFlog
+    topic: movie-review
+    topic_l2: movie-review/mr-drama
+    note: "달빛탐구 드라마 리뷰 · movie-review -> movie-review/mr-drama, 드라마 배경지식·리뷰 (2026-11-15 수동 검수, claude)"
+  - channel_id: UClemjev4pTL7-N8TkvEuOjA
+    topic: movie-review
+    topic_l2: movie-review/mr-drama
+    note: "리뷰남자 · movie-review -> movie-review/mr-drama, 드라마 리뷰 (2026-11-15 수동 검수, claude)"
+  - channel_id: UCUzoI1oDEyAJVy0bh503DLg
+    topic: movie-review
+    topic_l2: movie-review/mr-drama
+    note: "아이씨네마 · movie-review -> movie-review/mr-drama, 드라마 소개·회고 (2026-11-15 수동 검수, claude)"
+  - channel_id: UC6erIDuvbOaAO-OT5rB2Xew
+    topic: movie-review
+    topic_l2: movie-review/mr-clip
+    note: "SBS 스브스 Drama · movie-review -> movie-review/mr-clip, SBS 드라마 공식 클립 (2026-11-15 수동 검수, claude)"
+  - channel_id: UChpjIaEgwtDZtmWEkzFulSA
+    topic: movie-review
+    topic_l2: movie-review/mr-clip
+    note: "KBS Drama · movie-review -> movie-review/mr-clip, KBS 드라마 공식 클립 (2026-11-15 수동 검수, claude)"
+  - channel_id: UC3re3ueOE_6VZK85zlEUWFA
+    topic: movie-review
+    topic_l2: movie-review/mr-clip
+    note: "SBS Catch · movie-review -> movie-review/mr-clip, SBS 드라마 공식 클립 (2026-11-15 수동 검수, claude)"
+  - channel_id: UC41Vyqs1wSY0FTMqDsLsELA
+    topic: movie-review
+    topic_l2: movie-review/mr-clip
+    note: "SBS 옛날 드라마 - 빽드 · movie-review -> movie-review/mr-clip, SBS 옛날 드라마 클립 (2026-11-15 수동 검수, claude)"
+  - channel_id: UC9qrbRdZvyqiMTIuncx1fiA
+    topic: movie-review
+    topic_l2: movie-review/mr-clip
+    note: "TVCHOSUN DRAMA · movie-review -> movie-review/mr-clip, TV조선 드라마 공식 클립 (2026-11-15 수동 검수, claude)"
+  - channel_id: UCt4P18eL_MPmTpuTFA5xHCw
+    topic: fitness
+    topic_l2: fitness/home-workout
+    note: "린다이어트 Lean Diet · fitness -> fitness/home-workout, 다이어트 감량 영상 위주 (2026-11-15 수동 검수, claude)"
+  - channel_id: UCC0NUiMAjE-NqYtNX8C-3fg
+    topic: tech
+    topic_l2: tech/tech-etc
+    note: "컴싸부 · 리뷰·언박싱 아닌 윈도우·PC 사용 팁 강좌 (2026-11-15 수동 검수, claude)"
+  - channel_id: UCr_vGOCPjmYx3pd1iCFL7Bg
+    topic: sports
+    topic_l2: sports/golf
+    note: "백현범프로[백점골프] · 골프 레슨. 영상 판정이 운동으로 옮겨 운동 협찬 후보에 섞였다 (2026-11-15 수동 검수, claude)"
+  - channel_id: UChrcr99LjxyW8pnQXqagWqA
+    topic: sports
+    topic_l2: sports/golf
+    note: "세계유명 골프정보 · 골프 정보. 영상 판정이 운동으로 옮겨 운동 협찬 후보에 섞였다 (2026-11-15 수동 검수, claude)"
+  - channel_id: UCecsWge1jm5A4V4dTACb-_w
+    topic: sports
+    topic_l2: sports/golf
+    note: "이글이글골프왕 골프레슨 · 골프 레슨. 영상 판정이 운동으로 옮겨 운동 협찬 후보에 섞였다 (2026-11-15 수동 검수, claude)"
+  - channel_id: UC4iVwGvZhx79QF3aFhkRltQ
+    topic: issue
+    note: "건강밥상TV · fitness -> issue, 시장 상인·연예인 일화 쇼츠 위주로 운동·건강 아님 (2026-11-15 수동 검수, claude)"
+videos:
+  - video_id: FwccZHAHu3U
+    l1: web-drama
+    note: "사내뷰공업 '나의 매매 일기' · 부동산 정보가 아니라 콩트 쇼츠 (2026-11-15 수동 검수, claude)"
+  - video_id: 3cB8Kp8y3DY
+    l1: game
+    note: "캡틴라미 · 콜 오브 듀티 게임 스토리 요약, 영화·드라마 아님 (2026-11-15 수동 검수, claude)"

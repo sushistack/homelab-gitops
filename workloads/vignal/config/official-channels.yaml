@@ -1,0 +1,104 @@
+# vignal 공식 채널 목록 (2026-11-15). 이름 규칙(internal/publish/noise.go officialRe)이 놓치는 게임사·리그·팀·방송사·브랜드 채널.
+# 공식 채널은 크리에이터 또래 표본과 협찬 후보에서 빠진다(뉴스·정치는 방송사가 또래라 남는다). 채널명과 영상으로 확인한 것만 넣는다.
+# 형식: channels: [{channel_id: UC + 22자, note: "이름 · 근거 (필수)"}]. 이 파일을 모르는 이전 이미지는 무시한다.
+channels:
+  - channel_id: UCp6-Gf6Bl6WjE6C6kLUaU4g
+    note: "세븐나이츠 리버스 · 게임 공식 (2026-11-15 수동 검수, claude)"
+  - channel_id: UCTNqLvyabQWRC8KwQ1TGOqQ
+    note: "이클립스: 더 어웨이크닝 · 게임 공식 (2026-11-15 수동 검수, claude)"
+  - channel_id: UCOKQpmfKrtu7Nu719CVSw1A
+    note: "리그 오브 레전드: 와일드 리프트 · 게임 공식 (2026-11-15 수동 검수, claude)"
+  - channel_id: UCOaUTqrtz1yBBiwziVJEAmQ
+    note: "전략적 팀 전투 · 게임 공식 (2026-11-15 수동 검수, claude)"
+  - channel_id: UC0042GfGERAl0AzXR0j8TPA
+    note: "이환 · 게임 공식 (2026-11-15 수동 검수, claude)"
+  - channel_id: UCCvEN8bTeF8Z2jcN513T1Gg
+    note: "배틀그라운드 모바일 이스포츠 - PUBG MOBILE Esports KR · 게임 공식 (2026-11-15 수동 검수, claude)"
+  - channel_id: UCZjWy6bpBcAKnB8ec3Lyn9Q
+    note: "콘솔 & PC 패키지SEGA Korea · 게임사 공식 (2026-11-15 수동 검수, claude)"
+  - channel_id: UC9M8GGVwPqc9ubNruArCNPg
+    note: "발로란트 · 게임 공식 (2026-11-15 수동 검수, claude)"
+  - channel_id: UCH33CJMcI0XZUpIhWRHiUuw
+    note: "붕괴: 스타레일 · 게임 공식 (2026-11-15 수동 검수, claude)"
+  - channel_id: UCKuq0c-RXYaulECSuu5hFug
+    note: "명조:워더링 웨이브 · 게임 공식 (2026-11-15 수동 검수, claude)"
+  - channel_id: UCEOaB76vS9RfiAwEzxB8QGw
+    note: "이터널 리턴 · 게임 공식 (2026-11-15 수동 검수, claude)"
+  - channel_id: UCooLkG0FfrkPBQsSuC95L6w
+    note: "리그 오브 레전드 · 게임 공식 (2026-11-15 수동 검수, claude)"
+  - channel_id: UCv1tOT645xHOJrwdGlzjMaA
+    note: "발로란트 챔피언스 투어 · 리그 공식 (2026-11-15 수동 검수, claude)"
+  - channel_id: UC-2wa6jvprl7hfCpvw0ULzg
+    note: "오버워치 · 게임 공식 (2026-11-15 수동 검수, claude)"
+  - channel_id: UCcum1rCJ5GJeQ_xv0xrohqg
+    note: "원신 · 게임 공식 (2026-11-15 수동 검수, claude)"
+  - channel_id: UClJspSpzADMROqOW9HLHaoA
+    note: "브롤스타즈 · 게임 공식 (2026-11-15 수동 검수, claude)"
+  - channel_id: UCU_hKD03cUTCvnOJpEmKvCg
+    note: "메이플스토리 · 게임 공식 (2026-11-15 수동 검수, claude)"
+  - channel_id: UCqh_gleuOIleCy5Qmbo2j1Q
+    note: "AION2 · 게임 공식 (2026-11-15 수동 검수, claude)"
+  - channel_id: UC9otskL_kd-0CDib_5Lj-mQ
+    note: "EA SPORTS FC 온라인 · 게임 공식 (2026-11-15 수동 검수, claude)"
+  - channel_id: UC6YqXiwCBfPvPTs3wXgWElQ
+    note: "한국e스포츠협회 · 협회 공식 (2026-11-15 수동 검수, claude)"
+  - channel_id: UCJprx3bX49vNl6Bcw01Cwfg
+    note: "T1 · e스포츠 팀 (2026-11-15 수동 검수, claude)"
+  - channel_id: UCepHesz_5Lwr7qRaqjB-p1A
+    note: "Dplus Kia · e스포츠 팀 (2026-11-15 수동 검수, claude)"
+  - channel_id: UCDmmbxGg8g-EBkC_ku6vybg
+    note: "젠지 이스포츠 Gen.G Esports · e스포츠 팀 (2026-11-15 수동 검수, claude)"
+  - channel_id: UC5WN-znPsJK0BbA8aHxZHWQ
+    note: "키움 DRX · e스포츠 팀 (2026-11-15 수동 검수, claude)"
+  - channel_id: UC8FErYSi74YwGUAoTpjvgzQ
+    note: "kt Rolster · e스포츠 팀 (2026-11-15 수동 검수, claude)"
+  - channel_id: UCxedTJNaGRHiq6YfNtQVCNA
+    note: "BNK 피어엑스 LoL | BNK FEARX LoL · e스포츠 팀 (2026-11-15 수동 검수, claude)"
+  - channel_id: UCYQO6n0KZmwfwzWtm4_nAPA
+    note: "한진 브리온 · e스포츠 팀 (2026-11-15 수동 검수, claude)"
+  - channel_id: UCLjQgCF-lhvn5kTj-_nGjPg
+    note: "DN SOOPers ESPORTS · e스포츠 팀 (2026-11-15 수동 검수, claude)"
+  - channel_id: UCGW76VChAJKee9kYzvyoycQ
+    note: "DN SOOPers LoL · e스포츠 팀 (2026-11-15 수동 검수, claude)"
+  - channel_id: UCMGDrKq7V94bO7v1spb1mKQ
+    note: "젠지 골드 Gen.G Gold · e스포츠 팀 (2026-11-15 수동 검수, claude)"
+  - channel_id: UC4PoHC-R9EeJYTuUv3ndmJw
+    note: "NS RedForce · e스포츠 팀 (2026-11-15 수동 검수, claude)"
+  - channel_id: UC-yb5eNBQyXBE9nZnht9u-g
+    note: "NS RedForce Valorant · e스포츠 팀 (2026-11-15 수동 검수, claude)"
+  - channel_id: UCqcHlYhOAJgDcHJn_Q-qcsw
+    note: "에이블리 · 브랜드 공식 (2026-11-15 수동 검수, claude)"
+  - channel_id: UCtQZCFX4trYiFc3d3psq0KA
+    note: "TVCHOSUN FOOD · 방송사 (2026-11-15 수동 검수, claude)"
+  - channel_id: UC33yEDM8q3N8BeMpZMdP66Q
+    note: "TVCHOSUN MUSIC · 방송사 (2026-11-15 수동 검수, claude)"
+  - channel_id: UCb5ymSxGa41rYAMDvh22I2Q
+    note: "TVCHOSUN LIFE · 방송사 (2026-11-15 수동 검수, claude)"
+  - channel_id: UC9qrbRdZvyqiMTIuncx1fiA
+    note: "TVCHOSUN DRAMA · 방송사 (2026-11-15 수동 검수, claude)"
+  - channel_id: UCskIKQGpjI5sG2ZLtWLYSmw
+    note: "미스&미스터트롯 · 방송 프로그램 (2026-11-15 수동 검수, claude)"
+  - channel_id: UCx6jsZ02B4K3SECUrkgPyzg
+    note: "놀면 뭐하니? · 방송 프로그램 (2026-11-15 수동 검수, claude)"
+  - channel_id: UCTSfYd4nnazx_kAl3oIBpyw
+    note: "골 때리는 그녀들 Shooting Stars · 방송 프로그램 (2026-11-15 수동 검수, claude)"
+  - channel_id: UCy-swBYpRZx7KW11FStjTgw
+    note: "미우새 · 방송 프로그램 (2026-11-15 수동 검수, claude)"
+  - channel_id: UCRPk0-MHWWdgwThJtNpuW_Q
+    note: "동상이몽 · 방송 프로그램 (2026-11-15 수동 검수, claude)"
+  - channel_id: UCTnafh2iyIWh7MhcGBmGU0g
+    note: "놀라운 토요일 Amazing Saturday · 방송 프로그램 (2026-11-15 수동 검수, claude)"
+  - channel_id: UCG5bAssl2H0wjLG4BEv5ScQ
+    note: "옛드 · 방송사 (2026-11-15 수동 검수, claude)"
+  - channel_id: UCwR9k7QggFEfeHkvTR31JcA
+    note: "SK브로드밴드_B tv · 기업 (2026-11-15 수동 검수, claude)"
+  - channel_id: UCSB5FOwUVnAhGo_o99IhxYA
+    note: "MarvelKorea · 브랜드 공식 (2026-11-15 수동 검수, claude)"
+  - channel_id: UCWP5Zmotoug5-LYcLkAM2kw
+    note: "OK금융그룹 Culture Place · 기업 (2026-11-15 수동 검수, claude)"
+  - channel_id: UCxkGGBHDnz_YREk8gl7G9uA
+    note: "부산 OK저축은행 읏맨 프로배구단 · 구단 (2026-11-15 수동 검수, claude)"
+  - channel_id: UC0RBNQF49YqswknhmRb26uA
+    note: "동아대학교병원 · 병원 (2026-11-15 수동 검수, claude)"
+  - channel_id: UCEIt2uHc6gErZ5OhM_4PD1Q
+    note: "부산대학교병원 · 병원 (2026-11-15 수동 검수, claude)"

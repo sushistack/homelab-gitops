@@ -27,6 +27,7 @@ configMapGenerator:
       - config/observe-tags.yaml   # Story 28.3 (FR-86): observe tag enums, copy of vignal config/observe-tags.yaml
       - config/subject-types.yaml   # Story 33.1/33.2 (FR-101, AD-49): subject type list; absent = subject extraction off, topic tagging continues
       - config/topic-overrides.yaml   # 2026-11-13: hand-checked channel/video topics (source of truth lives only here, like approvals.yaml); images before sha-a486457 ignore it
+      - config/official-channels.yaml   # 2026-11-15: official channels the name rule misses (left out of creator peers and sponsor candidates); images before this one ignore it
 generatorOptions:
   disableNameSuffixHash: true
 
