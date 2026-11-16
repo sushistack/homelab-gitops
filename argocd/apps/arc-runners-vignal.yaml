@@ -30,7 +30,7 @@ spec:
           githubConfigSecret: arc-github
           runnerScaleSetName: vignal-k3s
           minRunners: 0
-          # 3 nodes x 4 CPU / 12 GiB, shared with the collector and the rest of the homelab.
+          # All runners share k3s-cp-3 (6 vCPU / 18 GiB on pve-k12) with the homelab-dash runner.
           maxRunners: 2
           controllerServiceAccount:
             namespace: arc-systems
@@ -49,9 +49,8 @@ spec:
                       cpu: "1"
                       memory: 2Gi
                     limits:
-                      # 2 cores: an unbounded build took 3+ cores of a 4-vCPU node and spun the mini-PC fan
-                      # (2026-11-12). Builds run a bit slower; raise if CI time matters more than noise.
-                      cpu: "2"
+                      # No CPU limit: the k3s-cp-3 vCPU count is the real ceiling (pve-k12 is the CI box);
+                      # other pods keep their share via requests. Cap noise via the VM's cores, not here.
                       memory: 6Gi   # vitest + Playwright e2e peak
     - repoURL: https://github.com/sushistack/homelab-gitops.git
       targetRevision: HEAD

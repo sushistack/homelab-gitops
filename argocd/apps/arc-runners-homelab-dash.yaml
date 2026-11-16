@@ -22,7 +22,7 @@ spec:
           githubConfigSecret: arc-github
           runnerScaleSetName: homelab-dash-k3s
           minRunners: 0
-          # 3 nodes x 4 CPU / 12 GiB, shared with the collector and the rest of the homelab.
+          # Shares k3s-cp-3 (6 vCPU / 18 GiB on pve-k12) with the vignal runners.
           maxRunners: 1
           controllerServiceAccount:
             namespace: arc-systems
@@ -41,7 +41,7 @@ spec:
                       cpu: 500m
                       memory: 1Gi
                     limits:
-                      cpu: "2"
+                      # No CPU limit (see arc-runners-vignal.yaml).
                       memory: 3Gi   # vite build of the Astryx bundle
   destination:
     server: https://kubernetes.default.svc
