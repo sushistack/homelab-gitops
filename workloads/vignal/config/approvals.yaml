@@ -1787,6 +1787,46 @@ approve:
   - channel_id: UCQT7znaczuADTOfQsSq4RRQ
     topic: education
     note: "scout:featured 구독 12600 롱폼 11/50 최근 업로드 2026-11-12"
+  # 달콤사운즈 Dalkom Sounds (scout 2026-11-17)
+  - channel_id: UC85aYqhPOhYVCbk24glsxvw
+    topic: game
+    note: "scout:mention 구독 15700 롱폼 16/50 최근 업로드 2026-11-05"
+  # 니니아 ninia (scout 2026-11-17)
+  - channel_id: UCCs6PUrVAbCaN0xuQ35qiLQ
+    topic: game
+    note: "scout:mention 구독 27600 롱폼 34/50 최근 업로드 2026-11-13"
+  # 한국사과연합회 KOREA APPLE ASSOCIATION (scout 2026-11-17)
+  - channel_id: UCOo-FB7sysJSwDz5zQtCnIw
+    topic: cooking
+    note: "scout:mention 구독 17400 롱폼 41/50 최근 업로드 2026-10-19"
+  # DawNHS (scout 2026-11-17)
+  - channel_id: UC_jqDoiHorunEwWNQw5M3IA
+    topic: game
+    note: "scout:mention 구독 30200 롱폼 50/50 최근 업로드 2026-11-13"
+  # 홍시채널 (scout 2026-11-17)
+  - channel_id: UCGv2BVEQQwcezvFXbEX8xnQ
+    topic: news
+    note: "scout:popular 구독 47600 롱폼 50/50 최근 업로드 2026-11-14"
+  # 김더미 (scout 2026-11-17)
+  - channel_id: UCfpW9NT8labw-16JYailtOw
+    topic: game
+    note: "scout:popular 구독 48300 롱폼 50/50 최근 업로드 2026-11-16"
+  # 이글콥 (scout 2026-11-17)
+  - channel_id: UC-711LHT7B6Lb1Xy5m_cjPw
+    topic: issue
+    note: "scout:featured 구독 20300 롱폼 33/50 최근 업로드 2026-11-15"
+  # 여까네 유튜브 (scout 2026-11-17)
+  - channel_id: UC0XpOtlB4CHcMC6uFuFYLAw
+    topic: issue
+    note: "scout:featured 구독 58900 롱폼 42/50 최근 업로드 2026-11-16"
+  # 404 덩기덕 (scout 2026-11-17)
+  - channel_id: UC6xDcxIbWgGxluRE9LwI0Fw
+    topic: issue
+    note: "scout:featured 구독 13000 롱폼 50/50 최근 업로드 2026-11-11"
+  # 집슐랭 (scout 2026-11-17)
+  - channel_id: UCAdyUuXIXGgDbtBb3rICRVQ
+    topic: economy
+    note: "scout:featured 구독 19700 롱폼 10/50 최근 업로드 2026-11-16"
 untrack: []
 
 # 2026-11-12 (user-approved, PERSONA15~18: 당뇨/당뇨병, 인공지능/AI split one subject's counts): duplicate subjects
