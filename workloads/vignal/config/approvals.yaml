@@ -1827,6 +1827,46 @@ approve:
   - channel_id: UCAdyUuXIXGgDbtBb3rICRVQ
     topic: economy
     note: "scout:featured 구독 19700 롱폼 10/50 최근 업로드 2026-11-16"
+  # 철권 조사파 tekken chosapa (scout 2026-11-17)
+  - channel_id: UC7hwQp3F6P_OwyRM14p88iQ
+    topic: game
+    note: "scout:popular 구독 13000 롱폼 49/50 최근 업로드 2026-11-17"
+  # 안굴렁 (scout 2026-11-17)
+  - channel_id: UCDSdbjzAlDcjIkEFMskXIdg
+    topic: game
+    note: "scout:popular 구독 38400 롱폼 2/24 최근 업로드 2026-11-17"
+  # 92송사원 (scout 2026-11-17)
+  - channel_id: UChDSrsDqewX234VU0LCmGbw
+    topic: vlog
+    note: "scout:popular 구독 70500 롱폼 44/50 최근 업로드 2026-11-16"
+  # 포셔 (scout 2026-11-17)
+  - channel_id: UCF-2zHpD1iy6QG08w9iqz6w
+    topic: game
+    note: "scout:featured 구독 49200 롱폼 50/50 최근 업로드 2026-11-15"
+  # 엊우진 (scout 2026-11-17)
+  - channel_id: UCFVFNS5R7L3Y-_kDX7XhEAg
+    topic: issue
+    note: "scout:featured 구독 81500 롱폼 22/50 최근 업로드 2026-10-30"
+  # 프로 파크골프TV (scout 2026-11-17)
+  - channel_id: UCH8aj-gZK7lNp8tlLFDIrEA
+    topic: real-estate
+    note: "scout:featured 구독 33600 롱폼 18/50 최근 업로드 2026-11-16"
+  # 붕괴3rd (scout 2026-11-17)
+  - channel_id: UCHnxdu0qphnV3vrERNtCqpw
+    topic: game
+    note: "scout:featured 구독 63300 롱폼 13/50 최근 업로드 2026-11-11"
+  # 장지수 풀영상 (scout 2026-11-17)
+  - channel_id: UCLGI1zERAugSCHMSD3NlC7g
+    topic: web-drama
+    note: "scout:featured 구독 30300 롱폼 50/50 최근 업로드 2026-11-15"
+  # 토코 파크골프 2타 3타치기-TP6 (scout 2026-11-17)
+  - channel_id: UCMVZ0jCMh9L82aVItXnOTzQ
+    topic: real-estate
+    note: "scout:featured 구독 30600 롱폼 20/50 최근 업로드 2026-11-16"
+  # 박옥자누나 (scout 2026-11-17)
+  - channel_id: UCNj0B9Vq-416ER2suWGCEhQ
+    topic: issue
+    note: "scout:featured 구독 29900 롱폼 20/50 최근 업로드 2026-11-13"
 untrack: []
 
 # 2026-11-12 (user-approved, PERSONA15~18: 당뇨/당뇨병, 인공지능/AI split one subject's counts): duplicate subjects
