@@ -51,7 +51,7 @@ spec:
               type: RuntimeDefault
           containers:
             - name: vignal
-              image: ghcr.io/sushistack/vignal@sha256:b237663003e2afad01666dfcf4d8daac7365ace5d219f08d247126a9a71f9690   # sha-5abdbc0 (dev: Kiwi tokens for new-word detection, distroless/cc)
+              image: ghcr.io/sushistack/vignal@sha256:7ddde8263aa29c6f680709683ced4d1c024b174bde97eb6d9b0629b11821bdce   # sha-7882119 (dev: subjects/related.json for thin subjects)
               args: ["publish-dev"]
               env:
                 - name: TZ
