@@ -323,6 +323,7 @@ tagging:
   skip_short_s: 180 # 2026-10-30 운영자(vignal D-45, FR-92): 이 초 이하 영상은 태깅 안 함. 0 = 끔
   per_channel_per_day: 2 # 2026-10-30 운영자(vignal D-45, FR-92): 채널·UTC 게시일당 K 개만 태깅. 0 = 끔
   group_size: 5 # 2026-11-12 (user-approved, cost): 같은 채널 영상을 요청 1건에 5개까지 묶는다. 1 = 예전 방식
+  mix_channels: true # 2026-11-18 (user-approved, cost): 같은 후보(분야) 영상을 채널을 섞어 12개씩 묶는다(채널 힌트는 영상마다). 시험: 태그 입력 851→424토큰/편(약 -34%), 맞는 소재 연결 91→82%(약 -8%p) 감수. 끄면 채널별(group_size)
   hold_hours: 24 # 2026-11-13 (user-approved, cost): 덜 찬 묶음은 영상이 모두 24시간 안이면 다음 run까지 기다려 채운다. 0 = 끔
   channel_l2_share: 0.6 # tags pending 이 채널 2단계를 제안하는 비중
   subjects:
