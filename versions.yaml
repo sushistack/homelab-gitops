@@ -134,7 +134,7 @@ workloads:
     manifest: workloads/vignal/cronjob.yaml
     # Own app (github.com/sushistack/vignal, private), built by its CI `image` job -> GHCR (amd64).
     # Pinned by digest (comment = source sha); bump here + cronjob.yaml in one PR.
-    image: ghcr.io/sushistack/vignal@sha256:d02bb73c5efa10b9cd6d4bd2c279fee49246ef6df1bc906ae449b15cda6cec52   # sha-9567967
+    image: ghcr.io/sushistack/vignal@sha256:4f4e3641a23eab59753b52ce7070b1188a55aed5ce081304fae90f7cd1957ebe   # sha-2e9ac88
   vignal-dev-publish:
     manifest: workloads/vignal/cronjob-dev-publish.yaml
     # Built from the app repo's `dev` branch (CI `image` job on dev pushes, or crane append on the prod image while
