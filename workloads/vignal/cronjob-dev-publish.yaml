@@ -51,7 +51,7 @@ spec:
               type: RuntimeDefault
           containers:
             - name: vignal
-              image: ghcr.io/sushistack/vignal@sha256:11cbc35fbe0175f88820d63e1827820e0b63cc0f1606abbcb032123ab8047955   # sha-b864404 (dev: new-word detection subject_burst)
+              image: ghcr.io/sushistack/vignal@sha256:fb7d39ed87bdf125dd7872fd6bdb48a2fd8f3a2e47c508cbde801aaa64f9d16c   # sha-e519c4f (dev: subject_burst skips videos at the subject cap)
               args: ["publish-dev"]
               env:
                 - name: TZ
