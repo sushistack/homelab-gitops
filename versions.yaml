@@ -139,7 +139,7 @@ workloads:
     manifest: workloads/vignal/cronjob-dev-publish.yaml
     # Built from the app repo's `dev` branch (CI `image` job on dev pushes, or crane append on the prod image while
     # CI is out of minutes; tag dev-<sha>), pinned by digest. Dev data only.
-    image: ghcr.io/sushistack/vignal@sha256:a015d1195587dd09e1dd3a86d1e21ba504d567915b8e5b1ab59a46975d938a42   # sha-8bd6266
+    image: ghcr.io/sushistack/vignal@sha256:2deef03809914a0934d0086183b5721ae2adf95a68ff0ddc30dc449fab33c2cb   # sha-6ae2deb
   anytype-heart:
     manifest: workloads/anytype/deployment-heart.yaml
     image: ghcr.io/sushistack/home.server/anytype-heart@sha256:8f1de0ea70e34ef976b98a2cbdc9622fd7ee24c713c724d301500a066f8aac73
