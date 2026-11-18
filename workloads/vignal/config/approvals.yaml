@@ -1867,6 +1867,46 @@ approve:
   - channel_id: UCNj0B9Vq-416ER2suWGCEhQ
     topic: issue
     note: "scout:featured 구독 29900 롱폼 20/50 최근 업로드 2026-11-13"
+  # 뚜까랜덤 (scout 2026-11-18)
+  - channel_id: UC2untV6RHYn-FMJe1JZyi-g
+    topic: game
+    note: "scout:mention 구독 57500 롱폼 35/50 최근 업로드 2026-11-15"
+  # 빅톡TV (scout 2026-11-18)
+  - channel_id: UC30N_JhDVyXBxVLsCnWuf-Q
+    topic: economy
+    note: "scout:mention 구독 49700 롱폼 16/50 최근 업로드 2026-11-18"
+  # 악마꽥 (scout 2026-11-18)
+  - channel_id: UC0Tx1di_CAXndBQqIwIxesQ
+    topic: game
+    note: "scout:featured 구독 23800 롱폼 9/9 최근 업로드 2026-10-25"
+  # 올싱글 스크린골프 (scout 2026-11-18)
+  - channel_id: UCNo1W3f-6XanxstYhIQFIkw
+    topic: real-estate
+    note: "scout:featured 구독 25400 롱폼 15/50 최근 업로드 2026-11-17"
+  # 쭈냥이왔쭈냥 (scout 2026-11-18)
+  - channel_id: UCP_EKGb1RJm3x930ZjJmYFg
+    topic: issue
+    note: "scout:featured 구독 51900 롱폼 26/50 최근 업로드 2026-11-18"
+  # 들려야 말하는 영어 (scout 2026-11-18)
+  - channel_id: UCQJEHG7bAaZGyoJgHvKhJuQ
+    topic: education
+    note: "scout:featured 구독 15400 롱폼 29/50 최근 업로드 2026-11-16"
+  # 남궁혁 (scout 2026-11-18)
+  - channel_id: UCRLoyYlPR9ufzlbeI9lLDqg
+    topic: issue
+    note: "scout:featured 구독 75400 롱폼 23/50 최근 업로드 2026-11-15"
+  # 세븐의 골프7래 (scout 2026-11-18)
+  - channel_id: UCS9lFbRAURnwW3P8wEiDgAg
+    topic: game
+    note: "scout:featured 구독 58900 롱폼 7/50 최근 업로드 2026-11-16"
+  # 알트쌍쌍바・altyu (scout 2026-11-18)
+  - channel_id: UCTl23djmHN05yA4I_Yp-xWA
+    topic: game
+    note: "scout:featured 구독 35000 롱폼 8/50 최근 업로드 2026-11-01"
+  # 밍키코 mingi_ko - 김민지 아나운서 (scout 2026-11-18)
+  - channel_id: UCWlXZ7vp0MBdQj9JIPVN4UQ
+    topic: game
+    note: "scout:featured 구독 10300 롱폼 7/50 최근 업로드 2026-11-17"
 untrack: []
 
 # 2026-11-12 (user-approved, PERSONA15~18: 당뇨/당뇨병, 인공지능/AI split one subject's counts): duplicate subjects
