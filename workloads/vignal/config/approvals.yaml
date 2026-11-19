@@ -1907,6 +1907,46 @@ approve:
   - channel_id: UCWlXZ7vp0MBdQj9JIPVN4UQ
     topic: game
     note: "scout:featured 구독 10300 롱폼 7/50 최근 업로드 2026-11-17"
+  # 경제를 알리자 (scout 2026-11-19)
+  - channel_id: UCCskOmXHWJZSsGN1uz6eDfQ
+    topic: news
+    note: "scout:popular 구독 11000 롱폼 50/50 최근 업로드 2026-11-19"
+  # 프로서준 (scout 2026-11-19)
+  - channel_id: UCXsQvaPJdwwporQuW3WJdXA
+    topic: game
+    note: "scout:popular 구독 16700 롱폼 39/50 최근 업로드 2026-11-19"
+  # 산디_SanD (scout 2026-11-19)
+  - channel_id: UCZoaqDaOtJaK0I30zNa3oSQ
+    topic: game
+    note: "scout:popular 구독 90000 롱폼 50/50 최근 업로드 2026-11-19"
+  # 파리지옥 (scout 2026-11-19)
+  - channel_id: UCaHcq0MVaJW2WtE-mikKdTg
+    topic: game
+    note: "scout:popular 구독 12200 롱폼 39/50 최근 업로드 2026-11-19"
+  # 무대뽀조성근 (scout 2026-11-19)
+  - channel_id: UCnNFUlThXX_ogt6S6DRBFAw
+    topic: beauty-life
+    note: "scout:popular 구독 84500 롱폼 27/50 최근 업로드 2026-11-19"
+  # FLY WITH DEEKAY (scout 2026-11-19)
+  - channel_id: UC0sb50-RVN7Tfj7YrLS9Ohw
+    topic: tech
+    note: "scout:featured 구독 19100 롱폼 34/50 최근 업로드 2026-11-18"
+  # 남언담 (scout 2026-11-19)
+  - channel_id: UC3oZfJv9jDmUKUroFMeZfGA
+    topic: issue
+    note: "scout:featured 구독 10200 롱폼 20/50 최근 업로드 2026-11-13"
+  # 남궁세가 비급서고 (scout 2026-11-19)
+  - channel_id: UCM45HgkHTD47GIjxeY2r0AQ
+    topic: issue
+    note: "scout:featured 구독 15700 롱폼 50/50 최근 업로드 2026-11-18"
+  # 새멋TV (scout 2026-11-19)
+  - channel_id: UCXIIyfdS3hA3OHrhuMY1urQ
+    topic: economy
+    note: "scout:featured 구독 70200 롱폼 13/50 최근 업로드 2026-11-19"
+  # 긴배돈 (scout 2026-11-19)
+  - channel_id: UCXt1U_unfnSiAfLObqQi14A
+    topic: game
+    note: "scout:featured 구독 19000 롱폼 50/50 최근 업로드 2026-11-18"
 untrack: []
 
 # 2026-11-12 (user-approved, PERSONA15~18: 당뇨/당뇨병, 인공지능/AI split one subject's counts): duplicate subjects
