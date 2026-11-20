@@ -1947,6 +1947,46 @@ approve:
   - channel_id: UCXt1U_unfnSiAfLObqQi14A
     topic: game
     note: "scout:featured 구독 19000 롱폼 50/50 최근 업로드 2026-11-18"
+  # 돈 공부시켜주는남자 (scout 2026-11-20)
+  - channel_id: UCdHvVS34GpMKV16dMlIbk0w
+    topic: economy
+    note: "scout:mention 구독 21100 롱폼 30/50 최근 업로드 2026-11-20"
+  # 코가미 히비키 (scout 2026-11-20)
+  - channel_id: UCjog0H_qT0oqjzhLkbWoNLQ
+    topic: anime
+    note: "scout:mention 구독 11200 롱폼 11/50 최근 업로드 2026-11-16"
+  # 이춘향 다시보기 (scout 2026-11-20)
+  - channel_id: UCt6yxtrzWq7m8fgA0-rqbdg
+    topic: issue
+    note: "scout:mention 구독 57300 롱폼 50/50 최근 업로드 2026-11-20"
+  # 에이원 개러지 A1 GARAGE (scout 2026-11-20)
+  - channel_id: UCUWJXrxa0DDgLDbcGbrDBBQ
+    topic: cars
+    note: "scout:popular 구독 76900 롱폼 17/50 최근 업로드 2026-11-19"
+  # 휴대폰 판매왕 폰킴 Phone Kim (scout 2026-11-20)
+  - channel_id: UCfu9UMOYgfjM3xmFRUTjsZA
+    topic: tech
+    note: "scout:popular 구독 53300 롱폼 45/50 최근 업로드 2026-11-20"
+  # 알뷰 (scout 2026-11-20)
+  - channel_id: UCoSDm6n22lp_0KbaAPubWSw
+    topic: tech
+    note: "scout:popular 구독 80600 롱폼 35/50 최근 업로드 2026-11-20"
+  # 알이에프터 (scout 2026-11-20)
+  - channel_id: UC-ehnem-k8Z9mXeCykuZkag
+    topic: game
+    note: "scout:featured 구독 84000 롱폼 5/50 최근 업로드 2026-11-17"
+  # 루멘시 Rumency (scout 2026-11-20)
+  - channel_id: UCa3f-95rS3aclqfjQsbFMQw
+    topic: anime
+    note: "scout:featured 구독 20900 롱폼 35/50 최근 업로드 2026-11-13"
+  # 노랑새 (scout 2026-11-20)
+  - channel_id: UCaJFowz3nXtqDe1o8p85HPg
+    topic: game
+    note: "scout:featured 구독 11100 롱폼 9/50 최근 업로드 2026-11-18"
+  # 픽드 (scout 2026-11-20)
+  - channel_id: UCcQ_j93bM4HHZIgKrqo0Qcw
+    topic: issue
+    note: "scout:featured 구독 54200 롱폼 22/50 최근 업로드 2026-11-18"
 untrack: []
 
 # 2026-11-12 (user-approved, PERSONA15~18: 당뇨/당뇨병, 인공지능/AI split one subject's counts): duplicate subjects
