@@ -195,7 +195,7 @@ subtopics:
   - slug: instrument
     parent: music
     label: '악기·레슨'
-    aliases: [기타레슨, 피아노, 악기]
+    aliases: [기타레슨, 피아노, 악기, 드럼, 통기타, 일렉기타, 베이스기타, 우쿨렐레, 바이올린, 첼로, 핑거스타일]
   - slug: music-etc
     parent: music
     label: '공연·음악 소식'
