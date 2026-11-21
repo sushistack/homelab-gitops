@@ -203,7 +203,7 @@ subtopics:
   - slug: exam
     parent: education
     label: '입시·수능'
-    aliases: [수능, 입시, 수시, 정시]
+    aliases: [수능, 대학수학능력시험, 입시, 수시, 정시]
   - slug: language
     parent: education
     label: '어학'
