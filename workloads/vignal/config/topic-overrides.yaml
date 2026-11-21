@@ -2117,6 +2117,10 @@ channels:
     topic: game
     topic_l2: game/rpg
     note: "쌈용 · 태그로 모바일 게임이 됨. 최근 영상 전부 PC 리니지 클래식 라이브 (2026-11-21 페르소나 r6 장민혁, claude)"
+  - channel_id: UC8E9ek7Ad-VFYhfgoBm91TA
+    topic: game
+    topic_l2: game/rpg
+    note: "송소희티비 · 모바일 게임으로 잡힘(해시태그 #리니지m). 최근 영상은 PC 리니지 클래식 방송 (2026-11-21 classify-audit 검토, claude)"
 
 videos:
   - video_id: FwccZHAHu3U
