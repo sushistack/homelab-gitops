@@ -2109,6 +2109,15 @@ channels:
     topic: education
     topic_l2: education/parenting-study
     note: "수학통역사_조안호 · L2 없음 -> parenting-study, 학부모 대상 자녀 수학 공부법 (2026-11-15 수동 검수, claude)"
+  - channel_id: UCkdjZEtXw2HwRGBNAroNc5A
+    topic: tech
+    topic_l2: tech/tech-etc
+    note: "욜디_컴퓨터 인터넷 기초강의 · 제목 규칙으로 리뷰·언박싱이 됨. 최근 영상은 클로드·챗GPT 사용법, 문서작성 강좌 (2026-11-21 페르소나 r6·r7 서도현: 테크 리뷰 참고 채널에 섞임, claude)"
+  - channel_id: UCviD8FRJE2BGUxI8SGOqfLQ
+    topic: game
+    topic_l2: game/rpg
+    note: "쌈용 · 태그로 모바일 게임이 됨. 최근 영상 전부 PC 리니지 클래식 라이브 (2026-11-21 페르소나 r6 장민혁, claude)"
+
 videos:
   - video_id: FwccZHAHu3U
     l1: web-drama
