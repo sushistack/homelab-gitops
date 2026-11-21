@@ -375,3 +375,54 @@ subtopics:
     parent: self-dev
     label: '인문·철학'
     aliases: [철학, 니체, 쇼펜하우어, 동양철학, 고전]
+  # 2026-11-21 (persona panel r4/r5, user approved for prod and dev): fields with no level 2 at all (web-drama left
+  # out: its channels' titles name no split, 1 of 175 got one). Channels get one
+  # from their titles (publish titleL2: 3+ titles and 30%+ naming a node's words), so no retagging is needed.
+  - slug: re-listing
+    parent: real-estate
+    label: '매물 소개·임장'
+    aliases: [매물, 급매, 전원주택, 단독주택, 타운하우스, 임장, 매매가, 분양가, 빌라매매, 상가매물]
+  - slug: re-market
+    parent: real-estate
+    label: '부동산 시황·전망'
+    aliases: [집값, 부동산시장, 아파트값, 아파트, 폭락, 하락, 상승, 전망, 청약, 대출규제, 재건축, 금리, 부동산대책, 공급]
+  - slug: re-etc
+    parent: real-estate
+    label: '기타 부동산'
+    default: true
+  - slug: lv-organize
+    parent: living
+    label: '정리·수납'
+    aliases: [정리, 수납, 정리정돈, 미니멀, 비우기]
+  - slug: lv-clean
+    parent: living
+    label: '청소·세탁'
+    aliases: [청소, 세탁, 빨래, 얼룩, 곰팡이, 세탁기청소]
+  - slug: lv-interior
+    parent: living
+    label: '인테리어·집꾸미기'
+    aliases: [인테리어, 셀프인테리어, 리모델링, 도배, 집꾸미기, 랜선집들이]
+  - slug: lv-tips
+    parent: living
+    label: '살림 꿀팁'
+    aliases: [살림, 꿀팁, 살림템, 살림꿀팁, 다이소, 주방, 생활꿀팁, 살림노하우]
+  - slug: lv-etc
+    parent: living
+    label: '기타 살림'
+    default: true
+  - slug: ec-stock
+    parent: economy
+    label: '주식·투자'
+    aliases: [주식, 종목, 코스피, 코스닥, 나스닥, 배당, ETF, 증시, 미국주식]
+  - slug: ec-crypto
+    parent: economy
+    label: '코인'
+    aliases: [비트코인, 코인, 이더리움, 리플, 가상자산, 알트코인]
+  - slug: ec-money
+    parent: economy
+    label: '재테크·절약'
+    aliases: [재테크, 절약, 적금, 연금, 짠테크, 월급, 통장]
+  - slug: ec-etc
+    parent: economy
+    label: '기타 경제'
+    default: true
