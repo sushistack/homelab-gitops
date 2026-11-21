@@ -1987,6 +1987,46 @@ approve:
   - channel_id: UCcQ_j93bM4HHZIgKrqo0Qcw
     topic: issue
     note: "scout:featured 구독 54200 롱폼 22/50 최근 업로드 2026-11-18"
+  # 숏뭅 (scout 2026-11-21)
+  - channel_id: UCGQlrCyCK2h_sVifV-s7XfQ
+    topic: movie-review
+    note: "scout:featured 구독 89500 롱폼 17/50 최근 업로드 2026-11-21"
+  # 계화 (scout 2026-11-21)
+  - channel_id: UCcfP83af1G7C6lIqHQjc6sw
+    topic: issue
+    note: "scout:featured 구독 86800 롱폼 6/50 최근 업로드 2026-11-09"
+  # 풀-레임TV (scout 2026-11-21)
+  - channel_id: UCfhZrNtNf9j-uZMauTPcrGg
+    topic: game
+    note: "scout:featured 구독 58500 롱폼 50/50 최근 업로드 2026-11-20"
+  # 삿땅 Sattan (scout 2026-11-21)
+  - channel_id: UChifr6bzxfWfYRR1NgEoJGA
+    topic: game
+    note: "scout:featured 구독 12500 롱폼 8/10 최근 업로드 2026-11-15"
+  # 동굴리언 (scout 2026-11-21)
+  - channel_id: UCi-2FdqeBlPqz3CoCHj2z4g
+    topic: tech
+    note: "scout:featured 구독 18400 롱폼 36/50 최근 업로드 2026-11-03"
+  # 다락원 중국어 회화, HSK, 여행 인강 (scout 2026-11-21)
+  - channel_id: UCjnMDMhJgaf3mzV7g7pfXng
+    topic: education
+    note: "scout:featured 구독 25700 롱폼 16/50 최근 업로드 2026-11-20"
+  # 골박창 (scout 2026-11-21)
+  - channel_id: UCjq01bhRRHe9Ix6-FEJE2fA
+    topic: sports
+    note: "scout:featured 구독 19900 롱폼 10/14 최근 업로드 2026-11-11"
+  # 오아 (scout 2026-11-21)
+  - channel_id: UCjyXK9pWHwWR_-bRibFaWDg
+    topic: issue
+    note: "scout:featured 구독 65600 롱폼 48/50 최근 업로드 2026-11-13"
+  # 꽃핀의 꽃꽃꽃꽃꽃핀핀핀핀핀 (scout 2026-11-21)
+  - channel_id: UCkW_xF9V-Rv6911EqClPGGw
+    topic: game
+    note: "scout:featured 구독 17800 롱폼 50/50 최근 업로드 2026-11-14"
+  # 93rK (scout 2026-11-21)
+  - channel_id: UCkgS23jeVC5-bmuXx_7qLFA
+    topic: game
+    note: "scout:featured 구독 10100 롱폼 7/50 최근 업로드 2026-11-18"
 untrack: []
 
 # 2026-11-12 (user-approved, PERSONA15~18: 당뇨/당뇨병, 인공지능/AI split one subject's counts): duplicate subjects
