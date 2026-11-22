@@ -262,6 +262,11 @@ subtopics:
     parent: mystery
     label: '기타 미스터리'
     default: true
+  # 2026-11-23 (persona r16–r19 서도현: PC 견적·조립 매장 채널이 가전·IT 리뷰어의 리뷰·언박싱 목록에 섞임)
+  - slug: tech-pc
+    parent: tech
+    label: 'PC·조립'
+    aliases: [조립컴퓨터, 조립PC, 컴퓨터견적, PC견적, 게이밍컴퓨터, 그래픽카드, 컴퓨터조립]
   # 2026-11-22 (persona r9·r10 서도현: AI·PC 사용법 강좌가 리뷰·언박싱 주간 목록과 추천에 섞임)
   - slug: tech-howto
     parent: tech
