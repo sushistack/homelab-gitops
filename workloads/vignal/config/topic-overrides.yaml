@@ -15,6 +15,10 @@
 #
 # 로컬 확인: go test ./internal/topics (형식), 잘못된 slug·중복·note 누락이면 run 이 실패한다.
 channels:
+  - channel_id: UCCUfsf35PukA4gEsU2hTtQg
+    topic: tech
+    topic_l2: tech/tech-etc
+    note: "대신남 말방구실험실 · DIY 개조·실험(차에 항공계기판, 덱스 개조) 채널인데 리뷰·언박싱으로 묶여 가전 리뷰어 목록에 섞임 (2026-11-23 페르소나 r22 서도현, claude)"
   - channel_id: UC4wiVnpTSIn6H61pdWbF-Qw
     topic: tech
     topic_l2: tech/tech-pc
