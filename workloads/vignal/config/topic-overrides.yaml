@@ -4,10 +4,6 @@
 #
 # 형식:
 #   channels:
-  - channel_id: UCPP1HVcKyFThWlpO-JJdXdg
-    topic: tech
-    topic_l2: tech/tech-howto
-    note: "감자나라ai · tech-review 로 묶임. 최근 영상 전부 AI 도구 설치·사용법 (헤르메스 설치 등). 테크 리뷰어 주간 리포트에 섞임 (2026-11-22 페르소나 r12 서도현, claude)"
 #     - channel_id: UC + 22자
 #       topic: config/topics.yaml 의 1단계 slug
 #       topic_l2: (선택) 2단계 경로, 예: game/fps
@@ -19,6 +15,10 @@
 #
 # 로컬 확인: go test ./internal/topics (형식), 잘못된 slug·중복·note 누락이면 run 이 실패한다.
 channels:
+  - channel_id: UCPP1HVcKyFThWlpO-JJdXdg
+    topic: tech
+    topic_l2: tech/tech-howto
+    note: "감자나라ai · tech-review 로 묶임. 최근 영상 전부 AI 도구 설치·사용법 (헤르메스 설치 등). 테크 리뷰어 주간 리포트에 섞임 (2026-11-22 페르소나 r12 서도현, claude)"
   - channel_id: UCgzCOR128Z8rovfBEIQ_lEQ
     topic: news
     note: "안동MBC NEWS · celeb 로 잘못 분류. 최근 30일 영상 판정 news 111·politics 88·celeb 9 (2026-11-13 표본 검수, claude)"
