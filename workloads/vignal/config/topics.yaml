@@ -249,6 +249,11 @@ subtopics:
     parent: tech
     label: '개발·코딩'
     aliases: [코딩, 프로그래밍]
+  # 2026-11-22 (persona r9·r10 서도현: AI·PC 사용법 강좌가 리뷰·언박싱 주간 목록과 추천에 섞임)
+  - slug: tech-howto
+    parent: tech
+    label: 'IT 사용법·강좌'
+    aliases: [사용법, 활용법, 설치법, 컴퓨터기초, 챗GPT, 클로드, 제미나이, 엑셀강좌]
   - slug: tech-etc
     parent: tech
     label: '기타 테크'
