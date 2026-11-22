@@ -2027,6 +2027,46 @@ approve:
   - channel_id: UCkgS23jeVC5-bmuXx_7qLFA
     topic: game
     note: "scout:featured 구독 10100 롱폼 7/50 최근 업로드 2026-11-18"
+  # 신선한망치 (scout 2026-11-22)
+  - channel_id: UCKttwyzsHvW7bCo7YfTacVQ
+    topic: game
+    note: "scout:mention 구독 27000 롱폼 47/50 최근 업로드 2026-11-22"
+  # 김호러 Horror (scout 2026-11-22)
+  - channel_id: UC_SEr4lmF69s2-c6oY1qkoA
+    topic: game
+    note: "scout:mention 구독 74600 롱폼 29/50 최근 업로드 2026-11-21"
+  # 지오 jiography (scout 2026-11-22)
+  - channel_id: UCfXu21Xg3XzZ0iMVYPjaJuw
+    topic: vlog
+    note: "scout:mention 구독 47300 롱폼 46/46 최근 업로드 2026-11-06"
+  # 조이냥 (scout 2026-11-22)
+  - channel_id: UCqVTAdTG5T7BkAD3xRKOFog
+    topic: game
+    note: "scout:mention 구독 15700 롱폼 49/50 최근 업로드 2026-11-16"
+  # 하스스톤 (scout 2026-11-22)
+  - channel_id: UCHyMBtXBR3uJyPg42jTwUgA
+    topic: game
+    note: "scout:featured 구독 46700 롱폼 33/50 최근 업로드 2026-11-20"
+  # 월드 오브 워크래프트 (scout 2026-11-22)
+  - channel_id: UCNwtfpReWSwlwlYccFDuSBA
+    topic: game
+    note: "scout:featured 구독 63200 롱폼 24/50 최근 업로드 2026-11-16"
+  # 던파TV(던전앤파이터) (scout 2026-11-22)
+  - channel_id: UCg80LjrsnWo0T3T3uYCPhrQ
+    topic: game
+    note: "scout:featured 구독 68500 롱폼 21/50 최근 업로드 2026-11-14"
+  # 달달럽코 ANI (scout 2026-11-22)
+  - channel_id: UCl1K0Gy9MNFcAtJB0TiRLqA
+    topic: anime
+    note: "scout:featured 구독 17000 롱폼 31/50 최근 업로드 2026-11-13"
+  # SIA 영상공작소 (scout 2026-11-22)
+  - channel_id: UCmPNChS1I0VZysqax6uHkYw
+    topic: tech
+    note: "scout:featured 구독 41700 롱폼 13/50 최근 업로드 2026-11-18"
+  # 815 캠퍼스 (scout 2026-11-22)
+  - channel_id: UCnTZ9DHMo8oEoVIZrGlVoOA
+    topic: economy
+    note: "scout:featured 구독 78000 롱폼 48/50 최근 업로드 2026-11-20"
 untrack: []
 
 # 2026-11-12 (user-approved, PERSONA15~18: 당뇨/당뇨병, 인공지능/AI split one subject's counts): duplicate subjects
