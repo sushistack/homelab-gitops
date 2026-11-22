@@ -249,6 +249,19 @@ subtopics:
     parent: tech
     label: '개발·코딩'
     aliases: [코딩, 프로그래밍]
+  # 2026-11-22 (persona r10 김하람: SCP·괴담 채널 목록에 그알·사건 클립이 섞임)
+  - slug: mys-ghost
+    parent: mystery
+    label: '괴담·SCP'
+    aliases: [괴담, SCP, 크리피파스타, 도시전설, 무서운이야기, 심야괴담, 공포썰]
+  - slug: mys-crime
+    parent: mystery
+    label: '실화·사건'
+    aliases: [실화, 미제사건, 살인사건, 그것이알고싶다, 그알, 사건반장, 범죄]
+  - slug: mys-etc
+    parent: mystery
+    label: '기타 미스터리'
+    default: true
   # 2026-11-22 (persona r9·r10 서도현: AI·PC 사용법 강좌가 리뷰·언박싱 주간 목록과 추천에 섞임)
   - slug: tech-howto
     parent: tech
