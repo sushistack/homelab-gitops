@@ -15,6 +15,34 @@
 #
 # 로컬 확인: go test ./internal/topics (형식), 잘못된 slug·중복·note 누락이면 run 이 실패한다.
 channels:
+  - channel_id: UC4wiVnpTSIn6H61pdWbF-Qw
+    topic: tech
+    topic_l2: tech/tech-pc
+    note: "왕가PC · 최근 12개 모두 PC 견적·조립. 가전·IT 리뷰어의 리뷰·언박싱 목록에 섞임 (2026-11-23 페르소나 r16–r19 서도현, claude)"
+  - channel_id: UCwtZFjYTZAy0m4G8bDEZ7mA
+    topic: tech
+    topic_l2: tech/tech-pc
+    note: "추천하는남자 · 컴퓨터 견적 추천 위주. 가전·IT 리뷰어의 리뷰·언박싱 목록에 섞임 (2026-11-23 페르소나 r16–r19 서도현, claude)"
+  - channel_id: UCKmRwsGQK9ee93t8nZ0zn1A
+    topic: tech
+    topic_l2: tech/tech-pc
+    note: "컴퓨터저장소 · 조립PC 판매. 가전·IT 리뷰어의 리뷰·언박싱 목록에 섞임 (2026-11-23 페르소나 r16–r19 서도현, claude)"
+  - channel_id: UC0sQEECROLZ_UtPTOI_Vpvw
+    topic: tech
+    topic_l2: tech/tech-pc
+    note: "려독 · 월간 컴퓨터 견적. 가전·IT 리뷰어의 리뷰·언박싱 목록에 섞임 (2026-11-23 페르소나 r16–r19 서도현, claude)"
+  - channel_id: UCaOwfLJxMjZ8RCBwg8_c90A
+    topic: tech
+    topic_l2: tech/tech-pc
+    note: "YJMOD x 영재컴퓨터 · PC·서버 조립 89%. 가전·IT 리뷰어의 리뷰·언박싱 목록에 섞임 (2026-11-23 페르소나 r16–r19 서도현, claude)"
+  - channel_id: UCNCZoEdHHuF76DZ78IBJvlQ
+    topic: tech
+    topic_l2: tech/tech-pc
+    note: "신성조 · PC 추천·조립 64%. 가전·IT 리뷰어의 리뷰·언박싱 목록에 섞임 (2026-11-23 페르소나 r16–r19 서도현, claude)"
+  - channel_id: UCyoqIWgyiQmxYiNP_l7KlyQ
+    topic: tech
+    topic_l2: tech/tech-pc
+    note: "허수아비 · PC 매장 주간 이야기·조립컴. 가전·IT 리뷰어의 리뷰·언박싱 목록에 섞임 (2026-11-23 페르소나 r16–r19 서도현, claude)"
   - channel_id: UCPP1HVcKyFThWlpO-JJdXdg
     topic: tech
     topic_l2: tech/tech-howto
