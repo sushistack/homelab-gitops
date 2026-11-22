@@ -200,3 +200,5 @@ channels:
     note: "드파밍 · 드라마 클립, 43개 중 25개 방송 표기 (2026-11-21 페르소나 r8, claude)"
   - channel_id: UC5biYYSX5sh4QR98ekCd8KA
     note: "출발! 비디오여행 · MBC 프로그램 채널, 22개 모두 'MBC 방송' 표기. 영화 리뷰어 또래·잘 된 영상에 섞임 (2026-11-21 페르소나 r8 노승현, claude)"
+  - channel_id: UC_U34UlsS9Mp5ZgvsEA7irw
+    note: "그것이 알고싶다 · SBS 프로그램 채널. 미스터리 소규모 크리에이터의 비슷한 채널·잘 된 영상에 섞임 (2026-11-22 페르소나 r11/r12 김하람, claude)"
