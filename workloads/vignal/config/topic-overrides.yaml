@@ -4,6 +4,10 @@
 #
 # 형식:
 #   channels:
+  - channel_id: UCPP1HVcKyFThWlpO-JJdXdg
+    topic: tech
+    topic_l2: tech/tech-howto
+    note: "감자나라ai · tech-review 로 묶임. 최근 영상 전부 AI 도구 설치·사용법 (헤르메스 설치 등). 테크 리뷰어 주간 리포트에 섞임 (2026-11-22 페르소나 r12 서도현, claude)"
 #     - channel_id: UC + 22자
 #       topic: config/topics.yaml 의 1단계 slug
 #       topic_l2: (선택) 2단계 경로, 예: game/fps
