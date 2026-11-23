@@ -17,11 +17,10 @@ kind: CronJob
 metadata:
   name: vignal-dev-publish
 spec:
-  # 03:30 KST: between prod runs (00:00/06:00, ~45 min each). A snapshot is consistent even if they overlap.
-  # Every 6 h, right after each prod run (00:30/06:30/12:30/18:30 KST, ~45-52 min; this runs 55 min after each): the release meta says refresh_interval_hours 6,
-  # so a daily dev release showed the "갱신 지연" banner after 12 h (2026-11-06). A snapshot taken during a prod run is
-  # still consistent (WAL read transaction).
-  schedule: "25 1-23/6 * * *"
+  # 2026-11-24: once a day (07:25 KST, 55 min after the 06:30 prod run). Every 6 h made vignal-data-dev write as many
+  # D1 rows as prod (~1.6-2.2M/day) and pushed the account past the 50M/month included writes. Accepted cost: dev shows
+  # the "갱신 지연" banner after ~12 h each day. A snapshot taken during a prod run is still consistent (WAL read transaction).
+  schedule: "25 7 * * *"
   timeZone: Asia/Seoul
   concurrencyPolicy: Forbid
   suspend: false
