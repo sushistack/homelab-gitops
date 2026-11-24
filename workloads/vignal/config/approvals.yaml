@@ -2067,6 +2067,46 @@ approve:
   - channel_id: UCnTZ9DHMo8oEoVIZrGlVoOA
     topic: economy
     note: "scout:featured 구독 78000 롱폼 48/50 최근 업로드 2026-11-20"
+  # 김복밥 (scout 2026-11-24)
+  - channel_id: UCcZQW1B8DZMe6p2T_PLlJCg
+    topic: game
+    note: "scout:popular 구독 51600 롱폼 30/50 최근 업로드 2026-11-22"
+  # 김길현 (scout 2026-11-24)
+  - channel_id: UCFAJ3x7eq9Mg7w6522hm_fA
+    topic: game
+    note: "scout:featured 구독 66500 롱폼 15/50 최근 업로드 2026-11-20"
+  # 위버멘쉬 너구리 (scout 2026-11-24)
+  - channel_id: UColmpOnnzakw7yWD8d22Gqg
+    topic: game
+    note: "scout:featured 구독 47500 롱폼 20/50 최근 업로드 2026-11-14"
+  # 율신비 (scout 2026-11-24)
+  - channel_id: UCqsN5R2tfyn123Xmwb0I7iw
+    topic: web-drama
+    note: "scout:featured 구독 96200 롱폼 10/50 최근 업로드 2026-11-22"
+  # 스튜디오 플러스 (scout 2026-11-24)
+  - channel_id: UCrDhvuskVPNyJHk7KJjHqUA
+    topic: sports
+    note: "scout:featured 구독 12900 롱폼 3/50 최근 업로드 2026-11-07"
+  # 김준우의 크립토 오디세이 (scout 2026-11-24)
+  - channel_id: UCtQCyUW6u2osOk5jNd2uTgw
+    topic: economy
+    note: "scout:featured 구독 10600 롱폼 31/50 최근 업로드 2026-11-20"
+  # 엄마와삼마니92 samani (scout 2026-11-24)
+  - channel_id: UCutuCVnhApA5GqAP2MI9feA
+    topic: travel
+    note: "scout:featured 구독 13100 롱폼 4/50 최근 업로드 2026-11-23"
+  # JB가든센터 | JB Garden Center (scout 2026-11-24)
+  - channel_id: UCvImJ1u-4QZ4hsQJnhtLvSA
+    topic: living
+    note: "scout:featured 구독 77800 롱폼 22/50 최근 업로드 2026-11-18"
+  # 소음연구소 방음 차음 (scout 2026-11-24)
+  - channel_id: UCxFGRoEhJ9bdBIGoblsVrUA
+    topic: real-estate
+    note: "scout:featured 구독 11100 롱폼 8/50 최근 업로드 2026-11-21"
+  # 단츄 (scout 2026-11-24)
+  - channel_id: UCy709n-h1QUhEOR2hdqbYNA
+    topic: issue
+    note: "scout:featured 구독 85200 롱폼 9/50 최근 업로드 2026-11-18"
 untrack: []
 
 # 2026-11-12 (user-approved, PERSONA15~18: 당뇨/당뇨병, 인공지능/AI split one subject's counts): duplicate subjects
