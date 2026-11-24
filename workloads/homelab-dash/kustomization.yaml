@@ -7,6 +7,7 @@ resources:
   - ingressroute.yaml # INTERNAL (CF Access app `monitoring`); host monitor.<zone>
   - certificate.yaml # letsencrypt-prod DNS-01
   - sealedsecret-ghcr.yaml # ghcr-sushistack: pull cred for the PRIVATE image (re-sealed for ns homelab-dash)
+  - sealedsecret-pve.yaml # pve-api: read-only Proxmox token (PVEAuditor) for /pve/resources
 labels:
   - includeSelectors: false
     pairs:
