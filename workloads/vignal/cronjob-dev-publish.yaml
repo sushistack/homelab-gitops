@@ -60,10 +60,8 @@ spec:
                   valueFrom: { secretKeyRef: { name: vignal-pg, key: TUNNEL_SERVICE_TOKEN_ID } }
                 - name: TUNNEL_SERVICE_TOKEN_SECRET
                   valueFrom: { secretKeyRef: { name: vignal-pg, key: TUNNEL_SERVICE_TOKEN_SECRET } }
-              startupProbe:
-                tcpSocket: { port: 5432 }
-                periodSeconds: 2
-                failureThreshold: 30
+              # No startupProbe: cloudflared listens on loopback and a tcpSocket probe dials the pod IP (refused). The
+              # collector connects only after its publish, minutes later.
               resources:
                 requests: { cpu: 10m, memory: 32Mi }
                 limits: { memory: 128Mi }
