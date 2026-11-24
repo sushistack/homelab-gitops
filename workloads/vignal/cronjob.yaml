@@ -67,7 +67,7 @@ spec:
             - name: vignal
               # Immutable sha tag from the app repo's CI (NOT :latest — version-lint rejects
               # floating refs). Upgrade = bump here + versions.yaml in one PR.
-              image: ghcr.io/sushistack/vignal@sha256:40af7d630245beb30f52b9fce4d2520bd8a165d8b6047db9dcd437bcd4b04b7c   # sha-5d0cfad (main 2026-11-24, PR #68: D1 sync holds videos >72h within a UTC day)
+              image: ghcr.io/sushistack/vignal@sha256:53e182ba511a3b65cb4020770000ed95df6bdb524e4481c4cda84c4d790e61c9   # sha-2e9c069 (main 2026-11-24, PR #71: writes each batch into the public read Postgres)
               args: ["run"]
               env:
                 - name: TZ
