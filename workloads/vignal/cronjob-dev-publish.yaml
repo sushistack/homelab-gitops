@@ -48,6 +48,30 @@ spec:
             fsGroup: 65532
             seccompProfile:
               type: RuntimeDefault
+          # 2026-11-24: the public read Postgres over the pg.vignal.kr tunnel (Access service token), on 127.0.0.1:5432
+          # for VIGNAL_PG_DSN. Native sidecar: up before the collector, stopped after it (vignal docs/ops/postgres.md).
+          initContainers:
+            - name: pg-tunnel
+              image: cloudflare/cloudflared:2026.10.7@sha256:4955524aeaa379e154023d5a027c250f7b35041a2e7e950cf13f144bc9b9c5ba
+              restartPolicy: Always
+              args: ["access", "tcp", "--hostname", "pg.vignal.kr", "--url", "127.0.0.1:5432"]
+              env:
+                - name: TUNNEL_SERVICE_TOKEN_ID
+                  valueFrom: { secretKeyRef: { name: vignal-pg, key: TUNNEL_SERVICE_TOKEN_ID } }
+                - name: TUNNEL_SERVICE_TOKEN_SECRET
+                  valueFrom: { secretKeyRef: { name: vignal-pg, key: TUNNEL_SERVICE_TOKEN_SECRET } }
+              startupProbe:
+                tcpSocket: { port: 5432 }
+                periodSeconds: 2
+                failureThreshold: 30
+              resources:
+                requests: { cpu: 10m, memory: 32Mi }
+                limits: { memory: 128Mi }
+              securityContext:
+                allowPrivilegeEscalation: false
+                readOnlyRootFilesystem: true
+                capabilities:
+                  drop: ["ALL"]
           containers:
             - name: vignal
               image: ghcr.io/sushistack/vignal@sha256:12f109f82f981f98f806876f619630b1cd6213611e25dc1b360f5dd0370ede48   # sha-8c3d47c (dev: flow top video format)
@@ -75,6 +99,8 @@ spec:
                   value: dev/snapshot/vignal-dev.db.gz
                 - name: TMPDIR
                   value: /tmp
+                - name: VIGNAL_PG_DSN   # 2026-11-24: collector writes each batch into the public read Postgres
+                  valueFrom: { secretKeyRef: { name: vignal-pg, key: VIGNAL_PG_DSN_DEV } }
               envFrom:
                 - secretRef:
                     name: vignal-secrets   # R2_* (public bucket write), GEMINI_API_KEY; same as the prod job
