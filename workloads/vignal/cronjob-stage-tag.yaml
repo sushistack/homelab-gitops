@@ -40,7 +40,7 @@ spec:
             - name: vignal
               # Immutable sha tag from the app repo's CI (NOT :latest — version-lint rejects
               # floating refs). Upgrade = bump here + versions.yaml in one PR.
-              image: ghcr.io/sushistack/vignal@sha256:dc8730d69faa10350b99317f91d73f9458e3796e15f9fe66c449396c50c9ab44   # sha-59eb30f (main 2026-11-24, PR #72/#74: Gemini vtopic only inside the publish cap + naive Bayes; public Postgres writes)
+              image: ghcr.io/sushistack/vignal@sha256:1863c0dbb79bce778d90483e8ff26af997c70a2acaf9d1058200009bcc78f4b4   # sha-1bde556 (main 2026-11-24, PR #75: lazy tagging gate; #72/#74 Gemini cuts; public Postgres writes)
               args: ["run", "--stage", "tag"]
               env:
                 - name: TZ
