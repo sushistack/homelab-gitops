@@ -8,6 +8,7 @@ resources:
   - cronjob-stage-tag.yaml    # suspended; manual `vignal run --stage tag` (Gemini batch results between runs)
   - cronjob-dev-publish.yaml   # dev data (2026-11-06): daily `vignal publish-dev` -> public bucket dev/
   - sealedsecret.yaml        # vignal-secrets: collector API/R2/CF/ntfy/ping/age-recipient (sealed to name+ns)
+  - sealedsecret-pg.yaml    # vignal-pg (2026-11-24): public read Postgres DSNs (prod/dev) + pg.vignal.kr Access service token
   - sealedsecret-ghcr.yaml   # ghcr-sushistack: pull cred for the PRIVATE collector image (re-sealed for ns vignal)
 # NOT included on purpose: seal.sh / secrets.env.example (operator tooling; secrets.env is git-ignored).
 # No Service / Ingress: the collector has no public inbound (vignal AD-1).
