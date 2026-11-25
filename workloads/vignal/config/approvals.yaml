@@ -2107,6 +2107,46 @@ approve:
   - channel_id: UCy709n-h1QUhEOR2hdqbYNA
     topic: issue
     note: "scout:featured 구독 85200 롱폼 9/50 최근 업로드 2026-11-18"
+  # 지호아재[JIHOAJAE] (scout 2026-11-25)
+  - channel_id: UCqzKt6Yf8n0GUfdZlDoPtEw
+    topic: game
+    note: "scout:mention 구독 88600 롱폼 49/50 최근 업로드 2026-11-24"
+  # 콩주 (scout 2026-11-25)
+  - channel_id: UCgyN4tj7aOTL_t_V66EeYLQ
+    topic: game
+    note: "scout:featured 구독 20400 롱폼 39/50 최근 업로드 2026-11-23"
+  # MTN 월가워즈 (scout 2026-11-25)
+  - channel_id: UCzsor4tbVidqL1N_X4VDhcQ
+    topic: economy
+    note: "scout:featured 구독 96700 롱폼 13/50 최근 업로드 2026-11-24"
+  # 김상순TV (scout 2026-11-25)
+  - channel_id: UC-inL60z-g0lIkh8g7JyjhA
+    topic: news
+    note: "scout:mention 구독 130000 롱폼 22/50 최근 업로드 2026-11-21"
+  # 국토교통부 (scout 2026-11-25)
+  - channel_id: UC0G0Z05LATPtpUkxeOrEjOA
+    topic: news
+    note: "scout:mention 구독 266000 롱폼 18/50 최근 업로드 2026-11-16"
+  # 가은아 뭐하니 [ KANI, 蟹ちゃん] (scout 2026-11-25)
+  - channel_id: UC0v9RmyOEr-J8kuu95nQZZw
+    topic: mukbang
+    note: "scout:mention 구독 470000 롱폼 34/50 최근 업로드 2026-11-24"
+  # 스텔라이브 STELLIVE OFFICIAL (scout 2026-11-25)
+  - channel_id: UC2b4WRE5BZ6SIUWBeJU8rwg
+    topic: game
+    note: "scout:mention 구독 286000 롱폼 39/50 최근 업로드 2026-11-24"
+  # 권인하 Kwon InHa (scout 2026-11-25)
+  - channel_id: UC6U9-wPhGRBaefaAbTWDOBQ
+    topic: web-drama
+    note: "scout:mention 구독 290000 롱폼 5/50 최근 업로드 2026-11-16"
+  # 대한민국 경찰청 (scout 2026-11-25)
+  - channel_id: UC7-PyZbi_QIthI3WFtopzLw
+    topic: news
+    note: "scout:mention 구독 433000 롱폼 8/50 최근 업로드 2026-11-20"
+  # 전남광주통합특별시의회 (scout 2026-11-25)
+  - channel_id: UC7lNFPol67JC9o-WqlltpTg
+    topic: news
+    note: "scout:mention 구독 1660 롱폼 19/50 최근 업로드 2026-11-24"
 untrack: []
 
 # 2026-11-12 (user-approved, PERSONA15~18: 당뇨/당뇨병, 인공지능/AI split one subject's counts): duplicate subjects
