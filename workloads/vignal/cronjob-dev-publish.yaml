@@ -72,7 +72,7 @@ spec:
                   drop: ["ALL"]
           containers:
             - name: vignal
-              image: ghcr.io/sushistack/vignal@sha256:7ff17866f0743dc1f1a34e5310a59b7d4ba6b60b80298d0aef8abcf0198e2753   # sha-bed1256 (dev 2026-11-24: public Postgres writes, vtopic reuses prod labels)
+              image: ghcr.io/sushistack/vignal@sha256:11e4239523796a56e0e728aeb0952b6c98353acbbe0cd989f47ba73af952010a   # sha-8a37abc (dev 2026-11-26: subject title match, 기획 주제 stage)
               args: ["publish-dev"]
               env:
                 - name: TZ
