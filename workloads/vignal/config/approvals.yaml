@@ -2147,6 +2147,46 @@ approve:
   - channel_id: UC7lNFPol67JC9o-WqlltpTg
     topic: news
     note: "scout:mention 구독 1660 롱폼 19/50 최근 업로드 2026-11-24"
+  # 재테크 똑순이, 쩐업주부 (scout 2026-11-26)
+  - channel_id: UCGBpV1gkb-vrw0ewMKTGJNg
+    topic: economy
+    note: "scout:mention 구독 22000 롱폼 47/50 최근 업로드 2026-11-23"
+  # 김동엽 ㅣ 주식리뉴얼 (scout 2026-11-26)
+  - channel_id: UCZAlWGu5JFA5TCguj4wW-4Q
+    topic: economy
+    note: "scout:mention 구독 28300 롱폼 50/50 최근 업로드 2026-11-23"
+  # 일강 (scout 2026-11-26)
+  - channel_id: UCatIOSCRfIJf-nSDMQC5C0A
+    topic: game
+    note: "scout:mention 구독 87300 롱폼 1/50 최근 업로드 2026-11-23"
+  # 콜 오브 듀티 (scout 2026-11-26)
+  - channel_id: UCM8SOxoAlgLXpfVmoOHq7ZA
+    topic: game
+    note: "scout:featured 구독 19200 롱폼 7/50 최근 업로드 2026-11-06"
+  # 놀면수심 (scout 2026-11-26)
+  - channel_id: UC18rzuvA7mnkvXTAls7E7Cw
+    topic: game
+    note: "scout:mention 구독 6570 롱폼 47/50 최근 업로드 2026-11-21"
+  # 브금대통령[BGM President] (scout 2026-11-26)
+  - channel_id: UC7oH_BYk5rSP0JF7IDn-jRQ
+    topic: game
+    note: "scout:mention 구독 500000 롱폼 8/50 최근 업로드 2026-11-25"
+  # 오네게 5555 (scout 2026-11-26)
+  - channel_id: UCBls7s9FNgzf-ehRCnrXK1w
+    topic: economy
+    note: "scout:mention 구독 7670 롱폼 33/50 최근 업로드 2026-11-22"
+  # Kangwoo Kim (scout 2026-11-26)
+  - channel_id: UCDD_RxV4mBT5omIfGfAq0Tg
+    topic: economy
+    note: "scout:mention 구독 2220 롱폼 18/50 최근 업로드 2026-11-15"
+  # 출판사 무제 MUZE (scout 2026-11-26)
+  - channel_id: UCDls3WiPkPi6BO5jebYKiHQ
+    topic: web-drama
+    note: "scout:mention 구독 171000 롱폼 42/50 최근 업로드 2026-11-19"
+  # 브금통장 (scout 2026-11-26)
+  - channel_id: UCGM8lqxkcF1mtZTqAqOTr4g
+    topic: economy
+    note: "scout:mention 구독 1560 롱폼 12/50 최근 업로드 2026-11-25"
 untrack: []
 
 # 2026-11-12 (user-approved, PERSONA15~18: 당뇨/당뇨병, 인공지능/AI split one subject's counts): duplicate subjects
