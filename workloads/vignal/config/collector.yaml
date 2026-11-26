@@ -337,6 +337,14 @@ video_topics:
   max_per_run: 3000 # 2026-11-12: back from the one-off 30000 kind backfill (dev, ≈ $3.5 spent)
   group_size: 25
 
+# 2026-11-26 (vignal, user-approved): 기획 주제 -- 제목 매칭 뒤에도 소재가 없는 30일 일반 영상에 고정 목록 58개 중 하나를
+# 제목으로 고른다 (Gemini batch, 300개 시험 2회: 95% 부여·약 94% 정확, 1천 개당 약 $0.02 -> 월 ~$0.35, 첫 따라잡기 ~$0.4).
+# 이 키를 읽는 이미지에서만 돈다 (dev 발행은 아래 이미지, prod 수집기는 main 반영 뒤).
+video_themes:
+  enabled: true
+  max_per_run: 3000
+  group_size: 30
+
 # 관찰 태그 (Story 28.3, FR-86, AD-40). 썸네일·제목의 enum 태그는 config/observe-tags.yaml 에 정의한다.
 # llm: 블록과 GEMINI_API_KEY 를 공유한다. 운영자가 G-5 회신과
 # 품질 확인 100장×3회(docs/ops/observe-tags.md)를 본 뒤에만 켠다.
