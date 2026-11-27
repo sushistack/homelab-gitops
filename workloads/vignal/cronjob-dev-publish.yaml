@@ -72,7 +72,7 @@ spec:
                   drop: ["ALL"]
           containers:
             - name: vignal
-              image: ghcr.io/sushistack/vignal@sha256:aec30b6a2cc73a7444c0d1ab4dcb3b6faf4ce821c7f0873d53ccd9c83f78765d   # sha-0fcca45 (dev 2026-11-27: month rows for every field)
+              image: ghcr.io/sushistack/vignal@sha256:315875778fd100681cbb0b8f789854aaf95c8f8952f5ca6f68dacd35332f01cb   # sha-2e5f889 (dev 2026-11-27: mult.h24x beside d7; tagging.hit_ratio, off)
               args: ["publish-dev"]
               env:
                 - name: TZ
