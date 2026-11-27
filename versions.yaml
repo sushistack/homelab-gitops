@@ -122,9 +122,10 @@ workloads:
     chartVersion: 0.15.1
   arc-runners-vignal:
     manifest: argocd/apps/arc-runners-vignal.yaml
-    # vignal runner scale set (gha-runner-scale-set chart) + the runner image it starts per job.
+    # vignal runner scale set (gha-runner-scale-set chart) + the runner image it starts per job:
+    # actions-runner 2.338.2 with the CI tools baked in (vignal repo .github/runner/Dockerfile).
     chartVersion: 0.15.1
-    image: ghcr.io/actions/actions-runner:2.338.2
+    image: ghcr.io/sushistack/vignal-runner@sha256:d200878adab29d671cb034d140b97687c52ac203322bb9732bb1af726a6a0462   # pw1.64.1-go1.25.0-4e44d93a
   arc-runners-homelab-dash:
     manifest: argocd/apps/arc-runners-homelab-dash.yaml
     # homelab-dash runner scale set; same chart + runner image as arc-runners-vignal.
