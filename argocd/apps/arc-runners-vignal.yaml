@@ -1,6 +1,6 @@
 # vignal's runner scale set `vignal-k3s` — GitHub Actions jobs of github.com/sushistack/vignal (PRIVATE repo only:
 # never point a self-hosted runner at a public repo, an outside PR would run code in the homelab) run here as
-# ephemeral pods: one pod per job, removed when the job ends; one idle pod waits for the next job (minRunners 1).
+# ephemeral pods: one pod per job, removed when the job ends; three idle pods wait for the next jobs (minRunners 3).
 #
 # Multi-source Application:
 #   Source 1: the gha-runner-scale-set chart (version pinned in versions.yaml).
@@ -29,9 +29,10 @@ spec:
           githubConfigUrl: https://github.com/sushistack/vignal
           githubConfigSecret: arc-github
           runnerScaleSetName: vignal-k3s
-          # 2026-11-27 (CI time): one runner stays warm (a cold pod cost each job about a minute) and go / web / e2e
-          # run side by side. All runners share k3s-cp-3 (6 vCPU / 18 GiB on pve-k12) with the homelab-dash runner.
-          minRunners: 1
+          # 2026-11-27 (CI time): three runners stay warm. A new pod is up in a second, but GitHub hands it a job only
+          # 40-50s later (measured), so `changes` takes one and web / e2e start at once on the other two. Idle cost is
+          # the 2Gi memory request each. All runners share k3s-cp-3 (6 vCPU / 18 GiB on pve-k12) with the homelab-dash runner.
+          minRunners: 3
           maxRunners: 3
           controllerServiceAccount:
             namespace: arc-systems
