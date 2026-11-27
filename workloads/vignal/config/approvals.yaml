@@ -2187,6 +2187,46 @@ approve:
   - channel_id: UCGM8lqxkcF1mtZTqAqOTr4g
     topic: economy
     note: "scout:mention 구독 1560 롱폼 12/50 최근 업로드 2026-11-25"
+  # 지혜jiejie (scout 2026-11-27)
+  - channel_id: UCO6hREphAYa51IO_m-ob8iQ
+    topic: real-estate
+    note: "scout:mention 구독 22900 롱폼 28/50 최근 업로드 2026-11-22"
+  # 재테크 신선배, 부룡TV (scout 2026-11-27)
+  - channel_id: UC_oIz7_AHOXaRSaWQcpqNAA
+    topic: economy
+    note: "scout:mention 구독 76200 롱폼 16/50 최근 업로드 2026-11-26"
+  # 소녀전선2: 망명 (scout 2026-11-27)
+  - channel_id: UCjlbr88kuWy4sMtvLv6f5vQ
+    topic: game
+    note: "scout:mention 구독 12900 롱폼 13/50 최근 업로드 2026-11-21"
+  # 이기릿 EEgirIT (scout 2026-11-27)
+  - channel_id: UClC7JcEtAZVa9vh6IRwlToA
+    topic: tech
+    note: "scout:mention 구독 53300 롱폼 7/50 최근 업로드 2026-11-25"
+  # 서진원소장의 바른수면연구소 (scout 2026-11-27)
+  - channel_id: UCuDldvhPJRC3dzBICSsfNJQ
+    topic: education
+    note: "scout:mention 구독 22700 롱폼 15/50 최근 업로드 2026-11-20"
+  # 디코드 (scout 2026-11-27)
+  - channel_id: UCSZdezvxTb8uuDFDAC5aoTQ
+    topic: tech
+    note: "scout:popular 구독 13500 롱폼 35/50 최근 업로드 2026-11-26"
+  # 쿡깸 / 쿠키뉴스 게임 (scout 2026-11-27)
+  - channel_id: UCUnA7OC8mkGgm5qOj-d7V8g
+    topic: game
+    note: "scout:popular 구독 10700 롱폼 16/50 최근 업로드 2026-11-26"
+  # 시우너38 (scout 2026-11-27)
+  - channel_id: UCHvXjxW7eHy4lyJNzhx0XoQ
+    topic: game
+    note: "scout:featured 구독 19500 롱폼 7/50 최근 업로드 2026-11-14"
+  # 사야되나? - IT도 패션이다 (scout 2026-11-27)
+  - channel_id: UC75nkVGVnnapAD9Sc8VQnlA
+    topic: tech
+    note: "scout:mention 구독 190000 롱폼 16/50 최근 업로드 2026-11-17"
+  # Jesus Yoon (scout 2026-11-27)
+  - channel_id: UCGnUWBLtkdJ10Qnj46vlU3Q
+    topic: tech
+    note: "scout:mention 구독 121000 롱폼 32/50 최근 업로드 2026-11-13"
 untrack: []
 
 # 2026-11-12 (user-approved, PERSONA15~18: 당뇨/당뇨병, 인공지능/AI split one subject's counts): duplicate subjects
