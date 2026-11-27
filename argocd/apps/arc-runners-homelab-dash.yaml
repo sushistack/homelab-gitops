@@ -22,7 +22,7 @@ spec:
           githubConfigSecret: arc-github
           runnerScaleSetName: homelab-dash-k3s
           minRunners: 0
-          # Shares k3s-cp-3 (6 vCPU / 18 GiB on pve-k12) with the vignal runners.
+          # Shares k3s-cp-3 (10 vCPU / 18 GiB on pve-k12; 6 until 2026-11-27) with the vignal runners.
           maxRunners: 1
           controllerServiceAccount:
             namespace: arc-systems

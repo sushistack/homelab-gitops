@@ -31,7 +31,7 @@ spec:
           runnerScaleSetName: vignal-k3s
           # 2026-11-27 (CI time): three runners stay warm. A new pod is up in a second, but GitHub hands it a job only
           # 40-50s later (measured), so `changes` takes one and web / e2e start at once on the other two. Idle cost is
-          # the 2Gi memory request each. All runners share k3s-cp-3 (6 vCPU / 18 GiB on pve-k12) with the homelab-dash runner.
+          # the 2Gi memory request each. All runners share k3s-cp-3 (10 vCPU / 18 GiB on pve-k12; 6 until 2026-11-27) with the homelab-dash runner.
           minRunners: 3
           maxRunners: 3
           controllerServiceAccount:
