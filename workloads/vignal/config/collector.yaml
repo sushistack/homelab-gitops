@@ -326,6 +326,7 @@ tagging:
   mix_channels: true # 2026-11-18 (user-approved, cost): 같은 후보(분야) 영상을 채널을 섞어 12개씩 묶는다(채널 힌트는 영상마다). 시험: 태그 입력 851→424토큰/편(약 -34%), 맞는 소재 연결 91→82%(약 -8%p) 감수. 끄면 채널별(group_size)
   hold_hours: 24 # 2026-11-13 (user-approved, cost): 덜 찬 묶음은 영상이 모두 24시간 안이면 다음 run까지 기다려 채운다. 0 = 끔
   min_age_hours: 24 # 2026-11-24 (user-approved, cost): tag only videos 24h+ old at or above their channel median views (vignal PR #75); 0 = off
+  hit_top: 10 # 2026-11-28 (user-approved): also tag the top 10 hits (views 2x+ the channel's same-format median, a day old) of each screen group -- topic x long/shorts x subscriber band -- past the three rules above, shorts included (vignal PR #108/#109). Measured on the prod DB: 2,647 backlog (~$0.3 once), ~440 a week (~$0.2/month). 0 = off
   channel_l2_share: 0.6 # tags pending 이 채널 2단계를 제안하는 비중
   subjects:
     hint_count: 10 # 2026-11-02 운영자(vignal Story 33.2): 프롬프트 힌트로 주는 채널 최근 30일 active 소재 수. 소재 추출을 끄려면 config/subject-types.yaml 을 ConfigMap 에서 뺀다
