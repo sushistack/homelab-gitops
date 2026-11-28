@@ -28,4 +28,4 @@ kubectl delete priorityclass longhorn-critical
 rm -rf /var/lib/longhorn
 ```
 
-Steps 1–4 done on the live cluster as of 2026-11-28. Step 5 still pending.
+All five steps done on the live cluster as of 2026-11-28.
