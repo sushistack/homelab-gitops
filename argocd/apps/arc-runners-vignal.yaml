@@ -1,6 +1,6 @@
 # vignal's runner scale set `vignal-k3s` — GitHub Actions jobs of github.com/sushistack/vignal (PRIVATE repo only:
 # never point a self-hosted runner at a public repo, an outside PR would run code in the homelab) run here as
-# ephemeral pods: one pod per job, removed when the job ends, 0 pods when idle.
+# ephemeral pods: one pod per job, removed when the job ends; three idle pods wait for the next jobs (minRunners 3).
 #
 # Multi-source Application:
 #   Source 1: the gha-runner-scale-set chart (version pinned in versions.yaml).
@@ -29,9 +29,11 @@ spec:
           githubConfigUrl: https://github.com/sushistack/vignal
           githubConfigSecret: arc-github
           runnerScaleSetName: vignal-k3s
-          minRunners: 0
-          # All runners share k3s-cp-3 (6 vCPU / 18 GiB on pve-k12) with the homelab-dash runner.
-          maxRunners: 2
+          # 2026-11-27 (CI time): three runners stay warm. A new pod is up in a second, but GitHub hands it a job only
+          # 40-50s later (measured), so `changes` takes one and web / e2e start at once on the other two. Idle cost is
+          # the 2Gi memory request each. All runners share k3s-cp-3 (10 vCPU / 18 GiB on pve-k12; 6 until 2026-11-27) with the homelab-dash runner.
+          minRunners: 3
+          maxRunners: 3
           controllerServiceAccount:
             namespace: arc-systems
             name: arc-gha-rs-controller
@@ -40,9 +42,13 @@ spec:
               # CI runs on k3s-cp-3 = the pve-k12 host (dev/CI machine), never next to services on pve.
               nodeSelector:
                 kubernetes.io/hostname: k3s-cp-3
+              imagePullSecrets:
+                - name: ghcr-sushistack   # infra/arc-runners/sealedsecret-ghcr.yaml (the runner image is private)
               containers:
                 - name: runner
-                  image: ghcr.io/actions/actions-runner:2.338.2   # == versions.yaml arc-runners-vignal.image
+                  # The stock runner 2.338.2 + Node, Go, PostgreSQL 16 and Playwright Chromium (vignal repo
+                  # .github/runner/Dockerfile, built by scripts/build-runner-image.sh). == versions.yaml arc-runners-vignal.image
+                  image: ghcr.io/sushistack/vignal-runner@sha256:d200878adab29d671cb034d140b97687c52ac203322bb9732bb1af726a6a0462   # pw1.64.1-go1.25.0-4e44d93a
                   command: ["/home/runner/run.sh"]
                   resources:
                     requests:

@@ -39,11 +39,33 @@ spec:
             fsGroup: 65532
             seccompProfile:
               type: RuntimeDefault
+          # 2026-11-24: the public read Postgres over the pg.vignal.kr tunnel (Access service token), on 127.0.0.1:5432
+          # for VIGNAL_PG_DSN. Native sidecar: up before the collector, stopped after it (vignal docs/ops/postgres.md).
+          initContainers:
+            - name: pg-tunnel
+              image: cloudflare/cloudflared:2026.10.7@sha256:4955524aeaa379e154023d5a027c250f7b35041a2e7e950cf13f144bc9b9c5ba
+              restartPolicy: Always
+              args: ["access", "tcp", "--hostname", "pg.vignal.kr", "--url", "127.0.0.1:5432"]
+              env:
+                - name: TUNNEL_SERVICE_TOKEN_ID
+                  valueFrom: { secretKeyRef: { name: vignal-pg, key: TUNNEL_SERVICE_TOKEN_ID } }
+                - name: TUNNEL_SERVICE_TOKEN_SECRET
+                  valueFrom: { secretKeyRef: { name: vignal-pg, key: TUNNEL_SERVICE_TOKEN_SECRET } }
+              # No startupProbe: cloudflared listens on loopback and a tcpSocket probe dials the pod IP (refused). The
+              # collector connects only after its publish, minutes later.
+              resources:
+                requests: { cpu: 10m, memory: 32Mi }
+                limits: { memory: 128Mi }
+              securityContext:
+                allowPrivilegeEscalation: false
+                readOnlyRootFilesystem: true
+                capabilities:
+                  drop: ["ALL"]
           containers:
             - name: vignal
               # Immutable sha tag from the app repo's CI (NOT :latest — version-lint rejects
               # floating refs). Upgrade = bump here + versions.yaml in one PR.
-              image: ghcr.io/sushistack/vignal@sha256:d02bb73c5efa10b9cd6d4bd2c279fee49246ef6df1bc906ae449b15cda6cec52   # sha-9567967 (vignal main: … + channel bundles + 11-14 vtopic rules: brand campaign = ad, game recap = game)
+              image: ghcr.io/sushistack/vignal@sha256:c275950a8819b30830e0ff14e81d0d4b782ea2288190e8d245f16cba2d327ac2   # sha-914b5d7 (main 2026-11-28, PR #109: tagging.hit_top; otherwise = sha-67294c9)
               args: ["run"]
               env:
                 - name: TZ
@@ -58,6 +80,8 @@ spec:
                   value: https://${SECRET:DOMAIN_VIGNAL_SITE}/schema-support.json
                 - name: TMPDIR
                   value: /tmp
+                - name: VIGNAL_PG_DSN   # 2026-11-24: collector writes each batch into the public read Postgres
+                  valueFrom: { secretKeyRef: { name: vignal-pg, key: VIGNAL_PG_DSN } }
               envFrom:
                 - secretRef:
                     name: vignal-secrets
