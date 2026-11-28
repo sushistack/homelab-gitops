@@ -79,7 +79,11 @@ services:
     container_name: seerr
     restart: unless-stopped
     init: true
-    environment: { TZ: Asia/Seoul }
+    environment:
+      TZ: Asia/Seoul
+      # TMDB (CloudFront) takes ~1 s to connect from here; Node's happy-eyeballs gives each
+      # address 250 ms and Docker has no IPv6 -> every TMDB call ETIMEDOUT. Plain IPv4 connect works.
+      NODE_OPTIONS: --no-network-family-autoselection --dns-result-order=ipv4first
     volumes: [/opt/arr/config/seerr:/app/config]
     ports: ["5055:5055"]
 
