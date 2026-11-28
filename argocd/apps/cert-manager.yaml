@@ -27,13 +27,15 @@ spec:
           enabled: true
         # DNS-01 self-check: this network (OpenWrt DoH/Zapret) REFUSES plain :53 egress to public
         # resolvers / authoritative NS, so cert-manager's default direct-to-authoritative propagation
-        # check fails ("connection refused"). Route it through in-cluster CoreDNS, which forwards
-        # external queries to the node upstream (the LAN DoH resolver) and resolves the challenge TXT.
-        # Use the short hostname (not the 10.43.x ClusterIP / *.svc.cluster.local) — this Helm-source
-        # app is NOT CMP-rendered, and the exposure gate blocks IPv4 literals + .local hostnames.
+        # check fails ("connection refused"). It used to go via in-cluster CoreDNS -> OpenWrt, but
+        # OpenWrt now does split-horizon for eli.kr (`address=/eli.kr/...` + local-only `server=/eli.kr/`),
+        # so every *.eli.kr name — including _acme-challenge TXT — is answered locally and the check
+        # never passes (memo.eli.kr renewal stuck "not yet propagated", 2026-11). Use public DoH over
+        # :443 instead: bypasses both the :53 block and the LAN split view. Hostname, not an IPv4
+        # literal (exposure gate).
         extraArgs:
           - --dns01-recursive-nameservers-only
-          - --dns01-recursive-nameservers=kube-dns.kube-system:53
+          - --dns01-recursive-nameservers=https://cloudflare-dns.com/dns-query
   destination:
     server: https://kubernetes.default.svc
     namespace: cert-manager
