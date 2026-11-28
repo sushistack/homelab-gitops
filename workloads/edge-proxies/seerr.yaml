@@ -1,0 +1,86 @@
+# Traefik front for Seerr (request UI) in the jellyfin LXC: Docker Compose, lxc/jellyfin-arr/.
+# Backend = http://${SECRET:IP_JELLYFIN}:5055. Public via CF tunnel, gated by its own CF Access app
+# (Google SSO; one Access app per host — see memory/cf-access notes). Seerr also requires Jellyfin login.
+# Same selector-less Service + manual EndpointSlice pattern as jellyfin.yaml (slice applied out of band).
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: seerr-tls
+  namespace: edge-proxies
+spec:
+  secretName: seerr-tls
+  dnsNames:
+    - "${SECRET:DOMAIN_SEERR}"
+  issuerRef:
+    name: letsencrypt-prod
+    kind: ClusterIssuer
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: seerr-backend
+  namespace: edge-proxies
+spec:
+  clusterIP: None        # headless; endpoints come from the manual EndpointSlice below
+  ports:
+    - name: http
+      port: 5055
+      targetPort: 5055
+      protocol: TCP
+---
+apiVersion: discovery.k8s.io/v1
+kind: EndpointSlice
+metadata:
+  name: seerr-backend-1
+  namespace: edge-proxies
+  labels:
+    kubernetes.io/service-name: seerr-backend   # associates this slice with the Service above
+addressType: IPv4
+ports:
+  - name: http
+    port: 5055
+    protocol: TCP
+endpoints:
+  - addresses:
+      - "${SECRET:IP_JELLYFIN}"                          # backend IP (tokenized — never a raw .x in git)
+    conditions:
+      ready: true        # explicit: an absent `ready` defaults to ready, but stricter Traefik builds may skip NotReady endpoints
+---
+apiVersion: traefik.io/v1alpha1
+kind: IngressRoute
+metadata:
+  name: seerr
+  annotations:
+    # public (whitelist): external-dns publishes this host to CF DNS
+    external-dns.alpha.kubernetes.io/target: 761ca633-e9d6-4af8-8508-727bba00f0a9.cfargotunnel.com
+  namespace: edge-proxies
+spec:
+  entryPoints:
+    - websecure
+  routes:
+    - match: Host(`${SECRET:DOMAIN_SEERR}`)
+      kind: Rule
+      services:
+        - name: seerr-backend
+          port: 5055
+          scheme: http
+  tls:
+    secretName: seerr-tls
+---
+apiVersion: traefik.io/v1alpha1
+kind: IngressRoute
+metadata:
+  name: seerr-redirect
+  namespace: edge-proxies
+spec:
+  entryPoints:
+    - web
+  routes:
+    - match: Host(`${SECRET:DOMAIN_SEERR}`)
+      kind: Rule
+      middlewares:
+        - name: redirect-https
+      services:
+        - name: seerr-backend
+          port: 5055
+          scheme: http

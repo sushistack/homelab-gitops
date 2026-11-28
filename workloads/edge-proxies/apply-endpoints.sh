@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Story 5.8 (AC6b) — apply the 5 external-host EndpointSlices OUT OF BAND.
+# Story 5.8 (AC6b) — apply the external-host EndpointSlices OUT OF BAND.
 #
 # WHY out-of-band: ArgoCD's cluster-wide resource.exclusions (argocd-cm) excludes BOTH core/v1
 # Endpoints AND discovery.k8s.io/EndpointSlice (the standard default — it stops ArgoCD watching the
@@ -17,7 +17,7 @@ set -euo pipefail
 cd "$(dirname "$0")/../.."
 
 tmp="$(mktemp)"; trap 'rm -f "$tmp"' EXIT
-for h in proxmox openwrt jellyfin immich kvm; do
+for h in proxmox openwrt jellyfin immich kvm seerr; do
   bin/render "workloads/edge-proxies/$h.yaml" >/dev/null
 done
 python3 - "$tmp" <<'PY'
