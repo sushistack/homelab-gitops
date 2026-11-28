@@ -8,7 +8,7 @@ Everything after it reconciles.
 1. **Provision three VMs** on Proxmox `${SECRET:HOST_PROXMOX}` — shapes recorded in
    [`../ansible/README.md`](../ansible/README.md). (Terraform Proxmox provider is deferred.)
 2. **Ansible host layer** (`../ansible/`) — three plays, all `server` role, **embedded etcd**:
-   - node 1: **k3s v1.35.10+k3s1** with `--cluster-init` (initializes etcd), bundled Traefik +
+   - node 1: **k3s v1.37.2+k3s1** with `--cluster-init` (initializes etcd), bundled Traefik +
      `--tls-san` (all three node IPs); **no** `--disable=traefik`.
    - nodes 2 & 3: join with `--server https://<node1>:6443` + the shared node-token, as `server`
      (**NOT** agent) → etcd **quorum=3, never 2**.
