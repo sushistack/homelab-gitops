@@ -178,7 +178,7 @@ workloads:
   # (AR29 — each manifest comment carries the `imagetools inspect` command).
   semaphore:
     manifest: workloads/semaphore/deployment.yaml
-    image: semaphoreui/semaphore:v2.20.23
+    image: semaphoreui/semaphore:v2.20.24
   # Beszel decommissioned 2026-06-22 — superseded by Netdata (node + per-pod + Proxmox-child). See DECISIONS.md.
   # Netdata — heavier-detail node + per-pod monitoring (parent dashboard/dbengine + children DaemonSet
   # streaming). SAME image for both roles (role = config). Tag pinned now (lint passes); SWAP TO @sha256
