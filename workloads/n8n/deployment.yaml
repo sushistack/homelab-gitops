@@ -1,7 +1,7 @@
 # Story 4.7 — n8n on k3s (ports configs/docker/docker-compose.yml:5-44).
 # SQLite on an RWO volume: strategy MUST be Recreate (never RollingUpdate — two pods sharing one WAL
 # is the named anti-pattern, AC5/AR14) and terminationGracePeriodSeconds 30 ports the Compose
-# stop_grace_period: 30s WAL-checkpoint flush. Same shape as the ntfy/navidrome reference.
+# stop_grace_period: 30s WAL-checkpoint flush. Same shape as the ntfy reference.
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -27,8 +27,8 @@ spec:
     spec:
       terminationGracePeriodSeconds: 30   # WAL checkpoint flush on shutdown (= Compose stop_grace_period)
       # n8nio/n8n runs as the non-root `node` user (uid/gid 1000); fsGroup makes the kubelet chown the
-      # freshly-provisioned RWO volume to gid 1000 so n8n can write ~/.n8n. (deluan/navidrome runs as
-      # root so it didn't need this — n8n does.) The cutover ingest preserves uid 1000 ownership too.
+      # freshly-provisioned RWO volume to gid 1000 so n8n can write ~/.n8n.
+      # The cutover ingest preserves uid 1000 ownership too.
       securityContext:
         runAsUser: 1000
         runAsGroup: 1000

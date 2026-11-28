@@ -1,5 +1,5 @@
 # Story 4.7 — public route for n8n: web -> websecure, TLS from the n8n-tls Secret (certificate.yaml);
-# plain HTTP 301-redirects to HTTPS. Same worked shape as navidrome/miniflux/draw. Host is tokenized
+# plain HTTP 301-redirects to HTTPS. Same worked shape as miniflux/draw. Host is tokenized
 # (${SECRET:DOMAIN_N8N}); the render CMP substitutes at ArgoCD sync time. traefik.io/v1alpha1 (v3) —
 # the old traefik.containo.us API silently fails.
 #

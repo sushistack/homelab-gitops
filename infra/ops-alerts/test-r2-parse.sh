@@ -15,13 +15,13 @@ STALED=$(( 27 * 3600 ))    # 27h — daily-cadence exception (R2_DAILY_SVCS)
 DAILY="anytype anytype-heart"
 RET=$(( 35 * 86400 ))      # 35d
 
-# Fixture: ntfy = fresh+rotated-ok; navidrome = STALE (newest 20h old); miniflux = OLD (oldest 40d);
+# Fixture: ntfy = fresh+rotated-ok; memos = STALE (newest 20h old); miniflux = OLD (oldest 40d);
 # anytype = daily-cadence, 20h old => under the 27h exception, must NOT alert (the c1c11c1 false-positive).
-# (ntfy newest 1h ago; navidrome newest 20h ago; miniflux newest 2h ago but oldest 40d ago; anytype 20h ago)
+# (ntfy newest 1h ago; memos newest 20h ago; miniflux newest 2h ago but oldest 40d ago; anytype 20h ago)
 FIXTURE='[
   {"Path":"ntfy/ntfy-a.tar.gz","ModTime":"2026-06-19T23:00:00.500Z"},
   {"Path":"ntfy/ntfy-b.tar.gz","ModTime":"2026-06-10T00:00:00Z"},
-  {"Path":"navidrome/navidrome-a.tar.gz","ModTime":"2026-06-19T04:00:00Z"},
+  {"Path":"memos/memos-a.tar.gz","ModTime":"2026-06-19T04:00:00Z"},
   {"Path":"miniflux/miniflux-a.tar.gz","ModTime":"2026-06-19T22:00:00Z"},
   {"Path":"miniflux/miniflux-old.tar.gz","ModTime":"2026-05-11T00:00:00Z"},
   {"Path":"anytype/anytype-a.tar.gz","ModTime":"2026-06-19T04:00:00Z"},
@@ -41,7 +41,7 @@ OUT=$(printf '%s' "$FIXTURE" | jq -r --argjson now "$NOW" --argjson stale "$STAL
 echo "--- filter output ---"; echo "$OUT"; echo "---------------------"
 
 fail=0
-echo "$OUT" | grep -q "^STALE	navidrome	20$" || { echo "FAIL: navidrome should be STALE (20h)"; fail=1; }
+echo "$OUT" | grep -q "^STALE	memos	20$" || { echo "FAIL: memos should be STALE (20h)"; fail=1; }
 echo "$OUT" | grep -q "^OLD	miniflux	40$"     || { echo "FAIL: miniflux should be OLD (40d)"; fail=1; }
 echo "$OUT" | grep -q "ntfy"                     && { echo "FAIL: ntfy is healthy, must not alert"; fail=1; } || true
 echo "$OUT" | grep -q "anytype"                  && { echo "FAIL: anytype is daily-cadence (20h<27h), must not alert"; fail=1; } || true

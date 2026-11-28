@@ -1,4 +1,4 @@
-# Story 4.8 — vaultwarden's single durable PVC. Unlike navidrome (two classes) vaultwarden is ONE
+# Story 4.8 — vaultwarden's single durable PVC. Unlike karakeep (split classes) vaultwarden is ONE
 # data class: everything under /data is durable, non-regenerable, CRITICAL.
 #   db.sqlite3 (+ WAL)   — the vault (users, ciphers, org keys)
 #   rsa_key.pem/.pub     — JWT signing keys; LOSING THEM forces every client/device to re-auth

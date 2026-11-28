@@ -1,9 +1,9 @@
 # Story 4.8 — vaultwarden backup actor. Online sqlite3 .backup of the vault DB + the durable,
 # non-regenerable companions (rsa_key.*, config.json, attachments/, sends/) -> R2. Ports the Compose
 # vaultwarden-backup offen sidecar (docker-compose.yml:540-572, `50 */6 * * *`, prefix vaultwarden-).
-# Copied from the navidrome reference (Story 4.3/4.1) with the dump command + R2 path changed.
+# Copied from the ntfy reference (Story 4.1) with the dump command + R2 path changed.
 #
-# Why MORE than just db.sqlite3 (unlike navidrome's DB-only dump): every file under /data is durable
+# Why MORE than just db.sqlite3 (unlike ntfy's DB-only dump): every file under /data is durable
 # here. rsa_key.* is LOAD-BEARING — lose it and every client re-auths (the JWT signing key). icon_cache/
 # is the only regenerable dir and is deliberately excluded.
 #

@@ -1,6 +1,6 @@
 # Story 4.4 — FILE-CLASS scale-to-0 backup actors (one per component). This is the BadgerDB port of
 # the Compose offen sidecar's `stop-during-backup` (docker-compose.yml:133-136,159-162) — NOT the
-# online `sqlite3 .backup` path (ntfy/navidrome): BadgerDB/leveldb has no online-consistent dump, so
+# online `sqlite3 .backup` path (ntfy/karakeep): BadgerDB/leveldb has no online-consistent dump, so
 # the writer must be STOPPED before the copy or the KV store is torn. (AC3 / Reconciliation 2)
 #
 # HOW SCALE-TO-0 WORKS WITH RWO (the crux): RWO = ReadWriteOnce-per-NODE (not per-pod). So the backup

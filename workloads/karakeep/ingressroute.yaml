@@ -1,6 +1,6 @@
 # Story 4.5 — public route for karakeep-web ONLY (never meili/chrome/bridge): web -> websecure, TLS
 # from the karakeep-tls Secret (certificate.yaml); plain HTTP 301-redirects to HTTPS. Same shape as
-# navidrome/miniflux. Host is tokenized (${SECRET:DOMAIN_KEEP} = keep.<public-zone>, Reconciliation 4); the
+# miniflux. Host is tokenized (${SECRET:DOMAIN_KEEP} = keep.<public-zone>, Reconciliation 4); the
 # render CMP substitutes at ArgoCD sync time. traefik.io/v1alpha1 (v3) — the old traefik.containo.us
 # API silently fails.
 #

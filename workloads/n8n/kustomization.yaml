@@ -15,7 +15,7 @@ resources:
 # NOT included on purpose:
 #   _cutover/   -> one-shot ingest Job, applied by hand during the write-frozen cutover (must NOT be
 #                 ArgoCD-managed). No networkpolicy.yaml: cluster is allow-all today; a per-ns
-#                 default-deny is platform-baseline debt (same deferral as navidrome 4.3), not n8n's
+#                 default-deny is platform-baseline debt (same deferral as ntfy 4.1), not n8n's
 #                 to introduce — n8n is single-component (no east-west isolation need).
 
 # Use `labels:` (newer field), NEVER commonLabels (pollutes selectors -> immutable conflict) and

@@ -41,7 +41,7 @@ spec:
   # this ArgoCD selfHeal would race the CronJob and scale the app back to 1 MID-BACKUP — reopening
   # BadgerDB while the tar runs = the torn KV store the scale-to-0 exists to prevent. Ignoring
   # /spec/replicas hands replica count to the CronJob (the trap restores it; see backup-cronjob.yaml).
-  # anytype is the only scale-to-0 service (navidrome/ntfy use online dumps), so this guard is new.
+  # anytype is the only scale-to-0 service (ntfy/karakeep use online dumps), so this guard is new.
   ignoreDifferences:
     - group: apps
       kind: Deployment

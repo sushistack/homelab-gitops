@@ -10,7 +10,7 @@
 # pod's node via podAffinity, mount RW, dump to an emptyDir /scratch — NEVER scale the app to 0.
 #
 # Choose the dump command by data class (architecture.md AR16/AR17) — THIS is the only per-service delta:
-#   - SQLite          -> sqlite3 <db> ".backup /scratch/<db>"   (online, lock-safe; ntfy/navidrome/karakeep)
+#   - SQLite          -> sqlite3 <db> ".backup /scratch/<db>"   (online, lock-safe; ntfy/memos/karakeep)
 #   - Postgres        -> pg_dump / pg_dumpall > /scratch/dump.sql   (miniflux 4.6)
 #   - File-class      -> tar/rsync the mount -> /scratch
 #   - BadgerDB / etc. -> quiesce or snapshot, then copy (anytype 4.4)

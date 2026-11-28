@@ -7,7 +7,7 @@
 # This Job co-schedules onto the ntfy pod's node via podAffinity and mounts the PVC read-write
 # (online `sqlite3 .backup` needs the -wal/-shm files), writing the dump to an emptyDir /scratch —
 # NEVER back onto /data. The app is NOT scaled to 0 (online backup needs no quiesce). Operator-
-# confirmed house pattern 2026-06-18; 4.3 (navidrome SQLite) / 4.5 (karakeep SQLite) / 4.6 (miniflux
+# confirmed house pattern 2026-06-18; 4.5 (karakeep SQLite) / 4.6 (miniflux
 # pg_dump) copy this with only the dump command + image changed.
 apiVersion: batch/v1
 kind: CronJob

@@ -1,7 +1,7 @@
 # Story 5.8 (AC6a) — uptime-kuma on k3s (was binwiederhier-style Compose on .20 behind NPM).
 # SQLite on an RWO volume: strategy MUST be Recreate (two pods sharing one WAL is the named
 # anti-pattern) and terminationGracePeriodSeconds 30 gives the WAL checkpoint time to flush on
-# shutdown. Same DB-class shape as ntfy/navidrome (AR14; architecture.md 717).
+# shutdown. Same DB-class shape as ntfy (AR14; architecture.md 717).
 apiVersion: apps/v1
 kind: Deployment
 metadata:
