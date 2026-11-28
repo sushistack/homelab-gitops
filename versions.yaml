@@ -100,9 +100,6 @@ workloads:
   memos:
     manifest: workloads/memos/deployment.yaml
     image: neosmemo/memos:0.31.0@sha256:8596928c21551afc7d4e100051510bc134fd0caae51ad1d26cf899845d719321   # v0.30.0
-  navidrome:
-    manifest: workloads/navidrome/deployment.yaml
-    image: deluan/navidrome:0.64.2@sha256:38dc2727bfcfd5ede290f8ada114fc90368146f265ae4701ddddbcbe2a44ee52
   miniflux:
     manifest: workloads/miniflux/deployment.yaml
     image: miniflux/miniflux:2.3.5     # upstream ships no stable digest tag stream; explicit semver tag

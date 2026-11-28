@@ -17,8 +17,8 @@
 # ($CLOUDFLARE_DNS01_TOKEN) come from the operator's environment — never tracked.
 
 # ── Storage prerequisites ────────────────────────────────────────────────────
-# nfs-common is required on every node: local PVs in lidarr/navidrome/komga bind host-path
-# directories that come from an NFS mount (/mnt/music, /mnt/manga). Without nfs-common those
+# nfs-common is required on every node: local PVs in komga bind host-path
+# directories that come from an NFS mount (/mnt/manga). Without nfs-common those
 # mounts silently fail on a fresh k3s install. open-iscsi/iscsid removed (Longhorn gone).
 - name: Play 0 — node storage prerequisites
   hosts: all
