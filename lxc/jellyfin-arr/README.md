@@ -98,7 +98,7 @@ Gluetun's own internal VPN reconnects, which happen during healthcheck restarts,
 - **Bazarr**
   - Connected to Sonarr and Radarr.
   - Language profile `ko-ja-en` is the default for both series and movies.
-  - Providers: Animetosho, plus OpenSubtitles.com and Jimaku once the API keys are added.
+  - Providers: Animetosho, OpenSubtitles.com (operator's account) and Jimaku (API key). All three were verified working on 2026-11-28.
 - **Jellyfin:** a new library "Movies" points at `/media/movies`. The existing libraries are Anime (`/media/anime`), Shows (`/media/shows`) and Study (`/media/english`), and `downloads/` is in none of them.
 
 ## Backup and restore
@@ -122,3 +122,16 @@ Gluetun's own internal VPN reconnects, which happen during healthcheck restarts,
 - Radarr is connected as `radarr:7878` with HD-1080p and `/data/movies`.
 - Sonarr is connected as `sonarr:8989` with HD-1080p. Its default root is `/data/shows`, and anime requests go to `/data/anime` with tag `anime`.
 - **Gotcha: TMDB timeouts.** Connecting to TMDB (CloudFront) takes about 1 s from this network. Node's happy-eyeballs gives each address only 250 ms, so every TMDB call failed with `ETIMEDOUT` and the UI showed "Series Not Found". `NODE_OPTIONS=--no-network-family-autoselection --dns-result-order=ipv4first` in `compose.yaml` fixes it.
+
+## Quality: "Small (720p pref)" (operator: "720p is enough", 2026-11-28)
+
+This is the built-in profile id 3 (formerly HD-720p), changed in both Sonarr and Radarr:
+
+- **Ranking:** 720p (HDTV, WEB, Bluray) ranks above 1080p (HDTV, WEB, Bluray). 1080p is only a fallback for releases that have no 720p version, which is common for anime.
+- **Excluded:** Remux, BR-DISK and Raw-HD.
+- **No upgrades.**
+- **Size caps (MB per minute):** 720p max 30, preferred 15 (about 3.6 GB per 2 h movie, about 700 MB per 24 min episode). 1080p max 40, preferred 20.
+- **Codec preference:** custom format `x265` (`[xh][ .]?265|HEVC`) scores +10, so smaller HEVC releases win when the quality is equal.
+- **Where it applies:** every existing series and movie uses it, and so do the Seerr defaults (movie, TV and anime).
+
+**Effect:** the first Paprika grab under HD-1080p was a 23 GB REMUX. It was swapped for the 0.8 GB Bluray-720p.
