@@ -195,7 +195,7 @@ subtopics:
   - slug: instrument
     parent: music
     label: '악기·레슨'
-    aliases: [기타레슨, 피아노, 악기]
+    aliases: [기타레슨, 피아노, 악기, 드럼, 통기타, 일렉기타, 베이스기타, 우쿨렐레, 바이올린, 첼로, 핑거스타일]
   - slug: music-etc
     parent: music
     label: '공연·음악 소식'
@@ -203,7 +203,7 @@ subtopics:
   - slug: exam
     parent: education
     label: '입시·수능'
-    aliases: [수능, 입시, 수시, 정시]
+    aliases: [수능, 대학수학능력시험, 입시, 수시, 정시]
   - slug: language
     parent: education
     label: '어학'
@@ -249,6 +249,29 @@ subtopics:
     parent: tech
     label: '개발·코딩'
     aliases: [코딩, 프로그래밍]
+  # 2026-11-22 (persona r10 김하람: SCP·괴담 채널 목록에 그알·사건 클립이 섞임)
+  - slug: mys-ghost
+    parent: mystery
+    label: '괴담·SCP'
+    aliases: [괴담, SCP, 크리피파스타, 도시전설, 무서운이야기, 심야괴담, 공포썰]
+  - slug: mys-crime
+    parent: mystery
+    label: '실화·사건'
+    aliases: [실화, 미제사건, 살인사건, 그것이알고싶다, 그알, 사건반장, 범죄]
+  - slug: mys-etc
+    parent: mystery
+    label: '기타 미스터리'
+    default: true
+  # 2026-11-23 (persona r16–r19 서도현: PC 견적·조립 매장 채널이 가전·IT 리뷰어의 리뷰·언박싱 목록에 섞임)
+  - slug: tech-pc
+    parent: tech
+    label: 'PC·조립'
+    aliases: [조립컴퓨터, 조립PC, 컴퓨터견적, PC견적, 게이밍컴퓨터, 그래픽카드, 컴퓨터조립]
+  # 2026-11-22 (persona r9·r10 서도현: AI·PC 사용법 강좌가 리뷰·언박싱 주간 목록과 추천에 섞임)
+  - slug: tech-howto
+    parent: tech
+    label: 'IT 사용법·강좌'
+    aliases: [사용법, 활용법, 설치법, 컴퓨터기초, 챗GPT, 클로드, 제미나이, 엑셀강좌]
   - slug: tech-etc
     parent: tech
     label: '기타 테크'
@@ -375,3 +398,54 @@ subtopics:
     parent: self-dev
     label: '인문·철학'
     aliases: [철학, 니체, 쇼펜하우어, 동양철학, 고전]
+  # 2026-11-21 (persona panel r4/r5, user approved for prod and dev): fields with no level 2 at all (web-drama left
+  # out: its channels' titles name no split, 1 of 175 got one). Channels get one
+  # from their titles (publish titleL2: 3+ titles and 30%+ naming a node's words), so no retagging is needed.
+  - slug: re-listing
+    parent: real-estate
+    label: '매물 소개·임장'
+    aliases: [매물, 급매, 전원주택, 단독주택, 타운하우스, 임장, 매매가, 분양가, 빌라매매, 상가매물]
+  - slug: re-market
+    parent: real-estate
+    label: '부동산 시황·전망'
+    aliases: [집값, 부동산시장, 아파트값, 아파트, 폭락, 하락, 상승, 전망, 청약, 대출규제, 재건축, 금리, 부동산대책, 공급]
+  - slug: re-etc
+    parent: real-estate
+    label: '기타 부동산'
+    default: true
+  - slug: lv-organize
+    parent: living
+    label: '정리·수납'
+    aliases: [정리, 수납, 정리정돈, 미니멀, 비우기]
+  - slug: lv-clean
+    parent: living
+    label: '청소·세탁'
+    aliases: [청소, 세탁, 빨래, 얼룩, 곰팡이, 세탁기청소]
+  - slug: lv-interior
+    parent: living
+    label: '인테리어·집꾸미기'
+    aliases: [인테리어, 셀프인테리어, 리모델링, 도배, 집꾸미기, 랜선집들이]
+  - slug: lv-tips
+    parent: living
+    label: '살림 꿀팁'
+    aliases: [살림, 꿀팁, 살림템, 살림꿀팁, 다이소, 주방, 생활꿀팁, 살림노하우]
+  - slug: lv-etc
+    parent: living
+    label: '기타 살림'
+    default: true
+  - slug: ec-stock
+    parent: economy
+    label: '주식·투자'
+    aliases: [주식, 종목, 코스피, 코스닥, 나스닥, 배당, ETF, 증시, 미국주식]
+  - slug: ec-crypto
+    parent: economy
+    label: '코인'
+    aliases: [비트코인, 코인, 이더리움, 리플, 가상자산, 알트코인]
+  - slug: ec-money
+    parent: economy
+    label: '재테크·절약'
+    aliases: [재테크, 절약, 적금, 연금, 짠테크, 월급, 통장]
+  - slug: ec-etc
+    parent: economy
+    label: '기타 경제'
+    default: true

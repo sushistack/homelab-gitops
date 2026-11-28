@@ -188,3 +188,19 @@ channels:
     note: "설백 다시보기 · 게임 다시보기·풀영상(VOD) 보관 채널, 크리에이터 또래·협찬 후보에서 뺌 (2026-11-15 수동 검수, claude)"
   - channel_id: UCihUwfQnmBTXwPS88fzbDgA
     note: "살구 풀영상 · 게임 다시보기·풀영상(VOD) 보관 채널, 크리에이터 또래·협찬 후보에서 뺌 (2026-11-15 수동 검수, claude)"
+  - channel_id: UC1cWTErb7vw_UmmuB0dYgsQ
+    note: "TV-People · 최근 30일 영상 216개 모두 'MBC yymmdd 방송' 클립 (2026-11-21 페르소나 r8 노승현, claude)"
+  - channel_id: UCG4L0wKH0Utcq5i9zE7eOXg
+    note: "오늘N · MBC 프로그램 클립, 91개 중 67개 'MBC 방송' 표기 (2026-11-21 페르소나 r8, claude)"
+  - channel_id: UC0imORt231LWWyyotvE3lUw
+    note: "실화 On · 57개 모두 방송 표기 클립 (2026-11-21 페르소나 r8, claude)"
+  - channel_id: UC9idb-NIhZrI6wkPesc3MUg
+    note: "오분순삭 · MBC 예능·드라마 클립, 50개 중 31개 방송 표기 (2026-11-21 페르소나 r8, claude)"
+  - channel_id: UCpvkqYCqk2huuMcJsEuiY5g
+    note: "드파밍 · 드라마 클립, 43개 중 25개 방송 표기 (2026-11-21 페르소나 r8, claude)"
+  - channel_id: UC5biYYSX5sh4QR98ekCd8KA
+    note: "출발! 비디오여행 · MBC 프로그램 채널, 22개 모두 'MBC 방송' 표기. 영화 리뷰어 또래·잘 된 영상에 섞임 (2026-11-21 페르소나 r8 노승현, claude)"
+  - channel_id: UC_U34UlsS9Mp5ZgvsEA7irw
+    note: "그것이 알고싶다 · SBS 프로그램 채널. 미스터리 소규모 크리에이터의 비슷한 채널·잘 된 영상에 섞임 (2026-11-22 페르소나 r11/r12 김하람, claude)"
+  - channel_id: UCANbkO40IlYW1d_aiYuHlgA
+    note: "월드건축자재DIY · 건축자재·원목가구 업체 자체 홍보 채널. 살림 협찬 후보에 섞여 브랜드 페르소나(오세훈)가 이탈 계기로 꼽음 (2026-11-23 r14, claude)"

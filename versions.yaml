@@ -122,9 +122,10 @@ workloads:
     chartVersion: 0.15.1
   arc-runners-vignal:
     manifest: argocd/apps/arc-runners-vignal.yaml
-    # vignal runner scale set (gha-runner-scale-set chart) + the runner image it starts per job.
+    # vignal runner scale set (gha-runner-scale-set chart) + the runner image it starts per job:
+    # actions-runner 2.338.2 with the CI tools baked in (vignal repo .github/runner/Dockerfile).
     chartVersion: 0.15.1
-    image: ghcr.io/actions/actions-runner:2.338.2
+    image: ghcr.io/sushistack/vignal-runner@sha256:d200878adab29d671cb034d140b97687c52ac203322bb9732bb1af726a6a0462   # pw1.64.1-go1.25.0-4e44d93a
   arc-runners-homelab-dash:
     manifest: argocd/apps/arc-runners-homelab-dash.yaml
     # homelab-dash runner scale set; same chart + runner image as arc-runners-vignal.
@@ -134,12 +135,12 @@ workloads:
     manifest: workloads/vignal/cronjob.yaml
     # Own app (github.com/sushistack/vignal, private), built by its CI `image` job -> GHCR (amd64).
     # Pinned by digest (comment = source sha); bump here + cronjob.yaml in one PR.
-    image: ghcr.io/sushistack/vignal@sha256:85b42bb700e78a1b84e0eb49cde2b8cd7105e080297da652c0bfdab5ad390a5c   # sha-421360e (main + channel_mentions only)
+    image: ghcr.io/sushistack/vignal@sha256:c275950a8819b30830e0ff14e81d0d4b782ea2288190e8d245f16cba2d327ac2   # sha-914b5d7 (main 2026-11-28, PR #109: tagging.hit_top; otherwise = sha-67294c9)
   vignal-dev-publish:
     manifest: workloads/vignal/cronjob-dev-publish.yaml
     # Built from the app repo's `dev` branch (CI `image` job on dev pushes, or crane append on the prod image while
     # CI is out of minutes; tag dev-<sha>), pinned by digest. Dev data only.
-    image: ghcr.io/sushistack/vignal@sha256:709df0f82a2b8bac06a358f2613c35d831abda614d0106c755203d33e1e68c2e   # sha-e2e29cc
+    image: ghcr.io/sushistack/vignal@sha256:95ac22d488d8279adf43c0e7a1af236454fe2cbdd2ae6c79d208783d07fdd1a3   # sha-b7b92e8 (dev 2026-11-28: short subject names match whole words -- 프로그 not in 프로그램; tagging.hit_top)
   anytype-heart:
     manifest: workloads/anytype/deployment-heart.yaml
     image: ghcr.io/sushistack/home.server/anytype-heart@sha256:8f1de0ea70e34ef976b98a2cbdc9622fd7ee24c713c724d301500a066f8aac73
