@@ -13,6 +13,7 @@ Docker Compose in **pve CT 200** (`jellyfin`, 10.0.0.10), next to the native `je
 | Radarr | http://10.0.0.10:7878 | Movies (`/data/movies`) |
 | Bazarr | http://10.0.0.10:6767 | Subtitles in ko/ja/en |
 | Seerr | http://10.0.0.10:5055 | Request UI. Log in with your Jellyfin account. |
+| FlareSolverr | (internal) | Solves Cloudflare challenges for Prowlarr indexers tagged `flaresolverr` |
 
 Every container mounts host `/media` at `/data`, so imports are hardlinks. Downloads go to `/media/downloads/<category>`, which is outside every Jellyfin library. Containers run as `jellyfin` (uid 107, gid 110).
 
@@ -92,8 +93,8 @@ Gluetun's own internal VPN reconnects, which happen during healthcheck restarts,
   - TVDB folds Full Metal Panic's Fumoffu, The Second Raid and Invisible Victory into seasons of `Full Metal Panic!`. Only the base folder is managed, and the other folders are still visible in Jellyfin.
 - **Radarr:** root `/data/movies`, qBittorrent category `movies`, hardlinks on, minimum free space 50 GB.
 - **Prowlarr**
-  - Indexers are Nyaa (anime) and YTS (movies), both full-synced to Sonarr and Radarr.
-  - EZTV is blocked by Cloudflare. TV needs either FlareSolverr plus a general indexer, or a private tracker.
+  - Indexers: Nyaa (anime), YTS (movies), EZTV (TV) and 1337x (TV and movies), all full-synced to Sonarr and Radarr.
+  - EZTV and 1337x sit behind Cloudflare. They carry the tag `flaresolverr`, which routes them through the `flaresolverr` container (added 2026-11-28, internal only, no published port).
 - **Bazarr**
   - Connected to Sonarr and Radarr.
   - Language profile `ko-ja-en` is the default for both series and movies.
