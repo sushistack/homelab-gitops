@@ -82,3 +82,10 @@ services:
     environment: { TZ: Asia/Seoul }
     volumes: [/opt/arr/config/seerr:/app/config]
     ports: ["5055:5055"]
+
+  # Solves Cloudflare challenges for Prowlarr indexers tagged `flaresolverr` (EZTV, 1337x).
+  flaresolverr:
+    image: ghcr.io/flaresolverr/flaresolverr:v3.5.2
+    container_name: flaresolverr
+    restart: unless-stopped
+    environment: { TZ: Asia/Seoul, LOG_LEVEL: info }
