@@ -72,7 +72,7 @@ spec:
                   drop: ["ALL"]
           containers:
             - name: vignal
-              image: ghcr.io/sushistack/vignal@sha256:315875778fd100681cbb0b8f789854aaf95c8f8952f5ca6f68dacd35332f01cb   # sha-2e5f889 (dev 2026-11-27: mult.h24x beside d7; tagging.hit_ratio, off)
+              image: ghcr.io/sushistack/vignal@sha256:95ac22d488d8279adf43c0e7a1af236454fe2cbdd2ae6c79d208783d07fdd1a3   # sha-b7b92e8 (dev 2026-11-28: short subject names match whole words -- 프로그 not in 프로그램; tagging.hit_top)
               args: ["publish-dev"]
               env:
                 - name: TZ
