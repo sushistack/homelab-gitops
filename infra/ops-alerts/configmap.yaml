@@ -88,7 +88,7 @@ data:
           {key:"Expires", value:$exp, status:"error"},
           {key:"Window", value:"\($w)d"},
           {key:"Fix", value:"describe certificate, inspect the Order/Challenge (DNS-01/issuer)", icon:"exit"}]') || rows='[]'
-        notify "$NTFY_TOPIC_CRITICAL" "🔐 Cert expiring: $cert" "$rows"
+        notify "$NTFY_TOPIC_CRITICAL" "🔐 Cert Expiring ($cert)" "$rows"
       done
 
     # (b) Node disk pressure (k8s DiskPressure condition — replaces Longhorn disk check post-migration)
@@ -104,7 +104,7 @@ data:
           {key:"Node", value:$node, icon:"host"},
           {key:"Condition", value:"DiskPressure=True", icon:"disk"},
           {key:"Fix", value:"Free space on local-path storage dir: /var/lib/rancher/k3s/storage", icon:"exit"}]') || rows='[]'
-        notify "$NTFY_TOPIC_CRITICAL" "💾 Storage low: $node" "$rows"
+        notify "$NTFY_TOPIC_CRITICAL" "💾 Disk Low ($node)" "$rows"
       done
 
     # Stateful namespaces = those carrying a <service>-backup CronJob (the Story 4.1 backup-actor
@@ -127,7 +127,7 @@ data:
             {key:"Namespace", value:$ns},
             {key:"Ready", value:"\($ready)/\($desired)", status:"error"},
             {key:"Fix", value:"get pods, then describe / logs the not-ready pod", icon:"exit"}]') || rows='[]'
-          notify "$NTFY_TOPIC_CRITICAL" "🔴 Service down: $ns/$wl" "$rows"
+          notify "$NTFY_TOPIC_CRITICAL" "🔴 Down ($wl)" "$rows"
         done
     done
 
@@ -142,7 +142,7 @@ data:
           {key:"Job", value:$job, icon:"status"},
           {key:"Failed", value:$failed, status:"error", icon:"error"},
           {key:"Fix", value:"kubectl logs job/<name>; re-run after fixing creds / R2 / disk", icon:"exit"}]') || rows='[]'
-        notify "$NTFY_TOPIC_CRITICAL" "🚨 Backup failed: $job" "$rows"
+        notify "$NTFY_TOPIC_CRITICAL" "🚨 Backup Failed ($job)" "$rows"
       done
 
     # ---- NFR15b: version/config drift (Story 5.1) ------------------------------------------------
@@ -172,7 +172,7 @@ data:
           {key:"Sync", value:$sync, status:(if $sync=="Synced" then "ok" else "error" end)},
           {key:"Health", value:$health, status:(if $health=="Healthy" then "ok" else "error" end)},
           {key:"Fix", value:"argocd app diff: revert+sync if wrong, else update Git to match", icon:"exit"}]') || rows='[]'
-        notify "$NTFY_TOPIC_OPS" "🔀 Drift: $app" "$rows"
+        notify "$NTFY_TOPIC_OPS" "🔀 Out of Sync ($app)" "$rows"
       done
 
     # (f) k3s node version drift + (g) node NotReady — ONE nodes read, two branches (no extra RBAC).
@@ -194,13 +194,13 @@ data:
             {key:"kubelet", value:$ver, status:"warn", icon:"version"},
             {key:"Pinned", value:$pin, icon:"version"},
             {key:"Fix", value:"Roll back to the pin, or bump versions.yaml + K3S_PINNED_VERSION if intended", icon:"exit"}]') || rows='[]'
-          notify "$NTFY_TOPIC_OPS" "⬆️ k3s skew: $node" "$rows"
+          notify "$NTFY_TOPIC_OPS" "⬆️ k3s Skew ($node)" "$rows"
         else
           rows=$(jq -nc --arg node "$node" --arg state "$detail" '[
             {key:"Node", value:$node, icon:"host"},
             {key:"State", value:$state, status:"error"},
             {key:"Fix", value:"describe node, check the host (Proxmox VM up? kubelet running?)", icon:"exit"}]') || rows='[]'
-          notify "$NTFY_TOPIC_OPS" "🔴 Node NotReady: $node" "$rows"
+          notify "$NTFY_TOPIC_OPS" "🔴 Node Down ($node)" "$rows"
         fi
       done
 
@@ -238,7 +238,7 @@ data:
             {key:"State", value:"unreachable", status:"error"},
             {key:"Impact", value:"capacity / freshness / rotation checks skipped (backup monitoring blind)"},
             {key:"Fix", value:"Check R2 credentials / network / endpoint", icon:"exit"}]') || rows='[]'
-          notify "$NTFY_TOPIC_OPS" "🔌 R2 unreachable" "$rows" "$CF_BTN"
+          notify "$NTFY_TOPIC_OPS" "🔌 R2 Unreachable" "$rows" "$CF_BTN"
         else
           # (a) capacity — total bytes in the services bucket vs threshold
           for b in "$SVC_BUCKET"; do
@@ -250,7 +250,7 @@ data:
                 {key:"Size", value:"\($gb)GiB", status:"error"},
                 {key:"Threshold", value:"\($thr)GiB (free tier ~10GB)"},
                 {key:"Fix", value:"Prune old backups or raise the limit", icon:"exit"}]') || rows='[]'
-              notify "$NTFY_TOPIC_CRITICAL" "💽 R2 capacity: $b" "$rows" "$CF_BTN"
+              notify "$NTFY_TOPIC_CRITICAL" "💽 R2 Full ($b)" "$rows" "$CF_BTN"
             fi
           done
 
@@ -275,7 +275,7 @@ data:
                   {key:"Newest", value:"\($age)h old", status:"error"},
                   {key:"Path", value:"r2:\($b)/\($svc)/", icon:"disk"},
                   {key:"Fix", value:"Check the \($svc)-backup CronJob logs (actor may have silently stopped)", icon:"exit"}]') || rows='[]'
-                notify "$NTFY_TOPIC_CRITICAL" "🥪 Backup stale: $svc" "$rows"
+                notify "$NTFY_TOPIC_CRITICAL" "🥪 Backup Stale ($svc)" "$rows"
               else
                 rows=$(jq -nc --arg svc "$svc" --arg age "$age" --arg ret "$R2_RETENTION_DAYS" --arg b "$SVC_BUCKET" '[
                   {key:"Service", value:$svc, icon:"service"},
@@ -283,7 +283,7 @@ data:
                   {key:"Retention", value:"\($ret)d exceeded"},
                   {key:"Path", value:"r2:\($b)/\($svc)/", icon:"disk"},
                   {key:"Fix", value:"Check the rotation logic / permissions (rclone delete failing)", icon:"exit"}]') || rows='[]'
-                notify "$NTFY_TOPIC_CRITICAL" "🗑️ Backup not rotating: $svc" "$rows"
+                notify "$NTFY_TOPIC_CRITICAL" "🗑️ Backup Not Rotating ($svc)" "$rows"
               fi
             done
         fi
@@ -292,7 +292,7 @@ data:
           {key:"State", value:"rclone install failed", status:"error"},
           {key:"Impact", value:"R2 capacity / freshness / rotation skipped this poll"},
           {key:"Fix", value:"Check the apk CDN egress", icon:"exit"}]') || rows='[]'
-        notify "$NTFY_TOPIC_OPS" "🔌 R2 unreachable" "$rows" "$CF_BTN"
+        notify "$NTFY_TOPIC_OPS" "🔌 R2 Unreachable" "$rows" "$CF_BTN"
       fi
     fi
 
