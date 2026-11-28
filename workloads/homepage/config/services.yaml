@@ -134,7 +134,7 @@
           version: 2
     # *arr stack: Docker Compose in the Jellyfin LXC (lxc/jellyfin-arr/), LAN-only, not Argo-managed.
     - seerr:
-        href: http://10.0.0.10:5055
+        href: https://${SECRET:DOMAIN_SEERR}
         icon: jellyseerr.png
         description: Requests
         widget:

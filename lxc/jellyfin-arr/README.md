@@ -12,7 +12,7 @@ Docker Compose in **pve CT 200** (`jellyfin`, 10.0.0.10), next to the native `je
 | Sonarr | http://10.0.0.10:8989 | Anime (`/data/anime`, tag `anime`) and TV (`/data/shows`) |
 | Radarr | http://10.0.0.10:7878 | Movies (`/data/movies`) |
 | Bazarr | http://10.0.0.10:6767 | Subtitles in ko/ja/en |
-| Seerr | http://10.0.0.10:5055 | Request UI. Log in with your Jellyfin account. |
+| Seerr | http://10.0.0.10:5055, public at **https://seerr.eli.kr** | Request UI. Log in with your Jellyfin account. The public host sits behind CF Access app `seerr` (Google SSO) via `workloads/edge-proxies/seerr.yaml`. |
 | FlareSolverr | (internal) | Solves Cloudflare challenges for Prowlarr indexers tagged `flaresolverr` |
 
 Every container mounts host `/media` at `/data`, so imports are hardlinks. Downloads go to `/media/downloads/<category>`, which is outside every Jellyfin library. Containers run as `jellyfin` (uid 107, gid 110).
