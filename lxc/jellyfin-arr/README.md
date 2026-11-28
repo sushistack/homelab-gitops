@@ -99,3 +99,18 @@ Gluetun's own internal VPN reconnects, which happen during healthcheck restarts,
   - Language profile `ko-ja-en` is the default for both series and movies.
   - Providers: Animetosho, plus OpenSubtitles.com and Jimaku once the API keys are added.
 - **Jellyfin:** a new library "Movies" points at `/media/movies`. The existing libraries are Anime (`/media/anime`), Shows (`/media/shows`) and Study (`/media/english`), and `downloads/` is in none of them.
+
+## Backup and restore
+
+- **Schedule:** pve `/etc/cron.d/arr-config-backup` runs daily at 04:15. It tars CT 200's `/opt/arr/{config,gluetun,compose.yaml}` (excluding logs and MediaCover) to `/mnt/pve/backup-k12/arr/arr-config-<date>.tgz` and keeps 14 copies.
+- **Permissions:** the archives contain the WireGuard private key, so the directory is 0700 and the files are 0600.
+- **Restore:**
+  ```bash
+  ssh root@10.0.0.2 'pct exec 200 -- sh -c "cd /opt/arr && docker compose down"; cat /mnt/pve/backup-k12/arr/arr-config-<date>.tgz | pct exec 200 -- tar xzf - -C /opt/arr; pct exec 200 -- sh -c "cd /opt/arr && docker compose up -d"'
+  ```
+- **Media is not backed up.**
+
+## Monitoring
+
+- **Uptime Kuma:** HTTP monitors for Seerr, Sonarr, Radarr and qBittorrent, with the same notification as the other monitors.
+- **Homepage:** the `Media` group has widgets for Seerr, Sonarr, Radarr and qBittorrent. Their keys are in `homepage-secrets` (`HOMEPAGE_VAR_SEERR_API_KEY`, `_SONARR_API_KEY`, `_RADARR_API_KEY`, `_QBIT_USER`, `_QBIT_PASSWORD`).
