@@ -2,6 +2,10 @@
 
 Affected services: longhorn (and every later stateful service that binds a `longhorn` PVC)
 
+> **Status: Superseded (2026-06).** Longhorn was removed in favour of node-local
+> `local-path-retain` — see [the migration plan](../superpowers/plans/2026-06-26-longhorn-to-local-path-retain-migration.md).
+> Kept for history.
+
 > Decision record. Back-reference: [README → Decision records](../../README.md#decision-records-adrs).
 
 ## Context

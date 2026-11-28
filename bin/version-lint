@@ -34,7 +34,7 @@ pairs() {
 
 if [[ "${1:-}" == "--list" ]]; then
   echo "# Platform (charts — ArgoCD-synced):"
-  grep -E '^(k3s|argocd|cert-manager|longhorn|sealed-secrets|helm):|chartVersion:|  version:|  appVersion:' "$VERSIONS"
+  grep -E '^(k3s|argocd|cert-manager|sealed-secrets|helm):|chartVersion:|  version:|  appVersion:' "$VERSIONS"
   echo
   echo "# Workloads (images):"
   pairs | awk -F'\t' '{printf "  %-55s %s\n", $1, $2}'
