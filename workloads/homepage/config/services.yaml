@@ -132,34 +132,6 @@
           url: https://${SECRET:DOMAIN_IMMICH}
           key: "{{HOMEPAGE_VAR_IMMICH_API_KEY}}"
           version: 2
-    - music:
-        href: https://${SECRET:DOMAIN_NAVIDROME}
-        icon: navidrome.png
-        description: Navidrome
-        namespace: navidrome
-        app: navidrome
-        widget:
-          type: navidrome
-          url: https://${SECRET:DOMAIN_NAVIDROME}
-          user: "{{HOMEPAGE_VAR_NAVIDROME_USER}}"
-          # ponytail: Homepage v1.13.2 generic handler doesn't compute md5(password+salt);
-          # pre-computed token = md5(password + salt) with fixed salt stored in secret.
-          # To regenerate: printf '%s%s' "$PASSWORD" "$SALT" | md5sum
-          token: "{{HOMEPAGE_VAR_NAVIDROME_TOKEN}}"
-          salt: "{{HOMEPAGE_VAR_NAVIDROME_SALT}}"
-    - slskd:
-        href: https://${SECRET:DOMAIN_SLSKD}
-        icon: slskd.png
-        description: Soulseek client
-        namespace: slskd
-        app: slskd
-        widget:
-          type: slskd
-          url: https://${SECRET:DOMAIN_SLSKD}
-          # ponytail: slskd has web.authentication.disabled=true (CF Access handles auth);
-          # the widget sends X-API-Key but slskd ignores it when auth is disabled.
-          key: dummy
-
 - Ops:
     - argocd:
         href: https://${SECRET:DOMAIN_ARGOCD}
