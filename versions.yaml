@@ -8,14 +8,14 @@ k3s:
   version: v1.35.10+k3s1
 
 argocd:
-  # Helm chart whose appVersion is ArgoCD 3.4.x. Vendor chart referenced as a source — not mirrored.
+  # Helm chart whose appVersion is ArgoCD 3.6.x. Vendor chart referenced as a source — not mirrored.
   # Phase 2a: now also SELF-MANAGED via argocd/apps/argocd.yaml (this same chartVersion), so upgrades
   # are a one-line bump here + a manual self-app sync (AR5/NFR14).
   repo: https://argoproj.github.io/argo-helm
   chart: argo-cd
   # renovate: datasource=helm depName=argo-cd registryUrl=https://argoproj.github.io/argo-helm
-  chartVersion: 9.7.1   # -> appVersion v3.4.4
-  appVersion: v3.4.4
+  chartVersion: 10.20.0   # -> appVersion v3.6.3
+  appVersion: v3.6.3
 
 helm:
   # The Helm CLI is just the install tool, but pin it too: the upstream get-helm-3
