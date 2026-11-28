@@ -115,3 +115,10 @@ Gluetun's own internal VPN reconnects, which happen during healthcheck restarts,
 
 - **Uptime Kuma:** HTTP monitors for Seerr, Sonarr, Radarr and qBittorrent, with the same notification as the other monitors.
 - **Homepage:** the `Media` group has widgets for Seerr, Sonarr, Radarr and qBittorrent. Their keys are in `homepage-secrets` (`HOMEPAGE_VAR_SEERR_API_KEY`, `_SONARR_API_KEY`, `_RADARR_API_KEY`, `_QBIT_USER`, `_QBIT_PASSWORD`).
+
+## Seerr
+
+- Logs in with Jellyfin accounts. Jellyfin is reached at `http://10.0.0.10:8096`, and the external URL is set to `https://jellyfin.eli.kr` so "Play" links open there. The enabled libraries are Anime, Shows and Movies.
+- Radarr is connected as `radarr:7878` with HD-1080p and `/data/movies`.
+- Sonarr is connected as `sonarr:8989` with HD-1080p. Its default root is `/data/shows`, and anime requests go to `/data/anime` with tag `anime`.
+- **Gotcha: TMDB timeouts.** Connecting to TMDB (CloudFront) takes about 1 s from this network. Node's happy-eyeballs gives each address only 250 ms, so every TMDB call failed with `ETIMEDOUT` and the UI showed "Series Not Found". `NODE_OPTIONS=--no-network-family-autoselection --dns-result-order=ipv4first` in `compose.yaml` fixes it.
