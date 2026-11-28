@@ -27,7 +27,7 @@ restores the prior state. Recorded against logical names only, behind the
 
 **Clip 2 — self-heal (pod-kill / node-drain → reschedule):** *recording pending.*
 The behavior is already proven live (pod self-heal to replica count; node-drain
-reschedule + Longhorn re-attach in ~12 s; health-gated bad rollout held) — the
+reschedule in ~12 s for stateless pods; health-gated bad rollout held) — the
 screen-recorded clip is captured and gated after the stateful cutovers land, so it
 shows the full platform rather than a Phase-2 slice.
 
@@ -48,7 +48,7 @@ by the [`adr-link-check`](.github/workflows/adr-link-check.yml) CI gate.
 
 - [ADR-0001 — Why Compose → k3s](docs/adr/ADR-0001-why-compose-to-k3s.md)
 - [ADR-0002 — Excalidraw is the Phase-1 throwaway pilot](docs/adr/ADR-0002-excalidraw-phase1-pilot.md)
-- [ADR-0003 — Longhorn on a single host: replicas guard VM/disk loss, not host loss](docs/adr/ADR-0003-longhorn-single-host-storage.md)
+- [ADR-0003 — Longhorn on a single host: replicas guard VM/disk loss, not host loss](docs/adr/ADR-0003-longhorn-single-host-storage.md) — *superseded: Longhorn removed, storage is node-local `local-path-retain`*
 - [ADR-0004 — Sealed Secrets: the sealing key is a cluster-bound Plane 0 asset](docs/adr/ADR-0004-secrets-sealing-key.md)
 - [ADR-0005 — Traefik + cert-manager DNS-01, cloudflared per-host cutover](docs/adr/ADR-0005-ingress-tls.md)
 - [ADR-0006 — One public-default repo, render-time tokens + a two-layer gate](docs/adr/ADR-0006-exposure-model.md)
@@ -89,15 +89,16 @@ waves 0→3 and the steady-state reconcile/`git revert` loop. Source:
 These are scoping decisions, not oversights — each names where the reasoning lives:
 
 - **Hardware HA — software self-heal is real, host redundancy is not.** The cluster
-  is three k3s node VMs, but all three run on **one Proxmox host with effectively one
-  disk**. *Software*-level self-healing is proven live: a killed pod restarts to its
-  replica count, a node-VM going down reschedules its pods onto a healthy node and
-  Longhorn re-attaches the volume with data intact (≤5 min, NFR3), and a bad rollout
-  is health-gate-held so the prior good version keeps serving. But a **host reboot /
-  PSU / single-disk failure takes all three VMs — and all Longhorn replicas — down
-  together**: one host is one failure domain, so this is *not* hardware HA. Durability
-  against host loss is the off-host bare-metal restore chain (Gate 0), not replication.
-  Full reasoning: [ADR-0003](docs/adr/ADR-0003-longhorn-single-host-storage.md).
+  is three k3s node VMs on **two Proxmox hosts**: `pve` runs k3s-cp-1 + k3s-cp-2 (and
+  the OpenWrt router VM), `pve-k12` runs k3s-cp-3. Storage is node-local
+  `local-path-retain` (Longhorn was removed — see
+  [migration plan](docs/superpowers/plans/2026-06-26-longhorn-to-local-path-retain-migration.md)),
+  so every stateful pod is **pinned to the node holding its PV** — most to k3s-cp-1.
+  *Software*-level self-healing is real for stateless pods and for pod restarts in
+  place, and a bad rollout is health-gate-held. But losing `pve` takes 2 of 3 etcd
+  members (quorum), the nodes holding nearly all app data, and the LAN gateway down
+  together — this is *not* hardware HA. Durability against host/disk loss is the
+  off-host backup + bare-metal restore chain (Gate 0), not replication.
 - **An adopted GitOps scaffold (onedr0p / Flux + Talos).** Rejected in favour of a
   self-scaffolded, bounded app-of-apps so every layer is understood and owned, not
   inherited — sized to ~14 services, not a generic fleet.

@@ -32,7 +32,7 @@ in dependency order as it is added:
 
 | Wave | Component                                   | Lands in        |
 |------|---------------------------------------------|-----------------|
-| 0    | sealed-secrets, Longhorn                    | Stories 2.3, 2.2 (**reserved** — not authored here) |
+| 0    | sealed-secrets (Longhorn: removed)          | Stories 2.3, 2.2 (**reserved** — not authored here) |
 | 1    | cert-manager (CRDs)                         | Story 1.5 (`argocd/apps/cert-manager.yaml`) |
 | 2    | ClusterIssuer                               | Story 1.5 / promoted to prod in 2.4 (`argocd/apps/cluster-issuer.yaml`) |
 | 3    | workloads + IngressRoute (Excalidraw, …)    | `argocd/applicationsets/workloads.yaml` |

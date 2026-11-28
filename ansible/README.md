@@ -11,6 +11,9 @@ Ansible owns the host layer only; it does **not** own anything past
 
 ## Phase 2a VM shapes (recorded in Git — Terraform Proxmox provider is deferred)
 
+> Historical: the original Phase 2a shape. Today the VMs are larger, k3s-cp-3 lives on a second
+> Proxmox host, and Longhorn is gone (node-local `local-path-retain`) — see the root README.
+
 Three identical nodes, all **control-plane + worker** (`server` role). VM sizing is finalized here
 (Phase 2a is where compute topology is decided); each node gets headroom **and a separate data
 disk anticipating Longhorn** (Story 2.2 does the Longhorn host prep — this story only attaches the
@@ -55,18 +58,10 @@ kubectl apply -f bootstrap/root-app.yaml
 The playbook is idempotent (k3s `creates:` guard, `helm upgrade --install`, `kubectl apply` of
 dry-run YAML). Re-running converges; it does not re-init etcd or duplicate joins.
 
-**Story 2.2 additions (now part of this same playbook):** Play 0 installs the Longhorn host
-prerequisites on **every** node (`open-iscsi` + `nfs-common`, `iscsid` enabled+started, `multipathd`
-stopped+masked + a `/etc/multipath.conf` blacklist). Play 3 also patches the bundled `local-path`
-StorageClass to non-default so `longhorn` is the sole default. Both are bootstrap-durable — they
-re-apply on a clean rebuild. The Longhorn Application itself (`argocd/apps/longhorn.yaml`) reconciles
-after the GitOps handoff, not from Ansible. Per-node verify:
-
-```sh
-iscsiadm --version                  # iSCSI admin tool present
-systemctl is-active iscsid          # active
-systemctl is-enabled multipathd     # masked / disabled / absent
-```
+**Storage prep (Play 0 / Play 3):** Play 0 installs `nfs-common` on every node (the node-local
+PVs bind host paths backed by NFS mounts). Play 3 keeps the k3s-bundled `local-path` StorageClass
+as the default; `local-path-retain` comes from `infra/local-path/` via GitOps. (The Longhorn-era
+`open-iscsi`/`multipathd` prep was removed with Longhorn.)
 
 ## Verify (operational evidence — keep real IPs/hostnames out of any committed clip, AR26)
 
