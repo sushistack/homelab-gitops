@@ -8,6 +8,7 @@
 # for NEW commits. Fingerprint = commit:file:rule:startline (no secret value is stored here).
 # Generated for Story 5.1 follow-up, 2026-06-19.
 
+41dedd86a2351eec272fd362008cbd07fd20ffff:workloads/navidrome/_cutover/ingest-job.yaml:raw-ipv4:15
 548f310d225238686fb6464e4615d56bf87ee155:workloads/n8n/_cutover/ingest-job.yaml:raw-ipv4:14
 548f310d225238686fb6464e4615d56bf87ee155:workloads/n8n/sealedsecret.yaml:raw-ipv4:13
 548f310d225238686fb6464e4615d56bf87ee155:workloads/n8n/sealedsecret.yaml:raw-ipv4:14
