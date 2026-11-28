@@ -78,3 +78,24 @@ Gluetun's own internal VPN reconnects, which happen during healthcheck restarts,
 - Default save path is `/data/downloads`.
 - Seeding stops at a ratio of 1.0 or after 7 days.
 - UPnP and random port are off. The listen port is pushed by gluetun's `VPN_PORT_FORWARDING_UP_COMMAND`, which relies on "bypass auth for localhost" being on.
+
+## Wiring (set via the APIs on 2026-11-28)
+
+- **Sonarr**
+  - Root folders: `/data/anime` and `/data/shows`.
+  - Download clients point at qBittorrent at `gluetun:8080`:
+    - `qBittorrent` uses category `tv` with priority 2 and no tags.
+    - `qBittorrent-anime` uses category `anime` with priority 1 and tag `anime`. Sonarr treats untagged clients as eligible for every series, so the priority makes anime-tagged series land in `anime`.
+  - Renaming is **off**, so existing folder names stay as they are. Hardlinks are on, and the minimum free space is 50 GB.
+  - The 16 existing series were library-imported without moving files. Anime series have type Anime and tag `anime`.
+  - Every series is monitored as "all", so an airing series such as Detective Conan gets new episodes through RSS. No backlog search was triggered.
+  - TVDB folds Full Metal Panic's Fumoffu, The Second Raid and Invisible Victory into seasons of `Full Metal Panic!`. Only the base folder is managed, and the other folders are still visible in Jellyfin.
+- **Radarr:** root `/data/movies`, qBittorrent category `movies`, hardlinks on, minimum free space 50 GB.
+- **Prowlarr**
+  - Indexers are Nyaa (anime) and YTS (movies), both full-synced to Sonarr and Radarr.
+  - EZTV is blocked by Cloudflare. TV needs either FlareSolverr plus a general indexer, or a private tracker.
+- **Bazarr**
+  - Connected to Sonarr and Radarr.
+  - Language profile `ko-ja-en` is the default for both series and movies.
+  - Providers: Animetosho, plus OpenSubtitles.com and Jimaku once the API keys are added.
+- **Jellyfin:** a new library "Movies" points at `/media/movies`. The existing libraries are Anime (`/media/anime`), Shows (`/media/shows`) and Study (`/media/english`), and `downloads/` is in none of them.
