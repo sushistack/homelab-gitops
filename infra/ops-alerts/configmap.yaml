@@ -88,7 +88,7 @@ data:
           {key:"Expires", value:$exp, status:"error"},
           {key:"Window", value:"\($w)d"},
           {key:"Fix", value:"describe certificate, inspect the Order/Challenge (DNS-01/issuer)", icon:"exit"}]') || rows='[]'
-        notify "$NTFY_TOPIC_CRITICAL" "🔐 Certificate expiring: $cert" "$rows"
+        notify "$NTFY_TOPIC_CRITICAL" "🔐 Cert expiring: $cert" "$rows"
       done
 
     # (b) Node disk pressure (k8s DiskPressure condition — replaces Longhorn disk check post-migration)
@@ -142,7 +142,7 @@ data:
           {key:"Job", value:$job, icon:"status"},
           {key:"Failed", value:$failed, status:"error", icon:"error"},
           {key:"Fix", value:"kubectl logs job/<name>; re-run after fixing creds / R2 / disk", icon:"exit"}]') || rows='[]'
-        notify "$NTFY_TOPIC_CRITICAL" "🚨 Backup/restore failed: $job" "$rows"
+        notify "$NTFY_TOPIC_CRITICAL" "🚨 Backup failed: $job" "$rows"
       done
 
     # ---- NFR15b: version/config drift (Story 5.1) ------------------------------------------------
@@ -172,7 +172,7 @@ data:
           {key:"Sync", value:$sync, status:(if $sync=="Synced" then "ok" else "error" end)},
           {key:"Health", value:$health, status:(if $health=="Healthy" then "ok" else "error" end)},
           {key:"Fix", value:"argocd app diff: revert+sync if wrong, else update Git to match", icon:"exit"}]') || rows='[]'
-        notify "$NTFY_TOPIC_OPS" "🌥️ ArgoCD drift: $app" "$rows"
+        notify "$NTFY_TOPIC_OPS" "🔀 Drift: $app" "$rows"
       done
 
     # (f) k3s node version drift + (g) node NotReady — ONE nodes read, two branches (no extra RBAC).
@@ -194,7 +194,7 @@ data:
             {key:"kubelet", value:$ver, status:"warn", icon:"version"},
             {key:"Pinned", value:$pin, icon:"version"},
             {key:"Fix", value:"Roll back to the pin, or bump versions.yaml + K3S_PINNED_VERSION if intended", icon:"exit"}]') || rows='[]'
-          notify "$NTFY_TOPIC_OPS" "⬆️ k3s version drift: $node" "$rows"
+          notify "$NTFY_TOPIC_OPS" "⬆️ k3s skew: $node" "$rows"
         else
           rows=$(jq -nc --arg node "$node" --arg state "$detail" '[
             {key:"Node", value:$node, icon:"host"},
