@@ -92,9 +92,9 @@
       "dependencyDashboardApproval": true
     },
     {
-      "description": "alpine/k8s bundles kubectl for the ops-alerter; kubectl is only supported within ±1 minor of the apiserver (k3s v1.35 → kubectl ≤1.36). Raise this ceiling in the same PR as a k3s upgrade (versions.yaml k3s.version).",
+      "description": "alpine/k8s bundles kubectl for the ops-alerter; kubectl is only supported within ±1 minor of the apiserver (k3s v1.37 → kubectl ≤1.38). Raise this ceiling in the same PR as a k3s upgrade (versions.yaml k3s.version).",
       "matchPackageNames": ["alpine/k8s"],
-      "allowedVersions": "<1.37"
+      "allowedVersions": "<1.39"
     },
     {
       "description": "n8n 3.x is still GitHub-prerelease (beta) while its Docker tags look like plain semver. Hold majors until 3.x goes GA, then drop this rule and review the breaking changes.",

@@ -3,9 +3,10 @@
 
 k3s:
   # Phase 2a (Story 2.1): 3-node cluster, EMBEDDED ETCD (node 1 `--cluster-init`; nodes 2/3 join
-  # as `server`), k3s-bundled Traefik. NOT v1.36 — stay on the 1.35 line so etcd stays on the 3.5
-  # series (v1.36 ships etcd 3.6, the component we most fear bumping). Re-confirm the +k3sN suffix.
-  version: v1.35.10+k3s1
+  # as `server`), k3s-bundled Traefik. 2026-11-28: 1.35.5 -> 1.35.10 -> 1.36.6 -> 1.37.2 rolled live
+  # (binary swap node by node, etcd snapshot before each hop). etcd is now 3.7 (cluster-version 3.7;
+  # 1.35.5 already shipped 3.6). Upgrade = one minor at a time.
+  version: v1.37.2+k3s1
 
 argocd:
   # Helm chart whose appVersion is ArgoCD 3.6.x. Vendor chart referenced as a source — not mirrored.
