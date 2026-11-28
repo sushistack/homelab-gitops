@@ -3,3 +3,4 @@ kind: Kustomization
 # Source 2 of argocd/apps/arc-runners-vignal.yaml. seal.sh / README.md / *.env are operator tooling, not synced.
 resources:
   - sealedsecret.yaml   # Secret arc-github (github_token) in arc-runners
+  - sealedsecret-ghcr.yaml   # Secret ghcr-sushistack (pull secret for the private runner image)
