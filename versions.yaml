@@ -3,9 +3,10 @@
 
 k3s:
   # Phase 2a (Story 2.1): 3-node cluster, EMBEDDED ETCD (node 1 `--cluster-init`; nodes 2/3 join
-  # as `server`), k3s-bundled Traefik. NOT v1.36 — stay on the 1.35 line so etcd stays on the 3.5
-  # series (v1.36 ships etcd 3.6, the component we most fear bumping). Re-confirm the +k3sN suffix.
-  version: v1.35.10+k3s1
+  # as `server`), k3s-bundled Traefik. 2026-11-28: 1.35.5 -> 1.35.10 -> 1.36.6 -> 1.37.2 rolled live
+  # (binary swap node by node, etcd snapshot before each hop). etcd is now 3.7 (cluster-version 3.7;
+  # 1.35.5 already shipped 3.6). Upgrade = one minor at a time.
+  version: v1.37.2+k3s1
 
 argocd:
   # Helm chart whose appVersion is ArgoCD 3.6.x. Vendor chart referenced as a source — not mirrored.
@@ -135,7 +136,7 @@ workloads:
     manifest: workloads/vignal/cronjob.yaml
     # Own app (github.com/sushistack/vignal, private), built by its CI `image` job -> GHCR (amd64).
     # Pinned by digest (comment = source sha); bump here + cronjob.yaml in one PR.
-    image: ghcr.io/sushistack/vignal@sha256:c275950a8819b30830e0ff14e81d0d4b782ea2288190e8d245f16cba2d327ac2   # sha-914b5d7 (main 2026-11-28, PR #109: tagging.hit_top; otherwise = sha-67294c9)
+    image: ghcr.io/sushistack/vignal@sha256:d46bc01811fdc732d501dbeb290c93e04821c697614a347e404cb63ba2c37a9b   # sha-ee52d15 (main 2026-11-28, PR #120: ntfy alerts as KV cards, short English titles; otherwise = sha-914b5d7)
   vignal-dev-publish:
     manifest: workloads/vignal/cronjob-dev-publish.yaml
     # Built from the app repo's `dev` branch (CI `image` job on dev pushes, or crane append on the prod image while
@@ -199,7 +200,7 @@ workloads:
   # to the digest the host last ran (2026.6.1). Same tunnel/token — only its home changed.
   cloudflared:
     manifest: infra/cloudflared/deployment.yaml
-    image: cloudflare/cloudflared:2026.10.7@sha256:4955524aeaa379e154023d5a027c250f7b35041a2e7e950cf13f144bc9b9c5ba
+    image: cloudflare/cloudflared:2026.11.2@sha256:55c7e3e8d89d5e8d20b75a82f3602cbf98e06db406e73e282073cfdc5a9a3af6
   # Stage 1 (public-host-automation) — external-dns automates public *.eli.kr CF DNS off Traefik
   # IngressRoutes. Tag pinned now (lint passes); SWAP TO @sha256 at apply (AR29):
   #   crane digest registry.k8s.io/external-dns/external-dns:v0.21.0
