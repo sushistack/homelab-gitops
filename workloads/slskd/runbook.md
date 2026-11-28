@@ -2,9 +2,9 @@
 
 > Single headless Soulseek daemon on k3s-cp-1, sharing the node-local music library `/mnt/music`
 > (dedicated 200G disk, scsi3). slskd downloads lossless releases into `/mnt/music/.incoming`;
-> music-curator drives it (track-level search/download for weekly_discovery) via the in-cluster API.
+> No automated driver right now (music-curator removed 2026-11-28, library wiped for a redesign).
 > Navidrome serves the same `/mnt/music`, so new music appears with no copy. UI (5030) is INTERNAL —
-> behind CF Access (Google SSO). (Lidarr + soularr were removed; music-curator does track-level directly.)
+> behind CF Access (Google SSO). (Lidarr, soularr and music-curator were removed.)
 
 ## Health check (exact command → expected output)
 
@@ -55,5 +55,4 @@ backed up. Music files are re-acquirable (re-download), so no R2 backup either.
 - **Exposure:** Traefik IngressRoute + cert-manager (letsencrypt-prod, DNS-01) + CF Access (Google SSO)
   + the shared cloudflared tunnel (`761ca633…cfargotunnel.com`). Host: `${SECRET:DOMAIN_SLSKD}`
   (register in `internal/tokens.example.env`).
-- **Secrets:** sealed-secrets controller (kubeseal). **Downstream:** Navidrome (serves the library),
-  music-curator (drives slskd API). **External:** a valid Soulseek account. No inbound port-forward.
+- **Secrets:** sealed-secrets controller (kubeseal). **Downstream:** Navidrome (serves the library). **External:** a valid Soulseek account. No inbound port-forward.

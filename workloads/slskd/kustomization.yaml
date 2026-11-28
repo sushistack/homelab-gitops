@@ -1,9 +1,8 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 
-# slskd (Soulseek client) — Soulseek downloads for music-curator weekly_discovery (track-level).
-# Lidarr and soularr removed: album-level downloads replaced by direct track-level slskd calls from
-# music-curator. slskd stays as the Soulseek transport layer.
+# slskd (Soulseek client). music-curator (the automated weekly collector) was removed 2026-11-28 and the
+# library wiped for a redesign; slskd stays as the Soulseek transport layer, currently driven manually.
 resources:
   - namespace.yaml
   - pvc-music-local.yaml   # static node-local PV -> k3s-cp-1:/mnt/music (RWX, off-Longhorn; dedicated music disk)
