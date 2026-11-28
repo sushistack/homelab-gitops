@@ -132,6 +132,41 @@
           url: https://${SECRET:DOMAIN_IMMICH}
           key: "{{HOMEPAGE_VAR_IMMICH_API_KEY}}"
           version: 2
+    # *arr stack: Docker Compose in the Jellyfin LXC (lxc/jellyfin-arr/), LAN-only, not Argo-managed.
+    - seerr:
+        href: http://10.0.0.10:5055
+        icon: jellyseerr.png
+        description: Requests
+        widget:
+          type: jellyseerr
+          url: http://10.0.0.10:5055
+          key: "{{HOMEPAGE_VAR_SEERR_API_KEY}}"
+    - sonarr:
+        href: http://10.0.0.10:8989
+        icon: sonarr.png
+        description: Anime / TV
+        widget:
+          type: sonarr
+          url: http://10.0.0.10:8989
+          key: "{{HOMEPAGE_VAR_SONARR_API_KEY}}"
+    - radarr:
+        href: http://10.0.0.10:7878
+        icon: radarr.png
+        description: Movies
+        widget:
+          type: radarr
+          url: http://10.0.0.10:7878
+          key: "{{HOMEPAGE_VAR_RADARR_API_KEY}}"
+    - qbittorrent:
+        href: http://10.0.0.10:8080
+        icon: qbittorrent.png
+        description: Torrent (via Proton VPN)
+        widget:
+          type: qbittorrent
+          url: http://10.0.0.10:8080
+          username: "{{HOMEPAGE_VAR_QBIT_USER}}"
+          password: "{{HOMEPAGE_VAR_QBIT_PASSWORD}}"
+
 - Ops:
     - argocd:
         href: https://${SECRET:DOMAIN_ARGOCD}
