@@ -2227,6 +2227,46 @@ approve:
   - channel_id: UCGnUWBLtkdJ10Qnj46vlU3Q
     topic: tech
     note: "scout:mention 구독 121000 롱폼 32/50 최근 업로드 2026-11-13"
+  # 포베 (scout 2026-11-28)
+  - channel_id: UCY4uIMjyliGg0Y6uSSBAQYg
+    topic: game
+    note: "scout:popular 구독 96100 롱폼 27/50 최근 업로드 2026-11-27"
+  # 김상순팟캐스트TV (scout 2026-11-28)
+  - channel_id: UCglmpMKYiheZdHab2Oucyzg
+    topic: news
+    note: "scout:featured 구독 13900 롱폼 1/50 최근 업로드 2026-11-27"
+  # 치평동사우나 (scout 2026-11-28)
+  - channel_id: UC2CjBTmLVvB_qoJZCVZXM2w
+    topic: news
+    note: "scout:mention 구독 202000 롱폼 26/50 최근 업로드 2026-11-27"
+  # 팍스경제TV VOD (scout 2026-11-28)
+  - channel_id: UC6UEuBvk-0rmV4FUu0LDiTw
+    topic: economy
+    note: "scout:mention 구독 7500 롱폼 50/50 최근 업로드 2026-11-27"
+  # 이춘향 (scout 2026-11-28)
+  - channel_id: UCH-5Xjx6MuEySkb-lAdIEeg
+    topic: issue
+    note: "scout:mention 구독 205000 롱폼 38/50 최근 업로드 2026-11-25"
+  # Dreamina_PairScene (scout 2026-11-28)
+  - channel_id: UCHBUoCjrPnOdlru1uaVLhHg
+    topic: tech
+    note: "scout:mention 구독 3160 롱폼 4/46 최근 업로드 2026-11-23"
+  # XLOV (scout 2026-11-28)
+  - channel_id: UCHWhn9xw7x8NPPnV6eWQDQA
+    topic: music
+    note: "scout:mention 구독 1320000 롱폼 3/50 최근 업로드 2026-11-25"
+  # 서눙 (scout 2026-11-28)
+  - channel_id: UCJYY560AbCxckUSVjKwnZlA
+    topic: fashion
+    note: "scout:mention 구독 9620 롱폼 2/50 최근 업로드 2026-11-24"
+  # 롱솔리 (scout 2026-11-28)
+  - channel_id: UCQ2f-oIzyiW5TCB8k532LOg
+    topic: game
+    note: "scout:mention 구독 1430 롱폼 50/50 최근 업로드 2026-11-22"
+  # 랜드로버는 김팀장 (LAND ROVER by KIM) (scout 2026-11-28)
+  - channel_id: UCRb2XUP2vG70O-L7QruVcPg
+    topic: real-estate
+    note: "scout:mention 구독 1380 롱폼 14/50 최근 업로드 2026-11-19"
 untrack: []
 
 # 2026-11-12 (user-approved, PERSONA15~18: 당뇨/당뇨병, 인공지능/AI split one subject's counts): duplicate subjects
