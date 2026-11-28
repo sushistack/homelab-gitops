@@ -9,7 +9,7 @@ resources:
   - ingressroute.yaml      # INTERNAL (CF Access); host homepage.eli.kr
   - certificate.yaml       # letsencrypt-prod DNS-01
   - rbac.yaml              # SA + read-only ClusterRole for the kubernetes integration
-  - sealedsecret.yaml      # homepage-secrets: Proxmox + Jellyfin/Immich/Navidrome/Lidarr/Miniflux API keys
+  - sealedsecret.yaml      # homepage-secrets: Proxmox + Jellyfin/Immich/Miniflux/... API keys
 
 # Hashed name suffix → editing any config file rolls the Deployment automatically.
 configMapGenerator:
