@@ -15,6 +15,42 @@
 #
 # 로컬 확인: go test ./internal/topics (형식), 잘못된 slug·중복·note 누락이면 run 이 실패한다.
 channels:
+  - channel_id: UCCUfsf35PukA4gEsU2hTtQg
+    topic: tech
+    topic_l2: tech/tech-etc
+    note: "대신남 말방구실험실 · DIY 개조·실험(차에 항공계기판, 덱스 개조) 채널인데 리뷰·언박싱으로 묶여 가전 리뷰어 목록에 섞임 (2026-11-23 페르소나 r22 서도현, claude)"
+  - channel_id: UC4wiVnpTSIn6H61pdWbF-Qw
+    topic: tech
+    topic_l2: tech/tech-pc
+    note: "왕가PC · 최근 12개 모두 PC 견적·조립. 가전·IT 리뷰어의 리뷰·언박싱 목록에 섞임 (2026-11-23 페르소나 r16–r19 서도현, claude)"
+  - channel_id: UCwtZFjYTZAy0m4G8bDEZ7mA
+    topic: tech
+    topic_l2: tech/tech-pc
+    note: "추천하는남자 · 컴퓨터 견적 추천 위주. 가전·IT 리뷰어의 리뷰·언박싱 목록에 섞임 (2026-11-23 페르소나 r16–r19 서도현, claude)"
+  - channel_id: UCKmRwsGQK9ee93t8nZ0zn1A
+    topic: tech
+    topic_l2: tech/tech-pc
+    note: "컴퓨터저장소 · 조립PC 판매. 가전·IT 리뷰어의 리뷰·언박싱 목록에 섞임 (2026-11-23 페르소나 r16–r19 서도현, claude)"
+  - channel_id: UC0sQEECROLZ_UtPTOI_Vpvw
+    topic: tech
+    topic_l2: tech/tech-pc
+    note: "려독 · 월간 컴퓨터 견적. 가전·IT 리뷰어의 리뷰·언박싱 목록에 섞임 (2026-11-23 페르소나 r16–r19 서도현, claude)"
+  - channel_id: UCaOwfLJxMjZ8RCBwg8_c90A
+    topic: tech
+    topic_l2: tech/tech-pc
+    note: "YJMOD x 영재컴퓨터 · PC·서버 조립 89%. 가전·IT 리뷰어의 리뷰·언박싱 목록에 섞임 (2026-11-23 페르소나 r16–r19 서도현, claude)"
+  - channel_id: UCNCZoEdHHuF76DZ78IBJvlQ
+    topic: tech
+    topic_l2: tech/tech-pc
+    note: "신성조 · PC 추천·조립 64%. 가전·IT 리뷰어의 리뷰·언박싱 목록에 섞임 (2026-11-23 페르소나 r16–r19 서도현, claude)"
+  - channel_id: UCyoqIWgyiQmxYiNP_l7KlyQ
+    topic: tech
+    topic_l2: tech/tech-pc
+    note: "허수아비 · PC 매장 주간 이야기·조립컴. 가전·IT 리뷰어의 리뷰·언박싱 목록에 섞임 (2026-11-23 페르소나 r16–r19 서도현, claude)"
+  - channel_id: UCPP1HVcKyFThWlpO-JJdXdg
+    topic: tech
+    topic_l2: tech/tech-howto
+    note: "감자나라ai · tech-review 로 묶임. 최근 영상 전부 AI 도구 설치·사용법 (헤르메스 설치 등). 테크 리뷰어 주간 리포트에 섞임 (2026-11-22 페르소나 r12 서도현, claude)"
   - channel_id: UCgzCOR128Z8rovfBEIQ_lEQ
     topic: news
     note: "안동MBC NEWS · celeb 로 잘못 분류. 최근 30일 영상 판정 news 111·politics 88·celeb 9 (2026-11-13 표본 검수, claude)"
@@ -1195,9 +1231,8 @@ channels:
     topic_l2: pets/cat
     note: "토니마루 · game -> pets, 고양이 영상 (2026-11-15 수동 검수, claude)"
   - channel_id: UCQeFes-kvjR9VLhqkFSdaAQ
-    topic: beauty-life
-    topic_l2: beauty-life/beauty-etc
-    note: "최깨비 · game -> beauty-life, 피부·미용 영상 (2026-11-15 수동 검수, claude)"
+    topic: web-drama
+    note: "최깨비 · 11-15엔 피부·미용 영상이라 beauty-life로 지정했으나 최근은 할마에·콩트 같은 코미디 쇼츠 (2026-11-26 협찬 후보 page-quality, r25p A8 뷰티 목록 점검 — 최근 제목 8개 확인, claude)"
   - channel_id: UCUfX5QqRnnNv1n5w-1mZVxg
     topic: mukbang
     topic_l2: mukbang/mb-tour
@@ -2121,7 +2156,73 @@ channels:
     topic: game
     topic_l2: game/rpg
     note: "송소희티비 · 모바일 게임으로 잡힘(해시태그 #리니지m). 최근 영상은 PC 리니지 클래식 방송 (2026-11-21 classify-audit 검토, claude)"
-
+  - channel_id: UCaAeaCKU-dBllPNadsXvQOg
+    topic: fitness
+    topic_l2: fitness/health-info
+    note: "옆집간호사 구슬언니 · 응급실 간호사의 링거·수액·병원 이야기, 뷰티 아님 (2026-11-26 협찬 후보 page-quality, r25p A8 뷰티 목록 점검 — 최근 제목 8개 확인, claude)"
+  - channel_id: UCMvXcsgroYSy7qs3CrpwEFQ
+    topic: web-drama
+    note: "혜다다다 · 노래 나레이션·상황극 쇼츠 (2026-11-26 협찬 후보 page-quality, r25p A8 뷰티 목록 점검 — 최근 제목 8개 확인, claude)"
+  - channel_id: UCjm1fZAjGD6UBrIuasxXzgg
+    topic: living
+    topic_l2: living/lv-tips
+    note: "백세뷰티 · '10가지' 생활 정보 목록(병문안·청첩장·음식·세일), 뷰티는 드묾 (2026-11-26 협찬 후보 page-quality, r25p A8 뷰티 목록 점검 — 최근 제목 8개 확인, claude)"
+  - channel_id: UClecY6IhcjwmCBJHiZ2-cTg
+    topic: tech
+    topic_l2: tech/tech-etc
+    note: "이븐쇼핑 · 발명품·제품 이야기 (2026-11-26 협찬 후보 page-quality, r25p A8 뷰티 목록 점검 — 최근 제목 8개 확인, claude)"
+  - channel_id: UChsVW8C9oiAmxAQPQ9AwX2g
+    topic: living
+    topic_l2: living/lv-tips
+    note: "리뷰하는 미미쨩 · 자취·주방·청소 꿀템 (2026-11-26 협찬 후보 page-quality, r25p A8 뷰티 목록 점검 — 최근 제목 8개 확인, claude)"
+  - channel_id: UCzPhd4orXg5TWhM1u2RV-cw
+    topic: vlog
+    topic_l2: vlog/vlog-etc
+    note: "헤어몬 Hairmon · 여행·일상 브이로그, 헤어 영상 없음 (2026-11-26 협찬 후보 page-quality, r25p A8 뷰티 목록 점검 — 최근 제목 8개 확인, claude)"
+  - channel_id: UCLigSO1MhXVFCjHbKof729Q
+    topic: living
+    topic_l2: living/lv-etc
+    note: "스마트한농부 · 마늘·양파 농사·예초기·쌀 보관 (2026-11-26 협찬 후보 page-quality, r25p A8 뷰티 목록 점검 — 최근 제목 8개 확인, claude)"
+  - channel_id: UCnNFUlThXX_ogt6S6DRBFAw
+    topic: vlog
+    topic_l2: vlog/vlog-etc
+    note: "무대뽀조성근 · 남대문 시장·여행 브이로그 (2026-11-26 협찬 후보 page-quality, r25p A8 뷰티 목록 점검 — 최근 제목 8개 확인, claude)"
+  - channel_id: UCltaErny4XmGSN0Yg9MGiYg
+    topic: living
+    topic_l2: living/lv-interior
+    note: "사고보는리뷰 · 데크·배수구·슬라이딩 도어 같은 집 고치기 제품 (2026-11-26 협찬 후보 page-quality, r25p A8 뷰티 목록 점검 — 최근 제목 8개 확인, claude)"
+  - channel_id: UCeX56fJzTAdcc-NxJO1qEeA
+    topic: fitness
+    topic_l2: fitness/health-info
+    note: "오늘도 뷰티 · 단식·혈액순환·체지방 같은 건강 정보 목록 (2026-11-26 협찬 후보 page-quality, r25p A8 뷰티 목록 점검 — 최근 제목 8개 확인, claude)"
+  - channel_id: UCmdOnmYKm4hijBxwGHtPT8Q
+    topic: vlog
+    topic_l2: vlog/vlog-etc
+    note: "박현지입니다 · 일상·토크 브이로그 (2026-11-26 협찬 후보 page-quality, r25p A8 뷰티 목록 점검 — 최근 제목 8개 확인, claude)"
+  - channel_id: UCzzt6bFEBcy-CoZeFvTSq0A
+    topic: vlog
+    topic_l2: vlog/family
+    note: "고수 평범해도 괜찮아 · 육아 브이로그 (2026-11-26 협찬 후보 page-quality, r25p A8 뷰티 목록 점검 — 최근 제목 8개 확인, claude)"
+  - channel_id: UCA12yqwan_vhRCpFRW3Bw_g
+    topic: vlog
+    topic_l2: vlog/vlog-etc
+    note: "샵뚱 · 일상·먹는 쇼츠 (2026-11-26 협찬 후보 page-quality, r25p A8 뷰티 목록 점검 — 최근 제목 8개 확인, claude)"
+  - channel_id: UC6KODul7GRM5hm6jR-lsnMg
+    topic: vlog
+    topic_l2: vlog/vlog-etc
+    note: "고니 goeun · 일상·상황 쇼츠 (2026-11-26 협찬 후보 page-quality, r25p A8 뷰티 목록 점검 — 최근 제목 8개 확인, claude)"
+  - channel_id: UCdY5tg5yBvMX9L9UnUGRNtg
+    topic: music
+    topic_l2: music/trot
+    note: "헤어닥터 영원쌤 · 트로트 가수 영상(해시태그), 헤어 영상 없음 (2026-11-26 협찬 후보 page-quality, r25p A8 뷰티 목록 점검 — 최근 제목 8개 확인, claude)"
+  - channel_id: UCqv5SRusZnrTsiti_xWAIcA
+    topic: vlog
+    topic_l2: vlog/vlog-etc
+    note: "멜원 melwon diary · 다꾸·여행 기록 (2026-11-26 협찬 후보 page-quality, r25p A8 뷰티 목록 점검 — 최근 제목 8개 확인, claude)"
+  - channel_id: UCB4HGPlKiz0VxkREPHEC3zg
+    topic: living
+    topic_l2: living/lv-tips
+    note: "미란이네 리뷰 · 육아·살림 꿀템 (2026-11-26 협찬 후보 page-quality, r25p A8 뷰티 목록 점검 — 최근 제목 8개 확인, claude)"
 videos:
   - video_id: FwccZHAHu3U
     l1: web-drama

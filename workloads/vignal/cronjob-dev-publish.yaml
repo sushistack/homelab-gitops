@@ -17,11 +17,10 @@ kind: CronJob
 metadata:
   name: vignal-dev-publish
 spec:
-  # 03:30 KST: between prod runs (00:00/06:00, ~45 min each). A snapshot is consistent even if they overlap.
-  # Every 6 h, right after each prod run (00:30/06:30/12:30/18:30 KST, ~45-52 min; this runs 55 min after each): the release meta says refresh_interval_hours 6,
-  # so a daily dev release showed the "갱신 지연" banner after 12 h (2026-11-06). A snapshot taken during a prod run is
-  # still consistent (WAL read transaction).
-  schedule: "25 1-23/6 * * *"
+  # 2026-11-24: once a day (07:25 KST, 55 min after the 06:30 prod run). Every 6 h made vignal-data-dev write as many
+  # D1 rows as prod (~1.6-2.2M/day) and pushed the account past the 50M/month included writes. Accepted cost: dev shows
+  # the "갱신 지연" banner after ~12 h each day. A snapshot taken during a prod run is still consistent (WAL read transaction).
+  schedule: "25 7 * * *"
   timeZone: Asia/Seoul
   concurrencyPolicy: Forbid
   suspend: false
@@ -49,9 +48,31 @@ spec:
             fsGroup: 65532
             seccompProfile:
               type: RuntimeDefault
+          # 2026-11-24: the public read Postgres over the pg.vignal.kr tunnel (Access service token), on 127.0.0.1:5432
+          # for VIGNAL_PG_DSN. Native sidecar: up before the collector, stopped after it (vignal docs/ops/postgres.md).
+          initContainers:
+            - name: pg-tunnel
+              image: cloudflare/cloudflared:2026.10.7@sha256:4955524aeaa379e154023d5a027c250f7b35041a2e7e950cf13f144bc9b9c5ba
+              restartPolicy: Always
+              args: ["access", "tcp", "--hostname", "pg.vignal.kr", "--url", "127.0.0.1:5432"]
+              env:
+                - name: TUNNEL_SERVICE_TOKEN_ID
+                  valueFrom: { secretKeyRef: { name: vignal-pg, key: TUNNEL_SERVICE_TOKEN_ID } }
+                - name: TUNNEL_SERVICE_TOKEN_SECRET
+                  valueFrom: { secretKeyRef: { name: vignal-pg, key: TUNNEL_SERVICE_TOKEN_SECRET } }
+              # No startupProbe: cloudflared listens on loopback and a tcpSocket probe dials the pod IP (refused). The
+              # collector connects only after its publish, minutes later.
+              resources:
+                requests: { cpu: 10m, memory: 32Mi }
+                limits: { memory: 128Mi }
+              securityContext:
+                allowPrivilegeEscalation: false
+                readOnlyRootFilesystem: true
+                capabilities:
+                  drop: ["ALL"]
           containers:
             - name: vignal
-              image: ghcr.io/sushistack/vignal@sha256:12f109f82f981f98f806876f619630b1cd6213611e25dc1b360f5dd0370ede48   # sha-8c3d47c (dev: flow top video format)
+              image: ghcr.io/sushistack/vignal@sha256:95ac22d488d8279adf43c0e7a1af236454fe2cbdd2ae6c79d208783d07fdd1a3   # sha-b7b92e8 (dev 2026-11-28: short subject names match whole words -- 프로그 not in 프로그램; tagging.hit_top)
               args: ["publish-dev"]
               env:
                 - name: TZ
@@ -76,6 +97,8 @@ spec:
                   value: dev/snapshot/vignal-dev.db.gz
                 - name: TMPDIR
                   value: /tmp
+                - name: VIGNAL_PG_DSN   # 2026-11-24: collector writes each batch into the public read Postgres
+                  valueFrom: { secretKeyRef: { name: vignal-pg, key: VIGNAL_PG_DSN_DEV } }
               envFrom:
                 - secretRef:
                     name: vignal-secrets   # R2_* (public bucket write), GEMINI_API_KEY; same as the prod job

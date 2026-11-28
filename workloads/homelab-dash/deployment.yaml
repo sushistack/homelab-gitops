@@ -1,5 +1,6 @@
 # Monitoring UI (github.com/sushistack/homelab-dash, private): static SPA + nginx proxying GET /api/*
-# to the netdata parent Service. Stateless, no secrets beyond the GHCR pull cred.
+# to the netdata parent Service, plus GET /pve/resources → Proxmox /cluster/resources with a read-only
+# PVEAuditor token (Secret pve-api). Stateless.
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -25,6 +26,13 @@ spec:
           env:
             - name: NETDATA_URL
               value: http://netdata.netdata.svc.cluster.local:19999
+            - name: PVE_URL   # edge-proxies' selector-less Service → pve:8006 (no raw IP in git)
+              value: https://proxmox-backend.edge-proxies.svc.cluster.local:8006
+            - name: PVE_AUTH
+              valueFrom:
+                secretKeyRef:
+                  name: pve-api
+                  key: PVE_AUTH
           readinessProbe:
             httpGet:
               path: /healthz

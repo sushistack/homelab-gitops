@@ -40,7 +40,7 @@ spec:
             - name: vignal
               # Immutable sha tag from the app repo's CI (NOT :latest — version-lint rejects
               # floating refs). Upgrade = bump here + versions.yaml in one PR.
-              image: ghcr.io/sushistack/vignal@sha256:d76ebf8db5b4a1fd08a8862b387904f25dd387d7b4cffe61d467bc542031c645   # sha-b98059b (main 2026-11-22 release, PR #55)
+              image: ghcr.io/sushistack/vignal@sha256:c275950a8819b30830e0ff14e81d0d4b782ea2288190e8d245f16cba2d327ac2   # sha-914b5d7 (main 2026-11-28, PR #109: tagging.hit_top; otherwise = sha-67294c9)
               args: ["run", "--stage", "tag"]
               env:
                 - name: TZ

@@ -202,3 +202,5 @@ channels:
     note: "출발! 비디오여행 · MBC 프로그램 채널, 22개 모두 'MBC 방송' 표기. 영화 리뷰어 또래·잘 된 영상에 섞임 (2026-11-21 페르소나 r8 노승현, claude)"
   - channel_id: UC_U34UlsS9Mp5ZgvsEA7irw
     note: "그것이 알고싶다 · SBS 프로그램 채널. 미스터리 소규모 크리에이터의 비슷한 채널·잘 된 영상에 섞임 (2026-11-22 페르소나 r11/r12 김하람, claude)"
+  - channel_id: UCANbkO40IlYW1d_aiYuHlgA
+    note: "월드건축자재DIY · 건축자재·원목가구 업체 자체 홍보 채널. 살림 협찬 후보에 섞여 브랜드 페르소나(오세훈)가 이탈 계기로 꼽음 (2026-11-23 r14, claude)"
