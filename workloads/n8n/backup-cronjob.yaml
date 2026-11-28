@@ -3,7 +3,7 @@
 # (Reconciliation 2): steady-state RPO is ≤6h (not 0), so an online lock-safe `.backup` of the LIVE
 # pod is correct here — NO scale-down. Replaces the Compose offen `n8n-backup` sidecar
 # (docker-compose.yml:618-641): same 30 */6 cadence, 30-day retention, n8n- prefix. Copied from the
-# navidrome (4.3) SQLite-class reference with only the DB path + R2 prefix changed.
+# ntfy (4.1) SQLite-class reference with only the DB path + R2 prefix changed.
 #
 # RWO multi-mount trap (Reconciliation 3): n8n-data is RWO -> Longhorn attaches to one node. This Job
 # co-schedules onto the n8n pod's node via podAffinity and mounts the PVC read-write (online .backup

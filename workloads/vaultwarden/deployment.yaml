@@ -2,7 +2,7 @@
 # CRITICAL single-writer SQLite vault on an RWO volume: strategy MUST be Recreate (never
 # RollingUpdate — two pods sharing one WAL corrupts the vault, the named anti-pattern AR14) and
 # terminationGracePeriodSeconds 30 ports the Compose stop_grace_period: 30s WAL-checkpoint flush.
-# Mechanically the same shape as navidrome (Story 4.3) / the n8n CRITICAL precedent (Story 4.7).
+# Mechanically the same shape as ntfy (Story 4.1) / the n8n CRITICAL precedent (Story 4.7).
 apiVersion: apps/v1
 kind: Deployment
 metadata:

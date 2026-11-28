@@ -132,7 +132,7 @@ data:
     done
 
     # (d) backup/restore Job failure — any Job whose name carries the -backup OR -restore convention
-    #     with status.failed>=1. Matches CronJob-spawned backups (ntfy-backup-<ts>, navidrome-backup-<ts>)
+    #     with status.failed>=1. Matches CronJob-spawned backups (ntfy-backup-<ts>, memos-backup-<ts>)
     #     AND one-off cutover restore Jobs (miniflux-restore, ...). AC1(d) covers backup *and* restore.
     kubectl get jobs -A -o json | jq -r '
       .items[] | select((.status.failed // 0) >= 1) | select(.metadata.name | test("-(backup|restore)"))

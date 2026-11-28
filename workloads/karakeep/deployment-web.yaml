@@ -2,7 +2,7 @@
 # The ONLY public face (Traefik -> :3000). Reaches meili :7700 + chrome :9222 (the two isolated
 # internal components) and is reached by the bridge :3000. SQLite (db.db) on RWO Longhorn ->
 # strategy MUST be Recreate (two pods on one WAL = corruption, AR14) + terminationGracePeriodSeconds
-# 30 (= Compose stop_grace_period: 30s WAL-checkpoint flush). Same shape as the navidrome/ntfy refs.
+# 30 (= Compose stop_grace_period: 30s WAL-checkpoint flush). Same shape as the ntfy ref.
 apiVersion: apps/v1
 kind: Deployment
 metadata:

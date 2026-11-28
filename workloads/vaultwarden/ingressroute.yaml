@@ -1,5 +1,5 @@
 # Story 4.8 — public route for vaultwarden: web -> websecure, TLS from the vaultwarden-tls Secret
-# (certificate.yaml); plain HTTP 301-redirects to HTTPS. Same worked shape as navidrome/ntfy/draw.
+# (certificate.yaml); plain HTTP 301-redirects to HTTPS. Same worked shape as ntfy/draw.
 # Host is tokenized (${SECRET:DOMAIN_VAULTWARDEN}); the render CMP substitutes at ArgoCD sync time.
 # traefik.io/v1alpha1 (v3) — the old traefik.containo.us API silently fails.
 #

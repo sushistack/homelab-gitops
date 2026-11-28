@@ -1,13 +1,13 @@
 # Story 4.5 — backup actors (AC1, Reconciliation 2). Replaces the Compose offen sidecar
 # (docker-compose.yml:580-611), which CANNOT port to k8s (a sidecar can't stop a peer pod) AND which
-# quiesced karakeep-web on every run. The house pattern (ntfy 4.1 / navidrome 4.3, operator-confirmed)
+# quiesced karakeep-web on every run. The house pattern (ntfy 4.1, operator-confirmed)
 # is an ONLINE `sqlite3 .backup` — lock-safe, NO scale-down, source stays live.
 #
 # TWO CronJobs, because the two SQLite files live on TWO separate RWO PVCs that Longhorn may attach
 # to DIFFERENT nodes — one pod can't mount both:
 #   karakeep-backup-web    : db.db (bookmarks + read-state) -> R2.  queue.db is regenerable job state;
 #                            assets/ are large regenerable crawl snapshots -> Longhorn replication,
-#                            NOT shipped every 6h (same call as navidrome's music). DB-class only.
+#                            NOT shipped every 6h (bulk, regenerable). DB-class only.
 #   karakeep-backup-bridge : bridge.sqlite (the DEDUP map). Reconciliation 2 — losing it re-emits
 #                            DUPLICATE Anytype objects, so it IS dumped (app-consistent, cheap).
 # meili is NOT dumped (rebuildable derived state, Reconciliation 5 / AR16).

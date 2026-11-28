@@ -1,5 +1,5 @@
 # calibre ebook library on a static local PV at /mnt/books (k3s-cp-1).
-# Same pattern as komga pvc-manga-local / navidrome pvc-music-local.
+# Same pattern as komga pvc-manga-local.
 #
 # /mnt/books must exist on k3s-cp-1 before ArgoCD syncs the deployment change.
 # Data migration order:

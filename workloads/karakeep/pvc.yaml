@@ -2,7 +2,7 @@
 #   karakeep-data        : karakeep-web's /data — db.db (bookmarks + read-state) + queue.db + assets/.
 #                          DB-class: db.db dumped to R2 by backup-cronjob.yaml (online sqlite3 .backup).
 #                          assets/ ride Longhorn replication (regenerable crawl snapshots; not shipped
-#                          every 6h — same call as navidrome's music PVC). RWO -> Recreate (SQLite WAL).
+#                          every 6h — bulk, regenerable). RWO -> Recreate (SQLite WAL).
 #   karakeep-bridge-data : the bridge's /data — bridge.sqlite (the Karakeep-ID -> Anytype-object DEDUP
 #                          map). Reconciliation 2: losing it = next sync re-creates DUPLICATE Anytype
 #                          objects. Treated as stateful: migrated + dumped to R2. RWO -> Recreate.
